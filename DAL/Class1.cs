@@ -32,7 +32,7 @@ namespace IDAL
             public override string ToString()
             {
                 return string.Format("id is: {0}\t model of the drone is: {1}\t drone type is: {2}\t" +
-                    "batrry level is: {3}\t  drone status is: {4}\t " ,Id, Model, MaxWeight, Battery, Status);
+                    "Battery level is: {3}\t  drone status is: {4}\t " ,Id, Model, MaxWeight, Battery, Status);
             }
         }
 
@@ -46,7 +46,7 @@ namespace IDAL
             public override string ToString()
             {
                 return string.Format("id is: {0}\t Customer's name: {1}\t Customer's phone naumber: {2}\t" +
-                    "Longitude: {3}\t  Latitude: {4}\t ", Id, Name, PhoneNumber, Longitude, Latitude);
+                    "Longitude location: {3}\t  Latitude location: {4}\t ", Id, Name, PhoneNumber, Longitude, Latitude);
             }
         }
      
@@ -69,10 +69,10 @@ namespace IDAL
             public DateTime Delivered { get; set; }
             public override string ToString()
             {
-                return string.Format("id is: {0}\t sender id is: {1}\t terget id: {2}\t" +
+                return string.Format("ID is: {0}\t sender ID is: {1}\t target ID: {2}\t" +
                     "parcel Weight: {3}\t  Priority: {4}\t  drone id: {5}\t" +
-                    "Requeste started in: {6}\t  Scheduled: {7}\t" +
-                    "picke up time at: {8}\t  arive time at: {9}\t"
+                    "Request started in: {6}\t  Scheduled: {7}\t" +
+                    "pick up time at: {8}\t  arivel time at: {9}\t"
                     , Id, SenderId, TargetId, Weight, Priority, DroneId, Requested, Scheduled, PickedUp, Delivered);
             }
         }
