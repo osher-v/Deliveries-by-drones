@@ -1,5 +1,5 @@
 ﻿using System;
-using DAL;
+
 namespace ConsoleUI
 {
     class Program
@@ -7,8 +7,8 @@ namespace ConsoleUI
 
         static void Main(string[] args)
         {
-           Class1.
-            Console.WriteLine("Hello World!");
+           Console.WriteLine("Hello World!");
+
         }
     }
 }
