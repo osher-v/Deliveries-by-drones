@@ -33,7 +33,7 @@ Your choice:");
                 options = (Options)choice;                      
                 switch (options)
                 {
-                    case 1:
+                    case Options.Insert:
                         Console.BackgroundColor = ConsoleColor.Blue;
                         Console.WriteLine(@"
 Insert options:
