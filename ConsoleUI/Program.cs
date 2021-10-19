@@ -7,7 +7,10 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
-           Console.WriteLine(@"
+            int choice = 0;
+            do
+            {
+                Console.WriteLine(@"
 choose from the following options (type the selected number): 
 
 1. Insert options.
@@ -16,12 +19,12 @@ choose from the following options (type the selected number):
 4. Display options (for the whole list).
 5. EXIT.
 Your choice:");
-            int choice = 0;
-            int.TryParse( Console.ReadLine(),out choice);
-            switch (choice)
-            {
-                case 1:
-                    Console.WriteLine(@"
+                
+                int.TryParse(Console.ReadLine(), out choice);
+                switch (choice)
+                {
+                    case 1:
+                        Console.WriteLine(@"
 Insert options:
 
 1. Add a base station to the list of stations.
@@ -30,11 +33,24 @@ Insert options:
 4. Admission of package for shipment.
 
 Your choice:");
-                       int.TryParse(Console.ReadLine(), out choice);
-                    break;
+                        int.TryParse(Console.ReadLine(), out choice);
+                        switch (choice)
+                        {
+                            case 1:
+                                break;
+                            case 2:
+                                break;
+                            case 3:
+                                break;
+                            case 4:
+                                break;
+                            default:
+                                break;
+                        }
+                        break;
 
-                case 2:
-                    Console.WriteLine(@"
+                    case 2:
+                        Console.WriteLine(@"
 Update options:
 
 1. Assigning a package to a drone
@@ -43,11 +59,24 @@ Update options:
 4. Sending a drone for charging at a base station
 5. Release drone from charging at base station
 Your choice:");
-                       int.TryParse(Console.ReadLine(), out choice);
-                    break;
+                        int.TryParse(Console.ReadLine(), out choice);
+                        switch (choice)
+                        {
+                            case 1:
+                                break;
+                            case 2:
+                                break;
+                            case 3:
+                                break;
+                            case 4:
+                                break;
+                            default:
+                                break;
+                        }
+                        break;
 
-                case 3:
-                    Console.WriteLine(@"
+                    case 3:
+                        Console.WriteLine(@"
 Display options(singel):
 
 1. Base station view.
@@ -56,10 +85,24 @@ Display options(singel):
 4. Package view.
 
 Your choice:");
-                    break;
+                        int.TryParse(Console.ReadLine(), out choice);
+                        switch (choice)
+                        {
+                            case 1:
+                                break;
+                            case 2:
+                                break;
+                            case 3:
+                                break;
+                            case 4:
+                                break;
+                            default:
+                                break;
+                        }
+                        break;
 
-                case 4:
-                    Console.WriteLine(@"
+                    case 4:
+                        Console.WriteLine(@"
 Display options (for the whole list):
 
 1. Displays a list of base stations.
@@ -70,32 +113,28 @@ Display options (for the whole list):
 6. Display base stations with available charging stations.
 
 Your choice:");
-                    break;
-                case 5:
-                    Console.WriteLine(@"Have a good day");
-                    break;
-                default:
-                    break;
-            }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                        int.TryParse(Console.ReadLine(), out choice);
+                        switch (choice)
+                        {
+                            case 1:
+                                break;
+                            case 2:
+                                break;
+                            case 3:
+                                break;
+                            case 4:
+                                break;
+                            default:
+                                break;
+                        }
+                        break;
+                    case 5:
+                        Console.WriteLine("Have a good day");
+                        return;         
+                    default:
+                        break;
+                }
+            } while (true);
         }
     }
 }
