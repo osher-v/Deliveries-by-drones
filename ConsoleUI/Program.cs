@@ -2,11 +2,13 @@
 
 namespace ConsoleUI
 {
-    //enum Options {Insert=1,Update,Display,DisplayList,EXIT}
+    enum Options {Insert=1,Update,Display,DisplayList,EXIT}
     class Program
     {
         static void Main(string[] args)
         {
+            Options options;
+           
             //DateTime time = new DateTime(2021, 10, 20);
             //DateTime time1 = new DateTime(2021, 10, 20);
             //Console.WriteLine(time.AddDays(5));
@@ -16,7 +18,7 @@ namespace ConsoleUI
             int choice = 0;
             do
             {
-               // Console.BackgroundColor = ConsoleColor.DarkRed;
+                Console.BackgroundColor = ConsoleColor.DarkRed;
                 Console.WriteLine(@"
 choose from the following options (type the selected number): 
 
@@ -28,10 +30,11 @@ choose from the following options (type the selected number):
 Your choice:");
                 
                while(!int.TryParse(Console.ReadLine(), out choice));
-                switch (choice)
+                options = (Options)choice;                      
+                switch (options)
                 {
                     case 1:
-                       // Console.BackgroundColor = ConsoleColor.Blue;
+                        Console.BackgroundColor = ConsoleColor.Blue;
                         Console.WriteLine(@"
 Insert options:
 
