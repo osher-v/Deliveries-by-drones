@@ -7,9 +7,11 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
+
             int choice = 0;
             do
             {
+               // Console.BackgroundColor = ConsoleColor.DarkRed;
                 Console.WriteLine(@"
 choose from the following options (type the selected number): 
 
@@ -20,10 +22,11 @@ choose from the following options (type the selected number):
 5. EXIT.
 Your choice:");
                 
-                int.TryParse(Console.ReadLine(), out choice);
+               while(!int.TryParse(Console.ReadLine(), out choice));
                 switch (choice)
                 {
                     case 1:
+                       // Console.BackgroundColor = ConsoleColor.Blue;
                         Console.WriteLine(@"
 Insert options:
 
@@ -50,6 +53,7 @@ Your choice:");
                         break;
 
                     case 2:
+                        //Console.BackgroundColor = ConsoleColor.Yellow;
                         Console.WriteLine(@"
 Update options:
 
@@ -130,11 +134,11 @@ Your choice:");
                         break;
                     case 5:
                         Console.WriteLine("Have a good day");
-                        return;         
+                        break;         
                     default:
                         break;
                 }
-            } while (true);
+            } while (!(choice==5));
         }
     }
 }
