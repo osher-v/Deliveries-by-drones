@@ -27,7 +27,7 @@ namespace DalObject
 
             public static int CountIdPackage = 0;
         }
-        
+
         public static void Initialize()
         {
             //
@@ -49,19 +49,19 @@ namespace DalObject
                 Latitude = 34.789990
             };
 
-            string[] modelNameArr = new string[5]{"I","IX","IIX","VI","IL"};
+            string[] modelNameArr = new string[5] { "I", "IX", "IIX", "VI", "IL" };
             for (int i = 0; i < 5; i++)
             {
                 droneArr[Config.indexOlderForDroneArr++] = new Drone()
                 {
                     Id = random.Next(100000000, 999999999),
                     Model = modelNameArr[i],
-                    MaxWeight = (WeightCategories)random.Next(0,2),
+                    MaxWeight = (WeightCategories)random.Next(0, 2),
                     Battery = random.Next(50, 100),
-                    Status = (DroneStatuses)random.Next(0, 2) 
+                    Status = (DroneStatuses)random.Next(0, 2)
                 };
             }
-            
+
             string[] CustomersNameArr = new string[10]{"James","Robert","John","Michael","William",
                    "David","Richard","Thomas","Mark","Donald"};
             for (int i = 0; i < 10; i++)
@@ -77,8 +77,6 @@ namespace DalObject
             }
 
             //
-            //string[] CustomersNameArr = new string[10]{"James","Robert","John","Michael","William",
-                 // "David","Richard","Thomas","Mark","Donald"};
             for (int i = 0; i < 10; i++)
             {
                 parcelArr[Config.indexOlderForParcelArr++] = new Parcel()
@@ -89,19 +87,21 @@ namespace DalObject
                     Weight = (WeightCategories)random.Next(0, 2),
                     Priority = (Priorities)random.Next(0, 2),
                     DroneId = random.Next(100000000, 999999999),
-                    Requested = new DateTime(2021, random.Next(7, 11), random.Next(0, 29)),
-                   
-                    
+                    Requested = new DateTime(2021, 7, random.Next(1, 7)),
 
-                    //Name = CustomersNameArr[i],
-                    //PhoneNumber = "0" + random.Next(50, 58) + "-" + random.Next(0000000, 9999999),
-                    //Longitude = (float)((float)(random.NextDouble() * (33.3 - 31)) + 31),
-                    //Latitude = (float)((float)(random.NextDouble() * (33.3 - 31)) + 31)
+                    /*
+                    Assigned = new DateTime(2021, 7, random.Next(8, 15)),
+                    PickedUp = new DateTime(2021, 7, random.Next(16, 24)),
+                    Delivered = new DateTime(2021, 7, random.Next(25, 29))
+                    */
                 };
+                parcelArr[i].Assigned = parcelArr[i].Requested; //.AddHours(1);
+                parcelArr[i].Assigned.AddHours(1);
+                parcelArr[i].PickedUp = parcelArr[i].Assigned; //.AddHours(1);
+                parcelArr[i].PickedUp.AddHours(1);
+                parcelArr[i].Delivered = parcelArr[i].PickedUp; //.AddHours(1);
+                parcelArr[i].Delivered.AddHours(1);
             }
-
-
-
         }
     }
 }
