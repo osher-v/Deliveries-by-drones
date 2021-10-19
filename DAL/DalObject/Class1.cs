@@ -9,7 +9,7 @@ using System.ComponentModel;
 
 namespace DalObject
 {
-    public class DataSource
+    public static class DataSource
     {
         internal static Random random = new Random(DateTime.Now.Millisecond);
 
@@ -87,7 +87,7 @@ namespace DalObject
                     Weight = (WeightCategories)random.Next(0, 2),
                     Priority = (Priorities)random.Next(0, 2),
                     DroneId = random.Next(100000000, 999999999),
-                    Requested = new DateTime(2021, 7, random.Next(1, 7)),
+                    Requested = new DateTime(2021, 7, random.Next(1, 7))
 
                     /*
                     Assigned = new DateTime(2021, 7, random.Next(8, 15)),
@@ -95,12 +95,12 @@ namespace DalObject
                     Delivered = new DateTime(2021, 7, random.Next(25, 29))
                     */
                 };
-                parcelArr[i].Assigned = parcelArr[i].Requested; //.AddHours(1);
-                parcelArr[i].Assigned.AddHours(1);
-                parcelArr[i].PickedUp = parcelArr[i].Assigned; //.AddHours(1);
-                parcelArr[i].PickedUp.AddHours(1);
-                parcelArr[i].Delivered = parcelArr[i].PickedUp; //.AddHours(1);
-                parcelArr[i].Delivered.AddHours(1);
+                parcelArr[i].Assigned = parcelArr[i].Requested.AddHours(1);
+                //parcelArr[i].Assigned.AddHours(1);
+                parcelArr[i].PickedUp = parcelArr[i].Assigned.AddHours(1);
+                //parcelArr[i].PickedUp.AddHours(1);
+                parcelArr[i].Delivered = parcelArr[i].PickedUp.AddHours(1); 
+                // parcelArr[i].Delivered.AddHours(1);
             }
         }
     }

@@ -16,12 +16,5 @@ namespace DalObject
         }
 
 
-
-
-
-
-
-
-
     }
 }

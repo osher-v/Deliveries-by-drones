@@ -7,6 +7,11 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
+            //DateTime time = new DateTime(2021, 10, 20);
+            //DateTime time1 = new DateTime(2021, 10, 20);
+            //Console.WriteLine(time.AddDays(5));
+            //time = time1.AddDays(5);
+            //Console.WriteLine();
 
             int choice = 0;
             do
