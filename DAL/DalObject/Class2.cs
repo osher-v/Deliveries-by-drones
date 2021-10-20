@@ -110,7 +110,7 @@ namespace DalObject
 
         public BaseStation[] GetBaseStationList()
         {
-            return DataSource.baseStationArr.Take();
+            return DataSource.baseStationArr.Take(DataSource.baseStationArr,DataSource.Config.indexOlderForBaseStationArr);
 
             //return DataSource.baseStationArr.Take(DataSource.Config.indexOlderForBaseStationArr)
         }
