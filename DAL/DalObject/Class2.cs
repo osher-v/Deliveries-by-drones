@@ -14,20 +14,17 @@ namespace DalObject
         {
             DataSource.Initialize();
         }
-        public static BaseStation GetBaseStation(int ID)
-        {
-            for (int i = 0; i < DataSource.Config.indexOlderForBaseStationArr; i++)
-            {
-                if ((ID == DataSource.baseStationArr[i].Id))
-                    return DataSource.baseStationArr[i];
-            }
-            return DataSource.baseStationArr[1];
-        }
+        
         public static void SetStation(int ID, string name, int chargsSlots, double longitude, double latitude)
         {
-
-
-
+            DataSource.baseStationArr[DataSource.Config.indexOlderForBaseStationArr++] = new BaseStation()
+            {
+                Id = ID,
+                StationName = name,
+                ChargeSlots = chargsSlots,
+                Longitude = longitude,
+                Latitude = latitude
+            };
         }
         public static void SetDrone(int droneID, string model, int weightCategory, int status, double batterylevel)
         {
@@ -43,5 +40,15 @@ namespace DalObject
 
         }
 
+
+        public static BaseStation GetBaseStation(int ID)
+        {
+            for (int i = 0; i < DataSource.Config.indexOlderForBaseStationArr; i++)
+            {
+                if ((ID == DataSource.baseStationArr[i].Id))
+                    return DataSource.baseStationArr[i];
+            }
+            return DataSource.baseStationArr[1];
+        }
     }
 }

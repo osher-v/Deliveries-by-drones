@@ -11,7 +11,7 @@ namespace ConsoleUI
     enum Options { Insert = 1, Update, DisplaySingle, DisplayList, EXIT }
     enum InsertrOption { baseStation = 1, Drone, AddCustomer, ParcelForShipment }
     enum DisplaySingleOption { BaseStationView = 1, Dronedisplay, CustomerView, PackageView }
-    enum DisplayListOptions
+    enum DisplayListOption
     {
         ListOfBaseStationView = 1, ListOfDronedisplay, ListOfCustomerView,
         ListOfPackageView, ListOfFreePackageView, BaseStationWhisFreeChargingView
@@ -197,6 +197,8 @@ Display options (for the whole list):
 
 Your choice:");
             int.TryParse(Console.ReadLine(), out choice);
+
+
             switch (choice)
             {
                 case 1:
