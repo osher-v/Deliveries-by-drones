@@ -1,13 +1,25 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
+using IDAL.DO;
+using System.ComponentModel;
 namespace ConsoleUI
 {
     enum Options {Insert=1,Update, DisplaySingle, DisplayList,EXIT}
+    enum InsertrOption { baseStation = 1, Drone, AddCustomer, Shipment}
+    enum DisplaySingleOption { BaseStationView = 1, Dronedisplay, CustomerView, PackageView }
+     enum DisplayListOptions{ ListOfBaseStationView = 1, ListOfDronedisplay, ListOfCustomerView,
+        ListOfPackageView, ListOfFreePackageView, BaseStationWhisFreeChargingView }
     class Program
     {
           static public void InsertOptions()
         {
             int choice = 0;
+          
+          
             Console.WriteLine(@"
 Insert options:
 
@@ -18,15 +30,49 @@ Insert options:
 
 Your choice:");
             int.TryParse(Console.ReadLine(), out choice);
-            switch (choice)
+            InsertrOption insertrOption;
+            insertrOption = (InsertrOption)choice;
+            switch (insertrOption)
             {
-                case 1:
+                case InsertrOption.baseStation:
+                    int ID, chargsSlots;
+                    string name;
+                    double longitude, latitude;
+                    Console.WriteLine(@"
+You have selected to add a new station.
+Please enter an ID number for the new station:");
+                    while (!int.TryParse(Console.ReadLine(), out ID)) ;
+                    Console.WriteLine(@"Next Please enter the name of the station:");
+                    name=Console.ReadLine();
+                    Console.WriteLine(@"Next Please enter the number of charging slots at the station:");
+                    while (!int.TryParse(Console.ReadLine(), out chargsSlots)) ;
+                    Console.WriteLine(@"Next Please enter the longitude of the station:");
+                    while (!double.TryParse(Console.ReadLine(), out longitude)) ;
+                    Console.WriteLine(@"Next Please enter the latitude of the station:");
+                    while (!double.TryParse(Console.ReadLine(), out latitude)) ;
+                    SetStation(ID, name, chargsSlots, longitude, latitude);
                     break;
-                case 2:
+                case InsertrOption.Drone:
+                    int droneID ;
+                    string model,;
+                    double a ;
+                    Console.WriteLine(@"
+You have selected to add a new Drone.
+Please enter an ID number for the new drone:");
+                    while (!int.TryParse(Console.ReadLine(), out droneID)) ;
+                    Console.WriteLine(@"Next Please enter the model of the Drone:");
+                    model = Console.ReadLine();
+                    Console.WriteLine(@"Next enter the weight category of the new Drone:");
+                    while (!int.TryParse(Console.ReadLine(), out chargsSlots)) ;
+                    Console.WriteLine(@"Next enter the charge level of the battery:");
+                    while (!double.TryParse(Console.ReadLine(), out longitude)) ;
+                    Console.WriteLine(@"Next Enter the status of the Drone:");
+                    while (!double.TryParse(Console.ReadLine(), out latitude)) ;
+                    AddDrone(ID, name, chargsSlots, longitude, latitude);  
                     break;
-                case 3:
+                case InsertrOption.AddCustomer:
                     break;
-                case 4:
+                case InsertrOption.Shipment:
                     break;
                 default:
                     break;
@@ -59,7 +105,6 @@ Your choice:");
                     break;
             }
         }
-
         static public void DisplaySingleOptions()
         {
             int choice = 0;
@@ -73,15 +118,32 @@ Display options(single):
 
 Your choice:");
             int.TryParse(Console.ReadLine(), out choice);
-            switch (choice)
+
+            int idForViewObject;
+
+            DisplaySingleOption displaySingleOption;
+            displaySingleOption = (DisplaySingleOption)choice;
+            switch (displaySingleOption)
             {
-                case 1:
+                case DisplaySingleOption.BaseStationView:
+                    Console.WriteLine("Insert ID number of base station:");
+                    int.TryParse(Console.ReadLine(), out idForViewObject);
+                    DalObject.DalObject.GetBaseStation(idForViewObject).ToString();
                     break;
-                case 2:
+                case DisplaySingleOption.Dronedisplay:
+                    Console.WriteLine("Insert ID number of requsted drone:");
+                    int.TryParse(Console.ReadLine(), out idForViewObject);
+                    GetDrone(idForViewObject).toString;
                     break;
-                case 3:
+                case DisplaySingleOption.CustomerView:
+                    Console.WriteLine("Insert ID number of requsted Customer:");
+                    int.TryParse(Console.ReadLine(), out idForViewObject);
+                    GetCustomer(idForViewObject).toString;
                     break;
-                case 4:
+                case DisplaySingleOption.PackageView:
+                    Console.WriteLine("Insert ID number of reqused parcel:");
+                    int.TryParse(Console.ReadLine(), out idForViewObject);
+                    GetParcel(idForViewObject).toString;
                     break;
                 default:
                     break;
