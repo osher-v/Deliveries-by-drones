@@ -60,7 +60,7 @@ Your choice:");
                         }
                         break;
 
-                    case 2:
+                    case Options.Update:
                         //Console.BackgroundColor = ConsoleColor.Yellow;
                         Console.WriteLine(@"
 Update options:
@@ -87,7 +87,7 @@ Your choice:");
                         }
                         break;
 
-                    case 3:
+                    case Options.Display:
                         Console.WriteLine(@"
 Display options(singel):
 
@@ -113,7 +113,7 @@ Your choice:");
                         }
                         break;
 
-                    case 4:
+                    case Options.DisplayList:
                         Console.WriteLine(@"
 Display options (for the whole list):
 
@@ -140,7 +140,7 @@ Your choice:");
                                 break;
                         }
                         break;
-                    case 5:
+                    case Options.EXIT:
                         Console.WriteLine("Have a good day");
                         break;         
                     default:

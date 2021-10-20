@@ -72,7 +72,7 @@ namespace DalObject
                     Name = CustomersNameArr[i],
                     PhoneNumber = "0" + random.Next(50, 58) + "-" + random.Next(0000000, 9999999),
                     Longitude = (float)((float)(random.NextDouble() * (33.3 - 31)) + 31),
-                    Latitude = (float)((float)(random.NextDouble() * (33.3 - 31)) + 31)
+                    Latitude = (float)((float)(random.NextDouble() * (35.5 - 34.3)) + 34.3)
                 };
             }
 
@@ -82,25 +82,16 @@ namespace DalObject
                 parcelArr[Config.indexOlderForParcelArr++] = new Parcel()
                 {
                     Id = Config.CountIdPackage++,
-                    SenderId = random.Next(100000000, 999999999),
-                    TargetId = random.Next(100000000, 999999999),
+                    SenderId = customerArr[random.Next(0,4)].Id,
+                    TargetId = customerArr[random.Next(5, 9)].Id,
                     Weight = (WeightCategories)random.Next(0, 2),
                     Priority = (Priorities)random.Next(0, 2),
-                    DroneId = random.Next(100000000, 999999999),
+                    DroneId = 0,
                     Requested = new DateTime(2021, 7, random.Next(1, 7))
-
-                    /*
-                    Assigned = new DateTime(2021, 7, random.Next(8, 15)),
-                    PickedUp = new DateTime(2021, 7, random.Next(16, 24)),
-                    Delivered = new DateTime(2021, 7, random.Next(25, 29))
-                    */
                 };
-                parcelArr[i].Assigned = parcelArr[i].Requested.AddHours(1);
-                //parcelArr[i].Assigned.AddHours(1);
-                parcelArr[i].PickedUp = parcelArr[i].Assigned.AddHours(1);
-                //parcelArr[i].PickedUp.AddHours(1);
-                parcelArr[i].Delivered = parcelArr[i].PickedUp.AddHours(1); 
-                // parcelArr[i].Delivered.AddHours(1);
+                //parcelArr[i].Assigned = parcelArr[i].Requested.AddHours(1);
+                //parcelArr[i].PickedUp = parcelArr[i].Assigned.AddHours(1);
+                //parcelArr[i].Delivered = parcelArr[i].PickedUp.AddHours(1);
             }
         }
     }
