@@ -84,5 +84,35 @@ namespace DalObject
             }
             return empty;
         }
+
+        public Customer GetCustomer(int ID)
+        {
+            Customer empty = new Customer();
+            for (int i = 0; i < DataSource.Config.indexOlderForCustomerArr; i++)
+            {
+                if (ID == DataSource.customerArr[i].Id)
+                    return DataSource.customerArr[i];
+            }
+            return empty;
+        }
+
+        public Parcel GetParcel(int ID)
+        {
+            Parcel empty = new Parcel();
+            for (int i = 0; i < DataSource.Config.indexOlderForParcelArr; i++)
+            {
+                if (ID == DataSource.parcelArr[i].Id)
+                    return DataSource.parcelArr[i];
+            }
+            return empty;
+        }
+
+
+        public BaseStation[] GetBaseStationList()
+        {
+            return DataSource.baseStationArr.Take();
+
+            //return DataSource.baseStationArr.Take(DataSource.Config.indexOlderForBaseStationArr)
+        }
     }
 }

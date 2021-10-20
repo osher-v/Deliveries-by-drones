@@ -115,7 +115,7 @@ Please enter an ID number for the new Parcel:");
                     break;
             }
         }
-        static public void UpdateOptions()
+        static public void UpdateOptions(DalObject.DalObject dal)
         {
             int choice = 0;
             Console.WriteLine(@"
@@ -142,7 +142,7 @@ Your choice:");
                     break;
             }
         }
-        static public void DisplaySingleOptions()
+        static public void DisplaySingleOptions(DalObject.DalObject dal)
         {
             int choice = 0;
             Console.WriteLine(@"
@@ -163,28 +163,28 @@ Your choice:");
                 case DisplaySingleOption.BaseStationView:
                     Console.WriteLine("Insert ID number of base station:");
                     int.TryParse(Console.ReadLine(), out idForViewObject);
-                    DalObject.DalObject.GetBaseStation(idForViewObject).ToString();
+                    dal.GetBaseStation(idForViewObject).ToString();
                     break;
                 case DisplaySingleOption.Dronedisplay:
                     Console.WriteLine("Insert ID number of requsted drone:");
                     int.TryParse(Console.ReadLine(), out idForViewObject);
-                    GetDrone(idForViewObject).toString;
+                    dal.GetDrone(idForViewObject).ToString();
                     break;
                 case DisplaySingleOption.CustomerView:
                     Console.WriteLine("Insert ID number of requsted Customer:");
                     int.TryParse(Console.ReadLine(), out idForViewObject);
-                    GetCustomer(idForViewObject).toString;
+                    dal.GetCustomer(idForViewObject).ToString();
                     break;
                 case DisplaySingleOption.PackageView:
                     Console.WriteLine("Insert ID number of reqused parcel:");
                     int.TryParse(Console.ReadLine(), out idForViewObject);
-                    GetParcel(idForViewObject).toString;
+                    dal.GetParcel(idForViewObject).ToString();
                     break;
                 default:
                     break;
             }
         }
-        static public void DisplayListOptions()
+        static public void DisplayListOptions(DalObject.DalObject dal)
         {
             int choice = 0;
             Console.WriteLine(@"
@@ -199,21 +199,55 @@ Display options (for the whole list):
 
 Your choice:");
             int.TryParse(Console.ReadLine(), out choice);
+            DisplayListOption displayListOptions;
+            displayListOptions = (DisplayListOption)choice;
 
-
-            switch (choice)
+            switch (displayListOptions)
             {
-                case 1:
+                case DisplayListOption.ListOfBaseStationView:
+
+                    BaseStation[] arr = dal.GetBaseStationList();
+                    foreach (var item in arr)
+                    {
+                        arr[item].ToString();
+                    }
                     break;
-                case 2:
+                case ConsoleUI.DisplayListOptions.ListOfDronedisplay:
+                    BaseStation[] arr = GetBaseStationList();
+                    foreach (var item in collection)
+                    {
+
+                    }
+
                     break;
-                case 3:
+                case ConsoleUI.DisplayListOptions.ListOfCustomerView:
+                    BaseStation[] arr = GetBaseStationList();
+                    foreach (var item in collection)
+                    {
+
+                    }
                     break;
-                case 4:
+                case ConsoleUI.DisplayListOptions.ListOfPackageView:
+                    BaseStation[] arr = GetBaseStationList();
+                    foreach (var item in collection)
+                    {
+
+                    }
                     break;
-                case 5:
+                case ConsoleUI.DisplayListOptions.ListOfFreePackageView:
+                    BaseStation[] arr = GetBaseStationList();
+                    foreach (var item in collection)
+                    {
+
+                    }
                     break;
-                case 6:
+                case ConsoleUI.DisplayListOptions.BaseStationWhisFreeChargingView:
+                    BaseStation[] arr = GetBaseStationList();
+                    foreach (var item in collection)
+                    {
+
+                    }
+                    break;
                 default:
                     break;
             }
@@ -244,15 +278,15 @@ Your choice:");
                         break;
 
                     case Options.Update:
-                        UpdateOptions();
+                        UpdateOptions(dalObject);
                         break;
 
                     case Options.DisplaySingle:
-                        DisplaySingleOptions();
+                        DisplaySingleOptions(dalObject);
                         break;
 
                     case Options.DisplayList:
-                        DisplayListOptions();
+                        DisplayListOptions(dalObject);
                         break;
                     case Options.EXIT:
                         Console.WriteLine("Have a good day");
