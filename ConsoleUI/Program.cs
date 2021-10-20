@@ -8,18 +8,19 @@ using IDAL.DO;
 using System.ComponentModel;
 namespace ConsoleUI
 {
-    enum Options {Insert=1,Update, DisplaySingle, DisplayList,EXIT}
-    enum InsertrOption { baseStation = 1, Drone, AddCustomer, Shipment}
+    enum Options { Insert = 1, Update, DisplaySingle, DisplayList, EXIT }
+    enum InsertrOption { baseStation = 1, Drone, AddCustomer, ParcelForShipment }
     enum DisplaySingleOption { BaseStationView = 1, Dronedisplay, CustomerView, PackageView }
-     enum DisplayListOptions{ ListOfBaseStationView = 1, ListOfDronedisplay, ListOfCustomerView,
-        ListOfPackageView, ListOfFreePackageView, BaseStationWhisFreeChargingView }
+    enum DisplayListOptions
+    {
+        ListOfBaseStationView = 1, ListOfDronedisplay, ListOfCustomerView,
+        ListOfPackageView, ListOfFreePackageView, BaseStationWhisFreeChargingView
+    }
     class Program
     {
-          static public void InsertOptions()
+        static public void InsertOptions()
         {
             int choice = 0;
-          
-          
             Console.WriteLine(@"
 Insert options:
 
@@ -42,38 +43,72 @@ Your choice:");
 You have selected to add a new station.
 Please enter an ID number for the new station:");
                     while (!int.TryParse(Console.ReadLine(), out ID)) ;
-                    Console.WriteLine(@"Next Please enter the name of the station:");
-                    name=Console.ReadLine();
-                    Console.WriteLine(@"Next Please enter the number of charging slots at the station:");
+                    Console.WriteLine("Next Please enter the name of the station:");
+                    name = Console.ReadLine();
+                    Console.WriteLine("Next Please enter the number of charging slots at the station:");
                     while (!int.TryParse(Console.ReadLine(), out chargsSlots)) ;
-                    Console.WriteLine(@"Next Please enter the longitude of the station:");
+                    Console.WriteLine("Next Please enter the longitude of the station:");
                     while (!double.TryParse(Console.ReadLine(), out longitude)) ;
-                    Console.WriteLine(@"Next Please enter the latitude of the station:");
+                    Console.WriteLine("Next Please enter the latitude of the station:");
                     while (!double.TryParse(Console.ReadLine(), out latitude)) ;
-                    SetStation(ID, name, chargsSlots, longitude, latitude);
+                    DalObject.DalObject.SetStation(ID, name, chargsSlots, longitude, latitude);
                     break;
+
                 case InsertrOption.Drone:
-                    int droneID ;
-                    string model,;
-                    double a ;
+                    int droneID, weightCategory, status;
+                    string model;
+                    double batterylevel;
                     Console.WriteLine(@"
 You have selected to add a new Drone.
 Please enter an ID number for the new drone:");
                     while (!int.TryParse(Console.ReadLine(), out droneID)) ;
-                    Console.WriteLine(@"Next Please enter the model of the Drone:");
+                    Console.WriteLine("Next Please enter the model of the Drone:");
                     model = Console.ReadLine();
-                    Console.WriteLine(@"Next enter the weight category of the new Drone:");
-                    while (!int.TryParse(Console.ReadLine(), out chargsSlots)) ;
-                    Console.WriteLine(@"Next enter the charge level of the battery:");
-                    while (!double.TryParse(Console.ReadLine(), out longitude)) ;
-                    Console.WriteLine(@"Next Enter the status of the Drone:");
-                    while (!double.TryParse(Console.ReadLine(), out latitude)) ;
-                    AddDrone(ID, name, chargsSlots, longitude, latitude);  
+                    Console.WriteLine("Next enter the weight category of the new Drone: 0 for light, 1 for medium and 2 for heavy");
+                    while (!int.TryParse(Console.ReadLine(), out weightCategory)) ;
+                    Console.WriteLine("Next enter the charge level of the battery:");
+                    while (!double.TryParse(Console.ReadLine(), out batterylevel)) ;
+                    Console.WriteLine("Next enter the status of the new Drone: 0 for free, 1 for inMaintenance and 2 for busy");
+                    while (!int.TryParse(Console.ReadLine(), out status)) ;
+                    DalObject.DalObject.SetDrone(droneID, model, weightCategory, status, batterylevel);
                     break;
+
                 case InsertrOption.AddCustomer:
+                    int customerID;
+                    string customerName, PhoneNumber;
+                    double customerLongitude, customerLatitude;
+                    Console.WriteLine(@"
+You have selected to add a new Customer.
+Please enter an ID number for the new Customer:");
+                    while (!int.TryParse(Console.ReadLine(), out customerID)) ;
+                    Console.WriteLine("Next Please enter the name of the customer:");
+                    customerName = Console.ReadLine();
+                    Console.WriteLine("Next enter the phone number of the new customer:");
+                    PhoneNumber = Console.ReadLine();
+                    Console.WriteLine("Next Please enter the longitude of the station:");
+                    while (!double.TryParse(Console.ReadLine(), out customerLongitude)) ;
+                    Console.WriteLine("Next Please enter the latitude of the station:");
+                    while (!double.TryParse(Console.ReadLine(), out customerLatitude)) ;
+                    DalObject.DalObject.SetCustomer(customerID, customerName, PhoneNumber, customerLongitude, customerLatitude);
                     break;
-                case InsertrOption.Shipment:
+
+                case InsertrOption.ParcelForShipment:
+                    int parcelID, SenderId, TargetId, Weight, priorities;
+                    Console.WriteLine(@"
+You have selected to add a new Parcel.
+Please enter an ID number for the new Parcel:");
+                    while (!int.TryParse(Console.ReadLine(), out parcelID)) ;
+                    Console.WriteLine("Next Please enter the sender ID number:");
+                    while (!int.TryParse(Console.ReadLine(), out SenderId)) ;
+                    Console.WriteLine("Next Please enter the target ID number:");
+                    while (!int.TryParse(Console.ReadLine(), out TargetId)) ;
+                    Console.WriteLine("Next enter the weight category of the new Parcel: 0 for free, 1 for inMaintenance and 2 for busy");
+                    while (!int.TryParse(Console.ReadLine(), out Weight)) ;
+                    Console.WriteLine("Next enter the priorities of the new Parcel: 0 for regular, 1 for fast and 2 for urgent");
+                    while (!int.TryParse(Console.ReadLine(), out priorities)) ;
+                    DalObject.DalObject.SetParcel(parcelID, SenderId, TargetId, Weight, priorities);
                     break;
+
                 default:
                     break;
             }
@@ -118,9 +153,7 @@ Display options(single):
 
 Your choice:");
             int.TryParse(Console.ReadLine(), out choice);
-
             int idForViewObject;
-
             DisplaySingleOption displaySingleOption;
             displaySingleOption = (DisplaySingleOption)choice;
             switch (displaySingleOption)
@@ -184,8 +217,6 @@ Your choice:");
         static void Main(string[] args)
         {
             Options options;
-
-
             int choice = 0;
             do
             {
@@ -198,13 +229,12 @@ choose from the following options (type the selected number):
 4. Display options (for the whole list).
 5. EXIT.
 Your choice:");
-                
-               while(!int.TryParse(Console.ReadLine(), out choice));
-                options = (Options)choice;                      
+                while (!int.TryParse(Console.ReadLine(), out choice)) ;
+                options = (Options)choice;
                 switch (options)
                 {
                     case Options.Insert:
-                       InsertOptions();
+                        InsertOptions();
                         break;
 
                     case Options.Update:
@@ -220,11 +250,11 @@ Your choice:");
                         break;
                     case Options.EXIT:
                         Console.WriteLine("Have a good day");
-                        break;         
+                        break;
                     default:
                         break;
                 }
-            } while (!(choice==5));
+            } while (!(choice == 5));
         }
     }
 }

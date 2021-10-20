@@ -15,7 +15,5 @@ namespace IDAL
                 return string.Format("Station id is: {0}\t DroneId: {1} ", StationId, DroneId);
             }
         }
-
     }
-
 }

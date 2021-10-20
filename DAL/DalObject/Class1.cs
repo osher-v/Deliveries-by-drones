@@ -12,7 +12,6 @@ namespace DalObject
     public static class DataSource
     {
         internal static Random random = new Random(DateTime.Now.Millisecond);
-
         internal static Drone[] droneArr = new Drone[10];
         internal static BaseStation[] baseStationArr = new BaseStation[5];
         internal static Customer[] customerArr = new Customer[100];
@@ -24,7 +23,6 @@ namespace DalObject
             internal static int indexOlderForBaseStationArr = 0;
             internal static int indexOlderForCustomerArr = 0;
             internal static int indexOlderForParcelArr = 0;
-
             public static int CountIdPackage = 0;
         }
 
@@ -82,7 +80,7 @@ namespace DalObject
                 parcelArr[Config.indexOlderForParcelArr++] = new Parcel()
                 {
                     Id = Config.CountIdPackage++,
-                    SenderId = customerArr[random.Next(0,4)].Id,
+                    SenderId = customerArr[random.Next(0, 4)].Id,
                     TargetId = customerArr[random.Next(5, 9)].Id,
                     Weight = (WeightCategories)random.Next(0, 2),
                     Priority = (Priorities)random.Next(0, 2),

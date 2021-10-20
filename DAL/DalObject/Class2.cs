@@ -16,12 +16,31 @@ namespace DalObject
         }
         public static BaseStation GetBaseStation(int ID)
         {
-            for (int i = 0; i <DataSource.Config.indexOlderForBaseStationArr ; i++)
+            for (int i = 0; i < DataSource.Config.indexOlderForBaseStationArr; i++)
             {
                 if ((ID == DataSource.baseStationArr[i].Id))
                     return DataSource.baseStationArr[i];
             }
             return DataSource.baseStationArr[1];
+        }
+        public static void SetStation(int ID, string name, int chargsSlots, double longitude, double latitude)
+        {
+
+
+
+        }
+        public static void SetDrone(int droneID, string model, int weightCategory, int status, double batterylevel)
+        {
+
+
+        }
+        public static void SetCustomer(int customerID, string customerName, string PhoneNumber, double customerLongitude, double customerLatitude)
+        {
+
+        }
+        public static void SetParcel(int parcelID, int SenderId, int TargetId, int Weight, int priorities)
+        {
+
         }
 
     }
