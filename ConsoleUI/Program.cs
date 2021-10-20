@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 using IDAL.DO;
 using System.ComponentModel;
+
 namespace ConsoleUI
 {
     enum Options { Insert = 1, Update, DisplaySingle, DisplayList, EXIT }
@@ -18,7 +19,7 @@ namespace ConsoleUI
     }
     class Program
     {
-        static public void InsertOptions()
+        static public void InsertOptions(DalObject.DalObject dal)
         {
             int choice = 0;
             Console.WriteLine(@"
@@ -51,7 +52,8 @@ Please enter an ID number for the new station:");
                     while (!double.TryParse(Console.ReadLine(), out longitude)) ;
                     Console.WriteLine("Next Please enter the latitude of the station:");
                     while (!double.TryParse(Console.ReadLine(), out latitude)) ;
-                    DalObject.DalObject.SetStation(ID, name, chargsSlots, longitude, latitude);
+                    dal.SetStation(ID, name, chargsSlots, longitude, latitude);
+                    
                     break;
 
                 case InsertrOption.Drone:
@@ -70,7 +72,7 @@ Please enter an ID number for the new drone:");
                     while (!double.TryParse(Console.ReadLine(), out batterylevel)) ;
                     Console.WriteLine("Next enter the status of the new Drone: 0 for free, 1 for inMaintenance and 2 for busy");
                     while (!int.TryParse(Console.ReadLine(), out status)) ;
-                    DalObject.DalObject.SetDrone(droneID, model, weightCategory, status, batterylevel);
+                    dal.SetDrone(droneID, model, weightCategory, status, batterylevel);
                     break;
 
                 case InsertrOption.AddCustomer:
@@ -89,7 +91,7 @@ Please enter an ID number for the new Customer:");
                     while (!double.TryParse(Console.ReadLine(), out customerLongitude)) ;
                     Console.WriteLine("Next Please enter the latitude of the station:");
                     while (!double.TryParse(Console.ReadLine(), out customerLatitude)) ;
-                    DalObject.DalObject.SetCustomer(customerID, customerName, PhoneNumber, customerLongitude, customerLatitude);
+                    dal.SetCustomer(customerID, customerName, PhoneNumber, customerLongitude, customerLatitude);
                     break;
 
                 case InsertrOption.ParcelForShipment:
@@ -106,7 +108,7 @@ Please enter an ID number for the new Parcel:");
                     while (!int.TryParse(Console.ReadLine(), out Weight)) ;
                     Console.WriteLine("Next enter the priorities of the new Parcel: 0 for regular, 1 for fast and 2 for urgent");
                     while (!int.TryParse(Console.ReadLine(), out priorities)) ;
-                    DalObject.DalObject.SetParcel(parcelID, SenderId, TargetId, Weight, priorities);
+                    dal.SetParcel(parcelID, SenderId, TargetId, Weight, priorities);
                     break;
 
                 default:
@@ -218,6 +220,8 @@ Your choice:");
         }
         static void Main(string[] args)
         {
+            DalObject.DalObject dalObject = new DalObject.DalObject();
+            
             Options options;
             int choice = 0;
             do
@@ -236,7 +240,7 @@ Your choice:");
                 switch (options)
                 {
                     case Options.Insert:
-                        InsertOptions();
+                        InsertOptions(dalObject);
                         break;
 
                     case Options.Update:
