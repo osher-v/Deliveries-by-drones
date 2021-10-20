@@ -59,6 +59,7 @@ Your choice:");
                     break;
             }
         }
+
         static public void DisplaySingleOptions()
         {
             int choice = 0;
