@@ -19,8 +19,5 @@ namespace IDAL
                     "Longitude: {3}\t  Latitude: {4}\t ", Id, StationName, FreeChargeSlots, Longitude, Latitude);
             }
         }
-
-
     }
-
 }

@@ -163,22 +163,22 @@ Your choice:");
                 case DisplaySingleOption.BaseStationView:
                     Console.WriteLine("Insert ID number of base station:");
                     int.TryParse(Console.ReadLine(), out idForViewObject);
-                    dal.GetBaseStation(idForViewObject).ToString();
+                    Console.WriteLine(dal.GetBaseStation(idForViewObject).ToString());
                     break;
                 case DisplaySingleOption.Dronedisplay:
                     Console.WriteLine("Insert ID number of requsted drone:");
                     int.TryParse(Console.ReadLine(), out idForViewObject);
-                    dal.GetDrone(idForViewObject).ToString();
+                    Console.WriteLine(dal.GetDrone(idForViewObject).ToString());
                     break;
                 case DisplaySingleOption.CustomerView:
                     Console.WriteLine("Insert ID number of requsted Customer:");
                     int.TryParse(Console.ReadLine(), out idForViewObject);
-                    dal.GetCustomer(idForViewObject).ToString();
+                    Console.WriteLine(dal.GetCustomer(idForViewObject).ToString());
                     break;
                 case DisplaySingleOption.PackageView:
                     Console.WriteLine("Insert ID number of reqused parcel:");
                     int.TryParse(Console.ReadLine(), out idForViewObject);
-                    dal.GetParcel(idForViewObject).ToString();
+                    Console.WriteLine(dal.GetParcel(idForViewObject).ToString());
                     break;
                 default:
                     break;
@@ -210,7 +210,7 @@ Your choice:");
                     displayBaseList = dal.GetBaseStationList();
                     for (int i = 0; i < displayBaseList.Count(); i++)
                     {
-                        displayBaseList[i].ToString();
+                        Console.WriteLine(displayBaseList[i].ToString());
                     }
                     break;
                 case DisplayListOption.ListOfDronedisplay:
@@ -218,7 +218,7 @@ Your choice:");
                     displayDroneList = dal.GetDroneList();
                     for (int i = 0; i < displayDroneList.Count(); i++)
                     {
-                        displayDroneList[i].ToString();
+                        Console.WriteLine(displayDroneList[i].ToString());
                     }
                     break;
                 case DisplayListOption.ListOfCustomerView:
@@ -226,7 +226,7 @@ Your choice:");
                     displayCustomerList = dal.GetCustomerList();
                     for (int i = 0; i < displayCustomerList.Count(); i++)
                     {
-                        displayCustomerList[i].ToString();
+                        Console.WriteLine(displayCustomerList[i].ToString());
                     }
                     break;
                 case DisplayListOption.ListOfPackageView:
@@ -234,7 +234,7 @@ Your choice:");
                     displayPackageList = dal.GetParcelList();
                     for (int i = 0; i < displayPackageList.Count(); i++)
                     {
-                        displayPackageList[i].ToString();
+                        Console.WriteLine(displayPackageList[i].ToString());
                     }
                     break;
                 case DisplayListOption.ListOfFreePackageView:
@@ -242,7 +242,7 @@ Your choice:");
                     displayParcelWithoutDrone = dal.GetParcelWithoutDrone();
                     for (int i = 0; i < displayParcelWithoutDrone.Count(); i++)
                     {
-                        displayParcelWithoutDrone[i].ToString();
+                        Console.WriteLine(displayParcelWithoutDrone[i].ToString());
                     }
                     break;
                 case DisplayListOption.ListOfBaseStationsWithFreeChargSlots:
@@ -250,7 +250,7 @@ Your choice:");
                     displayBaseStationWithFreeChargSlots = dal.GetBaseStationsWithFreeChargSlots();
                     for (int i = 0; i < displayBaseStationWithFreeChargSlots.Count(); i++)
                     {
-                        displayBaseStationWithFreeChargSlots[i].ToString();
+                        Console.WriteLine(displayBaseStationWithFreeChargSlots[i].ToString());
                     }
                     break;
                 default:

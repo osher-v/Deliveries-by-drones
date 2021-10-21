@@ -15,23 +15,15 @@ namespace DalObject
     public static class DataSource
     {
         internal static Random random = new Random(DateTime.Now.Millisecond);
-
+        //~~~~//
         internal static List<Drone> droneList = new List<Drone>();
         internal static List<BaseStation> baseStationsList = new List<BaseStation>();
         internal static List<Customer> customersList = new List<Customer>();
         internal static List<Parcel> parcelsList = new List<Parcel>();
 
-        //internal static Drone[] droneArr = new Drone[10];
-        //internal static BaseStation[] baseStationArr = new BaseStation[5];
-        //internal static Customer[] customerArr = new Customer[100];
-        //internal static Parcel[] parcelArr = new Parcel[1000];
 
         internal class Config
         {
-            //internal static int indexOlderForDroneArr = 0;
-            //internal static int indexOlderForBaseStationArr = 0;
-            //internal static int indexOlderForCustomerArr = 0;
-            //internal static int indexOlderForParcelArr = 0;
             public static int CountIdPackage = 0;
         }
 
