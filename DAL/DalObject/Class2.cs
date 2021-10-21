@@ -46,7 +46,7 @@ namespace DalObject
                 Latitude = customerLatitude
             });
         }
-        public void SetParcel(int parcelID, int senderId, int targetId, int weight, int priorities)
+        public int SetParcel(int parcelID, int senderId, int targetId, int weight, int priorities)
         {
             DataSource.parcelsList.Add( new Parcel() {
                 Id = parcelID,
@@ -54,8 +54,9 @@ namespace DalObject
                 TargetId = targetId,
                 Weight = (WeightCategories)weight,
                 Priority = (Priorities)priorities,
-                Requested = DateTime.Now
+                Requested = DateTime.Now    
             });
+            return DataSource.Config.CountIdPackage++;
         }
 
 

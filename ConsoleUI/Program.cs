@@ -11,6 +11,7 @@ namespace ConsoleUI
 {
     enum Options { Insert = 1, Update, DisplaySingle, DisplayList, EXIT }
     enum InsertrOption { baseStation = 1, Drone, AddCustomer, ParcelForShipment }
+    enum UpdatesOption { AssignDrone=1,PickUp, Deliverd, Incharging, Outcharging }
     enum DisplaySingleOption { BaseStationView = 1, Dronedisplay, CustomerView, PackageView }
     enum DisplayListOption  { ListOfBaseStationView = 1, ListOfDronedisplay, ListOfCustomerView,
         ListOfPackageView, ListOfFreePackageView, ListOfBaseStationsWithFreeChargSlots  }
@@ -105,7 +106,7 @@ Please enter an ID number for the new Parcel:");
                     while (!int.TryParse(Console.ReadLine(), out Weight)) ;
                     Console.WriteLine("Next enter the priorities of the new Parcel: 0 for regular, 1 for fast and 2 for urgent");
                     while (!int.TryParse(Console.ReadLine(), out priorities)) ;
-                    dal.SetParcel(parcelID, SenderId, TargetId, Weight, priorities);
+                    int counterParcelSerialNumber = dal.SetParcel(parcelID, SenderId, TargetId, Weight, priorities);
                     break;
 
                 default:
@@ -125,15 +126,23 @@ Update options:
 5. Release drone from charging at base station
 Your choice:");
             int.TryParse(Console.ReadLine(), out choice);
-            switch (choice)
+            UpdatesOption updateOptions = (UpdatesOption)choice;
+            switch (updateOptions)
             {
-                case 1:
+                case UpdatesOption.AssignDrone:
+                    Console.WriteLine("please enter Parcel ID:");
+                    int ParcelId;
+                    int.TryParse(Console.ReadLine(),out ParcelId);
+
                     break;
-                case 2:
+                case UpdatesOption.PickUp:
+
                     break;
-                case 3:
+                case UpdatesOption.Deliverd:
                     break;
-                case 4:
+                case UpdatesOption.Incharging:
+                    break;
+                case UpdatesOption.Outcharging:
                     break;
                 default:
                     break;
