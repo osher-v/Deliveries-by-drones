@@ -12,11 +12,8 @@ namespace ConsoleUI
     enum Options { Insert = 1, Update, DisplaySingle, DisplayList, EXIT }
     enum InsertrOption { baseStation = 1, Drone, AddCustomer, ParcelForShipment }
     enum DisplaySingleOption { BaseStationView = 1, Dronedisplay, CustomerView, PackageView }
-    enum DisplayListOption
-    {
-        ListOfBaseStationView = 1, ListOfDronedisplay, ListOfCustomerView,
-        ListOfPackageView, ListOfFreePackageView, ListOfBaseStationsWithFreeChargSlots
-    }
+    enum DisplayListOption  { ListOfBaseStationView = 1, ListOfDronedisplay, ListOfCustomerView,
+        ListOfPackageView, ListOfFreePackageView, ListOfBaseStationsWithFreeChargSlots  }
     class Program
     {
         static public void InsertOptions(DalObject.DalObject dal)
