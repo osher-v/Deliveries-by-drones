@@ -15,7 +15,7 @@ namespace ConsoleUI
     enum DisplayListOption
     {
         ListOfBaseStationView = 1, ListOfDronedisplay, ListOfCustomerView,
-        ListOfPackageView, ListOfFreePackageView, BaseStationWhisFreeChargingView
+        ListOfPackageView, ListOfFreePackageView, ListOfBaseStationsWithFreeChargSlots
     }
     class Program
     {
@@ -206,52 +206,59 @@ Your choice:");
             {
                 case DisplayListOption.ListOfBaseStationView:
 
-                    BaseStation[] arr = dal.GetBaseStationList();
-                    foreach (var item in arr)
+                    List<BaseStation> displayBaseList = new List<BaseStation>();
+                    displayBaseList = dal.GetBaseStationList();
+                    for (int i = 0; i < displayBaseList.Count(); i++)
                     {
-                        arr[item].ToString();
+                        displayBaseList[i].ToString();
                     }
                     break;
-                case ConsoleUI.DisplayListOptions.ListOfDronedisplay:
-                    BaseStation[] arr = GetBaseStationList();
-                    foreach (var item in collection)
+                case DisplayListOption.ListOfDronedisplay:
+                    List<Drone> displayDroneList = new List<Drone>();
+                    displayDroneList = dal.GetDroneList();
+                    for (int i = 0; i < displayDroneList.Count(); i++)
                     {
-
-                    }
-
-                    break;
-                case ConsoleUI.DisplayListOptions.ListOfCustomerView:
-                    BaseStation[] arr = GetBaseStationList();
-                    foreach (var item in collection)
-                    {
-
+                        displayDroneList[i].ToString();
                     }
                     break;
-                case ConsoleUI.DisplayListOptions.ListOfPackageView:
-                    BaseStation[] arr = GetBaseStationList();
-                    foreach (var item in collection)
+                case DisplayListOption.ListOfCustomerView:
+                    List<Customer> displayCustomerList = new List<Customer>();
+                    displayCustomerList = dal.GetCustomerList();
+                    for (int i = 0; i < displayCustomerList.Count(); i++)
                     {
-
+                        displayCustomerList[i].ToString();
                     }
                     break;
-                case ConsoleUI.DisplayListOptions.ListOfFreePackageView:
-                    BaseStation[] arr = GetBaseStationList();
-                    foreach (var item in collection)
+                case DisplayListOption.ListOfPackageView:
+                    List<Parcel> displayPackageList = new List<Parcel>();
+                    displayPackageList = dal.GetParcelList();
+                    for (int i = 0; i < displayPackageList.Count(); i++)
                     {
-
+                        displayPackageList[i].ToString();
                     }
                     break;
-                case ConsoleUI.DisplayListOptions.BaseStationWhisFreeChargingView:
-                    BaseStation[] arr = GetBaseStationList();
-                    foreach (var item in collection)
+                case DisplayListOption.ListOfFreePackageView:
+                    List<Parcel> displayParcelWithoutDrone = new List<Parcel>();
+                    displayParcelWithoutDrone = dal.GetParcelWithoutDrone();
+                    for (int i = 0; i < displayParcelWithoutDrone.Count(); i++)
                     {
-
+                        displayParcelWithoutDrone[i].ToString();
+                    }
+                    break;
+                case DisplayListOption.ListOfBaseStationsWithFreeChargSlots:
+                    List<BaseStation> displayBaseStationWithFreeChargSlots = new List<BaseStation>();
+                    displayBaseStationWithFreeChargSlots = dal.GetBaseStationsWithFreeChargSlots();
+                    for (int i = 0; i < displayBaseStationWithFreeChargSlots.Count(); i++)
+                    {
+                        displayBaseStationWithFreeChargSlots[i].ToString();
                     }
                     break;
                 default:
                     break;
             }
         }
+
+
         static void Main(string[] args)
         {
             DalObject.DalObject dalObject = new DalObject.DalObject();
