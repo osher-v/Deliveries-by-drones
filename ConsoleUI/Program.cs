@@ -105,7 +105,7 @@ You have selected to add a new Parcel.");
                     while (!int.TryParse(Console.ReadLine(), out Weight)) ;
                     Console.WriteLine("Next enter the priorities of the new Parcel: 0 for regular, 1 for fast and 2 for urgent");
                     while (!int.TryParse(Console.ReadLine(), out priorities)) ;
-                    int counterParcelSerialNumber = dal.Se4tParcel(/*parcelID,*/ SenderId, TargetId, Weight, priorities);
+                    int counterParcelSerialNumber = dal.SetParcel(/*parcelID,*/ SenderId, TargetId, Weight, priorities);
                     break;
 
                 default:

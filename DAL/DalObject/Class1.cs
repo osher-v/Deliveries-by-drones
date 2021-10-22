@@ -12,6 +12,9 @@ using System.ComponentModel;
 ////////////////baseStationsList.ForEach(i => Console.WriteLine(i));
 namespace DalObject
 {
+    /// <summary>
+    ///  
+    /// </summary>
     public static class DataSource
     {
         internal static Random random = new Random(DateTime.Now.Millisecond);
@@ -21,12 +24,16 @@ namespace DalObject
         internal static List<Customer> customersList = new List<Customer>();
         internal static List<Parcel> parcelsList = new List<Parcel>();
 
-
+        /// <summary>
+        /// 
+        /// </summary>
         internal class Config
         {
             public static int CountIdPackage = 0;
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
         public static void Initialize()
         {
             //
