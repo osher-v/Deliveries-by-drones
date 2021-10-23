@@ -99,7 +99,7 @@ namespace DalObject
             DataSource.droneList[indexaforDrone] = help;
 
             DataSource.droneChargeList.Add(new DroneCharge() { StationId = baseStationId, DroneId = droneId });
-
+            //
             int indexaforBaseStationId = DataSource.baseStationsList.FindIndex(x => x.Id == baseStationId);
             BaseStation temp = DataSource.baseStationsList[indexaforBaseStationId];
             temp.FreeChargeSlots--;
@@ -108,17 +108,17 @@ namespace DalObject
 
         public void ReleaseDroneFromChargingAtBaseStation(int droneId)
         {
+            //
             int indexaforDrone = DataSource.droneList.FindIndex(x => x.Id == droneId);
             Drone help = DataSource.droneList[indexaforDrone];
             help.Status = (DroneStatuses)0; //free
             DataSource.droneList[indexaforDrone] = help;
-
+            //
             int indexafordroneCharge = DataSource.droneChargeList.FindIndex(x => x.DroneId == droneId);
             DroneCharge help2 = DataSource.droneChargeList[indexafordroneCharge];
             int baseStationId = help2.StationId;
             DataSource.droneChargeList.Remove(DataSource.droneChargeList.Find(x => x.DroneId == droneId));
-
-
+            //
             int indexaforBaseStationId = DataSource.baseStationsList.FindIndex(x => x.Id == baseStationId);
             BaseStation temp = DataSource.baseStationsList[indexaforBaseStationId];
             temp.FreeChargeSlots++;
