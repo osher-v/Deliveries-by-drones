@@ -125,24 +125,46 @@ Update options:
 Your choice:");
             int.TryParse(Console.ReadLine(), out choice);
             UpdatesOption updateOptions = (UpdatesOption)choice;
+
+            int ParcelId, droneId, baseStationId;
+
             switch (updateOptions)
             {
+                
                 case UpdatesOption.AssignDrone:
                     Console.WriteLine("please enter Parcel ID:");
-                    int ParcelId;
                     int.TryParse(Console.ReadLine(),out ParcelId);
                     Console.WriteLine("please enter Drone ID:");
-                    int droneId;
                     int.TryParse(Console.ReadLine(), out droneId);
+                    dal.AssignPackageToDdrone(ParcelId, droneId);
                     break;
                 case UpdatesOption.PickUp:
-
+                    Console.WriteLine("please enter Parcel ID:");
+                    int.TryParse(Console.ReadLine(), out ParcelId);
+                    dal.PickedUpPackageByTheDrone(ParcelId);
                     break;
                 case UpdatesOption.Deliverd:
+                    Console.WriteLine("please enter Parcel ID:");
+                    int.TryParse(Console.ReadLine(), out ParcelId);
+                    dal.DeliveryPackageToTheCustomer(ParcelId);
                     break;
                 case UpdatesOption.Incharging:
+                    Console.WriteLine("please enter Drone ID:");
+                    int.TryParse(Console.ReadLine(), out droneId);
+                    Console.WriteLine("please choose baseStationId ID from the List below:");
+                    List<BaseStation> displayBaseStationWithFreeChargSlots = new List<BaseStation>();
+                    displayBaseStationWithFreeChargSlots = dal.GetBaseStationsWithFreeChargSlots();
+                    for (int i = 0; i < displayBaseStationWithFreeChargSlots.Count(); i++)
+                    {
+                        Console.WriteLine(displayBaseStationWithFreeChargSlots[i].ToString());
+                    }
+                    int.TryParse(Console.ReadLine(), out baseStationId);
+                    dal.SendingDroneforChargingAtBaseStation(baseStationId, droneId);
                     break;
                 case UpdatesOption.Outcharging:
+                    Console.WriteLine("please enter Drone ID:");
+                    int.TryParse(Console.ReadLine(), out droneId);
+                    dal.ReleaseDroneFromChargingAtBaseStation(droneId);
                     break;
                 default:
                     break;

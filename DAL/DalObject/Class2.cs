@@ -60,6 +60,72 @@ namespace DalObject
         }
 
 
+        public void AssignPackageToDdrone(int ParcelId, int droneId)
+        {
+            int indexaforParcel = DataSource.parcelsList.FindIndex(x => x.Id == ParcelId);
+            Parcel temp = DataSource.parcelsList[indexaforParcel];
+            temp.DroneId = droneId;
+            temp.Assigned = DateTime.Now;
+            DataSource.parcelsList[indexaforParcel] = temp;
+
+            
+            int indexaforDrone = DataSource.droneList.FindIndex(x => x.Id == ParcelId);
+            Drone help = DataSource.droneList[indexaforDrone];
+            help.Status = (DroneStatuses)2; //busy
+            DataSource.droneList[indexaforDrone] = help;
+        }
+
+        public void PickedUpPackageByTheDrone(int ParcelId)
+        {
+            int indexaforParcel = DataSource.parcelsList.FindIndex(x => x.Id == ParcelId);
+            Parcel temp = DataSource.parcelsList[indexaforParcel];
+            temp.PickedUp = DateTime.Now;
+            DataSource.parcelsList[indexaforParcel] = temp;
+        }
+
+        public void DeliveryPackageToTheCustomer(int ParcelId)
+        {
+            int indexaforParcel = DataSource.parcelsList.FindIndex(x => x.Id == ParcelId);
+            Parcel temp = DataSource.parcelsList[indexaforParcel];
+            temp.Delivered = DateTime.Now;
+            DataSource.parcelsList[indexaforParcel] = temp;
+        }
+       
+        public void SendingDroneforChargingAtBaseStation(int baseStationId ,int droneId)
+        {
+            int indexaforDrone = DataSource.droneList.FindIndex(x => x.Id == droneId);
+            Drone help = DataSource.droneList[indexaforDrone];
+            help.Status = (DroneStatuses)1; //inMaintenance
+            DataSource.droneList[indexaforDrone] = help;
+
+            DataSource.droneChargeList.Add(new DroneCharge() { StationId = baseStationId, DroneId = droneId });
+
+            int indexaforBaseStationId = DataSource.baseStationsList.FindIndex(x => x.Id == baseStationId);
+            BaseStation temp = DataSource.baseStationsList[indexaforBaseStationId];
+            temp.FreeChargeSlots--;
+            DataSource.baseStationsList[indexaforBaseStationId] = temp;
+        }
+
+        public void ReleaseDroneFromChargingAtBaseStation(int droneId)
+        {
+            int indexaforDrone = DataSource.droneList.FindIndex(x => x.Id == droneId);
+            Drone help = DataSource.droneList[indexaforDrone];
+            help.Status = (DroneStatuses)0; //free
+            DataSource.droneList[indexaforDrone] = help;
+
+            int indexafordroneCharge = DataSource.droneChargeList.FindIndex(x => x.DroneId == droneId);
+            DroneCharge help2 = DataSource.droneChargeList[indexafordroneCharge];
+            int baseStationId = help2.StationId;
+            DataSource.droneChargeList.Remove(DataSource.droneChargeList.Find(x => x.DroneId == droneId));
+
+
+            int indexaforBaseStationId = DataSource.baseStationsList.FindIndex(x => x.Id == baseStationId);
+            BaseStation temp = DataSource.baseStationsList[indexaforBaseStationId];
+            temp.FreeChargeSlots++;
+            DataSource.baseStationsList[indexaforBaseStationId] = temp;
+        }
+       
+
         public BaseStation GetBaseStation(int ID)
         {
             BaseStation empty = new BaseStation();
