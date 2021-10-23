@@ -94,11 +94,10 @@ Please enter an ID number for the new Customer:");
                     break;
 
                 case InsertrOption.ParcelForShipment:
-                    int parcelID, SenderId, TargetId, Weight, priorities;
+                    int  SenderId, TargetId, Weight, priorities;
                     Console.WriteLine(@"
-You have selected to add a new Parcel.");
-                  // while (!int.TryParse(Console.ReadLine(), out parcelID)) ;
-                    Console.WriteLine("Next Please enter the sender ID number:");
+You have selected to add a new Parcel.
+Next Please enter the sender ID number:");
                     while (!int.TryParse(Console.ReadLine(), out SenderId)) ;
                     Console.WriteLine("Next Please enter the target ID number:");
                     while (!int.TryParse(Console.ReadLine(), out TargetId)) ;
@@ -106,9 +105,8 @@ You have selected to add a new Parcel.");
                     while (!int.TryParse(Console.ReadLine(), out Weight)) ;
                     Console.WriteLine("Next enter the priorities of the new Parcel: 0 for regular, 1 for fast and 2 for urgent");
                     while (!int.TryParse(Console.ReadLine(), out priorities)) ;
-                    int counterParcelSerialNumber = dal.SetParcel(/*parcelID,*/ SenderId, TargetId, Weight, priorities);
+                    int counterParcelSerialNumber = dal.SetParcel( SenderId, TargetId, Weight, priorities);
                     break;
-
                 default:
                     break;
             }

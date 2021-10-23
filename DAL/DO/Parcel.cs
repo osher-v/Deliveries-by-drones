@@ -22,7 +22,7 @@ namespace IDAL
             public override string ToString()
             {
                 return string.Format("ID is: {0}\t sender ID is: {1}\t target ID: {2}\t" +
-                    "parcel Weight: {3}\t  Priority: {4}\t  drone id: {5}\t" +
+                    "parcel Weight: {3}\t  Priority: {4}\t  drone id: {5}\n" +
                     "Request started in: {6}\t  Assigned: {7}\t" +
                     "pick up time at: {8}\t  arivel time at: {9}\t"
                     , Id, SenderId, TargetId, Weight, Priority, DroneId, Requested, Assigned, PickedUp, Delivered);

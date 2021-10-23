@@ -46,17 +46,16 @@ namespace DalObject
                 Latitude = customerLatitude
             });
         }
-        public int SetParcel(/*int parcelID,*/ int senderId, int targetId, int weight, int priorities)
+        public int SetParcel( int senderId, int targetId, int weight, int priorities)
         {
             DataSource.parcelsList.Add( new Parcel() {
-                //Id = parcelID
                 Id=DataSource.Config.CountIdPackage++,
                 SenderId = senderId,
                 TargetId = targetId,
                 Weight = (WeightCategories)weight,
                 Priority = (Priorities)priorities,
                 Requested = DateTime.Now    
-            });;
+            });
             return DataSource.Config.CountIdPackage;
         }
 
