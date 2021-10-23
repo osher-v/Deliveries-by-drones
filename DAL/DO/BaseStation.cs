@@ -6,6 +6,12 @@ namespace IDAL
 {
     namespace DO
     {
+        /// <summary>
+        /// Data structure for drone stations, the structure contains 
+        /// the ID number, the name of the station, 
+        /// the number of available charging points
+        /// as well as the landmarks of the station.
+        /// </summary>
         public struct BaseStation
         {
             public int Id { get; set; }

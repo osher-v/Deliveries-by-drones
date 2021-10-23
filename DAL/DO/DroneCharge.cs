@@ -5,7 +5,11 @@ using IDAL.DO;
 namespace IDAL
 {
     namespace DO
-    {   
+    {
+        /// <summary>
+        /// Data structure for charging stations indicates the 
+        /// station number and the drone number in charging.
+        /// </summary>
         public struct DroneCharge
         {
             public int StationId { get; set; }

@@ -6,7 +6,11 @@ namespace IDAL
 {
     namespace DO
     {
-
+        /// <summary>
+        /// Data structure for customers The structure contains the
+        /// customer's identity number, his name, his telephone number.
+        /// As well as the customer's waypoints.
+        /// </summary>
         public struct Customer
         {
             public int Id { get; set; }

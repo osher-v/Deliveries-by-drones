@@ -4,6 +4,11 @@ using IDAL.DO;
 
 namespace IDAL
 {
+    /// <summary>
+    /// drone data structure contains the identity number of the glider,
+    /// its model, its weight category, its charge level and the status
+    /// in which it is located.
+    /// </summary>
     namespace DO
     {
         public struct Drone

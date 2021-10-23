@@ -7,6 +7,12 @@ namespace IDAL
 {
     namespace DO
     {
+        /// <summary>
+        /// Data structure to know the package data
+        /// Package ID number, sender and recipient ID, 
+        /// package weight category, priority, skimmer ID,
+        /// package times(times are arranged in chronological order)
+        /// </summary>
         public struct Parcel
         {
             public int Id { get; set; }
