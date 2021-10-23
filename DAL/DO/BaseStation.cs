@@ -21,8 +21,8 @@ namespace IDAL
             public double Latitude { get; set; }
             public override string ToString()
             {
-                return string.Format("id is: {0,9}\t name of the station is: {1,14}\t number of charge slots: {2,2}\t" +
-                    "Longitude: {3,12}\t  Latitude: {4,12}\t ", Id, StationName, FreeChargeSlots, Longitude, Latitude);
+                return string.Format("id is: {0,-9}\t name of the station is: {1,-14}\t number of charge slots: {2,-2}\t" +
+                    "Longitude: {3,-8}\t  Latitude: {4,-8}\t ", Id, StationName, FreeChargeSlots, Longitude, Latitude);
             }
         }
     }
