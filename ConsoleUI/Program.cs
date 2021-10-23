@@ -34,6 +34,7 @@ Your choice:");
             insertrOption = (InsertrOption)choice;
             switch (insertrOption)
             {
+
                 case InsertrOption.baseStation:
                     int ID, chargsSlots;
                     string name;
