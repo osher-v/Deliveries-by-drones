@@ -349,17 +349,16 @@ namespace DalObject
         /// <returns>string that hold the convert location</returns>
         public static string ConvertLongitudDecimalDegreesToSexagesimal(double decimalValueToConvert)
         {
-            
-            int degrees = (int)decimalValueToConvert;// we lose the numbers affter the dot
+
+            int degrees = (int)decimalValueToConvert;// we lose the numbers affter the dot.
             int minutes = (int)((decimalValueToConvert - degrees) * 60);//we take the decimal number and we remove the number that we take before 
-                                                                        //and multiplay by 60 (becuse we take minuts)
-            float seconds = (float)((decimalValueToConvert - degrees - (minutes / 60)) * 3600);
+                                                                        //and multiplay by 60 (becuse we want minuts)
+            float seconds = (float)((decimalValueToConvert - degrees - (minutes / 60)) * 3600);//and multiplay by 3600 (becuse we want seconds)
             string daricton = null;
             if (decimalValueToConvert >= 0)
                 daricton = "N";
             else daricton = "S";
-
-            return String.Format("{0}° {1}' {2}'' {3}", Math.Abs(degrees), Math.Abs(minutes), Math.Abs(seconds),daricton);
+            return String.Format("{0}° {1}' {2}'' {3}", Math.Abs(degrees), Math.Abs(minutes), Math.Abs(seconds),daricton);// return the complited number
         }
         /// <summary>
         /// A function that converts from decimal to Sexagesimal
@@ -369,16 +368,15 @@ namespace DalObject
         public static string ConvertLatitudDecimalDegreesToSexagesimal(double decimalValueToConvert)
         {
 
-            int degrees = (int)decimalValueToConvert;// we lose the numbers affter the dot
+            int degrees = (int)decimalValueToConvert;// we lose the numbers affter the dot.
             int minutes = (int)((decimalValueToConvert - degrees) * 60);//we take the decimal number and we remove the number that we take before 
-                                                                        //and multiplay by 60 (becuse we take minuts)
-            float seconds = (float)((decimalValueToConvert - degrees - (minutes / 60)) * 3600);
+                                                                        //and multiplay by 60 (becuse we want minuts)
+            float seconds = (float)((decimalValueToConvert - degrees - (minutes / 60)) * 3600);//and multiplay by 3600 (becuse we want seconds)
             string daricton = null;
-            if (decimalValueToConvert >= 0)//chack the number if its to east or weast
+            if (decimalValueToConvert >= 0)//chack the number if its too east or weast
                 daricton = "E";
             else daricton = "W";
-
-            return String.Format("{0}° {1}' {2}'' {3}", Math.Abs(degrees), Math.Abs(minutes), Math.Abs(seconds), daricton); // return the compited number
+            return String.Format("{0}° {1}' {2}'' {3}", Math.Abs(degrees), Math.Abs(minutes), Math.Abs(seconds), daricton); // return the complited number
         }
     }
 }

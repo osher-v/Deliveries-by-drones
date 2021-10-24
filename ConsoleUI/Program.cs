@@ -308,7 +308,7 @@ Your choice:");
 
         static void Main(string[] args)
         {
-           //Console.SetWindowSize(180, 30);
+          // Console.SetWindowSize(180, 30);
            DalObject.DalObject dalObject = new DalObject.DalObject();
             
             Options options;
