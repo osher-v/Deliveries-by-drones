@@ -319,7 +319,7 @@ longitude:");
             Console.WriteLine("latitude:");
             while (!double.TryParse(Console.ReadLine(), out latitudeNew)) ;
             Console.WriteLine(@"Would you like to check distance from a station or customer? 
-Choose 0 for a station or 1 for a customer");
+Choose 1 for a station or 2 for a customer");
             int.TryParse(Console.ReadLine(), out choice);
             chackDistance chackDistance;
             chackDistance = (chackDistance)choice;
@@ -329,7 +329,8 @@ Choose 0 for a station or 1 for a customer");
                     Console.WriteLine("please enter base ID:");
                     int baseID = 0;
                     int.TryParse(Console.ReadLine(), out baseID);
-
+                    // Console.WriteLine(DalObject.DalObject.ConvertLatitudDecimalDegreesToSexagesimal(DalObject.DalObject.GetDistance( longitudeNew,  latitudeNew , baseID))); 
+                    Console.WriteLine(DalObject.DalObject.GetDistance(longitudeNew, latitudeNew, baseID));
                     break;
                 case chackDistance.CustomerPoint:
                     Console.WriteLine("please enter Customer ID:");
@@ -365,7 +366,8 @@ choose from the following options (type the selected number):
 2. Update options.
 3. Display options(singel).
 4. Display options (for the whole list).
-5. EXIT.
+5. Calculate distance between points.
+6. EXIT.
 Your choice:");
                 while (!int.TryParse(Console.ReadLine(), out choice)) ;
                 options = (Options)choice;
@@ -396,7 +398,7 @@ Your choice:");
                     default:
                         break;
                 }
-            } while (!(choice == 5));
+            } while (!(choice == 6));
         }
     }
 }
