@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 using IDAL.DO;
 using System.ComponentModel;
-
+// האם זה גם צריך להיות סטטי??
 namespace DalObject
 {
     /// <summary>
     /// Contains boot data and list structure
     /// </summary>
-    public static class DataSource
+    public static class DataSource  //למה סטטי
     {
         /// <summary> A static Random that sets the random to select a millisecond to repel collisions </summary>
         internal static Random random = new Random(DateTime.Now.Millisecond);
@@ -27,16 +27,16 @@ namespace DalObject
         /// <summary> class that responsible for counters </summary>
         internal static List<DroneCharge> droneChargeList = new List<DroneCharge>();
 
-        internal class Config
+        internal class Config 
         {
         /// <summary> Continuous number For the package </summary>
-            public static int CountIdPackage = 0;
+            public static int CountIdPackage = 1;
         }
         /// <summary> responsible for initializing all entities </summary>
         public static void Initialize()
         {
             // we chose to Initialize manual the Base Station
-            // becuse its just 2 and we want the landmarks of our homes
+            // becuse its just 2 and we want the landmarks of our homes.
             baseStationsList.Add(new BaseStation {
                 Id = random.Next(100000000, 999999999),
                 StationName = "BnyBrak",
@@ -52,7 +52,9 @@ namespace DalObject
                 Longitude = 32.021679,
                 Latitude = 34.789990
             });
-            // We wanted a way to initialize types efficiently in a loop and chose to create an array of names from which to be randomly selected
+
+            //initialization of 5 Drones with different and random values.
+            // We wanted a way to initialize types efficiently in a loop and chose to create an array of names from which to be randomly selected.
             string[] modelNameArr = new string[5] { "I", "IX", "IIX", "VI", "IL" }; 
             for (int i = 0; i < 5; i++)
             {
@@ -65,6 +67,7 @@ namespace DalObject
                 });
             }
 
+            //initialization of 10 Customers with different and random values.
             string[] CustomersNameArr = new string[10]{"James","Robert","John","Michael","William",
                    "David","Richard","Thomas","Mark","Donald"};
             for (int i = 0; i < 10; i++)
@@ -78,7 +81,7 @@ namespace DalObject
                 });
             }
 
-            //
+            //initialization of 10 Parcels with different and random values
             for (int i = 0; i < 10; i++)
             {
                 parcelsList.Add( new Parcel(){

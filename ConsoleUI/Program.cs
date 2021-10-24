@@ -17,6 +17,10 @@ namespace ConsoleUI
         ListOfPackageView, ListOfFreePackageView, ListOfBaseStationsWithFreeChargSlots  }
     class Program
     {
+        /// <summary>
+        /// The function handles various addition options.
+        /// </summary>
+        /// <param name="dal">DalObject object that is passed as a parameter to enable the functions in the DalObject class</param>
         static public void InsertOptions(DalObject.DalObject dal)
         {
             int choice = 0;
@@ -111,6 +115,11 @@ Next Please enter the sender ID number:");
                     break;
             }
         }
+
+        /// <summary>
+        /// The function handles various update options.
+        /// </summary>
+        /// <param name="dal">DalObject object that is passed as a parameter to enable the functions in the DalObject class</param>
         static public void UpdateOptions(DalObject.DalObject dal)
         {
             int choice = 0;
@@ -170,6 +179,11 @@ Your choice:");
                     break;
             }
         }
+
+        /// <summary>
+        /// The function handles display options.
+        /// </summary>
+        /// <param name="dal">DalObject object that is passed as a parameter to enable the functions in the DalObject class</param>
         static public void DisplaySingleOptions(DalObject.DalObject dal)
         {
             int choice = 0;
@@ -212,6 +226,11 @@ Your choice:");
                     break;
             }
         }
+
+        /// <summary>
+        /// The function handles list view options.
+        /// </summary>
+        /// <param name="dal">DalObject object that is passed as a parameter to enable the functions in the DalObject class</param>
         static public void DisplayListOptions(DalObject.DalObject dal)
         {
             int choice = 0;
