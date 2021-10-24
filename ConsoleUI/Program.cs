@@ -9,12 +9,13 @@ using System.ComponentModel;
 
 namespace ConsoleUI
 {
-    enum Options { Insert = 1, Update, DisplaySingle, DisplayList, EXIT }
+    enum Options { Insert = 1, Update, DisplaySingle, DisplayList, Distance, EXIT }
     enum InsertrOption { baseStation = 1, Drone, AddCustomer, ParcelForShipment }
     enum UpdatesOption { AssignDrone=1,PickUp, Deliverd, Incharging, Outcharging }
     enum DisplaySingleOption { BaseStationView = 1, Dronedisplay, CustomerView, PackageView }
     enum DisplayListOption  { ListOfBaseStationView = 1, ListOfDronedisplay, ListOfCustomerView,
         ListOfPackageView, ListOfFreePackageView, ListOfBaseStationsWithFreeChargSlots  }
+    enum chackDistance {BasePoint=1, CustomerPoint } 
     class Program
     {
         /// <summary>
@@ -303,6 +304,48 @@ Your choice:");
                 default:
                     break;
             }
+
+        }
+        static public void DistanceBetweenPoints(DalObject.DalObject dal)
+        {
+            int choice = 0;
+            Console.WriteLine(@"
+You have chosen the option of calculating distance from a point to a customer or station.
+Please enter your point.
+longitude:");
+            Double longitudeNew = 0;
+            Double latitudeNew = 0;
+            while (!double.TryParse(Console.ReadLine(), out longitudeNew)) ;
+            Console.WriteLine("latitude:");
+            while (!double.TryParse(Console.ReadLine(), out latitudeNew)) ;
+            Console.WriteLine(@"Would you like to check distance from a station or customer? 
+Choose 0 for a station or 1 for a customer");
+            int.TryParse(Console.ReadLine(), out choice);
+            chackDistance chackDistance;
+            chackDistance = (chackDistance)choice;
+            switch (chackDistance)
+            {
+                case chackDistance.BasePoint:
+                    Console.WriteLine("please enter base ID:");
+                    int baseID = 0;
+                    int.TryParse(Console.ReadLine(), out baseID);
+
+                    break;
+                case chackDistance.CustomerPoint:
+                    Console.WriteLine("please enter Customer ID:");
+                    int customerID = 0;
+                    int.TryParse(Console.ReadLine(), out customerID);
+
+
+                    break;
+                default:
+                    break;
+            }
+
+
+
+
+
         }
 
 
@@ -343,9 +386,13 @@ Your choice:");
                     case Options.DisplayList:
                         DisplayListOptions(dalObject);
                         break;
+                    case Options.Distance:
+                        DistanceBetweenPoints(dalObject);
+                        break;
                     case Options.EXIT:
                         Console.WriteLine("Have a good day");
                         break;
+                   
                     default:
                         break;
                 }

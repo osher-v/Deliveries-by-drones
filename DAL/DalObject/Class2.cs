@@ -378,5 +378,6 @@ namespace DalObject
             else daricton = "W";
             return String.Format("{0}° {1}' {2}'' {3}", Math.Abs(degrees), Math.Abs(minutes), Math.Abs(seconds), daricton); // return the complited number
         }
+
     }
 }
