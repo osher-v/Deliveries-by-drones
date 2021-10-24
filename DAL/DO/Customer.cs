@@ -1,6 +1,12 @@
-﻿
+﻿ 
 using System;
 using IDAL.DO;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+using System.ComponentModel;
 
 namespace IDAL
 {
@@ -20,8 +26,11 @@ namespace IDAL
             public double Latitude { get; set; }
             public override string ToString()
             {
+                string convertLongitude =DalObject.DalObject.ConvertLongitudDecimalDegreesToSexagesimal(Longitude);
+                string convertLatitude = DalObject.DalObject.ConvertLatitudDecimalDegreesToSexagesimal(Longitude);
+
                 return string.Format("id is: {0,-9}\t Customer's name: {1,-14}\t Customer's phone naumber: {2,-8}\t" +
-                    "Longitude location: {3,-8}\t  Latitude location: {4,-8}\t ", Id, Name, PhoneNumber, Longitude, Latitude);
+                    "Longitude location: {3,-10}\t  Latitude location: {4,-10}\t ", Id, Name, PhoneNumber, convertLongitude, convertLatitude);
             }
         }
 

@@ -260,7 +260,7 @@ namespace DalObject
         /// <summary>
         /// The function returns an array of all base stations.
         /// </summary>
-        /// <returns>returns a new List that old all the data from the reqsted List</returns>
+        /// <returns>returns a new List that hold all the data from the reqsted List</returns>
         public List<BaseStation> GetBaseStationList()
         {
             List<BaseStation> temp = new List<BaseStation>();
@@ -274,7 +274,7 @@ namespace DalObject
         /// <summary>
         /// The function returns an array of all Drone.
         /// </summary>
-        /// <returns>returns a new List that old all the data from the reqsted List</returns>
+        /// <returns>returns a new List that hold all the data from the reqsted List</returns>
         public List<Drone> GetDroneList()
         {
             List<Drone> temp = new List<Drone>();
@@ -288,7 +288,7 @@ namespace DalObject
         /// <summary>
         /// The function returns an array of all Customer.
         /// </summary>
-        /// <returns>returns a new List that old all the data from the reqsted List</returns>
+        /// <returns>returns a new List that hold all the data from the reqsted List</returns>
         public List<Customer> GetCustomerList()
         {
             List<Customer> temp = new List<Customer>();
@@ -302,7 +302,7 @@ namespace DalObject
         /// <summary>
         /// The function returns an array of all Parcel.
         /// </summary>
-        /// <returns>returns a new List that old all the data from the reqsted List</returns>
+        /// <returns>returns a new List that hold all the data from the reqsted List</returns>
         public List<Parcel> GetParcelList()
         {
             List<Parcel> temp = new List<Parcel>();
@@ -316,7 +316,7 @@ namespace DalObject
         /// <summary>
         /// The function returns an array of all packages not associated with the Drone.
         /// </summary>
-        /// <returns>returns a new List that old all the data from the reqsted List</returns>
+        /// <returns>returns a new List that hold all the data from the reqsted List</returns>
         public List<Parcel> GetParcelWithoutDrone()
         {
             List<Parcel> temp = new List<Parcel>();
@@ -331,7 +331,7 @@ namespace DalObject
         /// <summary>
         /// The function returns base stations with free charge positions.
         /// </summary>
-        /// <returns>returns a new List that old all the data from the reqsted List</returns>
+        /// <returns>returns a new List that hold all the data from the reqsted List</returns>
         public List<BaseStation> GetBaseStationsWithFreeChargSlots()
         {
             List<BaseStation> temp = new List<BaseStation>();
@@ -341,6 +341,44 @@ namespace DalObject
                     temp.Add(DataSource.baseStationsList[i]);
             }
             return temp;
+        }
+        /// <summary>
+        /// A function that converts from decimal to Sexagesimal
+        /// </summary>
+        /// <param name="decimalValueToConvert"> the lociton on decimal display</param>
+        /// <returns>string that hold the convert location</returns>
+        public static string ConvertLongitudDecimalDegreesToSexagesimal(double decimalValueToConvert)
+        {
+            
+            int degrees = (int)decimalValueToConvert;// we lose the numbers affter the dot
+            int minutes = (int)((decimalValueToConvert - degrees) * 60);//we take the decimal number and we remove the number that we take before 
+                                                                        //and multiplay by 60 (becuse we take minuts)
+            float seconds = (float)((decimalValueToConvert - degrees - (minutes / 60)) * 3600);
+            string daricton = null;
+            if (decimalValueToConvert >= 0)
+                daricton = "N";
+            else daricton = "S";
+
+            return String.Format("{0}° {1}' {2}'' {3}", Math.Abs(degrees), Math.Abs(minutes), Math.Abs(seconds),daricton);
+        }
+        /// <summary>
+        /// A function that converts from decimal to Sexagesimal
+        /// </summary>
+        /// <param name="decimalValueToConvert"> the lociton on decimal display</param>
+        /// <returns>string that hold the convert location</returns>
+        public static string ConvertLatitudDecimalDegreesToSexagesimal(double decimalValueToConvert)
+        {
+
+            int degrees = (int)decimalValueToConvert;// we lose the numbers affter the dot
+            int minutes = (int)((decimalValueToConvert - degrees) * 60);//we take the decimal number and we remove the number that we take before 
+                                                                        //and multiplay by 60 (becuse we take minuts)
+            float seconds = (float)((decimalValueToConvert - degrees - (minutes / 60)) * 3600);
+            string daricton = null;
+            if (decimalValueToConvert >= 0)//chack the number if its to east or weast
+                daricton = "E";
+            else daricton = "W";
+
+            return String.Format("{0}° {1}' {2}'' {3}", Math.Abs(degrees), Math.Abs(minutes), Math.Abs(seconds), daricton); // return the compited number
         }
     }
 }
