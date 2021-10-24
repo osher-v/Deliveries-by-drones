@@ -9,13 +9,23 @@ using System.ComponentModel;
 
 namespace ConsoleUI
 {
+    /// <summary>enum for the first dialog </summary>
     enum Options { Insert = 1, Update, DisplaySingle, DisplayList, Distance, EXIT }
+    /// <summary> enum for InsertrOption</summary>
     enum InsertrOption { baseStation = 1, Drone, AddCustomer, ParcelForShipment }
-    enum UpdatesOption { AssignDrone=1,PickUp, Deliverd, Incharging, Outcharging }
+    /// <summary> enum for UpdatesOption</summary>
+    enum UpdatesOption { AssignDrone = 1, PickUp, Deliverd, Incharging, Outcharging }
+    /// <summary>enum for DisplaySingleOption </summary>
     enum DisplaySingleOption { BaseStationView = 1, Dronedisplay, CustomerView, PackageView }
-    enum DisplayListOption  { ListOfBaseStationView = 1, ListOfDronedisplay, ListOfCustomerView,
-        ListOfPackageView, ListOfFreePackageView, ListOfBaseStationsWithFreeChargSlots  }
-    enum chackDistance {BasePoint=1, CustomerPoint } 
+    /// <summary>enum for DisplayListOption </summary>
+    enum DisplayListOption
+    {
+        ListOfBaseStationView = 1, ListOfDronedisplay, ListOfCustomerView,
+        ListOfPackageView, ListOfFreePackageView, ListOfBaseStationsWithFreeChargSlots
+    }
+    /// <summary>enum for chackDistance</summary>
+    enum chackDistance { BasePoint = 1, CustomerPoint }
+    /// <summary>  </summary>
     class Program
     {
         /// <summary>
@@ -57,7 +67,7 @@ Please enter an ID number for the new station:");
                     Console.WriteLine("Next Please enter the latitude of the station:");
                     while (!double.TryParse(Console.ReadLine(), out latitude)) ;
                     dal.SetStation(ID, name, chargsSlots, longitude, latitude);
-                    
+
                     break;
 
                 case InsertrOption.Drone:
@@ -99,7 +109,7 @@ Please enter an ID number for the new Customer:");
                     break;
 
                 case InsertrOption.ParcelForShipment:
-                    int  SenderId, TargetId, Weight, priorities;
+                    int SenderId, TargetId, Weight, priorities;
                     Console.WriteLine(@"
 You have selected to add a new Parcel.
 Next Please enter the sender ID number:");
@@ -110,7 +120,7 @@ Next Please enter the sender ID number:");
                     while (!int.TryParse(Console.ReadLine(), out Weight)) ;
                     Console.WriteLine("Next enter the priorities of the new Parcel: 0 for regular, 1 for fast and 2 for urgent");
                     while (!int.TryParse(Console.ReadLine(), out priorities)) ;
-                    int counterParcelSerialNumber = dal.SetParcel( SenderId, TargetId, Weight, priorities);
+                    int counterParcelSerialNumber = dal.SetParcel(SenderId, TargetId, Weight, priorities);
                     break;
                 default:
                     break;
@@ -140,10 +150,10 @@ Your choice:");
 
             switch (updateOptions)
             {
-                
+
                 case UpdatesOption.AssignDrone:
                     Console.WriteLine("please enter Parcel ID:");
-                    int.TryParse(Console.ReadLine(),out ParcelId);
+                    int.TryParse(Console.ReadLine(), out ParcelId);
                     Console.WriteLine("please enter Drone ID:");
                     int.TryParse(Console.ReadLine(), out droneId);
                     dal.AssignPackageToDdrone(ParcelId, droneId);
@@ -329,32 +339,23 @@ Choose 1 for a station or 2 for a customer");
                     Console.WriteLine("please enter base ID:");
                     int baseID = 0;
                     int.TryParse(Console.ReadLine(), out baseID);
-                    // Console.WriteLine(DalObject.DalObject.ConvertLatitudDecimalDegreesToSexagesimal(DalObject.DalObject.GetDistance( longitudeNew,  latitudeNew , baseID))); 
-                    Console.WriteLine(DalObject.DalObject.GetDistance(longitudeNew, latitudeNew, baseID));
+                    Console.WriteLine(DalObject.DalObject.GetDistance(longitudeNew, latitudeNew, baseID, choice));
                     break;
                 case chackDistance.CustomerPoint:
                     Console.WriteLine("please enter Customer ID:");
                     int customerID = 0;
                     int.TryParse(Console.ReadLine(), out customerID);
-
-
+                    Console.WriteLine(DalObject.DalObject.GetDistance(longitudeNew, latitudeNew, customerID, choice));
                     break;
                 default:
                     break;
             }
-
-
-
-
-
         }
-
-
         static void Main(string[] args)
         {
-          // Console.SetWindowSize(180, 30);
-           DalObject.DalObject dalObject = new DalObject.DalObject();
-            
+            // Console.SetWindowSize(180, 30);           
+            DalObject.DalObject dalObject = new DalObject.DalObject();
+
             Options options;
             int choice = 0;
             do
@@ -394,7 +395,7 @@ Your choice:");
                     case Options.EXIT:
                         Console.WriteLine("Have a good day");
                         break;
-                   
+
                     default:
                         break;
                 }

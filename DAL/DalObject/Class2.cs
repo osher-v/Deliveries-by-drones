@@ -378,27 +378,52 @@ namespace DalObject
             else daricton = "W";
             return String.Format("{0}° {1}' {2}'' {3}", Math.Abs(degrees), Math.Abs(minutes), Math.Abs(seconds), daricton); // return the complited number
         }
-        public static double GetDistance(double longitude, double latitude, int ID)
+        /// <summary>
+        /// A function that calculates the distance between points
+        /// </summary>
+        /// <param name="longitude">The new longitude</param>
+        /// <param name="latitude">The new latitude</param>
+        /// <param name="ID">the ID for the reqsted objact</param>
+        /// <param name="yourChoise">the choise for the objact (to know the list that we need)</param>
+        /// <returns>the distence between the points</returns>
+        public static double GetDistance(double longitude, double latitude, int ID ,int yourChoise)
         {
             double otherLongitude = 0, otherLatitude = 0;
                List <BaseStation> temp = new List<BaseStation>();
-            for (int i = 0; i < DataSource.baseStationsList.Count(); i++)
+            if (yourChoise == 1)
             {
-                if (ID == DataSource.baseStationsList[i].Id)
+                for (int i = 0; i < DataSource.baseStationsList.Count(); i++) //same as before, find the id in the list 
                 {
-                    otherLongitude = DataSource.baseStationsList[i].Longitude;
-                    otherLatitude = DataSource.baseStationsList[i].Latitude;
+                    if (ID == DataSource.baseStationsList[i].Id)
+                    {
+                        otherLongitude = DataSource.baseStationsList[i].Longitude;
+                        otherLatitude = DataSource.baseStationsList[i].Latitude;
+                    }
                 }
             }
-            var num1 = longitude * (Math.PI / 180.0);
+            else if (yourChoise == 2)
+            {
+                for (int i = 0; i < DataSource.customersList.Count(); i++)
+                {
+                    if (ID == DataSource.customersList[i].Id)
+                    {
+                        otherLongitude = DataSource.customersList[i].Longitude;
+                        otherLatitude = DataSource.customersList[i].Latitude;
+                    }
+                }
+            }
+            else return -1;
+            //For the calculation we calculate the earth into a circle (ellipse) Divide its 360 degrees by half
+            //180 for each longitude / latitude and then make a pie on each half to calculate the radius for
+            //the formula below
+            var num1 = longitude * (Math.PI / 180.0); 
             var d1 = latitude * (Math.PI / 180.0);
-
             var d2 = otherLatitude * (Math.PI / 180.0);
             var num2 = otherLongitude * (Math.PI / 180.0) - num1;
-            var d3 = Math.Pow(Math.Sin((d2 - d1) / 2.0), 2.0) + Math.Cos(d1) * Math.Cos(d2) * Math.Pow(Math.Sin(num2 / 2.0), 2.0);
-
+            var d3 = Math.Pow(Math.Sin((d2 - d1) / 2.0), 2.0) + Math.Cos(d1) * Math.Cos(d2) * Math.Pow(Math.Sin(num2 / 2.0), 2.0); //https://iw.waldorf-am-see.org/588999-calculating-distance-between-two-latitude-QPAAIP
+                                                                                                                                   //We calculate the distance according to a formula that
+                                                                                                                                   // also takes into account the curvature of the earth
             return (double)(6376500.0 * (2.0 * Math.Atan2(Math.Sqrt(d3), Math.Sqrt(1.0 - d3))));
         }
-
     }
 }
