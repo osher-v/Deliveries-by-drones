@@ -23,7 +23,7 @@ namespace IDAL
             {
                 string convertLongitude = DalObject.DalObject.ConvertLongitudDecimalDegreesToSexagesimal(Longitude);
                 string convertLatitude = DalObject.DalObject.ConvertLatitudDecimalDegreesToSexagesimal(Longitude);
-                return string.Format("id is: {0,-9}\t name of the station is: {1,-14}\t number of charge slots: {2,-2}\t" +
+                return string.Format("id is: {0,-9}\t name of the station is: {1,-10}\t number of charge slots: {2,-2}\t" +
                     "Longitude: {3,-8}\t  Latitude: {4,-8}\t ", Id, StationName, FreeChargeSlots, convertLongitude, convertLatitude);
             }
         }
