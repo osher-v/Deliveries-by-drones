@@ -9,7 +9,7 @@ using IDAL.DO;
 namespace DalObject
 {
     /// <summary>
-    /// 
+    /// matods that use from the main 
     /// </summary>
     public class DalObject
     {
@@ -85,7 +85,8 @@ namespace DalObject
         /// <param name="targetId">Address identity</param>
         /// <param name="weight">weight of Parcel</param>
         /// <param name="priorities">The urgency of the package</param>
-        /// <returns></returns>
+        /// <returns>
+        /// </returns>
         public int SetParcel( int senderId, int targetId, int weight, int priorities)
         {
             DataSource.parcelsList.Add( new Parcel() {
@@ -196,7 +197,7 @@ namespace DalObject
         /// The function returns the selected base station.
         /// </summary>
         /// <param name="ID">Id of a selected BaseStation </param>
-        /// <returns></returns>
+        /// <returns> return empty ubjact if its not there</returns>
         public BaseStation GetBaseStation(int ID)
         {
             BaseStation empty = new BaseStation();
@@ -212,7 +213,7 @@ namespace DalObject
         /// The function returns the selected Drone.
         /// </summary>
         /// <param name="ID">Id of a selected Drone</param>
-        /// <returns></returns>
+        /// <returns>return empty ubjact if its not there</returns>
         public Drone GetDrone(int ID)
         {
             Drone empty = new Drone();
@@ -228,7 +229,7 @@ namespace DalObject
         /// The function returns the selected Customer.
         /// </summary>
         /// <param name="ID">Id of a selected Customer</param>
-        /// <returns></returns>
+        /// <returns>return empty ubjact if its not there</returns>
         public Customer GetCustomer(int ID)
         {
             Customer empty = new Customer();
@@ -244,7 +245,7 @@ namespace DalObject
         /// The function returns the selected Parcel.
         /// </summary>
         /// <param name="ID">Id of a selected Parcel</param>
-        /// <returns></returns>
+        /// <returns>return empty ubjact if its not there</returns>
         public Parcel GetParcel(int ID)
         {
             Parcel empty = new Parcel();
@@ -259,7 +260,7 @@ namespace DalObject
         /// <summary>
         /// The function returns an array of all base stations.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>returns a new List that old all the data from the reqsted List</returns>
         public List<BaseStation> GetBaseStationList()
         {
             List<BaseStation> temp = new List<BaseStation>();
@@ -273,7 +274,7 @@ namespace DalObject
         /// <summary>
         /// The function returns an array of all Drone.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>returns a new List that old all the data from the reqsted List</returns>
         public List<Drone> GetDroneList()
         {
             List<Drone> temp = new List<Drone>();
@@ -287,7 +288,7 @@ namespace DalObject
         /// <summary>
         /// The function returns an array of all Customer.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>returns a new List that old all the data from the reqsted List</returns>
         public List<Customer> GetCustomerList()
         {
             List<Customer> temp = new List<Customer>();
@@ -301,7 +302,7 @@ namespace DalObject
         /// <summary>
         /// The function returns an array of all Parcel.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>returns a new List that old all the data from the reqsted List</returns>
         public List<Parcel> GetParcelList()
         {
             List<Parcel> temp = new List<Parcel>();
@@ -315,7 +316,7 @@ namespace DalObject
         /// <summary>
         /// The function returns an array of all packages not associated with the Drone.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>returns a new List that old all the data from the reqsted List</returns>
         public List<Parcel> GetParcelWithoutDrone()
         {
             List<Parcel> temp = new List<Parcel>();
@@ -330,7 +331,7 @@ namespace DalObject
         /// <summary>
         /// The function returns base stations with free charge positions.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>returns a new List that old all the data from the reqsted List</returns>
         public List<BaseStation> GetBaseStationsWithFreeChargSlots()
         {
             List<BaseStation> temp = new List<BaseStation>();
