@@ -21,85 +21,48 @@ namespace DalObject
             DataSource.Initialize();
         }
 
+        #region Functions of insert options
         /// <summary>
         /// The function adds a station to the list of Basestations.
         /// </summary>
-        /// <param name="ID"> Id of baseStations </param>
-        /// <param name="name">name of baseStations</param>
-        /// <param name="chargsSlots">number of chargsSlots baseStations</param>
-        /// <param name="longitude">longitude of baseStations</param>
-        /// <param name="latitude">latitude of baseStations</param>
-        public void SetStation(int ID, string name, int chargsSlots, double longitude, double latitude)
+        /// <param name="newbaseStation"></param>
+        public void AddStation(BaseStation newbaseStation)
         {
-            DataSource.baseStationsList.Add(new BaseStation {
-                Id = ID,
-                StationName = name,
-                FreeChargeSlots = chargsSlots,
-                Longitude = longitude,
-                Latitude = latitude
-            });
+            DataSource.baseStationsList.Add(newbaseStation);
         }
 
         /// <summary>
         /// The function adds a drone to the list of drones.
         /// </summary>
-        /// <param name="droneID">Id of Drone</param>
-        /// <param name="model">model of Drone</param>
-        /// <param name="weightCategory">weight of Drone</param>
-        /// <param name="status">status of Drone</param>
-        /// <param name="batterylevel">batterylevel of Drone</param>
-        public void SetDrone(int droneID, string model, int weightCategory, int status, double batterylevel)
+        /// <param name="newDrone"></param>
+        public void AddDrone(Drone newDrone)
         {
-            DataSource.droneList.Add(new Drone() {
-                Id = droneID,
-                Model = model,
-                MaxWeight = (WeightCategories)weightCategory,
-                Battery = status,
-                Status = (DroneStatuses)batterylevel
-            });
+            DataSource.droneList.Add(newDrone);
         }
 
         /// <summary>
-        /// The function adds a customer to the list of sustomers.
+        /// The function adds a customer to the list of customers.
         /// </summary>
-        /// <param name="customerID">Id of customer</param>
-        /// <param name="customerName">name of customer</param>
-        /// <param name="PhoneNumber">PhoneNumber of customer</param>
-        /// <param name="customerLongitude">Longitude of customer</param>
-        /// <param name="customerLatitude">Latitude of customer</param>
-        public void SetCustomer(int customerID, string customerName, string PhoneNumber, double customerLongitude, double customerLatitude)
+        /// <param name="newCustomer"></param>
+        public void AddCustomer(Customer newCustomer)
         {
-            DataSource.customersList.Add( new Customer() {
-                Id = customerID,
-                Name = customerName,
-                PhoneNumber = PhoneNumber,
-                Longitude = customerLongitude,
-                Latitude = customerLatitude
-            });
+            DataSource.customersList.Add(newCustomer);
         }
 
         /// <summary>
-        /// The function adds a Parcel to the list of Parcels
+        /// The function adds a Parcel to the list of Parcels.
         /// </summary>
-        /// <param name="senderId">The identity of the sender</param>
-        /// <param name="targetId">Address identity</param>
-        /// <param name="weight">weight of Parcel</param>
-        /// <param name="priorities">The urgency of the package</param>
-        /// <returns>
-        /// </returns>
-        public int SetParcel( int senderId, int targetId, int weight, int priorities)
+        /// <param name="newParcel"></param>
+        /// <returns></returns>
+        public int AddParcel(Parcel newParcel)
         {
-            DataSource.parcelsList.Add( new Parcel() {
-                Id=DataSource.Config.CountIdPackage++,
-                SenderId = senderId,
-                TargetId = targetId,
-                Weight = (WeightCategories)weight,
-                Priority = (Priorities)priorities,
-                Requested = DateTime.Now    
-            });
-            return DataSource.Config.CountIdPackage;
+            newParcel.Id = DataSource.Config.CountIdPackage++;
+            DataSource.parcelsList.Add(newParcel);
+            return newParcel.Id; //Returns the id of the current Parcel.
         }
+        #endregion Functions of insert options
 
+        #region Functions of update options
         /// <summary>
         /// The function assigns a package to the drone.
         /// </summary>
@@ -114,11 +77,13 @@ namespace DalObject
             temp.Assigned = DateTime.Now;
             DataSource.parcelsList[indexaforParcel] = temp;
 
+            /*
             //drone update.
             int indexaforDrone = DataSource.droneList.FindIndex(x => x.Id == droneId);
             Drone help = DataSource.droneList[indexaforDrone];
             help.Status = (DroneStatuses)2; //busy
             DataSource.droneList[indexaforDrone] = help;
+            */
         }
 
         /// <summary>
@@ -184,7 +149,7 @@ namespace DalObject
             int indexafordroneCharge = DataSource.droneChargeList.FindIndex(x => x.DroneId == droneId);
             DroneCharge help2 = DataSource.droneChargeList[indexafordroneCharge];
             int baseStationId = help2.StationId;
-            DataSource.droneChargeList.Remove(DataSource.droneChargeList.Find(x => x.DroneId == droneId));
+            DataSource.droneChargeList.RemoveAt(DataSource.droneChargeList.FindIndex(x => x.DroneId == droneId));
 
             //BaseStation update.
             int indexaforBaseStationId = DataSource.baseStationsList.FindIndex(x => x.Id == baseStationId);
@@ -192,7 +157,9 @@ namespace DalObject
             temp.FreeChargeSlots++;
             DataSource.baseStationsList[indexaforBaseStationId] = temp;
         }
+        #endregion Functions of update options
 
+        #region Functions of display options
         /// <summary>
         /// The function returns the selected base station.
         /// </summary>
@@ -200,6 +167,8 @@ namespace DalObject
         /// <returns> return empty ubjact if its not there</returns>
         public BaseStation GetBaseStation(int ID)
         {
+            return DataSource.baseStationsList.Find(x => x.Id == ID);
+            /*
             BaseStation empty = new BaseStation();
             for (int i = 0; i < DataSource.baseStationsList.Count(); i++)
             {
@@ -207,6 +176,7 @@ namespace DalObject
                     return DataSource.baseStationsList[i];
             }
             return empty;
+            */
         }
 
         /// <summary>
@@ -216,6 +186,8 @@ namespace DalObject
         /// <returns>return empty ubjact if its not there</returns>
         public Drone GetDrone(int ID)
         {
+            return DataSource.droneList.Find(x => x.Id == ID);
+            /*
             Drone empty = new Drone();
             for (int i = 0; i < DataSource.droneList.Count(); i++)
             {
@@ -223,6 +195,7 @@ namespace DalObject
                     return DataSource.droneList[i];
             }
             return empty;
+            */
         }
 
         /// <summary>
@@ -232,13 +205,16 @@ namespace DalObject
         /// <returns>return empty ubjact if its not there</returns>
         public Customer GetCustomer(int ID)
         {
+            return DataSource.customersList.Find(x => x.Id == ID);
+            /*
             Customer empty = new Customer();
-            for (int i = 0; i < DataSource.customersList.Count(); i++)
+            for (int i = 0; i < DataSource.customersList.Count; i++)
             {
                 if (ID == DataSource.customersList[i].Id)
                     return DataSource.customersList[i];
             }
             return empty;
+            */
         }
 
         /// <summary>
@@ -248,6 +224,8 @@ namespace DalObject
         /// <returns>return empty ubjact if its not there</returns>
         public Parcel GetParcel(int ID)
         {
+            return DataSource.parcelsList.Find(x => x.Id == ID);
+            /*
             Parcel empty = new Parcel();
             for (int i = 0; i < DataSource.parcelsList.Count(); i++)
             {
@@ -255,20 +233,27 @@ namespace DalObject
                     return DataSource.parcelsList[i];
             }
             return empty;
+            */
         }
+        #endregion Functions of display options
 
+        #region Functions of listing options
         /// <summary>
         /// The function returns an array of all base stations.
         /// </summary>
         /// <returns>returns a new List that hold all the data from the reqsted List</returns>
         public List<BaseStation> GetBaseStationList()
         {
+            //return (List<BaseStation>)DataSource.baseStationsList.Take(DataSource.baseStationsList.Count);
+            return DataSource.baseStationsList.Take(DataSource.baseStationsList.Count).ToList();
+            /*
             List<BaseStation> temp = new List<BaseStation>();
             for (int i = 0; i < DataSource.baseStationsList.Count(); i++)
             {
                 temp.Add(DataSource.baseStationsList[i]);
             }
             return temp;
+            */
         }
 
         /// <summary>
@@ -277,12 +262,15 @@ namespace DalObject
         /// <returns>returns a new List that hold all the data from the reqsted List</returns>
         public List<Drone> GetDroneList()
         {
+            return DataSource.droneList.Take(DataSource.droneList.Count).ToList();
+            /*
             List<Drone> temp = new List<Drone>();
             for (int i = 0; i < DataSource.droneList.Count(); i++)
             {
                 temp.Add(DataSource.droneList[i]);
             }
             return temp;
+            */
         }
 
         /// <summary>
@@ -291,12 +279,15 @@ namespace DalObject
         /// <returns>returns a new List that hold all the data from the reqsted List</returns>
         public List<Customer> GetCustomerList()
         {
+            return DataSource.customersList.Take(DataSource.customersList.Count).ToList();
+            /*
             List<Customer> temp = new List<Customer>();
             for (int i = 0; i < DataSource.customersList.Count(); i++)
             {
                 temp.Add(DataSource.customersList[i]);
             }
             return temp;
+            */
         }
 
         /// <summary>
@@ -305,12 +296,15 @@ namespace DalObject
         /// <returns>returns a new List that hold all the data from the reqsted List</returns>
         public List<Parcel> GetParcelList()
         {
+            return DataSource.parcelsList.Take(DataSource.parcelsList.Count).ToList();
+            /*
             List<Parcel> temp = new List<Parcel>();
             for (int i = 0; i < DataSource.parcelsList.Count(); i++)
             {
                 temp.Add(DataSource.parcelsList[i]);
             }
             return temp;
+            */
         }
 
         /// <summary>
@@ -319,6 +313,8 @@ namespace DalObject
         /// <returns>returns a new List that hold all the data from the reqsted List</returns>
         public List<Parcel> GetParcelWithoutDrone()
         {
+            return DataSource.parcelsList.TakeWhile(x =>x.DroneId == 0).ToList();
+            /*
             List<Parcel> temp = new List<Parcel>();
             for (int i = 0; i < DataSource.parcelsList.Count(); i++)
             {
@@ -326,6 +322,7 @@ namespace DalObject
                     temp.Add(DataSource.parcelsList[i]);
             }
             return temp;
+            */
         }
 
         /// <summary>
@@ -333,15 +330,21 @@ namespace DalObject
         /// </summary>
         /// <returns>returns a new List that hold all the data from the reqsted List</returns>
         public List<BaseStation> GetBaseStationsWithFreeChargSlots()
+        { 
+            return DataSource.baseStationsList.TakeWhile(x => x.FreeChargeSlots > 0).ToList();
+            /*
+        List<BaseStation> temp = new List<BaseStation>();
+        for (int i = 0; i < DataSource.baseStationsList.Count(); i++)
         {
-            List<BaseStation> temp = new List<BaseStation>();
-            for (int i = 0; i < DataSource.baseStationsList.Count(); i++)
-            {
-                if (DataSource.baseStationsList[i].FreeChargeSlots > 0)
-                    temp.Add(DataSource.baseStationsList[i]);
-            }
-            return temp;
+            if (DataSource.baseStationsList[i].FreeChargeSlots > 0)
+                temp.Add(DataSource.baseStationsList[i]);
         }
+        return temp;
+            */
+        }
+        #endregion Functions of listing options
+
+        #region Convert decima to sexagesimal function 
         /// <summary>
         /// A function that converts from decimal to Sexagesimal
         /// </summary>
@@ -378,6 +381,9 @@ namespace DalObject
             else daricton = "W";
             return String.Format("{0}° {1}' {2}'' {3}", Math.Abs(degrees), Math.Abs(minutes), Math.Abs(seconds), daricton); // return the complited number
         }
+        #endregion Convert decima to sexagesimal function 
+
+        #region Function of calculating distance between points
         /// <summary>
         /// A function that calculates the distance between points
         /// </summary>
@@ -425,5 +431,6 @@ namespace DalObject
                                                                                                                                    // also takes into account the curvature of the earth
             return (double)(6376500.0 * (2.0 * Math.Atan2(Math.Sqrt(d3), Math.Sqrt(1.0 - d3))));
         }
+        #endregion Function of calculating distance between points
     }
 }

@@ -2,6 +2,7 @@
 using System;
 using IDAL.DO;
 using DalObject;
+
 namespace IDAL
 {
     namespace DO
