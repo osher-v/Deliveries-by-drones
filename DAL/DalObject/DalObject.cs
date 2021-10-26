@@ -168,15 +168,6 @@ namespace DalObject
         public BaseStation GetBaseStation(int ID)
         {
             return DataSource.baseStationsList.Find(x => x.Id == ID);
-            /*
-            BaseStation empty = new BaseStation();
-            for (int i = 0; i < DataSource.baseStationsList.Count(); i++)
-            {
-                if (ID == DataSource.baseStationsList[i].Id)
-                    return DataSource.baseStationsList[i];
-            }
-            return empty;
-            */
         }
 
         /// <summary>
@@ -187,15 +178,6 @@ namespace DalObject
         public Drone GetDrone(int ID)
         {
             return DataSource.droneList.Find(x => x.Id == ID);
-            /*
-            Drone empty = new Drone();
-            for (int i = 0; i < DataSource.droneList.Count(); i++)
-            {
-                if (ID == DataSource.droneList[i].Id)
-                    return DataSource.droneList[i];
-            }
-            return empty;
-            */
         }
 
         /// <summary>
@@ -206,15 +188,6 @@ namespace DalObject
         public Customer GetCustomer(int ID)
         {
             return DataSource.customersList.Find(x => x.Id == ID);
-            /*
-            Customer empty = new Customer();
-            for (int i = 0; i < DataSource.customersList.Count; i++)
-            {
-                if (ID == DataSource.customersList[i].Id)
-                    return DataSource.customersList[i];
-            }
-            return empty;
-            */
         }
 
         /// <summary>
@@ -225,15 +198,6 @@ namespace DalObject
         public Parcel GetParcel(int ID)
         {
             return DataSource.parcelsList.Find(x => x.Id == ID);
-            /*
-            Parcel empty = new Parcel();
-            for (int i = 0; i < DataSource.parcelsList.Count(); i++)
-            {
-                if (ID == DataSource.parcelsList[i].Id)
-                    return DataSource.parcelsList[i];
-            }
-            return empty;
-            */
         }
         #endregion Functions of display options
 
@@ -244,16 +208,7 @@ namespace DalObject
         /// <returns>returns a new List that hold all the data from the reqsted List</returns>
         public List<BaseStation> GetBaseStationList()
         {
-            //return (List<BaseStation>)DataSource.baseStationsList.Take(DataSource.baseStationsList.Count);
             return DataSource.baseStationsList.Take(DataSource.baseStationsList.Count).ToList();
-            /*
-            List<BaseStation> temp = new List<BaseStation>();
-            for (int i = 0; i < DataSource.baseStationsList.Count(); i++)
-            {
-                temp.Add(DataSource.baseStationsList[i]);
-            }
-            return temp;
-            */
         }
 
         /// <summary>
@@ -263,14 +218,6 @@ namespace DalObject
         public List<Drone> GetDroneList()
         {
             return DataSource.droneList.Take(DataSource.droneList.Count).ToList();
-            /*
-            List<Drone> temp = new List<Drone>();
-            for (int i = 0; i < DataSource.droneList.Count(); i++)
-            {
-                temp.Add(DataSource.droneList[i]);
-            }
-            return temp;
-            */
         }
 
         /// <summary>
@@ -280,14 +227,6 @@ namespace DalObject
         public List<Customer> GetCustomerList()
         {
             return DataSource.customersList.Take(DataSource.customersList.Count).ToList();
-            /*
-            List<Customer> temp = new List<Customer>();
-            for (int i = 0; i < DataSource.customersList.Count(); i++)
-            {
-                temp.Add(DataSource.customersList[i]);
-            }
-            return temp;
-            */
         }
 
         /// <summary>
@@ -297,14 +236,6 @@ namespace DalObject
         public List<Parcel> GetParcelList()
         {
             return DataSource.parcelsList.Take(DataSource.parcelsList.Count).ToList();
-            /*
-            List<Parcel> temp = new List<Parcel>();
-            for (int i = 0; i < DataSource.parcelsList.Count(); i++)
-            {
-                temp.Add(DataSource.parcelsList[i]);
-            }
-            return temp;
-            */
         }
 
         /// <summary>
@@ -314,15 +245,6 @@ namespace DalObject
         public List<Parcel> GetParcelWithoutDrone()
         {
             return DataSource.parcelsList.TakeWhile(x =>x.DroneId == 0).ToList();
-            /*
-            List<Parcel> temp = new List<Parcel>();
-            for (int i = 0; i < DataSource.parcelsList.Count(); i++)
-            {
-                if(DataSource.parcelsList[i].DroneId==0)
-                    temp.Add(DataSource.parcelsList[i]);
-            }
-            return temp;
-            */
         }
 
         /// <summary>
@@ -332,15 +254,6 @@ namespace DalObject
         public List<BaseStation> GetBaseStationsWithFreeChargSlots()
         { 
             return DataSource.baseStationsList.TakeWhile(x => x.FreeChargeSlots > 0).ToList();
-            /*
-        List<BaseStation> temp = new List<BaseStation>();
-        for (int i = 0; i < DataSource.baseStationsList.Count(); i++)
-        {
-            if (DataSource.baseStationsList[i].FreeChargeSlots > 0)
-                temp.Add(DataSource.baseStationsList[i]);
-        }
-        return temp;
-            */
         }
         #endregion Functions of listing options
 
@@ -434,7 +347,6 @@ namespace DalObject
         {
             double otherLongitude, otherLatitude;
             int index;
-            //List <BaseStation> temp = new List<BaseStation>();
 
             if (yourChoise == 1)//BaseStation point
             {
@@ -449,32 +361,6 @@ namespace DalObject
                 otherLatitude = DataSource.customersList[index].Latitude;
             }
             else return -1;
-
-            /*
-            if (yourChoise == 1)
-            {
-                for (int i = 0; i < DataSource.baseStationsList.Count(); i++) //same as before, find the id in the list 
-                {
-                    if (ID == DataSource.baseStationsList[i].Id)
-                    {
-                        otherLongitude = DataSource.baseStationsList[i].Longitude;
-                        otherLatitude = DataSource.baseStationsList[i].Latitude;
-                    }
-                }
-            }
-            else if (yourChoise == 2)
-            {
-                for (int i = 0; i < DataSource.customersList.Count(); i++)
-                {
-                    if (ID == DataSource.customersList[i].Id)
-                    {
-                        otherLongitude = DataSource.customersList[i].Longitude;
-                        otherLatitude = DataSource.customersList[i].Latitude;
-                    }
-                }
-            }
-            else return -1;
-            */
 
             //For the calculation we calculate the earth into a circle (ellipse) Divide its 360 degrees by half
             //180 for each longitude / latitude and then make a pie on each half to calculate the radius for
