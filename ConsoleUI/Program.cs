@@ -170,7 +170,7 @@ Update options:
 4. Sending a drone for charging at a base station
 5. Release drone from charging at base station
 Your choice:");
-            int.TryParse(Console.ReadLine(), out int choice);
+           int.TryParse(Console.ReadLine(), out int choice);
 
             int ParcelId, droneId, baseStationId;
 

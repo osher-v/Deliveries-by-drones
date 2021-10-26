@@ -25,7 +25,7 @@ namespace IDAL
             public override string ToString()
             {
                 string convertLongitude =DalObject.DalObject.ConvertDecimalDegreesToSexagesimal(Longitude, (LongitudeAndLatitude)0);
-                string convertLatitude = DalObject.DalObject.ConvertDecimalDegreesToSexagesimal(Longitude, (LongitudeAndLatitude)1);
+                string convertLatitude = DalObject.DalObject.ConvertDecimalDegreesToSexagesimal(Latitude, (LongitudeAndLatitude)1);
 
                 return string.Format("id is: {0,-9}\t Customer's name: {1,-9}\t Customer's phone naumber: {2,-8}\t" +
                     "Longitude location: {3,-10}\t  Latitude location: {4,-10}\t ", Id, Name, PhoneNumber, convertLongitude, convertLatitude);

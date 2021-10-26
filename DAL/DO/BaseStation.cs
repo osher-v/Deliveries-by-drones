@@ -23,7 +23,7 @@ namespace IDAL
             public override string ToString()
             {
                 string convertLongitude = DalObject.DalObject.ConvertDecimalDegreesToSexagesimal(Longitude,(LongitudeAndLatitude)0);
-                string convertLatitude = DalObject.DalObject.ConvertDecimalDegreesToSexagesimal(Longitude,(LongitudeAndLatitude)1);
+                string convertLatitude = DalObject.DalObject.ConvertDecimalDegreesToSexagesimal(Latitude, (LongitudeAndLatitude)1);
                 return string.Format("id is: {0,-9}\t name of the station is: {1,-10}\t number of charge slots: {2,-2}\t" +
                     "Longitude: {3,-8}\t  Latitude: {4,-8}\t ", Id, StationName, FreeChargeSlots, convertLongitude, convertLatitude);
             }

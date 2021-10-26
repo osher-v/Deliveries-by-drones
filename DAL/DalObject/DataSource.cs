@@ -13,20 +13,20 @@ namespace DalObject
     /// </summary>
     public class DataSource 
     {
-        /// <summary> A static Random that sets the random to select a millisecond to repel collisions </summary>
-        internal static Random random = new Random(DateTime.Now.Millisecond);
+        /// <summary> A static Random that sets the MyRandom to select a millisecond to repel collisions </summary>
+        internal static Random MyRandom = new Random(DateTime.Now.Millisecond);
 
         #region List of stracts
         /// <summary> list of drones </summary>
-        internal static List<Drone> droneList = new List<Drone>();
+        internal static List<Drone> DronesList = new List<Drone>();
         /// <summary> list of base stations </summary>
-        internal static List<BaseStation> baseStationsList = new List<BaseStation>();
+        internal static List<BaseStation> BaseStationsList = new List<BaseStation>();
         /// <summary>list of customers</summary>
-        internal static List<Customer> customersList = new List<Customer>();
+        internal static List<Customer> CustomersList = new List<Customer>();
         /// <summary> list of parcels </summary>
-        internal static List<Parcel> parcelsList = new List<Parcel>();
+        internal static List<Parcel> ParcelsList = new List<Parcel>();
         /// <summary> class that responsible for counters </summary>
-        internal static List<DroneCharge> droneChargeList = new List<DroneCharge>();
+        internal static List<DroneCharge> DroneChargeList = new List<DroneCharge>();
         #endregion List of stracts
 
         internal class Config 
@@ -41,65 +41,65 @@ namespace DalObject
             #region init BaseStation
             // we chose to Initialize manual the Base Station
             // becuse its just 2 and we want the landmarks of our homes.
-            baseStationsList.Add(new BaseStation {
-                Id = random.Next(100000000, 999999999),
+            BaseStationsList.Add(new BaseStation {
+                Id = MyRandom.Next(100000000, 999999999),
                 StationName = "BnyBrak",
-                FreeChargeSlots = random.Next(5, 10),
+                FreeChargeSlots = MyRandom.Next(5, 10),
                 Longitude = 32.086456,
                 Latitude = 34.844476
             });
 
-            baseStationsList.Add (new BaseStation {
-                Id = random.Next(100000000, 999999999),
+            BaseStationsList.Add (new BaseStation {
+                Id = MyRandom.Next(100000000, 999999999),
                 StationName = "Holon",
-                FreeChargeSlots = random.Next(5, 10),
+                FreeChargeSlots = MyRandom.Next(5, 10),
                 Longitude = 32.021679,
                 Latitude = 34.789990
             });
             #endregion init BaseStation
 
             #region init Drone
-            //initialization of 5 Drones with different and random values.
+            //initialization of 5 Drones with different and MyRandom values.
             // We wanted a way to initialize types efficiently in a loop and chose to create an array of names from which to be randomly selected.
             string[] modelNameArr = new string[5] { "I", "IX", "IIX", "VI", "IL" }; 
             for (int i = 0; i < 5; i++)
             {
-                droneList.Add( new Drone {
-                    Id = random.Next(100000000, 999999999),
+                DronesList.Add( new Drone {
+                    Id = MyRandom.Next(100000000, 999999999),
                     Model = modelNameArr[i],
-                    MaxWeight = (WeightCategories)random.Next(0, 3),//0=light,1=medium,2=heavy
-                    Battery = random.Next(50, 100),
-                    Status = (DroneStatuses)random.Next(0, 3)//0=free, 1=inMaintenance, 2=busy
+                    MaxWeight = (WeightCategories)MyRandom.Next(0, 3),//0=light,1=medium,2=heavy
+                    Battery = MyRandom.Next(50, 100),
+                    Status = (DroneStatuses)MyRandom.Next(0, 3)//0=free, 1=inMaintenance, 2=busy
                 });
             }
             #endregion init Drone
 
             #region init Customer
-            //initialization of 10 Customers with different and random values.
+            //initialization of 10 Customers with different and MyRandom values.
             string[] CustomersNameArr = new string[10]{"James","Robert","John","Michael","William",
                    "David","Richard","Thomas","Mark","Donald"};
             for (int i = 0; i < 10; i++)
             {
-                customersList.Add(new Customer{
-                    Id = random.Next(100000000, 999999999),
+                CustomersList.Add(new Customer{
+                    Id = MyRandom.Next(100000000, 999999999),
                     Name = CustomersNameArr[i],
-                    PhoneNumber = "0" + random.Next(50, 58) + "-" + random.Next(0000000, 9999999),
-                    Longitude = (float)((float)(random.NextDouble() * (33.3 - 31)) + 31),// get israel range 
-                    Latitude = (float)((float)(random.NextDouble() * (35.5 - 34.3)) + 34.3)//get israel range 
+                    PhoneNumber = "0" + MyRandom.Next(50, 58) + "-" + MyRandom.Next(0000000, 9999999),
+                    Longitude = (float)((float)(MyRandom.NextDouble() * (33.3 - 31)) + 31),// get israel range 
+                    Latitude = (float)((float)(MyRandom.NextDouble() * (35.5 - 34.3)) + 34.3)//get israel range 
                 });
             }
             #endregion init Customer
 
             #region init Parcel
-            //initialization of 10 Parcels with different and random values
+            //initialization of 10 Parcels with different and MyRandom values
             for (int i = 0; i < 10; i++)
             {
-                parcelsList.Add( new Parcel(){
+                ParcelsList.Add( new Parcel(){
                     Id = Config.CountIdPackage++,
-                    SenderId = customersList[random.Next(0, 5)].Id,// we choose from the list that we alrade have 
-                    TargetId = customersList[random.Next(5, 10)].Id,// we choose from the list that we alrade have  but not the same as before 
-                    Weight = (WeightCategories)random.Next(0, 3),//0=light,1=medium,2=heavy
-                    Priority = (Priorities)random.Next(0, 3),//0=regular, 1=fast, 2=urgent
+                    SenderId = CustomersList[MyRandom.Next(0, 5)].Id,// we choose from the list that we alrade have 
+                    TargetId = CustomersList[MyRandom.Next(5, 10)].Id,// we choose from the list that we alrade have  but not the same as before 
+                    Weight = (WeightCategories)MyRandom.Next(0, 3),//0=light,1=medium,2=heavy
+                    Priority = (Priorities)MyRandom.Next(0, 3),//0=regular, 1=fast, 2=urgent
                     DroneId = 0,
                     Requested = DateTime.Now
                 });

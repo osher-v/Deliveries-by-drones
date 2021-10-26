@@ -28,7 +28,7 @@ namespace DalObject
         /// <param name="newbaseStation"></param>
         public void AddStation(BaseStation newbaseStation)
         {
-            DataSource.baseStationsList.Add(newbaseStation);
+            DataSource.BaseStationsList.Add(newbaseStation);
         }
 
         /// <summary>
@@ -37,7 +37,7 @@ namespace DalObject
         /// <param name="newDrone"></param>
         public void AddDrone(Drone newDrone)
         {
-            DataSource.droneList.Add(newDrone);
+            DataSource.DronesList.Add(newDrone);
         }
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace DalObject
         /// <param name="newCustomer"></param>
         public void AddCustomer(Customer newCustomer)
         {
-            DataSource.customersList.Add(newCustomer);
+            DataSource.CustomersList.Add(newCustomer);
         }
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace DalObject
         public int AddParcel(Parcel newParcel)
         {
             newParcel.Id = DataSource.Config.CountIdPackage++;
-            DataSource.parcelsList.Add(newParcel);
+            DataSource.ParcelsList.Add(newParcel);
             return newParcel.Id; //Returns the id of the current Parcel.
         }
         #endregion Functions of insert options
@@ -71,18 +71,18 @@ namespace DalObject
         public void AssignPackageToDdrone(int ParcelId, int droneId)
         {
             //Update the package.
-            int indexaforParcel = DataSource.parcelsList.FindIndex(x => x.Id == ParcelId);
-            Parcel temp = DataSource.parcelsList[indexaforParcel];
+            int indexaforParcel = DataSource.ParcelsList.FindIndex(x => x.Id == ParcelId);
+            Parcel temp = DataSource.ParcelsList[indexaforParcel];
             temp.DroneId = droneId;
             temp.Assigned = DateTime.Now;
-            DataSource.parcelsList[indexaforParcel] = temp;
+            DataSource.ParcelsList[indexaforParcel] = temp;
 
             /*
             //drone update.
-            int indexaforDrone = DataSource.droneList.FindIndex(x => x.Id == droneId);
-            Drone help = DataSource.droneList[indexaforDrone];
+            int indexaforDrone = DataSource.DronesList.FindIndex(x => x.Id == droneId);
+            Drone help = DataSource.DronesList[indexaforDrone];
             help.Status = (DroneStatuses)2; //busy
-            DataSource.droneList[indexaforDrone] = help;
+            DataSource.DronesList[indexaforDrone] = help;
             */
         }
 
@@ -93,10 +93,10 @@ namespace DalObject
         public void PickedUpPackageByTheDrone(int ParcelId)
         {
             //Update the package.
-            int indexaforParcel = DataSource.parcelsList.FindIndex(x => x.Id == ParcelId);
-            Parcel temp = DataSource.parcelsList[indexaforParcel];
+            int indexaforParcel = DataSource.ParcelsList.FindIndex(x => x.Id == ParcelId);
+            Parcel temp = DataSource.ParcelsList[indexaforParcel];
             temp.PickedUp = DateTime.Now;
-            DataSource.parcelsList[indexaforParcel] = temp;
+            DataSource.ParcelsList[indexaforParcel] = temp;
         }
 
         /// <summary>
@@ -105,10 +105,10 @@ namespace DalObject
         /// <param name="ParcelId">Id of Parcel</param>
         public void DeliveryPackageToTheCustomer(int ParcelId)
         {
-            int indexaforParcel = DataSource.parcelsList.FindIndex(x => x.Id == ParcelId);
-            Parcel temp = DataSource.parcelsList[indexaforParcel];
+            int indexaforParcel = DataSource.ParcelsList.FindIndex(x => x.Id == ParcelId);
+            Parcel temp = DataSource.ParcelsList[indexaforParcel];
             temp.Delivered = DateTime.Now;
-            DataSource.parcelsList[indexaforParcel] = temp;
+            DataSource.ParcelsList[indexaforParcel] = temp;
         }
 
         /// <summary>
@@ -119,18 +119,18 @@ namespace DalObject
         public void SendingDroneforChargingAtBaseStation(int baseStationId ,int droneId)
         {
             //drone update.
-            int indexaforDrone = DataSource.droneList.FindIndex(x => x.Id == droneId);
-            Drone help = DataSource.droneList[indexaforDrone];
+            int indexaforDrone = DataSource.DronesList.FindIndex(x => x.Id == droneId);
+            Drone help = DataSource.DronesList[indexaforDrone];
             help.Status = (DroneStatuses)1; //inMaintenance
-            DataSource.droneList[indexaforDrone] = help;
+            DataSource.DronesList[indexaforDrone] = help;
 
-            DataSource.droneChargeList.Add(new DroneCharge() { StationId = baseStationId, DroneId = droneId });
+            DataSource.DroneChargeList.Add(new DroneCharge() { StationId = baseStationId, DroneId = droneId });
 
             //BaseStation update.
-            int indexaforBaseStationId = DataSource.baseStationsList.FindIndex(x => x.Id == baseStationId);
-            BaseStation temp = DataSource.baseStationsList[indexaforBaseStationId];
+            int indexaforBaseStationId = DataSource.BaseStationsList.FindIndex(x => x.Id == baseStationId);
+            BaseStation temp = DataSource.BaseStationsList[indexaforBaseStationId];
             temp.FreeChargeSlots--;
-            DataSource.baseStationsList[indexaforBaseStationId] = temp;
+            DataSource.BaseStationsList[indexaforBaseStationId] = temp;
         }
 
         /// <summary>
@@ -140,22 +140,22 @@ namespace DalObject
         public void ReleaseDroneFromChargingAtBaseStation(int droneId)
         {
             //Drone update.
-            int indexaforDrone = DataSource.droneList.FindIndex(x => x.Id == droneId);
-            Drone help = DataSource.droneList[indexaforDrone];
+            int indexaforDrone = DataSource.DronesList.FindIndex(x => x.Id == droneId);
+            Drone help = DataSource.DronesList[indexaforDrone];
             help.Status = (DroneStatuses)0; //free
-            DataSource.droneList[indexaforDrone] = help;
+            DataSource.DronesList[indexaforDrone] = help;
 
-            //find the Station Id and remove from the droneChargeList.
-            int indexafordroneCharge = DataSource.droneChargeList.FindIndex(x => x.DroneId == droneId);
-            DroneCharge help2 = DataSource.droneChargeList[indexafordroneCharge];
+            //find the Station Id and remove from the DroneChargeList.
+            int indexafordroneCharge = DataSource.DroneChargeList.FindIndex(x => x.DroneId == droneId);
+            DroneCharge help2 = DataSource.DroneChargeList[indexafordroneCharge];
             int baseStationId = help2.StationId;
-            DataSource.droneChargeList.RemoveAt(DataSource.droneChargeList.FindIndex(x => x.DroneId == droneId));
+            DataSource.DroneChargeList.RemoveAt(DataSource.DroneChargeList.FindIndex(x => x.DroneId == droneId));
 
             //BaseStation update.
-            int indexaforBaseStationId = DataSource.baseStationsList.FindIndex(x => x.Id == baseStationId);
-            BaseStation temp = DataSource.baseStationsList[indexaforBaseStationId];
+            int indexaforBaseStationId = DataSource.BaseStationsList.FindIndex(x => x.Id == baseStationId);
+            BaseStation temp = DataSource.BaseStationsList[indexaforBaseStationId];
             temp.FreeChargeSlots++;
-            DataSource.baseStationsList[indexaforBaseStationId] = temp;
+            DataSource.BaseStationsList[indexaforBaseStationId] = temp;
         }
         #endregion Functions of update options
 
@@ -167,7 +167,7 @@ namespace DalObject
         /// <returns> return empty ubjact if its not there</returns>
         public BaseStation GetBaseStation(int ID)
         {
-            return DataSource.baseStationsList.Find(x => x.Id == ID);
+            return DataSource.BaseStationsList.Find(x => x.Id == ID);
         }
 
         /// <summary>
@@ -177,7 +177,7 @@ namespace DalObject
         /// <returns>return empty ubjact if its not there</returns>
         public Drone GetDrone(int ID)
         {
-            return DataSource.droneList.Find(x => x.Id == ID);
+            return DataSource.DronesList.Find(x => x.Id == ID);
         }
 
         /// <summary>
@@ -187,7 +187,7 @@ namespace DalObject
         /// <returns>return empty ubjact if its not there</returns>
         public Customer GetCustomer(int ID)
         {
-            return DataSource.customersList.Find(x => x.Id == ID);
+            return DataSource.CustomersList.Find(x => x.Id == ID);
         }
 
         /// <summary>
@@ -197,7 +197,7 @@ namespace DalObject
         /// <returns>return empty ubjact if its not there</returns>
         public Parcel GetParcel(int ID)
         {
-            return DataSource.parcelsList.Find(x => x.Id == ID);
+            return DataSource.ParcelsList.Find(x => x.Id == ID);
         }
         #endregion Functions of display options
 
@@ -208,7 +208,7 @@ namespace DalObject
         /// <returns>returns a new List that hold all the data from the reqsted List</returns>
         public List<BaseStation> GetBaseStationList()
         {
-            return DataSource.baseStationsList.Take(DataSource.baseStationsList.Count).ToList();
+            return DataSource.BaseStationsList.Take(DataSource.BaseStationsList.Count).ToList();
         }
 
         /// <summary>
@@ -217,7 +217,7 @@ namespace DalObject
         /// <returns>returns a new List that hold all the data from the reqsted List</returns>
         public List<Drone> GetDroneList()
         {
-            return DataSource.droneList.Take(DataSource.droneList.Count).ToList();
+            return DataSource.DronesList.Take(DataSource.DronesList.Count).ToList();
         }
 
         /// <summary>
@@ -226,7 +226,7 @@ namespace DalObject
         /// <returns>returns a new List that hold all the data from the reqsted List</returns>
         public List<Customer> GetCustomerList()
         {
-            return DataSource.customersList.Take(DataSource.customersList.Count).ToList();
+            return DataSource.CustomersList.Take(DataSource.CustomersList.Count).ToList();
         }
 
         /// <summary>
@@ -235,7 +235,7 @@ namespace DalObject
         /// <returns>returns a new List that hold all the data from the reqsted List</returns>
         public List<Parcel> GetParcelList()
         {
-            return DataSource.parcelsList.Take(DataSource.parcelsList.Count).ToList();
+            return DataSource.ParcelsList.Take(DataSource.ParcelsList.Count).ToList();
         }
 
         /// <summary>
@@ -244,7 +244,7 @@ namespace DalObject
         /// <returns>returns a new List that hold all the data from the reqsted List</returns>
         public List<Parcel> GetParcelWithoutDrone()
         {
-            return DataSource.parcelsList.TakeWhile(x =>x.DroneId == 0).ToList();
+            return DataSource.ParcelsList.TakeWhile(x =>x.DroneId == 0).ToList();
         }
 
         /// <summary>
@@ -253,7 +253,7 @@ namespace DalObject
         /// <returns>returns a new List that hold all the data from the reqsted List</returns>
         public List<BaseStation> GetBaseStationsWithFreeChargSlots()
         { 
-            return DataSource.baseStationsList.TakeWhile(x => x.FreeChargeSlots > 0).ToList();
+            return DataSource.BaseStationsList.TakeWhile(x => x.FreeChargeSlots > 0).ToList();
         }
         #endregion Functions of listing options
 
@@ -350,15 +350,15 @@ namespace DalObject
 
             if (yourChoise == 1)//BaseStation point
             {
-                index = DataSource.baseStationsList.FindIndex(x => x.Id == ID);
-                otherLongitude = DataSource.baseStationsList[index].Longitude;
-                otherLatitude = DataSource.baseStationsList[index].Latitude;
+                index = DataSource.BaseStationsList.FindIndex(x => x.Id == ID);
+                otherLongitude = DataSource.BaseStationsList[index].Longitude;
+                otherLatitude = DataSource.BaseStationsList[index].Latitude;
             }
             else if (yourChoise == 2)//customer point
             {
-                index = DataSource.customersList.FindIndex(x => x.Id == ID);
-                otherLongitude = DataSource.customersList[index].Longitude;
-                otherLatitude = DataSource.customersList[index].Latitude;
+                index = DataSource.CustomersList.FindIndex(x => x.Id == ID);
+                otherLongitude = DataSource.CustomersList[index].Longitude;
+                otherLatitude = DataSource.CustomersList[index].Latitude;
             }
             else return -1;
 
