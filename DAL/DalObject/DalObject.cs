@@ -21,7 +21,7 @@ namespace DalObject
             DataSource.Initialize();
         }
 
-        #region Functions of insert options
+        #region Functions for insert options
         /// <summary>
         /// The function adds a station to the list of Basestations.
         /// </summary>
@@ -60,9 +60,9 @@ namespace DalObject
             DataSource.ParcelsList.Add(newParcel);
             return newParcel.Id; //Returns the id of the current Parcel.
         }
-        #endregion Functions of insert options
+        #endregion Functions for insert options
 
-        #region Functions of update options
+        #region Functions for update options
         /// <summary>
         /// The function assigns a package to the drone.
         /// </summary>
@@ -157,9 +157,9 @@ namespace DalObject
             temp.FreeChargeSlots++;
             DataSource.BaseStationsList[indexaforBaseStationId] = temp;
         }
-        #endregion Functions of update options
+        #endregion Functions for update options
 
-        #region Functions of display options
+        #region Functions for display options
         /// <summary>
         /// The function returns the selected base station.
         /// </summary>
@@ -199,9 +199,9 @@ namespace DalObject
         {
             return DataSource.ParcelsList.Find(x => x.Id == ID);
         }
-        #endregion Functions of display options
+        #endregion Functions for display options
 
-        #region Functions of listing options
+        #region Functions for listing options
         /// <summary>
         /// The function returns an array of all base stations.
         /// </summary>
@@ -255,9 +255,9 @@ namespace DalObject
         { 
             return DataSource.BaseStationsList.TakeWhile(x => x.FreeChargeSlots > 0).ToList();
         }
-        #endregion Functions of listing options
+        #endregion Functions for listing options
 
-        #region Convert decima to sexagesimal function 
+        #region Convert decima to sexagesimal function (Bonus)
 
         /// <summary>
         /// A function that converts from decimal to Sexagesimal
@@ -285,56 +285,16 @@ namespace DalObject
                 default:
                     break;
             }
-
             int degrees = (int)decimalValueToConvert;// we lose the numbers affter the dot.
             int minutes = (int)((decimalValueToConvert - degrees) * 60);//we take the decimal number and we remove the number that we take before 
                                                                         //and multiplay by 60 (becuse we want minuts)
             float seconds = (float)((decimalValueToConvert - degrees - (minutes / 60)) * 3600);//and multiplay by 3600 (becuse we want seconds)
-
             return String.Format("{0}° {1}' {2}'' {3}", Math.Abs(degrees), Math.Abs(minutes), Math.Abs(seconds), daricton);// return the complited number
         }
-       
 
-        /*
-        public static string ConvertLongitudDecimalDegreesToSexagesimal(double decimalValueToConvert)
-        {
+        #endregion Convert decima to sexagesimal function (Bonus)
 
-            int degrees = (int)decimalValueToConvert;// we lose the numbers affter the dot.
-            int minutes = (int)((decimalValueToConvert - degrees) * 60);//we take the decimal number and we remove the number that we take before 
-                                                                        //and multiplay by 60 (becuse we want minuts)
-            float seconds = (float)((decimalValueToConvert - degrees - (minutes / 60)) * 3600);//and multiplay by 3600 (becuse we want seconds)
-
-            string daricton;
-            if (decimalValueToConvert >= 0)
-                daricton = "N";
-            else daricton = "S";
-
-            return String.Format("{0}° {1}' {2}'' {3}", Math.Abs(degrees), Math.Abs(minutes), Math.Abs(seconds),daricton);// return the complited number
-        }
-
-        /// <summary>
-        /// A function that converts from decimal to Sexagesimal
-        /// </summary>
-        /// <param name="decimalValueToConvert"> the lociton on decimal display</param>
-        /// <returns>string that hold the convert location</returns>
-        public static string ConvertLatitudDecimalDegreesToSexagesimal(double decimalValueToConvert)
-        {
-
-            int degrees = (int)decimalValueToConvert;// we lose the numbers affter the dot.
-            int minutes = (int)((decimalValueToConvert - degrees) * 60);//we take the decimal number and we remove the number that we take before 
-                                                                        //and multiplay by 60 (becuse we want minuts)
-            float seconds = (float)((decimalValueToConvert - degrees - (minutes / 60)) * 3600);//and multiplay by 3600 (becuse we want seconds)
-
-            string daricton = null;
-            if (decimalValueToConvert >= 0)//chack the number if its too east or weast
-                daricton = "E";
-            else daricton = "W";
-            return String.Format("{0}° {1}' {2}'' {3}", Math.Abs(degrees), Math.Abs(minutes), Math.Abs(seconds), daricton); // return the complited number
-        }
-        */
-        #endregion Convert decima to sexagesimal function 
-
-        #region Function of calculating distance between points
+        #region Function of calculating distance between points (Bonus)
         /// <summary>
         /// A function that calculates the distance between points
         /// </summary>
@@ -374,7 +334,7 @@ namespace DalObject
                                                                                                                                    // also takes into account the curvature of the earth
             return (double)(6376500.0 * (2.0 * Math.Atan2(Math.Sqrt(d3), Math.Sqrt(1.0 - d3))));
         }
-        #endregion Function of calculating distance between points
+        #endregion Function of calculating distance between points (Bonus)
     }
 }
 
