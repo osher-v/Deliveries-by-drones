@@ -32,7 +32,7 @@ namespace DalObject
         internal class Config 
         {
         /// <summary> Continuous number For the package </summary>
-            public static int CountIdPackage = 1;
+            public static int CountIdPackage = 1000;
         }
 
         /// <summary> responsible for initializing all entities </summary>
@@ -101,8 +101,7 @@ namespace DalObject
                     Weight = (WeightCategories)random.Next(0, 3),//0=light,1=medium,2=heavy
                     Priority = (Priorities)random.Next(0, 3),//0=regular, 1=fast, 2=urgent
                     DroneId = 0,
-                    Requested = new DateTime(2021, 10, random.Next(1, 7))
-                    //Requested = DateTime.Now.AddDays(random.Next(-5, 1))
+                    Requested = DateTime.Now
                 });
             }
             #endregion init Parcel

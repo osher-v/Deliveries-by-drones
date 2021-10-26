@@ -393,15 +393,15 @@ Choose 1 for a station or 2 for a customer");
             {
                 case chackDistance.BasePoint:
                     Console.WriteLine("please enter base ID:");
-                    int baseID = 0;
-                    int.TryParse(Console.ReadLine(), out baseID);
+                    int.TryParse(Console.ReadLine(), out int baseID);
+
                     Console.WriteLine(DalObject.DalObject.GetDistance(longitudeNew, latitudeNew, baseID, choice));
                     break;
 
                 case chackDistance.CustomerPoint:
                     Console.WriteLine("please enter Customer ID:");
-                    int customerID = 0;
-                    int.TryParse(Console.ReadLine(), out customerID);
+                    int.TryParse(Console.ReadLine(), out int customerID);
+
                     Console.WriteLine(DalObject.DalObject.GetDistance(longitudeNew, latitudeNew, customerID, choice));
 
                     break;

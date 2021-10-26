@@ -21,6 +21,11 @@ namespace IDAL
         /// </summary>
         public enum DroneStatuses { free, inMaintenance, busy }
 
+        /// <summary>
+        /// Enum to know the Latitude and longitude
+        /// </summary>
+        public enum LongitudeAndLatitude { Longitude, Latitude}
+
     }
 
 }

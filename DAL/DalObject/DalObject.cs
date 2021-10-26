@@ -345,11 +345,44 @@ namespace DalObject
         #endregion Functions of listing options
 
         #region Convert decima to sexagesimal function 
+
         /// <summary>
         /// A function that converts from decimal to Sexagesimal
         /// </summary>
-        /// <param name="decimalValueToConvert"> the lociton on decimal display</param>
+        /// <param name="decimalValueToConvert">The number to convert</param>
+        /// <param name="side"></param>
         /// <returns>string that hold the convert location</returns>
+        public static string ConvertDecimalDegreesToSexagesimal(double decimalValueToConvert,LongitudeAndLatitude side )
+        {
+            string daricton = null;
+            switch (side)
+            {
+                case LongitudeAndLatitude.Longitude:
+                    if (decimalValueToConvert >= 0)
+                        daricton = "N";
+                    else daricton = "S";
+                    break;
+
+                case LongitudeAndLatitude.Latitude:
+                    if (decimalValueToConvert >= 0)//chack the number if its too east or weast
+                        daricton = "E";
+                    else daricton = "W";
+                    break;
+
+                default:
+                    break;
+            }
+
+            int degrees = (int)decimalValueToConvert;// we lose the numbers affter the dot.
+            int minutes = (int)((decimalValueToConvert - degrees) * 60);//we take the decimal number and we remove the number that we take before 
+                                                                        //and multiplay by 60 (becuse we want minuts)
+            float seconds = (float)((decimalValueToConvert - degrees - (minutes / 60)) * 3600);//and multiplay by 3600 (becuse we want seconds)
+
+            return String.Format("{0}° {1}' {2}'' {3}", Math.Abs(degrees), Math.Abs(minutes), Math.Abs(seconds), daricton);// return the complited number
+        }
+       
+
+        /*
         public static string ConvertLongitudDecimalDegreesToSexagesimal(double decimalValueToConvert)
         {
 
@@ -357,12 +390,15 @@ namespace DalObject
             int minutes = (int)((decimalValueToConvert - degrees) * 60);//we take the decimal number and we remove the number that we take before 
                                                                         //and multiplay by 60 (becuse we want minuts)
             float seconds = (float)((decimalValueToConvert - degrees - (minutes / 60)) * 3600);//and multiplay by 3600 (becuse we want seconds)
-            string daricton = null;
+
+            string daricton;
             if (decimalValueToConvert >= 0)
                 daricton = "N";
             else daricton = "S";
+
             return String.Format("{0}° {1}' {2}'' {3}", Math.Abs(degrees), Math.Abs(minutes), Math.Abs(seconds),daricton);// return the complited number
         }
+
         /// <summary>
         /// A function that converts from decimal to Sexagesimal
         /// </summary>
@@ -375,12 +411,14 @@ namespace DalObject
             int minutes = (int)((decimalValueToConvert - degrees) * 60);//we take the decimal number and we remove the number that we take before 
                                                                         //and multiplay by 60 (becuse we want minuts)
             float seconds = (float)((decimalValueToConvert - degrees - (minutes / 60)) * 3600);//and multiplay by 3600 (becuse we want seconds)
+
             string daricton = null;
             if (decimalValueToConvert >= 0)//chack the number if its too east or weast
                 daricton = "E";
             else daricton = "W";
             return String.Format("{0}° {1}' {2}'' {3}", Math.Abs(degrees), Math.Abs(minutes), Math.Abs(seconds), daricton); // return the complited number
         }
+        */
         #endregion Convert decima to sexagesimal function 
 
         #region Function of calculating distance between points
@@ -394,8 +432,25 @@ namespace DalObject
         /// <returns>the distence between the points</returns>
         public static double GetDistance(double longitude, double latitude, int ID ,int yourChoise)
         {
-            double otherLongitude = 0, otherLatitude = 0;
-               List <BaseStation> temp = new List<BaseStation>();
+            double otherLongitude, otherLatitude;
+            int index;
+            //List <BaseStation> temp = new List<BaseStation>();
+
+            if (yourChoise == 1)//BaseStation point
+            {
+                index = DataSource.baseStationsList.FindIndex(x => x.Id == ID);
+                otherLongitude = DataSource.baseStationsList[index].Longitude;
+                otherLatitude = DataSource.baseStationsList[index].Latitude;
+            }
+            else if (yourChoise == 2)//customer point
+            {
+                index = DataSource.customersList.FindIndex(x => x.Id == ID);
+                otherLongitude = DataSource.customersList[index].Longitude;
+                otherLatitude = DataSource.customersList[index].Latitude;
+            }
+            else return -1;
+
+            /*
             if (yourChoise == 1)
             {
                 for (int i = 0; i < DataSource.baseStationsList.Count(); i++) //same as before, find the id in the list 
@@ -419,6 +474,8 @@ namespace DalObject
                 }
             }
             else return -1;
+            */
+
             //For the calculation we calculate the earth into a circle (ellipse) Divide its 360 degrees by half
             //180 for each longitude / latitude and then make a pie on each half to calculate the radius for
             //the formula below
@@ -434,3 +491,5 @@ namespace DalObject
         #endregion Function of calculating distance between points
     }
 }
+
+
