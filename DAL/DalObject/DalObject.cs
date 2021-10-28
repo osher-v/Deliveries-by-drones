@@ -5,13 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 
 using IDAL.DO;
+using IDal;
 
 namespace DalObject
 {
     /// <summary>
     /// matods that use from the main 
     /// </summary>
-    public class DalObject
+    public class DalObject: IDal.IDal
     {
         /// <summary>
         /// Default constructor.
@@ -206,7 +207,7 @@ namespace DalObject
         /// The function returns an array of all base stations.
         /// </summary>
         /// <returns>returns a new List that hold all the data from the reqsted List</returns>
-        public List<BaseStation> GetBaseStationList()
+        public IEnumerable<BaseStation> GetBaseStationList()
         {
             return DataSource.BaseStationsList.Take(DataSource.BaseStationsList.Count).ToList();
         }
@@ -215,7 +216,7 @@ namespace DalObject
         /// The function returns an array of all Drone.
         /// </summary>
         /// <returns>returns a new List that hold all the data from the reqsted List</returns>
-        public List<Drone> GetDroneList()
+        public IEnumerable<Drone> GetDroneList()
         {
             return DataSource.DronesList.Take(DataSource.DronesList.Count).ToList();
         }
@@ -224,7 +225,7 @@ namespace DalObject
         /// The function returns an array of all Customer.
         /// </summary>
         /// <returns>returns a new List that hold all the data from the reqsted List</returns>
-        public List<Customer> GetCustomerList()
+        public IEnumerable<Customer> GetCustomerList()
         {
             return DataSource.CustomersList.Take(DataSource.CustomersList.Count).ToList();
         }
@@ -233,7 +234,7 @@ namespace DalObject
         /// The function returns an array of all Parcel.
         /// </summary>
         /// <returns>returns a new List that hold all the data from the reqsted List</returns>
-        public List<Parcel> GetParcelList()
+        public IEnumerable<Parcel> GetParcelList()
         {
             return DataSource.ParcelsList.Take(DataSource.ParcelsList.Count).ToList();
         }
@@ -242,7 +243,7 @@ namespace DalObject
         /// The function returns an array of all packages not associated with the Drone.
         /// </summary>
         /// <returns>returns a new List that hold all the data from the reqsted List</returns>
-        public List<Parcel> GetParcelWithoutDrone()
+        public IEnumerable<Parcel> GetParcelWithoutDrone()
         {
             return DataSource.ParcelsList.TakeWhile(x =>x.DroneId == 0).ToList();
         }
@@ -251,11 +252,18 @@ namespace DalObject
         /// The function returns base stations with free charge positions.
         /// </summary>
         /// <returns>returns a new List that hold all the data from the reqsted List</returns>
-        public List<BaseStation> GetBaseStationsWithFreeChargSlots()
+        public IEnumerable<BaseStation> GetBaseStationsWithFreeChargSlots()
         { 
             return DataSource.BaseStationsList.TakeWhile(x => x.FreeChargeSlots > 0).ToList();
         }
         #endregion Functions for listing options
+        public double[] RequestPowerConsumptionByDrone()
+        {
+            double[] temp = { DataSource.Config.Free, DataSource.Config.LightWeightCarrier,
+            DataSource.Config.MediumWeightBearing, DataSource.Config.CarriesHeavyWeight,
+                DataSource.Config.DroneLoadingRate};
+            return temp;
+        }
 
         #region Convert decima to sexagesimal function (Bonus)
 

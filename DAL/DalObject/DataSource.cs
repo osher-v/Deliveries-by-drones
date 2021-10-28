@@ -33,6 +33,13 @@ namespace DalObject
         {
         /// <summary> Continuous number For the package </summary>
             public static int CountIdPackage = 1000;
+
+            public static double Free;
+            public static double LightWeightCarrier;
+            public static double MediumWeightBearing;
+            public static double CarriesHeavyWeight;
+            public static double DroneLoadingRate;
+
         }
 
         /// <summary> responsible for initializing all entities </summary>
@@ -67,9 +74,9 @@ namespace DalObject
                 DronesList.Add( new Drone {
                     Id = MyRandom.Next(100000000, 999999999),
                     Model = modelNameArr[i],
-                    MaxWeight = (WeightCategories)MyRandom.Next(0, 3),//0=light,1=medium,2=heavy
-                    Battery = MyRandom.Next(50, 100),
-                    Status = (DroneStatuses)MyRandom.Next(0, 3)//0=free, 1=inMaintenance, 2=busy
+                    MaxWeight = (WeightCategories)MyRandom.Next(0, 3)//0=light,1=medium,2=heavy
+                    //Battery = MyRandom.Next(50, 100),
+                    //Status = (DroneStatuses)MyRandom.Next(0, 3)//0=free, 1=inMaintenance, 2=busy
                 });
             }
             #endregion init Drone

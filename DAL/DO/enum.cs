@@ -16,11 +16,12 @@ namespace IDAL
         ///  Enum to identify the weight category
         /// </summary>
         public enum WeightCategories { light, medium, heavy }
+        /*
         /// <summary>
         ///  Enum to know the status
         /// </summary>
         public enum DroneStatuses { free, inMaintenance, busy }
-
+        */
         /// <summary>
         /// Enum to know the Latitude and longitude
         /// </summary>

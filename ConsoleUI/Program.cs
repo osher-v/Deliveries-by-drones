@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using IDAL.DO;
+using IDal;
 
 namespace ConsoleUI
 {
@@ -288,6 +289,18 @@ Your choice:");
 
         #region Handling the list display options
         /// <summary>
+        /// The function prints the data array.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="listToPrint"></param>
+        public static void printTheList<T>(List<T> listToPrint) where T : struct
+        {
+            foreach (T item in listToPrint)
+            {
+                Console.WriteLine(item);
+            }
+        }
+        /// <summary>
         /// The function handles list view options.
         /// </summary>
         /// <param name="dal">DalObject object that is passed as a parameter to enable the functions in the DalObject class</param>
@@ -309,57 +322,68 @@ Your choice:");
             switch ((DisplayListOption)choice)
             {
                 case DisplayListOption.ListOfBaseStationView:
-                    List<BaseStation> displayBaseList = dal.GetBaseStationList();
-                    
+                    //List<BaseStation> displayBaseList = dal.GetBaseStationList().ToList();
+                    printTheList(dal.GetBaseStationList().ToList());
+    
+                    /*
                     for (int i = 0; i < displayBaseList.Count; i++)
                     {
                         Console.WriteLine(displayBaseList[i].ToString());
                     }
+                    */
                     break;
-
-                case DisplayListOption.ListOfDronedisplay:
-                    List<Drone> displayDroneList = dal.GetDroneList();
                     
+                case DisplayListOption.ListOfDronedisplay:
+                    //List<Drone> displayDroneList = dal.GetDroneList().ToList();
+                    printTheList(dal.GetDroneList().ToList());
+                    /*
                     for (int i = 0; i < displayDroneList.Count; i++)
                     {
                         Console.WriteLine(displayDroneList[i].ToString());
                     }
+                    */
                     break;
 
                 case DisplayListOption.ListOfCustomerView:
-                    List<Customer> displayCustomerList = dal.GetCustomerList();
-                   
+                    //List<Customer> displayCustomerList = dal.GetCustomerList().ToList();
+
+                    printTheList(dal.GetCustomerList().ToList());
+                    /*
                     for (int i = 0; i < displayCustomerList.Count; i++)
                     {
                         Console.WriteLine(displayCustomerList[i].ToString());
                     }
+                    */
                     break;
 
                 case DisplayListOption.ListOfPackageView:
-                    List<Parcel> displayPackageList = dal.GetParcelList();
-                  
-                    for (int i = 0; i < displayPackageList.Count(); i++)
-                    {
-                        Console.WriteLine(displayPackageList[i].ToString());
-                    }
+                    //List<Parcel> displayPackageList = dal.GetParcelList().ToList();
+                    printTheList(dal.GetParcelList().ToList());
+                    
                     break;
 
                 case DisplayListOption.ListOfFreePackageView:
-                    List<Parcel> displayParcelWithoutDrone = dal.GetParcelWithoutDrone();
-                    
+                    //List<Parcel> displayParcelWithoutDrone = dal.GetParcelWithoutDrone().ToList();
+                    printTheList(dal.GetParcelWithoutDrone().ToList());
+                    /*
                     for (int i = 0; i < displayParcelWithoutDrone.Count(); i++)
                     {
                         Console.WriteLine(displayParcelWithoutDrone[i].ToString());
                     }
+                    */
                     break;
 
                 case DisplayListOption.ListOfBaseStationsWithFreeChargSlots:
-                    List<BaseStation> displayBaseStationWithFreeChargSlots = dal.GetBaseStationsWithFreeChargSlots();
+                    //List<BaseStation> displayBaseStationWithFreeChargSlots = dal.GetBaseStationsWithFreeChargSlots().ToList();
                     
+                    printTheList(dal.GetBaseStationsWithFreeChargSlots().ToList());
+
+                    /*
                     for (int i = 0; i < displayBaseStationWithFreeChargSlots.Count(); i++)
                     {
                         Console.WriteLine(displayBaseStationWithFreeChargSlots[i].ToString());
                     }
+                    */
                     break;
 
                 default:
@@ -417,9 +441,9 @@ Choose 1 for a station or 2 for a customer");
         static void Main(string[] args)
         {          
             DalObject.DalObject dalObject = new DalObject.DalObject();
+            IDal.IDal idal = dalObject;
 
-            Options options;
-            int choice = 0;
+            int choice;
             do
             {
                 Console.WriteLine(@"
@@ -432,10 +456,9 @@ choose from the following options (type the selected number):
 5. Calculate distance between points.
 6. EXIT.
 Your choice:");
-                while (!int.TryParse(Console.ReadLine(), out choice)) ;
-                options = (Options)choice;
+                int.TryParse(Console.ReadLine(), out choice);
 
-                switch (options)
+                switch ((Options)choice)
                 {
                     case Options.Insert:
                         InsertOptions(dalObject);
