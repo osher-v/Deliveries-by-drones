@@ -24,7 +24,7 @@ namespace IDAL
                 return string.Format("id is: {0,-9}\t model of the drone is: {1,-7}\t drone type is: {2,-7}\t" +
                     "Battery level is: {3,-5}\t  drone status is: {4,-7}\t ", Id, Model, MaxWeight, Battery, Status);
                 */
-                return string.Format("id is: {0,-9}\t model of the drone is: {1,-7}\t drone type is: {2,-7}\t" +
+                return string.Format("id is: {0,-9}\t model of the drone is: {1,-7}\t drone type is: {2,-7}\t" 
                    , Id, Model, MaxWeight);
                 
             }

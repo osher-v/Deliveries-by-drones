@@ -96,8 +96,8 @@ Please enter an ID number for the new drone:");
                     while (!int.TryParse(Console.ReadLine(), out newStatus)) ;
                     
                     Drone newdrone = new Drone {
-                        Id = newDroneID, Model = newmodel, MaxWeight = (WeightCategories)newMaxWeight,
-                        Battery = newBatteryLevel, Status = (DroneStatuses)newStatus
+                        Id = newDroneID, Model = newmodel, MaxWeight = (WeightCategories)newMaxWeight
+                        //Battery = newBatteryLevel, Status = (DroneStatuses)newStatus
                     };
                     dal.AddDrone(newdrone);
                     break;
@@ -207,7 +207,7 @@ Your choice:");
                     Console.WriteLine("please choose baseStationId ID from the List below:");
                     //List<BaseStation> displayBaseStationWithFreeChargSlots = new List<BaseStation>();
                     //displayBaseStationWithFreeChargSlots = dal.GetBaseStationsWithFreeChargSlots();
-                    List<BaseStation> displayBaseStationWithFreeChargSlots = dal.GetBaseStationsWithFreeChargSlots();
+                    List<BaseStation> displayBaseStationWithFreeChargSlots = dal.GetBaseStationsWithFreeChargSlots().ToList();
                     for (int i = 0; i < displayBaseStationWithFreeChargSlots.Count; i++)
                     {
                         Console.WriteLine(displayBaseStationWithFreeChargSlots[i].ToString());

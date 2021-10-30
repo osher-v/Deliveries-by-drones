@@ -119,11 +119,13 @@ namespace DalObject
         /// <param name="droneId">Id of drone</param>
         public void SendingDroneforChargingAtBaseStation(int baseStationId ,int droneId)
         {
+            /*
             //drone update.
             int indexaforDrone = DataSource.DronesList.FindIndex(x => x.Id == droneId);
             Drone help = DataSource.DronesList[indexaforDrone];
             help.Status = (DroneStatuses)1; //inMaintenance
             DataSource.DronesList[indexaforDrone] = help;
+            */
 
             DataSource.DroneChargeList.Add(new DroneCharge() { StationId = baseStationId, DroneId = droneId });
 
@@ -140,11 +142,13 @@ namespace DalObject
         /// <param name="droneId">Id of drone</param>
         public void ReleaseDroneFromChargingAtBaseStation(int droneId)
         {
+            /*
             //Drone update.
             int indexaforDrone = DataSource.DronesList.FindIndex(x => x.Id == droneId);
             Drone help = DataSource.DronesList[indexaforDrone];
             help.Status = (DroneStatuses)0; //free
             DataSource.DronesList[indexaforDrone] = help;
+            */
 
             //find the Station Id and remove from the DroneChargeList.
             int indexafordroneCharge = DataSource.DroneChargeList.FindIndex(x => x.DroneId == droneId);
