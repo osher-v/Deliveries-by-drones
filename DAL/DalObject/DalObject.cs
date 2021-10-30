@@ -297,6 +297,7 @@ namespace DalObject
             int minutes = (int)((decimalValueToConvert - degrees) * 60);//we take the decimal number and we remove the number that we take before 
                                                                         //and multiplay by 60 (becuse we want minuts)
             float seconds = (float)((decimalValueToConvert - degrees - (minutes / 60)) * 3600);//and multiplay by 3600 (becuse we want seconds)
+
             return String.Format("{0}° {1}' {2}'' {3}", Math.Abs(degrees), Math.Abs(minutes), Math.Abs(seconds), daricton);// return the complited number
         }
 

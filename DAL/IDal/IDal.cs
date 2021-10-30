@@ -8,7 +8,7 @@ namespace IDal
 {
     public class IDal
     {
-        public double[] RequestPowerConsumptionByDrone();
+        //public double[] RequestPowerConsumptionByDrone();
 
 
 
