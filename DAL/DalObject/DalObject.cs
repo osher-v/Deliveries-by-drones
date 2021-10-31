@@ -261,6 +261,7 @@ namespace DalObject
             return DataSource.BaseStationsList.TakeWhile(x => x.FreeChargeSlots > 0).ToList();
         }
         #endregion Functions for listing options
+
         public double[] RequestPowerConsumptionByDrone()
         {
             double[] temp = { DataSource.Config.Free, DataSource.Config.LightWeightCarrier,

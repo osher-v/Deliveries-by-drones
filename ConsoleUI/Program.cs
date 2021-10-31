@@ -441,7 +441,7 @@ Choose 1 for a station or 2 for a customer");
         static void Main(string[] args)
         {          
             DalObject.DalObject dalObject = new DalObject.DalObject();
-            IDal.IDal idal = dalObject;
+            //IDal.IDal idal = dalObject;
 
             int choice;
             do
