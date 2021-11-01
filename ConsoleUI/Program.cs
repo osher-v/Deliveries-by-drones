@@ -322,68 +322,27 @@ Your choice:");
             switch ((DisplayListOption)choice)
             {
                 case DisplayListOption.ListOfBaseStationView:
-                    //List<BaseStation> displayBaseList = dal.GetBaseStationList().ToList();
                     printTheList(dal.GetBaseStationList().ToList());
-    
-                    /*
-                    for (int i = 0; i < displayBaseList.Count; i++)
-                    {
-                        Console.WriteLine(displayBaseList[i].ToString());
-                    }
-                    */
                     break;
                     
                 case DisplayListOption.ListOfDronedisplay:
-                    //List<Drone> displayDroneList = dal.GetDroneList().ToList();
                     printTheList(dal.GetDroneList().ToList());
-                    /*
-                    for (int i = 0; i < displayDroneList.Count; i++)
-                    {
-                        Console.WriteLine(displayDroneList[i].ToString());
-                    }
-                    */
                     break;
 
                 case DisplayListOption.ListOfCustomerView:
-                    //List<Customer> displayCustomerList = dal.GetCustomerList().ToList();
-
                     printTheList(dal.GetCustomerList().ToList());
-                    /*
-                    for (int i = 0; i < displayCustomerList.Count; i++)
-                    {
-                        Console.WriteLine(displayCustomerList[i].ToString());
-                    }
-                    */
                     break;
 
                 case DisplayListOption.ListOfPackageView:
-                    //List<Parcel> displayPackageList = dal.GetParcelList().ToList();
                     printTheList(dal.GetParcelList().ToList());
-                    
                     break;
 
                 case DisplayListOption.ListOfFreePackageView:
-                    //List<Parcel> displayParcelWithoutDrone = dal.GetParcelWithoutDrone().ToList();
                     printTheList(dal.GetParcelWithoutDrone().ToList());
-                    /*
-                    for (int i = 0; i < displayParcelWithoutDrone.Count(); i++)
-                    {
-                        Console.WriteLine(displayParcelWithoutDrone[i].ToString());
-                    }
-                    */
                     break;
 
-                case DisplayListOption.ListOfBaseStationsWithFreeChargSlots:
-                    //List<BaseStation> displayBaseStationWithFreeChargSlots = dal.GetBaseStationsWithFreeChargSlots().ToList();
-                    
+                case DisplayListOption.ListOfBaseStationsWithFreeChargSlots:                    
                     printTheList(dal.GetBaseStationsWithFreeChargSlots().ToList());
-
-                    /*
-                    for (int i = 0; i < displayBaseStationWithFreeChargSlots.Count(); i++)
-                    {
-                        Console.WriteLine(displayBaseStationWithFreeChargSlots[i].ToString());
-                    }
-                    */
                     break;
 
                 default:
