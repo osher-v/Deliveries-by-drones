@@ -29,6 +29,16 @@ namespace DalObject
         /// <param name="newbaseStation"></param>
         public void AddStation(BaseStation newbaseStation)
         {
+            /*
+            foreach (var item in DataSource.BaseStationsList)
+            {
+                if (item.Id == newbaseStation.Id)
+                    throw new AddAnExistingObjectException("Error adding an object with an existing ID number");
+            }
+            */
+
+            if((DataSource.BaseStationsList.FindIndex(x => x.Id == newbaseStation.Id)) != -1)
+                throw new AddAnExistingObjectException("Error adding an object with an existing ID number");
             DataSource.BaseStationsList.Add(newbaseStation);
         }
 
@@ -38,6 +48,8 @@ namespace DalObject
         /// <param name="newDrone"></param>
         public void AddDrone(Drone newDrone)
         {
+            if ((DataSource.BaseStationsList.FindIndex(x => x.Id == newDrone.Id)) != -1)
+                throw new AddAnExistingObjectException("Error adding an object with an existing ID number");
             DataSource.DronesList.Add(newDrone);
         }
 
@@ -47,6 +59,8 @@ namespace DalObject
         /// <param name="newCustomer"></param>
         public void AddCustomer(Customer newCustomer)
         {
+            if ((DataSource.BaseStationsList.FindIndex(x => x.Id == newCustomer.Id)) != -1)
+                throw new AddAnExistingObjectException("Error adding an object with an existing ID number");
             DataSource.CustomersList.Add(newCustomer);
         }
 
@@ -71,8 +85,13 @@ namespace DalObject
         /// <param name="droneId">Id of drone</param>
         public void AssignPackageToDdrone(int ParcelId, int droneId)
         {
+            //האם להוסיף בדיקה גם על תקינות הרחפן??
             //Update the package.
             int indexaforParcel = DataSource.ParcelsList.FindIndex(x => x.Id == ParcelId);
+
+            if (indexaforParcel == -1)
+                throw new NonExistentObjectException();
+
             Parcel temp = DataSource.ParcelsList[indexaforParcel];
             temp.DroneId = droneId;
             temp.Assigned = DateTime.Now;
@@ -95,6 +114,10 @@ namespace DalObject
         {
             //Update the package.
             int indexaforParcel = DataSource.ParcelsList.FindIndex(x => x.Id == ParcelId);
+
+            if (indexaforParcel == -1)
+                throw new NonExistentObjectException();
+
             Parcel temp = DataSource.ParcelsList[indexaforParcel];
             temp.PickedUp = DateTime.Now;
             DataSource.ParcelsList[indexaforParcel] = temp;
@@ -107,10 +130,16 @@ namespace DalObject
         public void DeliveryPackageToTheCustomer(int ParcelId)
         {
             int indexaforParcel = DataSource.ParcelsList.FindIndex(x => x.Id == ParcelId);
+
+            if (indexaforParcel == -1)
+                throw new NonExistentObjectException();
+
             Parcel temp = DataSource.ParcelsList[indexaforParcel];
             temp.Delivered = DateTime.Now;
             DataSource.ParcelsList[indexaforParcel] = temp;
         }
+
+        //בשתי הפונקציות הבאות אלו חריגות בדיוק לעשות????
 
         /// <summary>
         /// sending drone for charging at BaseStation.
@@ -165,6 +194,9 @@ namespace DalObject
         #endregion Functions for update options
 
         #region Functions for display options
+
+        //האם לשנות את הfind כי כבר מצאנו את האינדקס
+
         /// <summary>
         /// The function returns the selected base station.
         /// </summary>
@@ -172,6 +204,8 @@ namespace DalObject
         /// <returns> return empty ubjact if its not there</returns>
         public BaseStation GetBaseStation(int ID)
         {
+            if ((DataSource.BaseStationsList.FindIndex(x => x.Id == ID)) == -1)
+                throw new NonExistentObjectException();
             return DataSource.BaseStationsList.Find(x => x.Id == ID);
         }
 
@@ -182,6 +216,8 @@ namespace DalObject
         /// <returns>return empty ubjact if its not there</returns>
         public Drone GetDrone(int ID)
         {
+            if ((DataSource.DronesList.FindIndex(x => x.Id == ID)) == -1)
+                throw new NonExistentObjectException();
             return DataSource.DronesList.Find(x => x.Id == ID);
         }
 
@@ -192,6 +228,8 @@ namespace DalObject
         /// <returns>return empty ubjact if its not there</returns>
         public Customer GetCustomer(int ID)
         {
+            if ((DataSource.CustomersList.FindIndex(x => x.Id == ID)) == -1)
+                throw new NonExistentObjectException();
             return DataSource.CustomersList.Find(x => x.Id == ID);
         }
 
@@ -202,6 +240,8 @@ namespace DalObject
         /// <returns>return empty ubjact if its not there</returns>
         public Parcel GetParcel(int ID)
         {
+            if ((DataSource.ParcelsList.FindIndex(x => x.Id == ID)) == -1)
+                throw new NonExistentObjectException();
             return DataSource.ParcelsList.Find(x => x.Id == ID);
         }
         #endregion Functions for display options

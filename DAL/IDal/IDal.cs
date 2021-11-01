@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace IDal
 {
-    public class IDal
+    public interface IDal
     {
-        //public double[] RequestPowerConsumptionByDrone();
+        public double[] RequestPowerConsumptionByDrone();
 
 
 
