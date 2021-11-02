@@ -12,7 +12,7 @@ namespace DalObject
     /// <summary>
     /// matods that use from the main 
     /// </summary>
-    public class DalObject: IDal.IDal
+    public partial class  DalObject: IDal.IDal 
     {
         /// <summary>
         /// Default constructor.
@@ -27,170 +27,170 @@ namespace DalObject
         /// The function adds a station to the list of Basestations.
         /// </summary>
         /// <param name="newbaseStation"></param>
-        public void AddStation(BaseStation newbaseStation)
-        {
-            /*
-            foreach (var item in DataSource.BaseStationsList)
-            {
-                if (item.Id == newbaseStation.Id)
-                    throw new AddAnExistingObjectException("Error adding an object with an existing ID number");
-            }
-            */
+        //public void AddStation(BaseStation newbaseStation)
+        //{
+        //    /*
+        //    foreach (var item in DataSource.BaseStationsList)
+        //    {
+        //        if (item.Id == newbaseStation.Id)
+        //            throw new AddAnExistingObjectException("Error adding an object with an existing ID number");
+        //    }
+        //    */
 
-            if((DataSource.BaseStationsList.FindIndex(x => x.Id == newbaseStation.Id)) != -1)
-                throw new AddAnExistingObjectException("Error adding an object with an existing ID number");
-            DataSource.BaseStationsList.Add(newbaseStation);
-        }
+        //    if((DataSource.BaseStationsList.FindIndex(x => x.Id == newbaseStation.Id)) != -1)
+        //        throw new AddAnExistingObjectException("Error adding an object with an existing ID number");
+        //    DataSource.BaseStationsList.Add(newbaseStation);
+        //}
 
         /// <summary>
         /// The function adds a drone to the list of drones.
         /// </summary>
         /// <param name="newDrone"></param>
-        public void AddDrone(Drone newDrone)
-        {
-            if ((DataSource.BaseStationsList.FindIndex(x => x.Id == newDrone.Id)) != -1)
-                throw new AddAnExistingObjectException("Error adding an object with an existing ID number");
-            DataSource.DronesList.Add(newDrone);
-        }
+        //public void AddDrone(Drone newDrone)
+        //{
+        //    if ((DataSource.BaseStationsList.FindIndex(x => x.Id == newDrone.Id)) != -1)
+        //        throw new AddAnExistingObjectException("Error adding an object with an existing ID number");
+        //    DataSource.DronesList.Add(newDrone);
+        //}
 
         /// <summary>
         /// The function adds a customer to the list of customers.
         /// </summary>
         /// <param name="newCustomer"></param>
-        public void AddCustomer(Customer newCustomer)
-        {
-            if ((DataSource.BaseStationsList.FindIndex(x => x.Id == newCustomer.Id)) != -1)
-                throw new AddAnExistingObjectException("Error adding an object with an existing ID number");
-            DataSource.CustomersList.Add(newCustomer);
-        }
+        //public void AddCustomer(Customer newCustomer)
+        //{
+        //    if ((DataSource.BaseStationsList.FindIndex(x => x.Id == newCustomer.Id)) != -1)
+        //        throw new AddAnExistingObjectException("Error adding an object with an existing ID number");
+        //    DataSource.CustomersList.Add(newCustomer);
+        //}
 
-        /// <summary>
-        /// The function adds a Parcel to the list of Parcels.
-        /// </summary>
-        /// <param name="newParcel"></param>
-        /// <returns></returns>
-        public int AddParcel(Parcel newParcel)
-        {
-            newParcel.Id = DataSource.Config.CountIdPackage++;
-            DataSource.ParcelsList.Add(newParcel);
-            return newParcel.Id; //Returns the id of the current Parcel.
-        }
+        ///// <summary>
+        ///// The function adds a Parcel to the list of Parcels.
+        ///// </summary>
+        ///// <param name="newParcel"></param>
+        ///// <returns></returns>
+        //public int AddParcel(Parcel newParcel)
+        //{
+        //    newParcel.Id = DataSource.Config.CountIdPackage++;
+        //    DataSource.ParcelsList.Add(newParcel);
+        //    return newParcel.Id; //Returns the id of the current Parcel.
+        //}
         #endregion Functions for insert options
 
         #region Functions for update options
-        /// <summary>
-        /// The function assigns a package to the drone.
-        /// </summary>
-        /// <param name="ParcelId">Id of Parcel</param>
-        /// <param name="droneId">Id of drone</param>
-        public void AssignPackageToDdrone(int ParcelId, int droneId)
-        {
-            //האם להוסיף בדיקה גם על תקינות הרחפן??
-            //Update the package.
-            int indexaforParcel = DataSource.ParcelsList.FindIndex(x => x.Id == ParcelId);
+        ///// <summary>
+        ///// The function assigns a package to the drone.
+        ///// </summary>
+        ///// <param name="ParcelId">Id of Parcel</param>
+        ///// <param name="droneId">Id of drone</param>
+        //public void AssignPackageToDdrone(int ParcelId, int droneId)
+        //{
+        //    //האם להוסיף בדיקה גם על תקינות הרחפן??
+        //    //Update the package.
+        //    int indexaforParcel = DataSource.ParcelsList.FindIndex(x => x.Id == ParcelId);
 
-            if (indexaforParcel == -1)
-                throw new NonExistentObjectException();
+        //    if (indexaforParcel == -1)
+        //        throw new NonExistentObjectException();
 
-            Parcel temp = DataSource.ParcelsList[indexaforParcel];
-            temp.DroneId = droneId;
-            temp.Assigned = DateTime.Now;
-            DataSource.ParcelsList[indexaforParcel] = temp;
+        //    Parcel temp = DataSource.ParcelsList[indexaforParcel];
+        //    temp.DroneId = droneId;
+        //    temp.Assigned = DateTime.Now;
+        //    DataSource.ParcelsList[indexaforParcel] = temp;
 
-            /*
-            //drone update.
-            int indexaforDrone = DataSource.DronesList.FindIndex(x => x.Id == droneId);
-            Drone help = DataSource.DronesList[indexaforDrone];
-            help.Status = (DroneStatuses)2; //busy
-            DataSource.DronesList[indexaforDrone] = help;
-            */
-        }
+        //    /*
+        //    //drone update.
+        //    int indexaforDrone = DataSource.DronesList.FindIndex(x => x.Id == droneId);
+        //    Drone help = DataSource.DronesList[indexaforDrone];
+        //    help.Status = (DroneStatuses)2; //busy
+        //    DataSource.DronesList[indexaforDrone] = help;
+        //    */
+        //}
 
-        /// <summary>
-        /// picked up package by the drone.
-        /// </summary>
-        /// <param name="ParcelId">Id of Parcel</param>
-        public void PickedUpPackageByTheDrone(int ParcelId)
-        {
-            //Update the package.
-            int indexaforParcel = DataSource.ParcelsList.FindIndex(x => x.Id == ParcelId);
+        ///// <summary>
+        ///// picked up package by the drone.
+        ///// </summary>
+        ///// <param name="ParcelId">Id of Parcel</param>
+        //public void PickedUpPackageByTheDrone(int ParcelId)
+        //{
+        //    //Update the package.
+        //    int indexaforParcel = DataSource.ParcelsList.FindIndex(x => x.Id == ParcelId);
 
-            if (indexaforParcel == -1)
-                throw new NonExistentObjectException();
+        //    if (indexaforParcel == -1)
+        //        throw new NonExistentObjectException();
 
-            Parcel temp = DataSource.ParcelsList[indexaforParcel];
-            temp.PickedUp = DateTime.Now;
-            DataSource.ParcelsList[indexaforParcel] = temp;
-        }
+        //    Parcel temp = DataSource.ParcelsList[indexaforParcel];
+        //    temp.PickedUp = DateTime.Now;
+        //    DataSource.ParcelsList[indexaforParcel] = temp;
+        //}
 
-        /// <summary>
-        /// delivery package to the customer.
-        /// </summary>
-        /// <param name="ParcelId">Id of Parcel</param>
-        public void DeliveryPackageToTheCustomer(int ParcelId)
-        {
-            int indexaforParcel = DataSource.ParcelsList.FindIndex(x => x.Id == ParcelId);
+        ///// <summary>
+        ///// delivery package to the customer.
+        ///// </summary>
+        ///// <param name="ParcelId">Id of Parcel</param>
+        //public void DeliveryPackageToTheCustomer(int ParcelId)
+        //{
+        //    int indexaforParcel = DataSource.ParcelsList.FindIndex(x => x.Id == ParcelId);
 
-            if (indexaforParcel == -1)
-                throw new NonExistentObjectException();
+        //    if (indexaforParcel == -1)
+        //        throw new NonExistentObjectException();
 
-            Parcel temp = DataSource.ParcelsList[indexaforParcel];
-            temp.Delivered = DateTime.Now;
-            DataSource.ParcelsList[indexaforParcel] = temp;
-        }
+        //    Parcel temp = DataSource.ParcelsList[indexaforParcel];
+        //    temp.Delivered = DateTime.Now;
+        //    DataSource.ParcelsList[indexaforParcel] = temp;
+        //}
 
-        //בשתי הפונקציות הבאות אלו חריגות בדיוק לעשות????
+        ////בשתי הפונקציות הבאות אלו חריגות בדיוק לעשות????
 
-        /// <summary>
-        /// sending drone for charging at BaseStation.
-        /// </summary>
-        /// <param name="baseStationId">Id of baseStation</param>
-        /// <param name="droneId">Id of drone</param>
-        public void SendingDroneforChargingAtBaseStation(int baseStationId ,int droneId)
-        {
-            /*
-            //drone update.
-            int indexaforDrone = DataSource.DronesList.FindIndex(x => x.Id == droneId);
-            Drone help = DataSource.DronesList[indexaforDrone];
-            help.Status = (DroneStatuses)1; //inMaintenance
-            DataSource.DronesList[indexaforDrone] = help;
-            */
+        ///// <summary>
+        ///// sending drone for charging at BaseStation.
+        ///// </summary>
+        ///// <param name="baseStationId">Id of baseStation</param>
+        ///// <param name="droneId">Id of drone</param>
+        //public void SendingDroneforChargingAtBaseStation(int baseStationId ,int droneId)
+        //{
+        //    /*
+        //    //drone update.
+        //    int indexaforDrone = DataSource.DronesList.FindIndex(x => x.Id == droneId);
+        //    Drone help = DataSource.DronesList[indexaforDrone];
+        //    help.Status = (DroneStatuses)1; //inMaintenance
+        //    DataSource.DronesList[indexaforDrone] = help;
+        //    */
 
-            DataSource.DroneChargeList.Add(new DroneCharge() { StationId = baseStationId, DroneId = droneId });
+        //    DataSource.DroneChargeList.Add(new DroneCharge() { StationId = baseStationId, DroneId = droneId });
 
-            //BaseStation update.
-            int indexaforBaseStationId = DataSource.BaseStationsList.FindIndex(x => x.Id == baseStationId);
-            BaseStation temp = DataSource.BaseStationsList[indexaforBaseStationId];
-            temp.FreeChargeSlots--;
-            DataSource.BaseStationsList[indexaforBaseStationId] = temp;
-        }
+        //    //BaseStation update.
+        //    int indexaforBaseStationId = DataSource.BaseStationsList.FindIndex(x => x.Id == baseStationId);
+        //    BaseStation temp = DataSource.BaseStationsList[indexaforBaseStationId];
+        //    temp.FreeChargeSlots--;
+        //    DataSource.BaseStationsList[indexaforBaseStationId] = temp;
+        //}
 
-        /// <summary>
-        /// release drone from charging at BaseStation.
-        /// </summary>
-        /// <param name="droneId">Id of drone</param>
-        public void ReleaseDroneFromChargingAtBaseStation(int droneId)
-        {
-            /*
-            //Drone update.
-            int indexaforDrone = DataSource.DronesList.FindIndex(x => x.Id == droneId);
-            Drone help = DataSource.DronesList[indexaforDrone];
-            help.Status = (DroneStatuses)0; //free
-            DataSource.DronesList[indexaforDrone] = help;
-            */
+        ///// <summary>
+        ///// release drone from charging at BaseStation.
+        ///// </summary>
+        ///// <param name="droneId">Id of drone</param>
+        //public void ReleaseDroneFromChargingAtBaseStation(int droneId)
+        //{
+        //    /*
+        //    //Drone update.
+        //    int indexaforDrone = DataSource.DronesList.FindIndex(x => x.Id == droneId);
+        //    Drone help = DataSource.DronesList[indexaforDrone];
+        //    help.Status = (DroneStatuses)0; //free
+        //    DataSource.DronesList[indexaforDrone] = help;
+        //    */
 
-            //find the Station Id and remove from the DroneChargeList.
-            int indexafordroneCharge = DataSource.DroneChargeList.FindIndex(x => x.DroneId == droneId);
-            DroneCharge help2 = DataSource.DroneChargeList[indexafordroneCharge];
-            int baseStationId = help2.StationId;
-            DataSource.DroneChargeList.RemoveAt(DataSource.DroneChargeList.FindIndex(x => x.DroneId == droneId));
+        //    //find the Station Id and remove from the DroneChargeList.
+        //    int indexafordroneCharge = DataSource.DroneChargeList.FindIndex(x => x.DroneId == droneId);
+        //    DroneCharge help2 = DataSource.DroneChargeList[indexafordroneCharge];
+        //    int baseStationId = help2.StationId;
+        //    DataSource.DroneChargeList.RemoveAt(DataSource.DroneChargeList.FindIndex(x => x.DroneId == droneId));
 
-            //BaseStation update.
-            int indexaforBaseStationId = DataSource.BaseStationsList.FindIndex(x => x.Id == baseStationId);
-            BaseStation temp = DataSource.BaseStationsList[indexaforBaseStationId];
-            temp.FreeChargeSlots++;
-            DataSource.BaseStationsList[indexaforBaseStationId] = temp;
-        }
+        //    //BaseStation update.
+        //    int indexaforBaseStationId = DataSource.BaseStationsList.FindIndex(x => x.Id == baseStationId);
+        //    BaseStation temp = DataSource.BaseStationsList[indexaforBaseStationId];
+        //    temp.FreeChargeSlots++;
+        //    DataSource.BaseStationsList[indexaforBaseStationId] = temp;
+        //}
         #endregion Functions for update options
 
         #region Functions for display options
@@ -202,48 +202,48 @@ namespace DalObject
         /// </summary>
         /// <param name="ID">Id of a selected BaseStation </param>
         /// <returns> return empty ubjact if its not there</returns>
-        public BaseStation GetBaseStation(int ID)
-        {
-            if ((DataSource.BaseStationsList.FindIndex(x => x.Id == ID)) == -1)
-                throw new NonExistentObjectException();
-            return DataSource.BaseStationsList.Find(x => x.Id == ID);
-        }
+        //public BaseStation GetBaseStation(int ID)
+        //{
+        //    if ((DataSource.BaseStationsList.FindIndex(x => x.Id == ID)) == -1)
+        //        throw new NonExistentObjectException();
+        //    return DataSource.BaseStationsList.Find(x => x.Id == ID);
+        //}
 
-        /// <summary>
-        /// The function returns the selected Drone.
-        /// </summary>
-        /// <param name="ID">Id of a selected Drone</param>
-        /// <returns>return empty ubjact if its not there</returns>
-        public Drone GetDrone(int ID)
-        {
-            if ((DataSource.DronesList.FindIndex(x => x.Id == ID)) == -1)
-                throw new NonExistentObjectException();
-            return DataSource.DronesList.Find(x => x.Id == ID);
-        }
+        ///// <summary>
+        ///// The function returns the selected Drone.
+        ///// </summary>
+        ///// <param name="ID">Id of a selected Drone</param>
+        ///// <returns>return empty ubjact if its not there</returns>
+        //public Drone GetDrone(int ID)
+        //{
+        //    if ((DataSource.DronesList.FindIndex(x => x.Id == ID)) == -1)
+        //        throw new NonExistentObjectException();
+        //    return DataSource.DronesList.Find(x => x.Id == ID);
+        //}
 
-        /// <summary>
-        /// The function returns the selected Customer.
-        /// </summary>
-        /// <param name="ID">Id of a selected Customer</param>
-        /// <returns>return empty ubjact if its not there</returns>
-        public Customer GetCustomer(int ID)
-        {
-            if ((DataSource.CustomersList.FindIndex(x => x.Id == ID)) == -1)
-                throw new NonExistentObjectException();
-            return DataSource.CustomersList.Find(x => x.Id == ID);
-        }
+        ///// <summary>
+        ///// The function returns the selected Customer.
+        ///// </summary>
+        ///// <param name="ID">Id of a selected Customer</param>
+        ///// <returns>return empty ubjact if its not there</returns>
+        //public Customer GetCustomer(int ID)
+        //{
+        //    if ((DataSource.CustomersList.FindIndex(x => x.Id == ID)) == -1)
+        //        throw new NonExistentObjectException();
+        //    return DataSource.CustomersList.Find(x => x.Id == ID);
+        //}
 
-        /// <summary>
-        /// The function returns the selected Parcel.
-        /// </summary>
-        /// <param name="ID">Id of a selected Parcel</param>
-        /// <returns>return empty ubjact if its not there</returns>
-        public Parcel GetParcel(int ID)
-        {
-            if ((DataSource.ParcelsList.FindIndex(x => x.Id == ID)) == -1)
-                throw new NonExistentObjectException();
-            return DataSource.ParcelsList.Find(x => x.Id == ID);
-        }
+        ///// <summary>
+        ///// The function returns the selected Parcel.
+        ///// </summary>
+        ///// <param name="ID">Id of a selected Parcel</param>
+        ///// <returns>return empty ubjact if its not there</returns>
+        //public Parcel GetParcel(int ID)
+        //{
+        //    if ((DataSource.ParcelsList.FindIndex(x => x.Id == ID)) == -1)
+        //        throw new NonExistentObjectException();
+        //    return DataSource.ParcelsList.Find(x => x.Id == ID);
+        //}
         #endregion Functions for display options
 
         #region Functions for listing options
@@ -251,55 +251,55 @@ namespace DalObject
         /// The function returns an array of all base stations.
         /// </summary>
         /// <returns>returns a new List that hold all the data from the reqsted List</returns>
-        public IEnumerable<BaseStation> GetBaseStationList()
-        {
-            return DataSource.BaseStationsList.Take(DataSource.BaseStationsList.Count).ToList();
-        }
+        //public IEnumerable<BaseStation> GetBaseStationList()
+        //{
+        //    return DataSource.BaseStationsList.Take(DataSource.BaseStationsList.Count).ToList();
+        //}
 
-        /// <summary>
-        /// The function returns an array of all Drone.
-        /// </summary>
-        /// <returns>returns a new List that hold all the data from the reqsted List</returns>
-        public IEnumerable<Drone> GetDroneList()
-        {
-            return DataSource.DronesList.Take(DataSource.DronesList.Count).ToList();
-        }
+        ///// <summary>
+        ///// The function returns an array of all Drone.
+        ///// </summary>
+        ///// <returns>returns a new List that hold all the data from the reqsted List</returns>
+        //public IEnumerable<Drone> GetDroneList()
+        //{
+        //    return DataSource.DronesList.Take(DataSource.DronesList.Count).ToList();
+        //}
 
-        /// <summary>
-        /// The function returns an array of all Customer.
-        /// </summary>
-        /// <returns>returns a new List that hold all the data from the reqsted List</returns>
-        public IEnumerable<Customer> GetCustomerList()
-        {
-            return DataSource.CustomersList.Take(DataSource.CustomersList.Count).ToList();
-        }
+        ///// <summary>
+        ///// The function returns an array of all Customer.
+        ///// </summary>
+        ///// <returns>returns a new List that hold all the data from the reqsted List</returns>
+        //public IEnumerable<Customer> GetCustomerList()
+        //{
+        //    return DataSource.CustomersList.Take(DataSource.CustomersList.Count).ToList();
+        //}
 
-        /// <summary>
-        /// The function returns an array of all Parcel.
-        /// </summary>
-        /// <returns>returns a new List that hold all the data from the reqsted List</returns>
-        public IEnumerable<Parcel> GetParcelList()
-        {
-            return DataSource.ParcelsList.Take(DataSource.ParcelsList.Count).ToList();
-        }
+        ///// <summary>
+        ///// The function returns an array of all Parcel.
+        ///// </summary>
+        ///// <returns>returns a new List that hold all the data from the reqsted List</returns>
+        //public IEnumerable<Parcel> GetParcelList()
+        //{
+        //    return DataSource.ParcelsList.Take(DataSource.ParcelsList.Count).ToList();
+        //}
 
-        /// <summary>
-        /// The function returns an array of all packages not associated with the Drone.
-        /// </summary>
-        /// <returns>returns a new List that hold all the data from the reqsted List</returns>
-        public IEnumerable<Parcel> GetParcelWithoutDrone()
-        {
-            return DataSource.ParcelsList.TakeWhile(x =>x.DroneId == 0).ToList();
-        }
+        ///// <summary>
+        ///// The function returns an array of all packages not associated with the Drone.
+        ///// </summary>
+        ///// <returns>returns a new List that hold all the data from the reqsted List</returns>
+        //public IEnumerable<Parcel> GetParcelWithoutDrone()
+        //{
+        //    return DataSource.ParcelsList.TakeWhile(x =>x.DroneId == 0).ToList();
+        //}
 
-        /// <summary>
-        /// The function returns base stations with free charge positions.
-        /// </summary>
-        /// <returns>returns a new List that hold all the data from the reqsted List</returns>
-        public IEnumerable<BaseStation> GetBaseStationsWithFreeChargSlots()
-        { 
-            return DataSource.BaseStationsList.TakeWhile(x => x.FreeChargeSlots > 0).ToList();
-        }
+        ///// <summary>
+        ///// The function returns base stations with free charge positions.
+        ///// </summary>
+        ///// <returns>returns a new List that hold all the data from the reqsted List</returns>
+        //public IEnumerable<BaseStation> GetBaseStationsWithFreeChargSlots()
+        //{ 
+        //    return DataSource.BaseStationsList.TakeWhile(x => x.FreeChargeSlots > 0).ToList();
+        //}
         #endregion Functions for listing options
 
         public double[] RequestPowerConsumptionByDrone()
