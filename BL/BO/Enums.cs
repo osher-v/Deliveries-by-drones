@@ -22,7 +22,11 @@ namespace IBL
             ///  Enum to know the status
             /// </summary>
             public enum DroneStatuses { free, inMaintenance, busy }
+            /// <summary>
+            /// Enum for delivert status
+            /// </summary>
+            public enum DeliveryStatus { created, Assigned, PickedUp, Delivered }
 
-        
+
     }
 }
