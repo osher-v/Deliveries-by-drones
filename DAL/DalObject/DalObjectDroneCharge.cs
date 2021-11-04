@@ -62,13 +62,6 @@ namespace DalObject
             temp.FreeChargeSlots++;
             DataSource.BaseStationsList[indexaforBaseStationId] = temp;
         }
-        /// <summary>
-        /// The function returns base stations with free charge positions.
-        /// </summary>
-        /// <returns>returns a new List that hold all the data from the reqsted List</returns>
-        public IEnumerable<BaseStation> GetBaseStationsWithFreeChargSlots()
-        {
-            return DataSource.BaseStationsList.TakeWhile(x => x.FreeChargeSlots > 0).ToList();
-        }
+        
     }
 }

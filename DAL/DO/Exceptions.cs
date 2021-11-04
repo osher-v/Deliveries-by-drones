@@ -22,7 +22,7 @@ namespace IDAL
 
             public override string ToString()
             {
-                return Message;
+                return "Error adding an object with an existing ID number";
             }
         }
 
