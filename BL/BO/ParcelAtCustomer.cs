@@ -8,6 +8,7 @@ namespace IBL
 {
     namespace BO
     {
+        //משלוח אצל לקוח
         class DeliveryToACustomer
         {
             public int Id { get; set; }
