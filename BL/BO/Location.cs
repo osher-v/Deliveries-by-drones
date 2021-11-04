@@ -18,6 +18,7 @@ namespace IBL
 
             public override string ToString()
             {
+                // צריך להוסיף המרה של הבונוס מתרגיל 1 
                 return string.Format("the longitude is {0,-8} \t the latitude is {1,-8} ", longitude, latitude);
             }
         }

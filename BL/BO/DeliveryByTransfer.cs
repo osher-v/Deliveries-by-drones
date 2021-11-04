@@ -8,7 +8,7 @@ namespace IBL
 {
     namespace BO
     {
-        class DeliveryByTransfer
+        class DeliveryInTransfer
         {
             public int Id { get; set; }
 
