@@ -16,13 +16,13 @@ namespace IBL
 
             public Priorities Prior { get; set; }
 
-            public DeliveryStatus MyProperty { get; set; }
+            public DeliveryStatus Status { get; set; }
 
             public int MyProperty { get; set; }
 
             public override string ToString()
             {
-                return string.Format(  ,   ,   ,);
+                return string.Format("   ", Id, Weight, Prior, Status, MyProperty);
             }
         }
     } 
