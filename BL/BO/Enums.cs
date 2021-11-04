@@ -8,8 +8,6 @@ namespace IBL
 {
     namespace BO
     {
-        class Enums
-        {
             /// <summary>
             ///  Enum to identify the order of priority
             /// </summary>
@@ -25,6 +23,6 @@ namespace IBL
             /// </summary>
             public enum DroneStatuses { free, inMaintenance, busy }
 
-        }
+        
     }
 }
