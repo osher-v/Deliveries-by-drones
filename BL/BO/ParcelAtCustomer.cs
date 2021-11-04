@@ -16,7 +16,7 @@ namespace IBL
 
             public Priorities Prior { get; set; }
 
-            public int MyProperty { get; set; }
+            public DeliveryStatus MyProperty { get; set; }
 
             public int MyProperty { get; set; }
 
