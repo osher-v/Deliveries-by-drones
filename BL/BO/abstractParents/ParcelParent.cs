@@ -8,10 +8,8 @@ namespace IBL
 {
     namespace BO
     {
-        class DroneInCharging
+        abstract class ParcelParent
         {
-            public int Id { get; set; }
-
 
 
         }
