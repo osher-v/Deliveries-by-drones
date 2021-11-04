@@ -15,12 +15,8 @@ namespace IBL
             public List<DroneInCharg> DroneInChargsList { get; set; }
             public override string ToString()
             {
-                string str = base.ToString() + string.Format("location:{0,-8}\t ", BaseStationLocation);
-                foreach (var item in DroneInChargsList)
-                {
-                    str += item.ToString();
-                }
-                return str;
+                return base.ToString() + string.Format("location:{0,-8}\t ", BaseStationLocation)
+                    + String.Join("\t", DroneInChargsList);
             }
 
         }
