@@ -10,7 +10,7 @@ namespace IBL
     {
         class Drone : DroneParent
         {
-            public ParcelInDelivery Delivery { get; set; }
+            public ParcelInTransfer Delivery { get; set; }
 
             public override string ToString()
             {

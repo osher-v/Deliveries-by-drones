@@ -12,15 +12,15 @@ namespace IBL
         {
             public Location location { get; set; }
 
-            public List<DeliveryToACustomer> FromTheCustomer { get; set; }
+            public List<DeliveryToACustomer> ParcelFromTheCustomer { get; set; }
 
-            public List<DeliveryToACustomer> ToTheCustomer { get; set; }
+            public List<DeliveryToACustomer> ParcelToTheCustomer { get; set; }
 
             public override string ToString()
             {
                 return base.ToString() + string.Format("location:{0,-8}\t ", location)
-                   + "the list of delivery from the customer is:" + String.Join("\t", FromTheCustomer)
-                   + "the list of delivery from the customer is:" + string.Join("\t,",ToTheCustomer);
+                   + "the list of delivery from the customer is:" + String.Join("\t", ParcelFromTheCustomer)
+                   + "the list of delivery from the customer is:" + string.Join("\t,",ParcelToTheCustomer);
             }
         }
     }   
