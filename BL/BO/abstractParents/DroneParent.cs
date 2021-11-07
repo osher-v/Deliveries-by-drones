@@ -8,7 +8,7 @@ namespace IBL
 {
     namespace BO
     {
-        class DroneParent
+        abstract class DroneParent
         {
             public int Id { get; set; }
 

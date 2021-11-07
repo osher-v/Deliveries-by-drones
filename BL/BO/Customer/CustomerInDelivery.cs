@@ -8,6 +8,7 @@ namespace IBL
 {
     namespace BO
     {
+        //לקוח בחבילה
         /// <summary>
         /// 
         /// </summary>

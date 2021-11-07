@@ -8,15 +8,19 @@ namespace IBL
 {
     namespace BO
     {
-        class DeliveryInTransfer
+        class ParcelInTransfer
         {
             public int Id { get; set; }
 
-            public WeightCategories Weight { get; set; }
+            public bool MyProperty { get; set; } //???????????????????????????????
 
             public Priorities Prior { get; set; }
 
-            public bool MyProperty { get; set; }
+            public WeightCategories Weight { get; set; }
+
+            public CustomerInDelivery Sender { get; set; }
+
+            public CustomerInDelivery Receiver { get; set; }
 
             public Location SourceLocation { get; set; }
 
@@ -26,7 +30,7 @@ namespace IBL
 
             public override string ToString()
             {
-                return string.Format("     " , Id, Weight, Prior, MyProperty, SourceLocation, 
+                return string.Format("     " , Id, MyProperty, Prior, Weight, Sender, Receiver, SourceLocation, 
                     DestinationLocation, TransportDistance);
             }
         }

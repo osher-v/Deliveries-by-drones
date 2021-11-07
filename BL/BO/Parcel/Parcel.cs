@@ -10,7 +10,9 @@ namespace IBL
     {
         class Parcel :ParcelParent
         {
-            public Drone MyDrone { get; set; }
+            public CustomerInDelivery Sender { get; set; }
+            public CustomerInDelivery Receiver { get; set; }
+            public DroneInThePackage MyDrone { get; set; }
             public DateTime Requested { get; set; }
             public DateTime Assigned { get; set; }
             public DateTime PickedUp { get; set; }
@@ -18,9 +20,14 @@ namespace IBL
 
              public override string ToString()
             {
+                return base.ToString() + string.Format("sender is: {0,-6} \t receiver is: {1,-6} \t the drone is: {2,-5}" +
+                    "Request started in: { 3,-12}\t Assigned: { 4,-12}\t" +
+                    "pick up time at: {5,-12}\t  arivel time at: {6,-12}\t", Sender, Receiver, MyDrone,
+                    Requested, Assigned, PickedUp, Delivered);
+                /*
                 return base.ToString() + string.Format("{0}\t Request started in: { 6,-12}\t Assigned: { 7,-12}\t" +
                     "pick up time at: {8,-12}\t  arivel time at: {9,-12}\t",MyDrone,Requested,Assigned,PickedUp,Delivered);
-                   
+                 */
             }
         }
     }

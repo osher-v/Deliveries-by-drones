@@ -16,14 +16,11 @@ namespace IBL
 
             public List<DeliveryToACustomer> ToTheCustomer { get; set; }
 
-            //לא ברור איך מדפיסים את הרימה דרך טו סטרינג
-            //דרך פוראייצ
             public override string ToString()
             {
-                return base.ToString() + string.Format("the location is {0,-6} \t" +
-                    "the list of delivery from the customer is {1,-6} \t" +
-                    " the list of delivery from the customer is {2,-6}"
-                    , location, FromTheCustomer, ToTheCustomer);
+                return base.ToString() + string.Format("location:{0,-8}\t ", location)
+                   + "the list of delivery from the customer is:" + String.Join("\t", FromTheCustomer)
+                   + "the list of delivery from the customer is:" + string.Join("\t,",ToTheCustomer);
             }
         }
     }   

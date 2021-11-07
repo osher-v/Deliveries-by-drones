@@ -8,6 +8,7 @@ namespace IBL
 {
     namespace BO
     {
+        //רחפן בחבילה
         class DroneInThePackage
         {
             public int Id { get; set; }

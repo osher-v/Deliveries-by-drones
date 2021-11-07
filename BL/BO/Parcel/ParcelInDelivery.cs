@@ -8,6 +8,8 @@ namespace IBL
 {
     namespace BO
     {
+        //חבילה בהעברה??????
+
         class ParcelInDelivery
         {
             public int Id { get; set; }

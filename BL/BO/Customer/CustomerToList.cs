@@ -14,7 +14,7 @@ namespace IBL
 
             public int NumberOfPackagesSentAndNotYetDelivered { get; set; }
 
-            public int NumberOfPackagesWhoreceived { get; set; }
+            public int NumberOfPackagesWhoReceived { get; set; }
 
             public int NumberPackagesOnTheWayToTheCustomer { get; set; }
 
@@ -25,7 +25,7 @@ namespace IBL
                     "the Number Of Packages Who received is {2,-5} \t" +
                     "the Number Packages On The Way To The Customer is {3,-5}"
                     , NumberOfPackagesSentAndDelivered, NumberOfPackagesSentAndNotYetDelivered,
-                    NumberOfPackagesWhoreceived, NumberPackagesOnTheWayToTheCustomer);
+                    NumberOfPackagesWhoReceived, NumberPackagesOnTheWayToTheCustomer);
             }
         }
     }
