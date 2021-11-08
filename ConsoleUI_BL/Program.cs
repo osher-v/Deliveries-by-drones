@@ -1,4 +1,6 @@
 ﻿using System;
+using IBL;
+using IBL.BO;
 
 namespace ConsoleUI_BL
 {
@@ -32,7 +34,7 @@ namespace ConsoleUI_BL
         /// The function handles various addition options.
         /// </summary>
         /// <param name="dal">DalObject object that is passed as a parameter to enable the functions in the DalObject class</param>
-        static public void InsertOptions(DalObject.DalObject dal)
+        static public void InsertOptions(IBL.IBL dal)
         {
             Console.WriteLine(@"
 Insert options:
@@ -65,13 +67,17 @@ Please enter an ID number for the new station:");
                     Console.WriteLine("Next Please enter the latitude of the station:");
                     while (!double.TryParse(Console.ReadLine(), out newlatitude)) ;
 
+                    Location location = new Location
+                    {
+                        longitude = newlongitude,
+                        latitude = newlatitude
+                    };
                     BaseStation newbaseStation = new BaseStation
                     {
                         Id = newBaseStationID,
-                        StationName = newname,
+                        Name = newname,
                         FreeChargeSlots = newchargsSlots,
-                        Longitude = newlongitude,
-                        Latitude = newlatitude
+                        BaseStationLocation = location
                     };
                     dal.AddStation(newbaseStation);
                     break;
@@ -91,7 +97,7 @@ Please enter an ID number for the new drone:");
                     while (!int.TryParse(Console.ReadLine(), out newMaxWeight)) ;
                     Console.WriteLine("Next enter the charge level of the battery:");
                     while (!double.TryParse(Console.ReadLine(), out newBatteryLevel)) ;
-                    Console.WriteLine("Next enter the status of the new Drone: 0 for free, 1 for inMaintenance and 2 for busy");
+                    Console.WriteLine("Next enter the ID of the Station to Put the drone for first charge : 0 for free, 1 for inMaintenance and 2 for busy");
                     while (!int.TryParse(Console.ReadLine(), out newStatus)) ;
 
                     Drone newdrone = new Drone
@@ -99,7 +105,8 @@ Please enter an ID number for the new drone:");
                         Id = newDroneID,
                         Model = newmodel,
                         MaxWeight = (WeightCategories)newMaxWeight
-                        //Battery = newBatteryLevel, Status = (DroneStatuses)newStatus
+
+                       
                     };
                     dal.AddDrone(newdrone);
                     break;
@@ -121,14 +128,17 @@ Please enter an ID number for the new Customer:");
                     while (!double.TryParse(Console.ReadLine(), out newCustomerLongitude)) ;
                     Console.WriteLine("Next Please enter the latitude of the station:");
                     while (!double.TryParse(Console.ReadLine(), out newCustomerLatitude)) ;
-
+                    Location customerlocation = new Location
+                    {
+                        longitude = newCustomerLongitude,
+                        latitude = newCustomerLatitude
+                    };
                     Customer newCustomer = new Customer
                     {
                         Id = newCustomerID,
                         Name = newCustomerName,
                         PhoneNumber = newPhoneNumber,
-                        Longitude = newCustomerLongitude,
-                        Latitude = newCustomerLatitude
+                        LocationOfCustomer=customerlocation
                     };
                     dal.AddCustomer(newCustomer);
                     break;
@@ -408,7 +418,7 @@ Choose 1 for a station or 2 for a customer");
 
         static void Main(string[] args)
         {
-            IBL.BL dalObject = new IBL.BL();
+            IBL.IBL BLObject = new IBL.BL();
             //IDal.IDal idal = dalObject;
 
             int choice;
@@ -429,7 +439,7 @@ Your choice:");
                 switch ((Options)choice)
                 {
                     case Options.Insert:
-                        InsertOptions(dalObject);
+                        InsertOptions(BLObject);
                         break;
 
                     case Options.Update:
