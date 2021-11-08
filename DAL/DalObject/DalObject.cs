@@ -12,7 +12,7 @@ namespace DalObject
     /// <summary>
     /// matods that use from the main 
     /// </summary>
-    public partial class  DalObject: IDal.IDal 
+    public partial class DalObject : IDal.IDal 
     {
         /// <summary>
         /// Default constructor.
@@ -22,6 +22,7 @@ namespace DalObject
             DataSource.Initialize();
         }
 
+        
         #region Functions for insert options
         /// <summary>
         /// The function adds a station to the list of Basestations.
@@ -301,7 +302,7 @@ namespace DalObject
         //    return DataSource.BaseStationsList.TakeWhile(x => x.FreeChargeSlots > 0).ToList();
         //}
         #endregion Functions for listing options
-
+        
         public double[] RequestPowerConsumptionByDrone()
         {
             double[] temp = { DataSource.Config.Free, DataSource.Config.LightWeightCarrier,

@@ -29,18 +29,30 @@ namespace DalObject
         /// The function returns an array of all base stations.
         /// </summary>
         /// <returns>returns a new List that hold all the data from the reqsted List</returns>
-        public IEnumerable<BaseStation> GetBaseStationList()
+        public IEnumerable<BaseStation> GetBaseStationList(Predicate<BaseStation> predicate = null)
         {
-            return DataSource.BaseStationsList.Take(DataSource.BaseStationsList.Count).ToList();
+            return DataSource.BaseStationsList.FindAll(x => predicate == null ? true : predicate(x));  
         }
 
+        /*
+        /// <summary>
+        /// The function returns an array of all base stations.
+        /// </summary>
+        /// <returns>returns a new List that hold all the data from the reqsted List</returns>
+        public IEnumerable<BaseStation> GetBaseStationList()
+        {
+            return DataSource.BaseStationsList.Take(DataSource.BaseStationsList.Count);
+        }
+
+        
         /// <summary>
         /// The function returns base stations with free charge positions.
         /// </summary>
         /// <returns>returns a new List that hold all the data from the reqsted List</returns>
         public IEnumerable<BaseStation> GetBaseStationsWithFreeChargSlots()
         {
-            return DataSource.BaseStationsList.TakeWhile(x => x.FreeChargeSlots > 0).ToList();
+            return DataSource.BaseStationsList.FindAll(x => x.FreeChargeSlots > 0);
         }
+        */
     }
 }

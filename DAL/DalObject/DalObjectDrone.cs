@@ -23,7 +23,7 @@ namespace DalObject
         /// <returns>return empty ubjact if its not there</returns>
         public Drone GetDrone(int ID)
         {
-            if ((DataSource.DronesList.FindIndex(x => x.Id == ID)) == -1)
+            if (!(DataSource.DronesList.Exists(x => x.Id == ID)))
                 throw new NonExistentObjectException();
             return DataSource.DronesList.Find(x => x.Id == ID);
         }

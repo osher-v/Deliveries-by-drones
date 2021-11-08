@@ -207,7 +207,7 @@ Your choice:");
                     Console.WriteLine("please choose baseStationId ID from the List below:");
                     //List<BaseStation> displayBaseStationWithFreeChargSlots = new List<BaseStation>();
                     //displayBaseStationWithFreeChargSlots = dal.GetBaseStationsWithFreeChargSlots();
-                    List<BaseStation> displayBaseStationWithFreeChargSlots = dal.GetBaseStationsWithFreeChargSlots().ToList();
+                    List<BaseStation> displayBaseStationWithFreeChargSlots = dal.GetBaseStationList(x => x.FreeChargeSlots > 0).ToList();
                     for (int i = 0; i < displayBaseStationWithFreeChargSlots.Count; i++)
                     {
                         Console.WriteLine(displayBaseStationWithFreeChargSlots[i].ToString());
@@ -336,13 +336,23 @@ Your choice:");
                 case DisplayListOption.ListOfPackageView:
                     printTheList(dal.GetParcelList().ToList());
                     break;
-
+                /*
                 case DisplayListOption.ListOfFreePackageView:
                     printTheList(dal.GetParcelWithoutDrone().ToList());
                     break;
+                */
+                case DisplayListOption.ListOfFreePackageView:
+                    printTheList(dal.GetParcelList(x => x.DroneId == 0).ToList());
+                    break;
 
+                    
+                    /*
                 case DisplayListOption.ListOfBaseStationsWithFreeChargSlots:                    
                     printTheList(dal.GetBaseStationsWithFreeChargSlots().ToList());
+                    break;
+                    */
+               case DisplayListOption.ListOfBaseStationsWithFreeChargSlots:
+                    printTheList(dal.GetBaseStationList(x => x.FreeChargeSlots > 0).ToList());
                     break;
 
                 default:

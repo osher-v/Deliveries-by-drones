@@ -28,7 +28,7 @@ namespace DalObject
         /// <returns>return empty ubjact if its not there</returns>
         public Customer GetCustomer(int ID)
         {
-            if ((DataSource.CustomersList.FindIndex(x => x.Id == ID)) == -1)
+            if (!(DataSource.CustomersList.Exists(x => x.Id == ID)))
                 throw new NonExistentObjectException();
             return DataSource.CustomersList.Find(x => x.Id == ID);
         }

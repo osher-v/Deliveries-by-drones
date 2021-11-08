@@ -11,7 +11,7 @@ namespace IBL
         public class ParcelInTransfer :ParcelParent
         {
 
-            public bool MyProperty { get; set; } //מה זה למען השם מצב חבילה בולאני 
+            public bool OnTheWayToTheDestination { get; set; } 
 
             public CustomerInDelivery Sender { get; set; }
 
@@ -26,7 +26,7 @@ namespace IBL
             public override string ToString()
             {
                 return string.Format(" {0,-2}\t the customar in hold is:{1,-8}\treciver ID:{2,8}\t  the Source Location is:{3,-8}\t" +
-                    " the Destination Location is:{4,-8}\t destiniton is:{5,-8}\t  ", MyProperty, Sender, Receiver, SourceLocation, 
+                    " the Destination Location is:{4,-8}\t destiniton is:{5,-8}\t  ", OnTheWayToTheDestination, Sender, Receiver, SourceLocation, 
                     DestinationLocation, TransportDistance);
             }
         }

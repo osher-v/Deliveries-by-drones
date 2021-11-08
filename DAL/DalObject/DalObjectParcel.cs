@@ -86,7 +86,7 @@ namespace DalObject
         /// <returns>return empty ubjact if its not there</returns>
         public Parcel GetParcel(int ID)
         {
-            if ((DataSource.ParcelsList.FindIndex(x => x.Id == ID)) == -1)
+            if (!(DataSource.ParcelsList.Exists(x => x.Id == ID)))
                 throw new NonExistentObjectException();
             return DataSource.ParcelsList.Find(x => x.Id == ID);
         }
@@ -95,6 +95,7 @@ namespace DalObject
         {
             return DataSource.ParcelsList.FindAll(x => prdicat == null ? true : prdicat(x));
         }
+
         /*
         /// <summary>
         /// The function returns an array of all Parcel.
