@@ -38,7 +38,7 @@ namespace ConsoleUI
         /// The function handles various addition options.
         /// </summary>
         /// <param name="dal">DalObject object that is passed as a parameter to enable the functions in the DalObject class</param>
-        static public void InsertOptions(DalObject.DalObject dal)
+        static public void InsertOptions(IDal.IDal dal)
         {
             Console.WriteLine(@"
 Insert options:
@@ -160,7 +160,7 @@ Next Please enter the sender ID number:");
         /// The function handles various update options.
         /// </summary>
         /// <param name="dal">DalObject object that is passed as a parameter to enable the functions in the DalObject class</param>
-        static public void UpdateOptions(DalObject.DalObject dal)
+        static public void UpdateOptions(IDal.IDal dal)
         {
             Console.WriteLine(@"
 Update options:
@@ -236,7 +236,7 @@ Your choice:");
         /// The function handles display options.
         /// </summary>
         /// <param name="dal">DalObject object that is passed as a parameter to enable the functions in the DalObject class</param>
-        static public void DisplaySingleOptions(DalObject.DalObject dal)
+        static public void DisplaySingleOptions(IDal.IDal dal)
         {
             Console.WriteLine(@"
 Display options(single):
@@ -304,7 +304,7 @@ Your choice:");
         /// The function handles list view options.
         /// </summary>
         /// <param name="dal">DalObject object that is passed as a parameter to enable the functions in the DalObject class</param>
-        static public void DisplayListOptions(DalObject.DalObject dal)
+        static public void DisplayListOptions(IDal.IDal dal)
         {
             Console.WriteLine(@"
 Display options (for the whole list):
@@ -367,7 +367,7 @@ Your choice:");
         /// The function checks the distance between points.
         /// </summary>
         /// <param name="dal">DalObject object that is passed as a parameter to enable the functions in the DalObject class</param>
-        static public void DistanceBetweenPoints(DalObject.DalObject dal)
+        static public void DistanceBetweenPoints(IDal.IDal dal)
         {
             Console.WriteLine(@"
 You have chosen the option of calculating distance from a point to a customer or station.
@@ -409,9 +409,8 @@ Choose 1 for a station or 2 for a customer");
         
         static void Main(string[] args)
         {          
-            DalObject.DalObject dalObject = new DalObject.DalObject();
-            //IDal.IDal idal = dalObject;
-
+            IDal.IDal dalObject = new DalObject.DalObject();
+            
             int choice;
             do
             {
