@@ -14,11 +14,11 @@ namespace IBL
 
             public DeliveryStatus Status { get; set; }
 
-            public CustomerInDelivery InDelivery { get; set; }//?????????????????????????????????????????
+            public CustomerInDelivery OtherCustomer { get; set; }
 
-        public override string ToString()
+            public override string ToString()
             {
-                return string.Format("status is: {3,-5} \t the InDelivery is: {4,-6}",Status, InDelivery);
+                return string.Format("status is: {3,-5} \t the InDelivery is: {4,-6}",Status, OtherCustomer);
             }
         }
     } 

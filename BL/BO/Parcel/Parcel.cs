@@ -24,10 +24,6 @@ namespace IBL
                     "Request started in: { 3,-12}\t Assigned: { 4,-12}\t" +
                     "pick up time at: {5,-12}\t  arivel time at: {6,-12}\t", Sender, Receiver, MyDrone,
                     Requested, Assigned, PickedUp, Delivered);
-                /*
-                return base.ToString() + string.Format("{0}\t Request started in: { 6,-12}\t Assigned: { 7,-12}\t" +
-                    "pick up time at: {8,-12}\t  arivel time at: {9,-12}\t",MyDrone,Requested,Assigned,PickedUp,Delivered);
-                 */
             }
         }
     }
