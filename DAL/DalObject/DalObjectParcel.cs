@@ -90,6 +90,12 @@ namespace DalObject
                 throw new NonExistentObjectException();
             return DataSource.ParcelsList.Find(x => x.Id == ID);
         }
+
+        public IEnumerable<Parcel> GetParcelList(Predicate<Parcel> prdicat = null)
+        {
+            return DataSource.ParcelsList.FindAll(x => prdicat == null ? true : prdicat(x));
+        }
+        /*
         /// <summary>
         /// The function returns an array of all Parcel.
         /// </summary>
@@ -102,9 +108,10 @@ namespace DalObject
         /// The function returns an array of all packages not associated with the Drone.
         /// </summary>
         /// <returns>returns a new List that hold all the data from the reqsted List</returns>
-        public IEnumerable<Parcel> GetParcelWithoutDrone()
+        public IEnumerable<Parcel> GetParcelWithoutDrone(Predicate<Parcel> prdicat = null)
         {
-            return DataSource.ParcelsList.TakeWhile(x => x.DroneId == 0).ToList();
+            return DataSource.ParcelsList.FindAll(x => prdicat == null ? true : prdicat(x));
         }
+        */
     }
 }

@@ -8,7 +8,7 @@ namespace IBL
 {
     namespace BO
     {
-        class Drone : DroneParent
+        public class Drone : DroneParent
         {
             public ParcelInTransfer Delivery { get; set; }
 

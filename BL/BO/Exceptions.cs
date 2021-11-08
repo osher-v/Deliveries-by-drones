@@ -8,7 +8,7 @@ namespace IBL
 {
     namespace BO
     {
-        class Exceptions
+        public class Exceptions : Exception
         {
 
         }

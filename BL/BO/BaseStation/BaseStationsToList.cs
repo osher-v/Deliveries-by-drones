@@ -8,7 +8,7 @@ namespace IBL
 {
     namespace BO
     {
-        class BaseStationsToList : BaseStationParnt
+        public class BaseStationsToList : BaseStationParnt
         {
             public int BusyChargeSlots { get; set; }
 

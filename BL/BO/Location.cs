@@ -11,7 +11,7 @@ namespace IBL
         /// <summary>
         /// The class specifies location by longitude and latitude.
         /// </summary>
-        class Location
+        public class Location
         {
             public double longitude { get; set; }
             public double latitude { get; set; }

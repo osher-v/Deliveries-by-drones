@@ -12,7 +12,7 @@ namespace IBL
         /// <summary>
         /// 
         /// </summary>
-        class CustomerInDelivery
+        public class CustomerInDelivery
         {
             public int Id { get; set; }
 

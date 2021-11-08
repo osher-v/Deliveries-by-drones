@@ -8,7 +8,7 @@ namespace IBL
 {
     namespace BO
     {
-        abstract class CustomerParent
+        public abstract class CustomerParent
         {
             public int Id { get; set; }
 

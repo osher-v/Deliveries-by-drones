@@ -9,7 +9,7 @@ namespace IBL
 {
     namespace BO
     {
-        class BaseStation : BaseStationParnt
+        public class BaseStation : BaseStationParnt
         {
             public Location BaseStationLocation { get; set; }
             public List<DroneInCharg> DroneInChargsList { get; set; }

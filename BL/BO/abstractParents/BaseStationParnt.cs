@@ -8,7 +8,7 @@ namespace IBL
 {
     namespace BO
     {
-        abstract class BaseStationParnt
+        public abstract class BaseStationParnt
         {
             public int Id { get; set; }
             public string Name { get; set; }       

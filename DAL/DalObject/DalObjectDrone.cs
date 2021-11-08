@@ -33,7 +33,7 @@ namespace DalObject
         /// <returns>returns a new List that hold all the data from the reqsted List</returns>
         public IEnumerable<Drone> GetDroneList()
         {
-            return DataSource.DronesList.Take(DataSource.DronesList.Count).ToList();
+            return DataSource.DronesList.Take(DataSource.DronesList.Count);
         }
        
 

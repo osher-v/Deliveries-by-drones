@@ -8,7 +8,7 @@ namespace IBL
 {
     namespace BO
     {
-        class ParcelInTransfer :ParcelParent
+        public class ParcelInTransfer :ParcelParent
         {
 
             public bool MyProperty { get; set; } //מה זה למען השם מצב חבילה בולאני 

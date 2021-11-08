@@ -8,7 +8,7 @@ namespace IBL
 {
     namespace BO
     {
-        class Parcel :ParcelParent
+        public class Parcel :ParcelParent
         {
             public CustomerInDelivery Sender { get; set; }
             public CustomerInDelivery Receiver { get; set; }

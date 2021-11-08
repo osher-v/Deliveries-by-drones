@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IDAL.DO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,9 +9,9 @@ namespace IDal
 {
     public interface IDal
     {
-        public double[] RequestPowerConsumptionByDrone();
+        double[] RequestPowerConsumptionByDrone();
 
-
-
+        IEnumerable<Drone> GetDroneList();
+        IEnumerable<Parcel> GetParcelList(Predicate<Parcel> prdicat = null);
     }
 }

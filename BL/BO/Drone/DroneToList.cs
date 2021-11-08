@@ -8,7 +8,7 @@ namespace IBL
 {
     namespace BO
     {
-        class DroneToList : DroneParent
+        public class DroneToList : DroneParent
         {
             //מספר חבילה מועברת אם יש?
             public int NumberOfLinkedParcel { get; set; }

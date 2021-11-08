@@ -9,7 +9,7 @@ namespace IBL
     namespace BO
     {
         //חבילה אצל לקוח
-        class DeliveryToACustomer : ParcelParent
+        public class ParcelAtCustomer : ParcelParent
         {
 
             public DeliveryStatus Status { get; set; }

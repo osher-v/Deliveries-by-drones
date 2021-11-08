@@ -8,11 +8,12 @@ namespace IBL
 {
     namespace BO
     {
-        abstract class ParcelParent
+        public abstract class ParcelParent
         {
             public int Id { get; set; }
 
             public WeightCategories Weight { get; set; }
+
             public Priorities Prior { get; set; }
 
             public override string ToString()
