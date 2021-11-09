@@ -11,7 +11,7 @@ namespace ConsoleUI_BL
     /// <summary> enum for InsertrOption</summary>
     enum InsertrOption { BaseStation = 1, Drone, Customer, Parcel }
     /// <summary> enum for UpdatesOption</summary>
-    enum UpdatesOption { AssignDrone = 1, PickUp, Deliverd, Incharging, Outcharging }
+    enum UpdatesOption { DroneUpdate=1, BaseStaitonUpdate, CustomerUpdate, AssignDrone  , PickUp, Deliverd, Incharging, Outcharging }
     /// <summary>enum for DisplaySingleOption </summary>
     enum DisplaySingleOption { BaseStationView = 1, Dronedisplay, CustomerView, PackageView }
     /// <summary>enum for DisplayListOption </summary>
@@ -198,12 +198,14 @@ Next Please enter the sender ID number:");
         {
             Console.WriteLine(@"
 Update options:
-
-1. Assigning a package to a drone
-2. Collection of a package by drone
-3. Delivery package to customer
-4. Sending a drone for charging at a base station
-5. Release drone from charging at base station
+1.
+2.
+3.
+4. Assigning a package to a drone
+5. Collection of a package by drone
+6. Delivery package to customer
+7. Sending a drone for charging at a base station
+8. Release drone from charging at base station
 Your choice:");
             int.TryParse(Console.ReadLine(), out int choice);
 
@@ -211,6 +213,30 @@ Your choice:");
 
             switch ((UpdatesOption)choice)
             {
+                case UpdatesOption.DroneUpdate:
+                    //Console.WriteLine("please enter Parcel ID:");
+                    //int.TryParse(Console.ReadLine(), out ParcelId);
+                    //Console.WriteLine("please enter Drone ID:");
+                    //int.TryParse(Console.ReadLine(), out droneId);
+
+                   // dal.AssignPackageToDdrone(ParcelId, droneId);
+                    break;
+                case UpdatesOption.BaseStaitonUpdate:
+                    //Console.WriteLine("please enter Parcel ID:");
+                    //int.TryParse(Console.ReadLine(), out ParcelId);
+                    //Console.WriteLine("please enter Drone ID:");
+                    //int.TryParse(Console.ReadLine(), out droneId);
+
+                  //  dal.AssignPackageToDdrone(ParcelId, droneId);
+                    break;
+                case UpdatesOption.CustomerUpdate:
+                    //Console.WriteLine("please enter Parcel ID:");
+                    //int.TryParse(Console.ReadLine(), out ParcelId);
+                    //Console.WriteLine("please enter Drone ID:");
+                    //int.TryParse(Console.ReadLine(), out droneId);
+
+                    //dal.AssignPackageToDdrone(ParcelId, droneId);
+                    break;
 
                 case UpdatesOption.AssignDrone:
                     Console.WriteLine("please enter Parcel ID:");
