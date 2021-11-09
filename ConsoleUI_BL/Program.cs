@@ -51,7 +51,7 @@ Your choice:");
             {
                 case InsertrOption.BaseStation:
                     int newBaseStationID, newchargsSlots;
-                    string newname;
+                    string newName;
                     double newlongitude, newlatitude;
 
                     Console.WriteLine(@"
@@ -59,7 +59,7 @@ You have selected to add a new station.
 Please enter an ID number for the new station:");
                     while (!int.TryParse(Console.ReadLine(), out newBaseStationID)) ;
                     Console.WriteLine("Next Please enter the name of the station:");
-                    newname = Console.ReadLine();
+                    newName = Console.ReadLine();
                     Console.WriteLine("Next Please enter the number of charging slots at the station:");
                     while (!int.TryParse(Console.ReadLine(), out newchargsSlots)) ;
                     Console.WriteLine("Next Please enter the longitude of the station:");
@@ -75,7 +75,7 @@ Please enter an ID number for the new station:");
                     BaseStation newbaseStation = new BaseStation
                     {
                         Id = newBaseStationID,
-                        Name = newname,
+                        Name = newName,
                         FreeChargeSlots = newchargsSlots,
                         BaseStationLocation = location
                     };
@@ -83,7 +83,7 @@ Please enter an ID number for the new station:");
                     break;
 
                 case InsertrOption.Drone:
-                    int newDroneID, newMaxWeight, newStatus;
+                    int newDroneID, newMaxWeight, firstchargingStation;
                     string newmodel;
                     double newBatteryLevel;
 
@@ -98,15 +98,15 @@ Please enter an ID number for the new drone:");
                     Console.WriteLine("Next enter the charge level of the battery:");
                     while (!double.TryParse(Console.ReadLine(), out newBatteryLevel)) ;
                     Console.WriteLine("Next enter the ID of the Station to Put the drone for first charge : 0 for free, 1 for inMaintenance and 2 for busy");
-                    while (!int.TryParse(Console.ReadLine(), out newStatus)) ;
+                    while (!int.TryParse(Console.ReadLine(), out firstchargingStation)) ;
 
                     Drone newdrone = new Drone
                     {
                         Id = newDroneID,
                         Model = newmodel,
-                        MaxWeight = (WeightCategories)newMaxWeight
+                        MaxWeight = (WeightCategories)newMaxWeight,
+                       // = firstchargingStation  מה בעצם דורשים? אין כזה שדה באף יישות ,צריך לעדכן בעצם את השדה של התחנה ואת השדה של רחפן בטעינה 
 
-                       
                     };
                     dal.AddDrone(newdrone);
                     break;
@@ -145,24 +145,39 @@ Please enter an ID number for the new Customer:");
 
                 case InsertrOption.Parcel:
                     int newSenderId, newTargetId, newWeight, newPriorities;
+                    string senderName,reciverName;
 
                     Console.WriteLine(@"
 You have selected to add a new Parcel.
 Next Please enter the sender ID number:");
                     while (!int.TryParse(Console.ReadLine(), out newSenderId)) ;
+                    Console.WriteLine("Next Please enter the name of the customer:");
+                    senderName = Console.ReadLine();
                     Console.WriteLine("Next Please enter the target ID number:");
                     while (!int.TryParse(Console.ReadLine(), out newTargetId)) ;
+                    Console.WriteLine("Next Please enter the name of the customer:");
+                    reciverName = Console.ReadLine();
                     Console.WriteLine("Next enter the weight category of the new Parcel: 0 for free, 1 for inMaintenance and 2 for busy");
                     while (!int.TryParse(Console.ReadLine(), out newWeight)) ;
                     Console.WriteLine("Next enter the priorities of the new Parcel: 0 for regular, 1 for fast and 2 for urgent");
                     while (!int.TryParse(Console.ReadLine(), out newPriorities)) ;
 
+
+                    CustomerInDelivery newSender = new CustomerInDelivery
+                    {
+                        Id = newSenderId,
+                        Name = senderName,
+                    };
+                    CustomerInDelivery newReciver = new CustomerInDelivery
+                    {
+                        Id = newTargetId,
+                        Name = reciverName,
+                    };
+
                     Parcel newParcel = new Parcel
                     {
-                        SenderId = newSenderId,
-                        TargetId = newTargetId,
                         Weight = (WeightCategories)newWeight,
-                        Priority = (Priorities)newPriorities
+                        Prior = (Priorities)newPriorities
                     };
 
                     int counterParcelSerialNumber = dal.AddParcel(newParcel);

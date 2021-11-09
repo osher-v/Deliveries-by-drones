@@ -9,12 +9,8 @@ namespace IBL
     namespace BO
     {
         //רחפן בחבילה
-        public class DroneInThePackage
+        public class DroneInThePackage : DroneInCharg
         {
-            public int Id { get; set; }
-
-            public double BatteryStatus { get; set; }
-
             public Location CurrentLocation { get; set; }
 
             public override string ToString()
