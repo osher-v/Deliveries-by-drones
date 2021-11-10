@@ -209,27 +209,27 @@ Update options:
 Your choice:");
             int.TryParse(Console.ReadLine(), out int choice);
 
-            int ParcelId, droneId, baseStationId, chargeslots, customerId,phoneNumber;
+            int  droneId, baseStationId, chargeslots, customerId,phoneNumber;
             string droneName, baseName, customerName;
             DateTime time;
             switch ((UpdatesOption)choice)
             {
                 case UpdatesOption.DroneUpdate:
                     Console.WriteLine("please enter drone ID for update:");
-                    int.TryParse(Console.ReadLine(), out ParcelId);
+                    int.TryParse(Console.ReadLine(), out droneId);
                     Console.WriteLine("Next Please enter the new Modal name:");
                     droneName = Console.ReadLine();
-                    bl.UpdateDroneName(ParcelId, droneName);
+                    bl.UpdateDroneName(droneId, droneName);
                     break;
 
                 case UpdatesOption.BaseStaitonUpdate:
                     Console.WriteLine("please enter base station ID for update:");
-                    int.TryParse(Console.ReadLine(), out ParcelId);
+                    int.TryParse(Console.ReadLine(), out baseStationId);
                     Console.WriteLine("Next Please enter the new base station name if not send empty line:");
                     baseName = Console.ReadLine();//אם נשלח ריק השדה לא מתעדכן
                     Console.WriteLine("please enter update for the Charge slots number:");
                     int.TryParse(Console.ReadLine(), out chargeslots);//אם נשלח ריק השדה לא מתעדכן
-                    bl.UpdateBaseStaison(ParcelId, baseName, chargeslots);
+                    bl.UpdateBaseStaison(baseStationId, baseName, chargeslots);
                     break;
 
                 case UpdatesOption.CustomerUpdate:
@@ -401,48 +401,48 @@ Your choice:");
         }
         #endregion Handling the list display options
 
-        #region Handling calculat the distance of coordinates
-        /// <summary>
-        /// The function checks the distance between points.
-        /// </summary>
-        /// <param name="dal">DalObject object that is passed as a parameter to enable the functions in the DalObject class</param>
-        static public void DistanceBetweenPoints(DalObject.DalObject dal)
-        {
-            Console.WriteLine(@"
-You have chosen the option of calculating distance from a point to a customer or station.
-Please enter your point.
-longitude:");
-            Double longitudeNew, latitudeNew;
+//        #region Handling calculat the distance of coordinates
+//        /// <summary>
+//        /// The function checks the distance between points.
+//        /// </summary>
+//        /// <param name="dal">DalObject object that is passed as a parameter to enable the functions in the DalObject class</param>
+//        static public void DistanceBetweenPoints(DalObject.DalObject dal)
+//        {
+//            Console.WriteLine(@"
+//You have chosen the option of calculating distance from a point to a customer or station.
+//Please enter your point.
+//longitude:");
+//            Double longitudeNew, latitudeNew;
 
-            while (!double.TryParse(Console.ReadLine(), out longitudeNew)) ;
-            Console.WriteLine("latitude:");
-            while (!double.TryParse(Console.ReadLine(), out latitudeNew)) ;
-            Console.WriteLine(@"Would you like to check distance from a station or customer? 
-Choose 1 for a station or 2 for a customer");
-            int.TryParse(Console.ReadLine(), out int choice);
+//            while (!double.TryParse(Console.ReadLine(), out longitudeNew)) ;
+//            Console.WriteLine("latitude:");
+//            while (!double.TryParse(Console.ReadLine(), out latitudeNew)) ;
+//            Console.WriteLine(@"Would you like to check distance from a station or customer? 
+//Choose 1 for a station or 2 for a customer");
+//            int.TryParse(Console.ReadLine(), out int choice);
 
-            switch ((chackDistance)choice)
-            {
-                case chackDistance.BasePoint:
-                    Console.WriteLine("please enter base ID:");
-                    int.TryParse(Console.ReadLine(), out int baseID);
+//            switch ((chackDistance)choice)
+//            {
+//                case chackDistance.BasePoint:
+//                    Console.WriteLine("please enter base ID:");
+//                    int.TryParse(Console.ReadLine(), out int baseID);
 
-                    Console.WriteLine(DalObject.DalObject.GetDistance(longitudeNew, latitudeNew, baseID, choice));
-                    break;
+//                    Console.WriteLine(DalObject.DalObject.GetDistance(longitudeNew, latitudeNew, baseID, choice));
+//                    break;
 
-                case chackDistance.CustomerPoint:
-                    Console.WriteLine("please enter Customer ID:");
-                    int.TryParse(Console.ReadLine(), out int customerID);
+//                case chackDistance.CustomerPoint:
+//                    Console.WriteLine("please enter Customer ID:");
+//                    int.TryParse(Console.ReadLine(), out int customerID);
 
-                    Console.WriteLine(DalObject.DalObject.GetDistance(longitudeNew, latitudeNew, customerID, choice));
+//                    Console.WriteLine(DalObject.DalObject.GetDistance(longitudeNew, latitudeNew, customerID, choice));
 
-                    break;
+//                    break;
 
-                default:
-                    break;
-            }
-        }
-        #endregion Handling calculat the distance of coordinates
+//                default:
+//                    break;
+//            }
+//        }
+//        #endregion Handling calculat the distance of coordinates
 
         #endregion fanction of main
 
@@ -483,9 +483,9 @@ Your choice:");
                     case Options.DisplayList:
                         DisplayListOptions(BLObject);
                         break;
-                    case Options.Distance:
-                        DistanceBetweenPoints(BLObject);
-                        break;
+                    //case Options.Distance:
+                    //    DistanceBetweenPoints(BLObject);
+                    //    break;
                     case Options.EXIT:
                         Console.WriteLine("Have a good day");
                         break;
