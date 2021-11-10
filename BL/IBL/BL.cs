@@ -116,7 +116,10 @@ namespace IBL
                     }
                     else //item.Statuses == DroneStatuses.free
                     {
-                        List<Parcel> parcelsWhoDelivered = 
+                        List<IDAL.DO.Parcel> holdDalParcelWhoDelivered = AccessIdal.GetParcelList(i => i.Delivered != DateTime.MinValue).ToList();
+                        List<Customer> holdCustomer = new List<Customer>();
+                        holdCustomer.Add(holdDalParcelWhoDelivered)
+
                         item.BatteryStatus = random.Next(55, 101);
                     }
                 }
