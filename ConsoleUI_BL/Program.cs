@@ -11,9 +11,9 @@ namespace ConsoleUI_BL
     /// <summary> enum for InsertrOption</summary>
     enum InsertrOption { BaseStation = 1, Drone, Customer, Parcel }
     /// <summary> enum for UpdatesOption</summary>
-    enum UpdatesOption { DroneUpdate=1, BaseStaitonUpdate, CustomerUpdate, AssignDrone  , PickUp, Deliverd, Incharging, Outcharging }
+    enum UpdatesOption { DroneUpdate=1, BaseStaitonUpdate, CustomerUpdate, InCharging, Outcharging, AssignDrone , PickUp, Deliverd }
     /// <summary>enum for DisplaySingleOption </summary>
-    enum DisplaySingleOption { BaseStationView = 1, Dronedisplay, CustomerView, PackageView }
+    enum DisplaySingleOption { BaseStationView = 1, DroneDisplay, CustomerView, PackageView }
     /// <summary>enum for DisplayListOption </summary>
     enum DisplayListOption
     {
@@ -29,12 +29,12 @@ namespace ConsoleUI_BL
     {
         #region fanction of main
 
-        #region Handling insert options
+       #region Handling insert options
         /// <summary>
         /// The function handles various addition options.
         /// </summary>
         /// <param name="dal">DalObject object that is passed as a parameter to enable the functions in the DalObject class</param>
-        static public void InsertOptions(IBL.IBL dal)
+        static public void InsertOptions(IBL.IBL bl)
         {
             Console.WriteLine(@"
 Insert options:
@@ -79,7 +79,7 @@ Please enter an ID number for the new station:");
                         FreeChargeSlots = newchargsSlots,
                         BaseStationLocation = location
                     };
-                    dal.AddStation(newbaseStation);
+                    bl.AddStation(newbaseStation);
                     break;
 
                 case InsertrOption.Drone:
@@ -108,7 +108,7 @@ Please enter an ID number for the new drone:");
                        // = firstchargingStation  מה בעצם דורשים? אין כזה שדה באף יישות ,צריך לעדכן בעצם את השדה של התחנה ואת השדה של רחפן בטעינה 
 
                     };
-                    dal.AddDrone(newdrone);
+                    bl.AddDrone(newdrone);
                     break;
 
                 case InsertrOption.Customer:
@@ -140,7 +140,7 @@ Please enter an ID number for the new Customer:");
                         PhoneNumber = newPhoneNumber,
                         LocationOfCustomer=customerlocation
                     };
-                    dal.AddCustomer(newCustomer);
+                    bl.AddCustomer(newCustomer);
                     break;
 
                 case InsertrOption.Parcel:
@@ -180,7 +180,7 @@ Next Please enter the sender ID number:");
                         Prior = (Priorities)newPriorities
                     };
 
-                    int counterParcelSerialNumber = dal.AddParcel(newParcel);
+                    int counterParcelSerialNumber = bl.AddParcel(newParcel);
                     break;
 
                 default:
@@ -194,13 +194,13 @@ Next Please enter the sender ID number:");
         /// The function handles various update options.
         /// </summary>
         /// <param name="dal">DalObject object that is passed as a parameter to enable the functions in the DalObject class</param>
-        static public void UpdateOptions(DalObject.DalObject dal)
+        static public void UpdateOptions(IBL.IBL bl)
         {
             Console.WriteLine(@"
 Update options:
-1.
-2.
-3.
+1. drone        (new modal name)
+2. base station (new name or new chrage slots number )
+3. costomer     (new name or new phone number)
 4. Assigning a package to a drone
 5. Collection of a package by drone
 6. Delivery package to customer
@@ -209,80 +209,69 @@ Update options:
 Your choice:");
             int.TryParse(Console.ReadLine(), out int choice);
 
-            int ParcelId, droneId, baseStationId;
-
+            int ParcelId, droneId, baseStationId, chargeslots, customerId,phoneNumber;
+            string droneName, baseName, customerName;
+            DateTime time;
             switch ((UpdatesOption)choice)
             {
                 case UpdatesOption.DroneUpdate:
-                    //Console.WriteLine("please enter Parcel ID:");
-                    //int.TryParse(Console.ReadLine(), out ParcelId);
-                    //Console.WriteLine("please enter Drone ID:");
-                    //int.TryParse(Console.ReadLine(), out droneId);
-
-                   // dal.AssignPackageToDdrone(ParcelId, droneId);
+                    Console.WriteLine("please enter drone ID for update:");
+                    int.TryParse(Console.ReadLine(), out ParcelId);
+                    Console.WriteLine("Next Please enter the new Modal name:");
+                    droneName = Console.ReadLine();
+                    bl.UpdateDroneName(ParcelId, droneName);
                     break;
+
                 case UpdatesOption.BaseStaitonUpdate:
-                    //Console.WriteLine("please enter Parcel ID:");
-                    //int.TryParse(Console.ReadLine(), out ParcelId);
-                    //Console.WriteLine("please enter Drone ID:");
-                    //int.TryParse(Console.ReadLine(), out droneId);
-
-                  //  dal.AssignPackageToDdrone(ParcelId, droneId);
+                    Console.WriteLine("please enter base station ID for update:");
+                    int.TryParse(Console.ReadLine(), out ParcelId);
+                    Console.WriteLine("Next Please enter the new base station name if not send empty line:");
+                    baseName = Console.ReadLine();//אם נשלח ריק השדה לא מתעדכן
+                    Console.WriteLine("please enter update for the Charge slots number:");
+                    int.TryParse(Console.ReadLine(), out chargeslots);//אם נשלח ריק השדה לא מתעדכן
+                    bl.UpdateBaseStaison(ParcelId, baseName, chargeslots);
                     break;
+
                 case UpdatesOption.CustomerUpdate:
-                    //Console.WriteLine("please enter Parcel ID:");
-                    //int.TryParse(Console.ReadLine(), out ParcelId);
-                    //Console.WriteLine("please enter Drone ID:");
-                    //int.TryParse(Console.ReadLine(), out droneId);
-
-                    //dal.AssignPackageToDdrone(ParcelId, droneId);
+                    Console.WriteLine("please enter Customer ID for update:");
+                    int.TryParse(Console.ReadLine(), out customerId);
+                    Console.WriteLine("Next Please enter the new base station name if not send empty line:");
+                    customerName = Console.ReadLine();//אם נשלח ריק השדה לא מתעדכן
+                    Console.WriteLine("please enter update for the Charge slots number:");
+                    int.TryParse(Console.ReadLine(), out phoneNumber);//אם נשלח ריק השדה לא מתעדכן
+                    bl.UpdateCustomer(customerId, customerName, phoneNumber);
                     break;
 
-                case UpdatesOption.AssignDrone:
-                    Console.WriteLine("please enter Parcel ID:");
-                    int.TryParse(Console.ReadLine(), out ParcelId);
+                case UpdatesOption.InCharging:
                     Console.WriteLine("please enter Drone ID:");
-                    int.TryParse(Console.ReadLine(), out droneId);
-
-                    dal.AssignPackageToDdrone(ParcelId, droneId);
-                    break;
-
-                case UpdatesOption.PickUp:
-                    Console.WriteLine("please enter Parcel ID:");
-                    int.TryParse(Console.ReadLine(), out ParcelId);
-
-                    dal.PickedUpPackageByTheDrone(ParcelId);
-                    break;
-
-                case UpdatesOption.Deliverd:
-                    Console.WriteLine("please enter Parcel ID:");
-                    int.TryParse(Console.ReadLine(), out ParcelId);
-
-                    dal.DeliveryPackageToTheCustomer(ParcelId);
-                    break;
-
-                case UpdatesOption.Incharging:
-                    Console.WriteLine("please enter Drone ID:");
-                    int.TryParse(Console.ReadLine(), out droneId);
-                    Console.WriteLine("please choose baseStationId ID from the List below:");
-                    //List<BaseStation> displayBaseStationWithFreeChargSlots = new List<BaseStation>();
-                    //displayBaseStationWithFreeChargSlots = dal.GetBaseStationsWithFreeChargSlots();
-                    List<BaseStation> displayBaseStationWithFreeChargSlots = dal.GetBaseStationsWithFreeChargSlots().ToList();
-                    for (int i = 0; i < displayBaseStationWithFreeChargSlots.Count; i++)
-                    {
-                        Console.WriteLine(displayBaseStationWithFreeChargSlots[i].ToString());
-                    }
-
-                    int.TryParse(Console.ReadLine(), out baseStationId);
-
-                    dal.SendingDroneforChargingAtBaseStation(baseStationId, droneId);
+                    int.TryParse(Console.ReadLine(), out droneId);   
+                    bl.SendingDroneforCharging(droneId);
                     break;
 
                 case UpdatesOption.Outcharging:
                     Console.WriteLine("please enter Drone ID:");
                     int.TryParse(Console.ReadLine(), out droneId);
+                    Console.WriteLine("Please enter the length of time the drone has been charging:");
+                    DateTime.TryParse(Console.ReadLine(), out time);
+                    bl.ReleaseDroneFromCharging(droneId, time);
+                    break;
 
-                    dal.ReleaseDroneFromChargingAtBaseStation(droneId);
+                case UpdatesOption.AssignDrone:          
+                    Console.WriteLine("please enter Drone ID:");
+                    int.TryParse(Console.ReadLine(), out droneId);
+                    bl.AssignPackageToDdrone( droneId);
+                    break;
+
+                case UpdatesOption.PickUp:
+                    Console.WriteLine("please enter Drone ID:");
+                    int.TryParse(Console.ReadLine(), out droneId);
+                    bl.PickedUpPackageByTheDrone(droneId);
+                    break;
+
+                case UpdatesOption.Deliverd:
+                    Console.WriteLine("please enter Drone ID:");
+                    int.TryParse(Console.ReadLine(), out droneId);
+                    bl.DeliveryPackageToTheCustomer(droneId);
                     break;
 
                 default:
@@ -296,7 +285,7 @@ Your choice:");
         /// The function handles display options.
         /// </summary>
         /// <param name="dal">DalObject object that is passed as a parameter to enable the functions in the DalObject class</param>
-        static public void DisplaySingleOptions(DalObject.DalObject dal)
+        static public void DisplaySingleOptions(IBL.IBL bl)
         {
             Console.WriteLine(@"
 Display options(single):
@@ -309,36 +298,36 @@ Display options(single):
 Your choice:");
             int.TryParse(Console.ReadLine(), out int choice);
 
-            int idForViewObject;
+            int idForDisplayObject;
 
             switch ((DisplaySingleOption)choice)
             {
                 case DisplaySingleOption.BaseStationView:
                     Console.WriteLine("Insert ID number of base station:");
-                    int.TryParse(Console.ReadLine(), out idForViewObject);
+                    int.TryParse(Console.ReadLine(), out idForDisplayObject);
 
-                    Console.WriteLine(dal.GetBaseStation(idForViewObject).ToString());
+                    Console.WriteLine(bl.GetBaseStation(idForDisplayObject).ToString());
                     break;
 
-                case DisplaySingleOption.Dronedisplay:
+                case DisplaySingleOption.DroneDisplay:
                     Console.WriteLine("Insert ID number of requsted drone:");
-                    int.TryParse(Console.ReadLine(), out idForViewObject);
+                    int.TryParse(Console.ReadLine(), out idForDisplayObject);
 
-                    Console.WriteLine(dal.GetDrone(idForViewObject).ToString());
+                    Console.WriteLine(bl.GetDrone(idForDisplayObject).ToString());
                     break;
 
                 case DisplaySingleOption.CustomerView:
                     Console.WriteLine("Insert ID number of requsted Customer:");
-                    int.TryParse(Console.ReadLine(), out idForViewObject);
+                    int.TryParse(Console.ReadLine(), out idForDisplayObject);
 
-                    Console.WriteLine(dal.GetCustomer(idForViewObject).ToString());
+                    Console.WriteLine(bl.GetCustomer(idForDisplayObject).ToString());
                     break;
 
                 case DisplaySingleOption.PackageView:
                     Console.WriteLine("Insert ID number of reqused parcel:");
-                    int.TryParse(Console.ReadLine(), out idForViewObject);
+                    int.TryParse(Console.ReadLine(), out idForDisplayObject);
 
-                    Console.WriteLine(dal.GetParcel(idForViewObject).ToString());
+                    Console.WriteLine(bl.GetParcel(idForDisplayObject).ToString());
                     break;
 
                 default:
@@ -363,8 +352,8 @@ Your choice:");
         /// <summary>
         /// The function handles list view options.
         /// </summary>
-        /// <param name="dal">DalObject object that is passed as a parameter to enable the functions in the DalObject class</param>
-        static public void DisplayListOptions(DalObject.DalObject dal)
+        /// <param name="bl">DalObject object that is passed as a parameter to enable the functions in the DalObject class</param>
+        static public void DisplayListOptions(IBL.IBL bl)
         {
             Console.WriteLine(@"
 Display options (for the whole list):
@@ -382,27 +371,27 @@ Your choice:");
             switch ((DisplayListOption)choice)
             {
                 case DisplayListOption.ListOfBaseStationView:
-                    printTheList(dal.GetBaseStationList().ToList());
+                    printTheList(bl.GetBaseStationList().ToList());
                     break;
 
                 case DisplayListOption.ListOfDronedisplay:
-                    printTheList(dal.GetDroneList().ToList());
+                    printTheList(bl.GetDroneList().ToList());
                     break;
 
                 case DisplayListOption.ListOfCustomerView:
-                    printTheList(dal.GetCustomerList().ToList());
+                    printTheList(bl.GetCustomerList().ToList());
                     break;
 
                 case DisplayListOption.ListOfPackageView:
-                    printTheList(dal.GetParcelList().ToList());
+                    printTheList(bl.GetParcelList().ToList());
                     break;
 
                 case DisplayListOption.ListOfFreePackageView:
-                    printTheList(dal.GetParcelWithoutDrone().ToList());
+                    printTheList(bl.GetParcelWithoutDrone().ToList());
                     break;
 
                 case DisplayListOption.ListOfBaseStationsWithFreeChargSlots:
-                    printTheList(dal.GetBaseStationsWithFreeChargSlots().ToList());
+                    printTheList(bl.GetBaseStationsWithFreeChargSlots().ToList());
                     break;
 
                 default:
@@ -484,18 +473,18 @@ Your choice:");
                         break;
 
                     case Options.Update:
-                        UpdateOptions(dalObject);
+                        UpdateOptions(BLObject);
                         break;
 
                     case Options.DisplaySingle:
-                        DisplaySingleOptions(dalObject);
+                        DisplaySingleOptions(BLObject);
                         break;
 
                     case Options.DisplayList:
-                        DisplayListOptions(dalObject);
+                        DisplayListOptions(BLObject);
                         break;
                     case Options.Distance:
-                        DistanceBetweenPoints(dalObject);
+                        DistanceBetweenPoints(BLObject);
                         break;
                     case Options.EXIT:
                         Console.WriteLine("Have a good day");
