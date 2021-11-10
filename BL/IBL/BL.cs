@@ -12,7 +12,7 @@ namespace IBL
     {
         public IDal.IDal AccessIdal;
 
-        public List<DroneToList> Drones;
+        public List<DroneToList> DronesBL;
 
         public static double Free;
         public static double LightWeightCarrier;
@@ -25,44 +25,108 @@ namespace IBL
             //IDal.IDal idal = new DalObject.DalObject();
             AccessIdal = new DalObject.DalObject();
 
-            Drones = new List<DroneToList>();
-
             double[] arr = AccessIdal.RequestPowerConsumptionByDrone();
             //למלא את השדות לפי המערך
 
-            List<IDAL.DO.Drone> drones = AccessIdal.GetDroneList().ToList();
-
-            DroneToList temp = new DroneToList();
-
-            for (int i = 0; i < drones.Count; i++)
+            //המרת מערך הרחפנים של שכבת הנתונים למערך רחפנים של השכבה הלוגית
+            DronesBL = new List<DroneToList>();
+            List<IDAL.DO.Drone> holdDalDrones = AccessIdal.GetDroneList().ToList();
+            foreach (var item in holdDalDrones)
             {
-                temp.Id = drones[i].Id;
-                temp.Model = drones[i].Model;
-                temp.MaxWeight = (WeightCategories)drones[i].MaxWeight;
-
-                Drones.Add(temp);
-
+                DronesBL.Add(new DroneToList { Id = item.Id, Model = item.Model,
+                     MaxWeight = (WeightCategories)item.MaxWeight });
             }
 
-            List<IDAL.DO.Parcel> Parcels = AccessIdal.GetParcelList(i => i.DroneId != 0 && i.Delivered == DateTime.MinValue).ToList();
-
-            foreach (var item in Parcels)
+            //יצירת רשימת לקוחות משכבת הנתונים
+            List<Customer> CustomerBL = new List<Customer>();
+            List<IDAL.DO.Customer> holdDalCustomer = AccessIdal.GetCustomerList().ToList();
+            foreach (var item in holdDalCustomer)
             {
-                
-                Drones.Find(x => x.Id == item.DroneId).Statuses = DroneStatuses.busy;
+                Location LocationOfItem = new Location() { longitude = item.Longitude, latitude = item.Latitude };
+                CustomerBL.Add(new Customer { Id = item.Id, Name = item.Name, PhoneNumber
+                = item.PhoneNumber, LocationOfCustomer = LocationOfItem});
+            }
 
-                if(item.PickedUp == DateTime.MinValue)
+            //יצירת רשימת תחנות בסיס משכבת הנתונים
+            List<BaseStation> baseStationBL = new List<BaseStation>();
+            List <IDAL.DO.BaseStation> holdDalBaseStation = AccessIdal.GetBaseStationList().ToList();
+            foreach (var item in holdDalBaseStation)
+            {
+                Location LocationOfItem = new Location() { longitude = item.Longitude, latitude = item.Latitude };
+                baseStationBL.Add(new BaseStation { Id = item.Id, Name = item.StationName,
+                    FreeChargeSlots = item.FreeChargeSlots, BaseStationLocation = LocationOfItem});
+            }
+            //יצירת רשימת חבילות עם תנאי משכבת הנתונים
+            List<IDAL.DO.Parcel> holdDalParcel = AccessIdal.GetParcelList(i => i.DroneId != 0 && i.Delivered == DateTime.MinValue).ToList();
+
+            /*
+            foreach (var item in holdDalParcel)
+            {
+                DronesBL.Find(x => x.Id == item.DroneId).Statuses = DroneStatuses.busy;
+            }
+            */
+            Random random = new Random(DateTime.Now.Millisecond);
+
+            foreach (var item in DronesBL)
+            {
+                //if(holdDalParcel.Exists(x => x.DroneId == item.Id))
+                int index = holdDalParcel.FindIndex(x => x.DroneId == item.Id);
+                if (index != -1)
                 {
-                    foreach (var item in collection)
-                    {
+                    item.Statuses = DroneStatuses.busy;
 
+                    if(holdDalParcel[index].PickedUp == DateTime.MinValue)
+                    {
+                        int CustomerId = holdDalParcel[index].SenderId;
+
+                        Location LocationOfCustomer = new Location();
+                        LocationOfCustomer.longitude = holdDalCustomer.Find(x => x.Id == CustomerId).Longitude;
+                        LocationOfCustomer.latitude = holdDalCustomer.Find(x => x.Id == CustomerId).Latitude;
+
+                        List<double> listOfDistance = new List<double>();
+
+                        foreach (var obj in holdDalBaseStation)
+                        {
+                            
+                            Location LocationOfBaseStation = new Location();
+                            LocationOfBaseStation.longitude = obj.Longitude;
+                            LocationOfBaseStation.latitude = obj.Latitude;
+
+                            listOfDistance.Add(GetDistance(LocationOfCustomer, LocationOfBaseStation));
+                        }
+
+                        //מציאת המיקום של התחנה הקרובה ביותר לשולח והכנסתו למיקום הרחפן
+                        item.CurrentLocation = baseStationBL[listOfDistance.FindIndex(x => x == listOfDistance.Min())].BaseStationLocation;
+                    }
+                    else
+                    { 
+                        item.CurrentLocation = CustomerBL[CustomerBL.FindIndex(x => x.Id == holdDalParcel[index].SenderId)].LocationOfCustomer;    
+                    }
+
+                    
+                    item.BatteryStatus = random.Next(70, 101);
+                }
+                else
+                {
+                    item.Statuses = (DroneStatuses)random.Next(0, 2);
+                    if(item.Statuses == DroneStatuses.inMaintenance)
+                    {
+                        item.CurrentLocation = baseStationBL[random.Next(0, baseStationBL.Count)].BaseStationLocation;
+                        item.BatteryStatus = random.Next(0, 21);
+                    }
+                    else //item.Statuses == DroneStatuses.free
+                    {
+                        List<Parcel> parcelsWhoDelivered = 
+                        item.BatteryStatus = random.Next(55, 101);
                     }
                 }
-
             }
-
-
         }
+
+
+
+
+
         #region Function of calculating distance between points (Bonus)
         /// <summary>
         /// A function that calculates the distance between points
@@ -90,21 +154,3 @@ namespace IBL
         #endregion Function of calculating distance between points (Bonus)
     }
 }
-
-
-
-/*
-                int index = Parcels.FindIndex(x => x.DroneId == item.Id);
-                //if (item.Id == Parcels.Exists())
-                if(index != -1)
-                {
-                    item.Statuses = DroneStatuses.busy; 
-                    if(Parcels[index].PickedUp == DateTime.MinValue)
-                    {
-                       // item.CurrentLocation = 
-
-
-
-                    }
-                }
-                */
