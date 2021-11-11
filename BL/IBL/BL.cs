@@ -10,23 +10,28 @@ namespace IBL
 {
     public class BL: IBL
     {
-        public IDal.IDal AccessIdal;
+        public IDal.IDal AccessIdal; 
 
         public List<DroneToList> DronesBL;
 
-        public static double Free;
-        public static double LightWeightCarrier;
-        public static double MediumWeightBearing;
-        public static double CarriesHeavyWeight;
-        public static double DroneLoadingRate;
+        public double Free;
+        public double LightWeightCarrier;
+        public double MediumWeightBearing;
+        public double CarriesHeavyWeight;
+        public double DroneLoadingRate;
 
         public BL()
         {
-            //IDal.IDal idal = new DalObject.DalObject();
+            //Creates an object that will serve as an access point to methods in DAL.
             AccessIdal = new DalObject.DalObject();
 
+            //צריכת החשמל של הרחפנים וקצב טעינתם
             double[] arr = AccessIdal.RequestPowerConsumptionByDrone();
-            //למלא את השדות לפי המערך
+            Free = arr[0];
+            LightWeightCarrier = arr[1];
+            MediumWeightBearing = arr[2];
+            CarriesHeavyWeight = arr[3];
+            DroneLoadingRate = arr[4];
 
             //המרת מערך הרחפנים של שכבת הנתונים למערך רחפנים של השכבה הלוגית
             DronesBL = new List<DroneToList>();
@@ -60,61 +65,74 @@ namespace IBL
             //יצירת רשימת חבילות עם תנאי משכבת הנתונים
             List<IDAL.DO.Parcel> holdDalParcel = AccessIdal.GetParcelList(i => i.DroneId != 0 && i.Delivered == DateTime.MinValue).ToList();
 
+            //Create a Random object to be used to draw the battery status and Location of the drones.
             Random random = new Random(DateTime.Now.Millisecond);
 
+            //The loop will go through the dronesBL list and check if the drone is associated with the package
+            //or if it does not makes a delivery and will update its status, location and battery status.
             foreach (var item in DronesBL)
             {
-                //if(holdDalParcel.Exists(x => x.DroneId == item.Id))
+                // לשנות את השם לindex 
                 int index = holdDalParcel.FindIndex(x => x.DroneId == item.Id);
-                if (index != -1)
+                if (index != -1) //If the drone is indeed associated with one of the Parcels in the list.
                 {
-                    item.Statuses = DroneStatuses.busy;
+                    item.Statuses = DroneStatuses.busy; //Update drone status for shipping operation.
 
-                    if(holdDalParcel[index].PickedUp == DateTime.MinValue)
+                    if (holdDalParcel[index].PickedUp == DateTime.MinValue)//Check if the Parcel has already been PickedUped.
                     {
                         int CustomerId = holdDalParcel[index].SenderId;
-
+                        /*
                         Location LocationOfCustomer = new Location();
                         LocationOfCustomer.longitude = holdDalCustomer.Find(x => x.Id == CustomerId).Longitude;
                         LocationOfCustomer.latitude = holdDalCustomer.Find(x => x.Id == CustomerId).Latitude;
+                        */
 
-                        List<double> listOfDistance = new List<double>();
+                        List<double> listOfDistance = new List<double>();//
 
-                        foreach (var obj in holdDalBaseStation)
+                        //
+                        foreach (var obj in baseStationBL)
                         {
-                            
+                            listOfDistance.Add(GetDistance(CustomerBL[index].LocationOfCustomer, obj.BaseStationLocation));
+                            /*
                             Location LocationOfBaseStation = new Location();
                             LocationOfBaseStation.longitude = obj.Longitude;
                             LocationOfBaseStation.latitude = obj.Latitude;
-
-                            listOfDistance.Add(GetDistance(LocationOfCustomer, LocationOfBaseStation));
+                            */
                         }
 
                         //מציאת המיקום של התחנה הקרובה ביותר לשולח והכנסתו למיקום הרחפן
                         item.CurrentLocation = baseStationBL[listOfDistance.FindIndex(x => x == listOfDistance.Min())].BaseStationLocation;
                     }
-                    else
+                    else //If the package was PickedUped.
                     { 
                         item.CurrentLocation = CustomerBL[CustomerBL.FindIndex(x => x.Id == holdDalParcel[index].SenderId)].LocationOfCustomer;    
                     }
 
-                    
+                    // random number battery status between minimum charge to make the shipment and full charge.     
                     item.BatteryStatus = random.Next(70, 101);
                 }
-                else
+                else //If the drone is not associated with one of the parcels on the list and is actually available and does not ship.
                 {
-                    item.Statuses = (DroneStatuses)random.Next(0, 2);
-                    if(item.Statuses == DroneStatuses.inMaintenance)
+                    item.Statuses = (DroneStatuses)random.Next(0, 2);//Lottery drone mode between maintenance mode and free mode.
+
+                    if (item.Statuses == DroneStatuses.inMaintenance)
                     {
                         item.CurrentLocation = baseStationBL[random.Next(0, baseStationBL.Count)].BaseStationLocation;
                         item.BatteryStatus = random.Next(0, 21);
                     }
                     else //item.Statuses == DroneStatuses.free
                     {
-                        List<IDAL.DO.Parcel> holdDalParcelWhoDelivered = AccessIdal.GetParcelList(i => i.Delivered != DateTime.MinValue).ToList();
-                        List<Customer> holdCustomer = new List<Customer>();
-                        holdCustomer.Add(holdDalParcelWhoDelivered)
+                        List<IDAL.DO.Parcel> DeliveredAndSameDroneID = AccessIdal.GetParcelList(i => i.Delivered != DateTime.MinValue && i.DroneId == item.Id).ToList();
+                        if (!DeliveredAndSameDroneID.Any())//if the List is empty.
+                        {
+                            item.CurrentLocation = baseStationBL[random.Next(0, baseStationBL.Count)].BaseStationLocation;
+                        }
+                        else //if the List is not empty.
+                        {
+                            item.CurrentLocation = CustomerBL.Find(x => x.Id == DeliveredAndSameDroneID[random.Next(0, DeliveredAndSameDroneID.Count)].TargetId).LocationOfCustomer;
+                        }
 
+                        //
                         item.BatteryStatus = random.Next(55, 101);
                     }
                 }
@@ -122,9 +140,12 @@ namespace IBL
             
         }
 
-        
+        public void AddDrone(Drone newdrone)
+        {
 
+        }
 
+            
 
         #region Function of calculating distance between points (Bonus)
         /// <summary>
