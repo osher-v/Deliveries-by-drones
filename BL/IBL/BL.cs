@@ -56,15 +56,10 @@ namespace IBL
                 baseStationBL.Add(new BaseStation { Id = item.Id, Name = item.StationName,
                     FreeChargeSlots = item.FreeChargeSlots, BaseStationLocation = LocationOfItem});
             }
+
             //יצירת רשימת חבילות עם תנאי משכבת הנתונים
             List<IDAL.DO.Parcel> holdDalParcel = AccessIdal.GetParcelList(i => i.DroneId != 0 && i.Delivered == DateTime.MinValue).ToList();
 
-            /*
-            foreach (var item in holdDalParcel)
-            {
-                DronesBL.Find(x => x.Id == item.DroneId).Statuses = DroneStatuses.busy;
-            }
-            */
             Random random = new Random(DateTime.Now.Millisecond);
 
             foreach (var item in DronesBL)
@@ -124,9 +119,10 @@ namespace IBL
                     }
                 }
             }
+            
         }
 
-
+        
 
 
 
