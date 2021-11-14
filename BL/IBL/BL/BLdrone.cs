@@ -27,8 +27,8 @@ namespace IBL
             {
                 newDrone.BatteryStatus = random.Next(20, 41);
                 newDrone.Statuses = DroneStatuses.inMaintenance;
-                newDrone.CurrentLocation.longitude = AccessIdal.GetBaseStation(firstchargingStation).Longitude;
-                newDrone.CurrentLocation.latitude = AccessIdal.GetBaseStation(firstchargingStation).Latitude;
+                newDrone.CurrentLocation.longitude = AccessIdal.GetBaseStation(firstChargingStation).Longitude;
+                newDrone.CurrentLocation.latitude = AccessIdal.GetBaseStation(firstChargingStation).Latitude;
                 DronesBL.Add(newDrone);
                 AccessIdal.SendingDroneforChargingAtBaseStation(firstChargingStation, newDrone.Id);// לשאול את דן 
             }
