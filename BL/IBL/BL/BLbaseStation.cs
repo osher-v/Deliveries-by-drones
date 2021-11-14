@@ -12,13 +12,15 @@ namespace IBL
     {
         public void AddStation(BaseStation newbaseStation)
         {
-            /*
-            if ((BaseStation.FindIndex(x => x.Id == newbaseStation.Id)) != -1)
-                throw new AddAnExistingObjectException();
-            DataSource.BaseStationsList.Add(newbaseStation);
-            */
-
-            AccessIdal.AddStation(newbaseStation);
+            IDAL.DO. BaseStation newStation =new IDAL.DO.BaseStation() { Id=newbaseStation.Id, StationName=newbaseStation.Name, 
+                FreeChargeSlots=newbaseStation.FreeChargeSlots,Longitude=newbaseStation.BaseStationLocation.longitude,
+                Latitude = newbaseStation.BaseStationLocation.latitude} ;
+            try
+            {
+                AccessIdal.AddStation(newStation);
+            }
+            catch {  }
         }
+
     }
 }

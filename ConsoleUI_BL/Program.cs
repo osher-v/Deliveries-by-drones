@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using IBL;
 using IBL.BO;
 
@@ -77,7 +78,8 @@ Please enter an ID number for the new station:");
                         Id = newBaseStationID,
                         Name = newName,
                         FreeChargeSlots = newchargsSlots,
-                        BaseStationLocation = location
+                        BaseStationLocation = location,
+                        DroneInChargsList = new List<DroneInCharg>()     
                     };
                     bl.AddStation(newbaseStation);
                     break;
