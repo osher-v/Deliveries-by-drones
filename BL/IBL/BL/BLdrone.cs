@@ -33,7 +33,16 @@ namespace IBL
                 AccessIdal.SendingDroneforChargingAtBaseStation(firstChargingStation, newDrone.Id);// לשאול את דן 
             }
             catch { }
+        }
+        public void UpdateDroneName(int droneId, string droneName)
+        {
+            try
+            {
+                DronesBL.Find(x => x.Id == droneId).Model = droneName;
+            }
+            catch { }
 
         }
+
     }
 }
