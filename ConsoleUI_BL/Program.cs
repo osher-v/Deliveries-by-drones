@@ -7,7 +7,7 @@ namespace ConsoleUI_BL
 
     #region enums
     /// <summary>enum for the first dialog </summary>
-    enum Options { Insert = 1, Update, DisplaySingle, DisplayList, Distance, EXIT }
+    enum Options { Insert = 1, Update, DisplaySingle, DisplayList, EXIT }
     /// <summary> enum for InsertrOption</summary>
     enum InsertrOption { BaseStation = 1, Drone, Customer, Parcel }
     /// <summary> enum for UpdatesOption</summary>
@@ -29,7 +29,7 @@ namespace ConsoleUI_BL
     {
         #region fanction of main
 
-       #region Handling insert options
+        #region Handling insert options
         /// <summary>
         /// The function handles various addition options.
         /// </summary>
@@ -483,9 +483,7 @@ Your choice:");
                     case Options.DisplayList:
                         DisplayListOptions(BLObject);
                         break;
-                    //case Options.Distance:
-                    //    DistanceBetweenPoints(BLObject);
-                    //    break;
+                 
                     case Options.EXIT:
                         Console.WriteLine("Have a good day");
                         break;
@@ -493,7 +491,7 @@ Your choice:");
                     default:
                         break;
                 }
-            } while (!(choice == 6));
+            } while (!(choice == 5));
         }
     }
 
