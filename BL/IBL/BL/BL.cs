@@ -20,6 +20,9 @@ namespace IBL
         public double CarriesHeavyWeight;
         public double DroneLoadingRate;
 
+        //Create a Random object to be used to draw the battery status and Location of the drones.
+        Random random = new Random(DateTime.Now.Millisecond); 
+
         public BL()
         {
             //Creates an object that will serve as an access point to methods in DAL.
@@ -65,8 +68,6 @@ namespace IBL
             //יצירת רשימת חבילות עם תנאי משכבת הנתונים
             List<IDAL.DO.Parcel> holdDalParcels = AccessIdal.GetParcelList(i => i.DroneId != 0).ToList();
 
-            //Create a Random object to be used to draw the battery status and Location of the drones.
-            Random random = new Random(DateTime.Now.Millisecond);
 
             //The loop will go through the dronesBL list and check if the drone is associated with the package
             //or if it does not makes a delivery and will update its status, location and battery status.

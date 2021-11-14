@@ -85,7 +85,7 @@ Please enter an ID number for the new station:");
                     break;
 
                 case InsertrOption.Drone:
-                    int newDroneID, newMaxWeight, firstchargingStation;
+                    int newDroneID, newMaxWeight, firstChargingStation;
                     string newmodel;
                     double newBatteryLevel;
 
@@ -100,17 +100,16 @@ Please enter an ID number for the new drone:");
                     Console.WriteLine("Next enter the charge level of the battery:");
                     while (!double.TryParse(Console.ReadLine(), out newBatteryLevel)) ;
                     Console.WriteLine("Next enter the ID of the Station to Put the drone for first charge : 0 for free, 1 for inMaintenance and 2 for busy");
-                    while (!int.TryParse(Console.ReadLine(), out firstchargingStation)) ;
+                    while (!int.TryParse(Console.ReadLine(), out firstChargingStation)) ;
 
-                    Drone newdrone = new Drone
+                    DroneToList newdrone = new DroneToList
                     {
                         Id = newDroneID,
                         Model = newmodel,
-                        MaxWeight = (WeightCategories)newMaxWeight,
-                       // = firstchargingStation  מה בעצם דורשים? אין כזה שדה באף יישות ,צריך לעדכן בעצם את השדה של התחנה ואת השדה של רחפן בטעינה 
-
+                        MaxWeight = (WeightCategories)newMaxWeight
                     };
-                    bl.AddDrone(newdrone);
+
+                    bl.AddDrone(newdrone,firstChargingStation);
                     break;
 
                 case InsertrOption.Customer:
@@ -153,12 +152,12 @@ Please enter an ID number for the new Customer:");
 You have selected to add a new Parcel.
 Next Please enter the sender ID number:");
                     while (!int.TryParse(Console.ReadLine(), out newSenderId)) ;
-                    Console.WriteLine("Next Please enter the name of the customer:");
-                    senderName = Console.ReadLine();
+                    //Console.WriteLine("Next Please enter the name of the customer:");
+                    //senderName = Console.ReadLine();
                     Console.WriteLine("Next Please enter the target ID number:");
                     while (!int.TryParse(Console.ReadLine(), out newTargetId)) ;
-                    Console.WriteLine("Next Please enter the name of the customer:");
-                    reciverName = Console.ReadLine();
+                    //Console.WriteLine("Next Please enter the name of the customer:");
+                    //reciverName = Console.ReadLine();
                     Console.WriteLine("Next enter the weight category of the new Parcel: 0 for free, 1 for inMaintenance and 2 for busy");
                     while (!int.TryParse(Console.ReadLine(), out newWeight)) ;
                     Console.WriteLine("Next enter the priorities of the new Parcel: 0 for regular, 1 for fast and 2 for urgent");
@@ -168,21 +167,23 @@ Next Please enter the sender ID number:");
                     CustomerInDelivery newSender = new CustomerInDelivery
                     {
                         Id = newSenderId,
-                        Name = senderName,
+                        //Name = senderName,
                     };
                     CustomerInDelivery newReciver = new CustomerInDelivery
                     {
                         Id = newTargetId,
-                        Name = reciverName,
+                        //Name = reciverName,
                     };
 
                     Parcel newParcel = new Parcel
                     {
+                        Sender = newSender,
+                        Receiver= newReciver,
                         Weight = (WeightCategories)newWeight,
                         Prior = (Priorities)newPriorities
                     };
-
-                    int counterParcelSerialNumber = bl.AddParcel(newParcel);
+                    //int counterParcelSerialNumber = 
+                        bl.AddParcel(newParcel);
                     break;
 
                 default:
