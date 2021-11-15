@@ -12,17 +12,45 @@ namespace IBL
     {
         public void AddStation(BaseStation newbaseStation)
         {
-            IDAL.DO. BaseStation newStation =new IDAL.DO.BaseStation() { Id=newbaseStation.Id, StationName=newbaseStation.Name, 
-                FreeChargeSlots=newbaseStation.FreeChargeSlots,Longitude=newbaseStation.BaseStationLocation.longitude,
-                Latitude = newbaseStation.BaseStationLocation.latitude} ;
+            IDAL.DO.BaseStation newStation = new IDAL.DO.BaseStation()
+            {
+                Id = newbaseStation.Id,
+                StationName = newbaseStation.Name,
+                FreeChargeSlots = newbaseStation.FreeChargeSlots,
+                Longitude = newbaseStation.BaseStationLocation.longitude,
+                Latitude = newbaseStation.BaseStationLocation.latitude
+            };
             try
             {
                 AccessIdal.AddStation(newStation);
             }
-            catch(IDAL.DO.AddAnExistingObjectException ex)
+            catch (IDAL.DO.AddAnExistingObjectException ex)
             {
-                throw new Exception("",ex); 
+                throw new Exception("", ex);
             }
+        }
+
+        public void UpdateBaseStaison(int baseStationId, string baseName, int chargeslots)
+        {
+            try
+            {
+                if (baseName != "")
+                {
+                    IDAL.DO.BaseStation newbase = AccessIdal.GetBaseStation(baseStationId);
+                    newbase.StationName = baseName;
+                }
+
+                //if (!(chargeslots==0))
+                //{
+                //    IDAL.DO.BaseStation newbase = AccessIdal.GetBaseStation(baseStationId);
+                //    newbase.StationName = baseName;
+                //    AccessIdal.UpdateBaseStation(newbase);
+                //}
+
+                AccessIdal.UpdateBaseStation(newbase);
+            }
+            catch { }
+
         }
 
     }
