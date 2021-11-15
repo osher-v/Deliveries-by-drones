@@ -8,6 +8,10 @@ namespace IBL
 {
     public partial class BL
     {
+        /// <summary>
+        /// the fanction send drone to charge and update accordanly 
+        /// </summary>
+        /// <param name="droneId"></param>
         public void SendingDroneforCharging(int droneId)
         {
             DroneToList drone = DronesBL.Find(x => x.Id == droneId);
@@ -36,8 +40,29 @@ namespace IBL
             drone.BatteryStatus -= distence * Free;
             drone.CurrentLocation = minDistanceBetweenBaseStationsAndLocation(BLbaseStations, drone.CurrentLocation).Item1;
             drone.Statuses = DroneStatuses.inMaintenance;
+            AccessIdal.SendingDroneforChargingAtBaseStation(BLbaseStations.Find(x => x.BaseStationLocation == drone.CurrentLocation).Id, drone.Id);
+            // AccessIdal.UpdateMinusChargeSlots(BLbaseStations.Find(x => x.BaseStationLocation == drone.CurrentLocation).Id);
+        }
 
-         //   AccessIdal.UpdateMinusChargeSlots(BLbaseStations.Find(x => x.BaseStationLocation == drone.CurrentLocation).Id);
+
+        public void ReleaseDroneFromCharging(int droneId, DateTime time)
+        {
+            DroneToList drone = DronesBL.Find(x => x.Id == droneId);
+            if (drone.Statuses != DroneStatuses.inMaintenance)
+            {
+                throw new Exception();
+            }
+
+            double horsnInCahrge = time.Hour + (time.Minute/60) + (time.Second / 3600);
+
+            double batrryCharge = horsnInCahrge * DroneLoadingRate+drone.BatteryStatus;
+            if (batrryCharge > 100)
+                batrryCharge = 100;
+            drone.BatteryStatus = batrryCharge;
+            drone.Statuses = DroneStatuses.free;
+
+            AccessIdal.ReleaseDroneFromChargingAtBaseStation(droneId);
+
         }
 
 
