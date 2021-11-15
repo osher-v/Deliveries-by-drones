@@ -18,7 +18,7 @@ namespace DalObject
             DataSource.BaseStationsList.Add(newbaseStation);
         }
 
-        public void updateMinusChargeSlots(int baseStationId)
+        public void UpdateMinusChargeSlots(int baseStationId)
         {
             //BaseStation update.
             int indexaforBaseStationId = DataSource.BaseStationsList.FindIndex(x => x.Id == baseStationId);
@@ -27,7 +27,7 @@ namespace DalObject
             DataSource.BaseStationsList[indexaforBaseStationId] = temp;
         }
 
-        public void updatePluseChargeSlots(int baseStationId)
+        public void UpdatePluseChargeSlots(int baseStationId)
         {
             //BaseStation update.
             int indexaforBaseStationId = DataSource.BaseStationsList.FindIndex(x => x.Id == baseStationId);

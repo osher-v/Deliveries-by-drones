@@ -20,7 +20,7 @@ namespace DalObject
         public void SendingDroneforChargingAtBaseStation(int baseStationId, int droneId)
         {
             DataSource.DroneChargeList.Add(new DroneCharge() { StationId = baseStationId, DroneId = droneId });
-            updateMinusChargeSlots(baseStationId);
+            UpdateMinusChargeSlots(baseStationId);
         }
         /// <summary>
         /// release drone from charging at BaseStation.
@@ -34,7 +34,7 @@ namespace DalObject
             int baseStationId = help2.StationId;
             DataSource.DroneChargeList.RemoveAt(DataSource.DroneChargeList.FindIndex(x => x.DroneId == droneId));
 
-            updatePluseChargeSlots(baseStationId);
+            UpdatePluseChargeSlots(baseStationId);
         }
         
     }

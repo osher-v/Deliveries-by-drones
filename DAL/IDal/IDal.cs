@@ -38,6 +38,18 @@ namespace IDal
 
         #region Functions for update options
         /// <summary>
+        /// The function updates the number of charging stations at the base station by--
+        /// </summary>
+        /// <param name="baseStationId">baseStationId</param>
+        public void UpdateMinusChargeSlots(int baseStationId);
+
+        /// <summary>
+        /// The function updates the number of charging stations at the base station by++
+        /// </summary>
+        /// <param name="baseStationId">baseStationId</param>
+        public void UpdatePluseChargeSlots(int baseStationId);
+
+        /// <summary>
         /// The function assigns a package to the drone.
         /// </summary>
         /// <param name="ParcelId">Id of Parcel</param>
