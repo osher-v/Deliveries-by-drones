@@ -34,9 +34,9 @@ namespace IBL
         {
             try
             {
+                IDAL.DO.BaseStation newbase = AccessIdal.GetBaseStation(baseStationId);
                 if (baseName != "")
                 {
-                    IDAL.DO.BaseStation newbase = AccessIdal.GetBaseStation(baseStationId);
                     newbase.StationName = baseName;
                 }
 
