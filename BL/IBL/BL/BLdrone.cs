@@ -10,14 +10,14 @@ namespace IBL
     //public partial class BLdrone
     public partial class BL
     {
-        public void AddDrone(DroneToList newDrone,int firstChargingStation)
+        public void AddDrone(DroneToList newDrone, int firstChargingStation)
         {
             IDAL.DO.Drone Drone = new IDAL.DO.Drone()
             {
                 Id = newDrone.Id,
-                MaxWeight= (IDAL.DO.WeightCategories)newDrone.MaxWeight, 
-                Model=newDrone.Model
-            };       
+                MaxWeight = (IDAL.DO.WeightCategories)newDrone.MaxWeight,
+                Model = newDrone.Model
+            };
             try
             {
                 AccessIdal.AddDrone(Drone);

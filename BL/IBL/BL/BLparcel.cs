@@ -15,12 +15,12 @@ namespace IBL
             IDAL.DO.Parcel parcel = new IDAL.DO.Parcel()
             {
                 Id = newParcel.Id,
-                SenderId=newParcel.Sender.Id,
-                TargetId= newParcel.Receiver.Id,
-                Weight =(IDAL.DO.WeightCategories)newParcel.Weight,
-                Priority=(IDAL.DO.Priorities)newParcel.Prior,
-                Assigned=DateTime.Now,
-                DroneId=0 // לשאול את דן   
+                SenderId = newParcel.Sender.Id,
+                TargetId = newParcel.Receiver.Id,
+                Weight = (IDAL.DO.WeightCategories)newParcel.Weight,
+                Priority = (IDAL.DO.Priorities)newParcel.Prior,
+                Assigned = DateTime.Now,
+                DroneId = 0 // לשאול את דן   
             };
 
             try
