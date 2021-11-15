@@ -50,6 +50,12 @@ namespace IDal
         public void UpdatePluseChargeSlots(int baseStationId);
 
         /// <summary>
+        /// The function updates the drone object in the list
+        /// </summary>
+        /// <param name="newDrone">newDrone</param>
+        public void UpdateDrone(Drone newDrone);
+
+        /// <summary>
         /// The function assigns a package to the drone.
         /// </summary>
         /// <param name="ParcelId">Id of Parcel</param>
