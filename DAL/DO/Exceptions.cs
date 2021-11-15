@@ -12,7 +12,7 @@ namespace IDAL
     namespace DO
     {
         [Serializable]
-        class  AddAnExistingObjectException : Exception
+        public class  AddAnExistingObjectException : Exception
         {
             public AddAnExistingObjectException() : base() { }
             public AddAnExistingObjectException(string message) : base(message) { }
@@ -29,7 +29,7 @@ namespace IDAL
 
         [Serializable]
         //class UpdateOfANonExistentObjectException : Exception
-        class NonExistentObjectException : Exception
+        public class NonExistentObjectException : Exception
         {
             public NonExistentObjectException() : base() { }
             public NonExistentObjectException(string message) : base(message) { }

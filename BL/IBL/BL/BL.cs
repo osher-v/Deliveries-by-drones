@@ -73,6 +73,7 @@ namespace IBL
             //or if it does not makes a delivery and will update its status, location and battery status.
             foreach (var item in DronesBL)
             {
+
                 // לשנות את השם לindex 
                 int index = holdDalParcels.FindIndex(x => x.DroneId == item.Id && x.Delivered == DateTime.MinValue);
                 if (index != -1) //If the drone is indeed associated with one of the Parcels in the list.
@@ -85,10 +86,33 @@ namespace IBL
                     IDAL.DO.Customer receiverCustomer = AccessIdal.GetCustomer(holdDalParcels[index].TargetId);
                     Location locationOfReceiver = new Location { longitude = receiverCustomer.Longitude, latitude = receiverCustomer.Latitude };
 
+                    WeightCategories WeightOfTheParcel = (WeightCategories)holdDalParcels[index].Weight;
+                    double distance1 = GetDistance(locationOfsender, locationOfReceiver);
+                    //double distance2 = GetDistance(locationOfReceiver, minDistanceBetweenBaseStationsAndLocation
+                        //(baseStationBL, locationOfReceiver).Item1) * Free;
+                    double distance2 = minDistanceBetweenBaseStationsAndLocation
+                        (baseStationBL, locationOfReceiver).Item2 *Free;
+                    switch (WeightOfTheParcel)
+                    {
+                        case WeightCategories.light:
+                            distance1 *= LightWeightCarrier;
+                            // 
+                            break;
+                        case WeightCategories.medium:
+                            distance1 *= MediumWeightBearing;
+                            break;
+                        case WeightCategories.heavy:
+                            distance1 *= CarriesHeavyWeight;
+                            break;
+                        default:
+                            break;
+                    }
+                    distance1 += distance2;
+
                     if (holdDalParcels[index].PickedUp == DateTime.MinValue)//Check if the Parcel has already been PickedUped.
                     {
                         //מציאת המיקום של התחנה הקרובה ביותר לשולח והכנסתו למיקום הרחפן
-                        item.CurrentLocation = minDistanceBetweenBaseStationsAndLocation(baseStationBL, locationOfsender);
+                        item.CurrentLocation = minDistanceBetweenBaseStationsAndLocation(baseStationBL, locationOfsender).Item1;
                     }
                     else //If the package was PickedUped.
                     {
@@ -96,29 +120,7 @@ namespace IBL
                         item.CurrentLocation = locationOfsender;
                     }
 
-                    WeightCategories WeightOfTheParcel = (WeightCategories)holdDalParcels[index].Weight;
-                    double distance1 = GetDistance(item.CurrentLocation, locationOfReceiver);
-                    double distance2 = GetDistance(locationOfReceiver, minDistanceBetweenBaseStationsAndLocation
-                        (baseStationBL, locationOfReceiver)) * Free;
-                    switch (WeightOfTheParcel)
-                    {
-                        case WeightCategories.light:
-                            distance1 *=  LightWeightCarrier;
-                           // 
-
-
-
-                            break;
-                        case WeightCategories.medium:
-
-                            break;
-                        case WeightCategories.heavy:
-
-                            break;
-                        default:
-                            break;
-                    }
-                    distance1 += distance2;
+                    
                     // random number battery status between minimum charge to make the shipment and full charge.     
                     //item.BatteryStatus = random.NextDouble(distance1, 101);
                     //(float)((float)(MyRandom.NextDouble() * (33.3 - 31)) + 31)
@@ -166,15 +168,16 @@ namespace IBL
         /// </summary>
         /// <param name="baseStationBL">baseStationBL List</param>
         /// <param name="location">location</param>
-        /// <returns>The location of the base station closest to the location</returns>
-        private Location minDistanceBetweenBaseStationsAndLocation(List<BaseStation> baseStationBL, Location location)
+        /// <returns>The location of the base station closest to the location and the min distance</returns>
+        private (Location,double) minDistanceBetweenBaseStationsAndLocation(List<BaseStation> baseStationBL, Location location)
         {
             List<double> listOfDistance = new List<double>();
             foreach (var obj in baseStationBL)
             {
                 listOfDistance.Add(GetDistance(location, obj.BaseStationLocation));
             }
-            return baseStationBL[listOfDistance.FindIndex(x => x == listOfDistance.Min())].BaseStationLocation;
+            double minDistance = listOfDistance.Min();
+            return (baseStationBL[listOfDistance.FindIndex(x => x == minDistance)].BaseStationLocation, minDistance);
         }
         #endregion Function of finding the location of the base station closest to the location
 

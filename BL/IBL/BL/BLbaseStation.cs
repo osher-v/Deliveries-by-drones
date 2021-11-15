@@ -19,7 +19,10 @@ namespace IBL
             {
                 AccessIdal.AddStation(newStation);
             }
-            catch {  }
+            catch(IDAL.DO.AddAnExistingObjectException ex)
+            {
+                throw new Exception("",ex); 
+            }
         }
 
     }
