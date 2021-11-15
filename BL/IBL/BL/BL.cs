@@ -165,7 +165,16 @@ namespace IBL
             }          
         }
 
+        public void SendingDroneforCharging(int droneId)
+        {
+            DroneToList drone = DronesBL.Find(x => x.Id == droneId);
 
+            if (drone.Statuses != DroneStatuses.free)
+                throw new Exception(); //צריך לראות מהי החריגה
+
+
+
+        }
 
 
         #region Function of finding the location of the base station closest to the location
