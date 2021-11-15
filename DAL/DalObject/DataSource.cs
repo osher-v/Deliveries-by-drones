@@ -74,8 +74,6 @@ namespace DalObject
                     Id = MyRandom.Next(100000000, 999999999),
                     Model = modelNameArr[i],
                     MaxWeight = (WeightCategories)MyRandom.Next(0, 3)//0=light,1=medium,2=heavy
-                    //Battery = MyRandom.Next(50, 100),
-                    //Status = (DroneStatuses)MyRandom.Next(0, 3)//0=free, 1=inMaintenance, 2=busy
                 });
             }
             #endregion init Drone

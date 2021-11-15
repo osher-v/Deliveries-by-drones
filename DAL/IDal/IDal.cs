@@ -8,11 +8,7 @@ using System.Threading.Tasks;
 namespace IDal
 {
     public interface IDal
-    {
-        //לבדוק מה קורה עם זה ובאיזה פונקציות לשנות את הפרמטר לפרדיקט
-        //IEnumerable<Parcel> GetParcelList(Predicate<Parcel> prdicat = null);
-        
-         
+    {    
         #region Functions for insert options
         /// <summary>
         /// The function adds a station to the list of Basestations.

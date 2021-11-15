@@ -1,5 +1,4 @@
 ﻿
-//using IDAL.DO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -70,7 +69,7 @@ namespace IBL
 
 
             //The loop will go through the dronesBL list and check if the drone is associated with the package
-            //or if it does not makes a delivery and will update its status, location and battery status.
+            //or if it does not makes a delivery. and will update its status, location and battery status.
             foreach (var item in DronesBL)
             {
 
@@ -80,51 +79,57 @@ namespace IBL
                 {
                     item.Statuses = DroneStatuses.busy; //Update drone status for shipping operation.
 
+                    /*
                     IDAL.DO.Customer senderCustomer = AccessIdal.GetCustomer(holdDalParcels[index].SenderId);
                     Location locationOfsender = new Location { longitude = senderCustomer.Longitude, latitude = senderCustomer.Latitude };
-                    
+                    */
+                    Location locationOfsender = CustomerBL.Find(x => x.Id == holdDalParcels[index].SenderId).LocationOfCustomer;
+
+                    /*
                     IDAL.DO.Customer receiverCustomer = AccessIdal.GetCustomer(holdDalParcels[index].TargetId);
                     Location locationOfReceiver = new Location { longitude = receiverCustomer.Longitude, latitude = receiverCustomer.Latitude };
+                    */
+                    Location locationOfReceiver = CustomerBL.Find(x => x.Id == holdDalParcels[index].TargetId).LocationOfCustomer;
+
+                    //Distance between sender and receiver.
+                    double distanceBetweenSenderAndReceiver = GetDistance(locationOfsender, locationOfReceiver);
+
+                    //Distance between the receiver and the nearest base station.
+                    double DistanceBetweenReceiverAndNearestBaseStation = minDistanceBetweenBaseStationsAndLocation
+                        (baseStationBL, locationOfReceiver).Item2; //*Free;
+
+                    double electricityUse = DistanceBetweenReceiverAndNearestBaseStation * Free;
 
                     WeightCategories WeightOfTheParcel = (WeightCategories)holdDalParcels[index].Weight;
-                    double distance1 = GetDistance(locationOfsender, locationOfReceiver);
-                    //double distance2 = GetDistance(locationOfReceiver, minDistanceBetweenBaseStationsAndLocation
-                        //(baseStationBL, locationOfReceiver).Item1) * Free;
-                    double distance2 = minDistanceBetweenBaseStationsAndLocation
-                        (baseStationBL, locationOfReceiver).Item2 *Free;
                     switch (WeightOfTheParcel)
                     {
                         case WeightCategories.light:
-                            distance1 *= LightWeightCarrier;
-                            // 
+                            electricityUse += distanceBetweenSenderAndReceiver * LightWeightCarrier;
                             break;
                         case WeightCategories.medium:
-                            distance1 *= MediumWeightBearing;
+                            electricityUse += distanceBetweenSenderAndReceiver * MediumWeightBearing;
                             break;
                         case WeightCategories.heavy:
-                            distance1 *= CarriesHeavyWeight;
+                            electricityUse += distanceBetweenSenderAndReceiver * CarriesHeavyWeight;           
                             break;
                         default:
                             break;
                     }
-                    distance1 += distance2;
 
                     if (holdDalParcels[index].PickedUp == DateTime.MinValue)//Check if the Parcel has already been PickedUped.
-                    {
-                        //מציאת המיקום של התחנה הקרובה ביותר לשולח והכנסתו למיקום הרחפן
+                    {    
                         item.CurrentLocation = minDistanceBetweenBaseStationsAndLocation(baseStationBL, locationOfsender).Item1;
+
+                        //Need to add the electricity use between the drone position and the sender position
+                        electricityUse += GetDistance(item.CurrentLocation, locationOfsender) * Free; //
                     }
                     else //If the package was PickedUped.
                     {
-                        //item.CurrentLocation = CustomerBL[CustomerBL.FindIndex(x => x.Id == holdDalParcels[index].SenderId)].LocationOfCustomer;
                         item.CurrentLocation = locationOfsender;
                     }
-
-                    
+    
                     // random number battery status between minimum charge to make the shipment and full charge.     
-                    //item.BatteryStatus = random.NextDouble(distance1, 101);
-                    //(float)((float)(MyRandom.NextDouble() * (33.3 - 31)) + 31)
-                    item.BatteryStatus = (float)((float)(random.NextDouble() * (100 - distance1)) + distance1);
+                    item.BatteryStatus = (float)((float)(random.NextDouble() * (100 - electricityUse)) + electricityUse);
                 }
                 else //If the drone is not associated with one of the parcels on the list and is actually available and does not ship.
                 {
@@ -132,34 +137,32 @@ namespace IBL
 
                     if (item.Statuses == DroneStatuses.inMaintenance)
                     {
-                        item.CurrentLocation = baseStationBL[random.Next(0, baseStationBL.Count)].BaseStationLocation;
+                        //item.CurrentLocation = baseStationBL[random.Next(0, baseStationBL.Count)].BaseStationLocation;
+                        BaseStation baseStation = baseStationBL[random.Next(0, baseStationBL.Count)];
+                        item.CurrentLocation = baseStation.BaseStationLocation;
+
+                        AccessIdal.SendingDroneforChargingAtBaseStation(baseStation.Id, item.Id);
+
                         item.BatteryStatus = random.Next(0, 21);
                     }
                     else //item.Statuses == DroneStatuses.free
                     {
                         List<IDAL.DO.Parcel> DeliveredAndSameDroneID = holdDalParcels.FindAll(x => x.DroneId == item.Id && x.Delivered != DateTime.MinValue);
                         
-                        if (!DeliveredAndSameDroneID.Any())//if the List is empty.
-                        {
-                            item.CurrentLocation = baseStationBL[random.Next(0, baseStationBL.Count)].BaseStationLocation;
-                        }
-                        else //if the List is not empty.
+                        if (DeliveredAndSameDroneID.Any())//if the List is not empty.
                         {
                             item.CurrentLocation = CustomerBL.Find(x => x.Id == DeliveredAndSameDroneID[random.Next(0, DeliveredAndSameDroneID.Count)].TargetId).LocationOfCustomer;
+                            double electricityUse = minDistanceBetweenBaseStationsAndLocation(baseStationBL, item.CurrentLocation).Item2 *Free;
+                            item.BatteryStatus = (float)((float)(random.NextDouble() * (100 - electricityUse)) + electricityUse);
                         }
-
-                        //
-
-
-
-
-
-
-                        item.BatteryStatus = random.Next(55, 101);
+                        else //if the List is empty.
+                        {
+                            item.CurrentLocation = baseStationBL[random.Next(0, baseStationBL.Count)].BaseStationLocation;
+                            item.BatteryStatus = random.Next(0, 101);
+                        }
                     }
                 }
-            }
-            
+            }          
         }
 
         #region Function of finding the location of the base station closest to the location
@@ -205,12 +208,5 @@ namespace IBL
             return (double)(6376500.0 * (2.0 * Math.Atan2(Math.Sqrt(d3), Math.Sqrt(1.0 - d3))));
         }
         #endregion Function of calculating distance between points
-
-        /*
-        public void AddDrone(Drone newdrone)
-        {
-
-        }
-        */
     }
 }

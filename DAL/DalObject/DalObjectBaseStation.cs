@@ -18,6 +18,24 @@ namespace DalObject
             DataSource.BaseStationsList.Add(newbaseStation);
         }
 
+        public void updateMinusChargeSlots(int baseStationId)
+        {
+            //BaseStation update.
+            int indexaforBaseStationId = DataSource.BaseStationsList.FindIndex(x => x.Id == baseStationId);
+            BaseStation temp = DataSource.BaseStationsList[indexaforBaseStationId];
+            temp.FreeChargeSlots--;
+            DataSource.BaseStationsList[indexaforBaseStationId] = temp;
+        }
+
+        public void updatePluseChargeSlots(int baseStationId)
+        {
+            //BaseStation update.
+            int indexaforBaseStationId = DataSource.BaseStationsList.FindIndex(x => x.Id == baseStationId);
+            BaseStation temp = DataSource.BaseStationsList[indexaforBaseStationId];
+            temp.FreeChargeSlots++;
+            DataSource.BaseStationsList[indexaforBaseStationId] = temp;
+        }
+
         public BaseStation GetBaseStation(int ID)
         {
             if (!(DataSource.BaseStationsList.Exists(x => x.Id == ID)))
