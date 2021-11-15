@@ -26,6 +26,13 @@ namespace IBL
             }
             catch { }
         }
+
+        public void UpdateCustomer(int customerId, string customerName, string phoneNumber)
+        {
+
+
+
+        }
     }
 
 }
