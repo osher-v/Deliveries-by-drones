@@ -26,6 +26,15 @@ namespace DalObject
         /// </summary>
         /// <param name="ID">Id of a selected Customer</param>
         /// <returns>return empty ubjact if its not there</returns>
+        
+        
+        public void UpdateCustomer(Customer newCustomer)
+        {
+            if (!(DataSource.CustomersList.Exists(x => x.Id == newCustomer.Id)))
+                throw new NonExistentObjectException();
+            DataSource.CustomersList[DataSource.CustomersList.FindIndex(x => x.Id == newCustomer.Id)] = newCustomer;
+        }
+
         public Customer GetCustomer(int ID)
         {
             if (!(DataSource.CustomersList.Exists(x => x.Id == ID)))

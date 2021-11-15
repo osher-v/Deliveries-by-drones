@@ -10,6 +10,10 @@ namespace IBL
     //public partial class BLcustomer
     public partial class BL
     {
+        /// <summary>
+        /// The function adds a customer object.
+        /// </summary>
+        /// <param name="customer">customer</param>
         public void AddCustomer(Customer customer)
         {
             IDAL.DO.Customer newCustomer = new IDAL.DO.Customer()
@@ -25,6 +29,29 @@ namespace IBL
                 AccessIdal.AddCustomer(newCustomer);
             }
             catch { }
+        }
+
+        /// <summary>
+        /// The function updates a customer object.
+        /// </summary>
+        /// <param name="customerId">customer ID</param>
+        /// <param name="customerName">customer name</param>
+        /// <param name="phoneNumber">phone number</param>
+        public void UpdateCustomer(int customerId, string customerName, string phoneNumber)
+        {
+            try
+            {
+                IDAL.DO.Customer customer = AccessIdal.GetCustomer(customerId);
+                if (customerName != "")
+                    customer.Name = customerName;
+                if (phoneNumber != "")
+                    customer.PhoneNumber = phoneNumber;
+                AccessIdal.UpdateCustomer(customer);
+            }
+            catch
+            {
+
+            }
         }
     }
 

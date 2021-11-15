@@ -18,6 +18,13 @@ namespace DalObject
             DataSource.BaseStationsList.Add(newbaseStation);
         }
 
+        public void UpdateBaseStation(BaseStation newBaseStation)
+        {
+            if (!(DataSource.BaseStationsList.Exists(x => x.Id == newBaseStation.Id)))
+                throw new NonExistentObjectException();
+            DataSource.BaseStationsList[DataSource.BaseStationsList.FindIndex(x => x.Id == newBaseStation.Id)] = newBaseStation;
+        }
+
         public void UpdateMinusChargeSlots(int baseStationId)
         {
             //BaseStation update.

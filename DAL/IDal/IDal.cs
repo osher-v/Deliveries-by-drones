@@ -56,6 +56,18 @@ namespace IDal
         public void UpdateDrone(Drone newDrone);
 
         /// <summary>
+        /// The function updates the Customer object in the list
+        /// </summary>
+        /// <param name="newCustomer"></param>
+        public void UpdateCustomer(Customer newCustomer);
+
+        /// <summary>
+        /// The function updates the BaseStation object in the list
+        /// </summary>
+        /// <param name="newBaseStation"></param>
+        public void UpdateBaseStation(BaseStation newBaseStation);
+
+        /// <summary>
         /// The function assigns a package to the drone.
         /// </summary>
         /// <param name="ParcelId">Id of Parcel</param>
