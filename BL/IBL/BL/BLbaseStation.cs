@@ -52,6 +52,21 @@ namespace IBL
             catch { }
 
         }
+        public BaseStation GetBaseStation(int idForDisplayObject)
+        {
+            IDAL.DO.BaseStation printBase = AccessIdal.GetBaseStation(idForDisplayObject);
+            Location dalBaseLocation = new Location() { longitude = printBase.Longitude, latitude=printBase.Latitude };
+            BaseStation blBase = new BaseStation() { Id = printBase.Id, Name=printBase.StationName, BaseStationLocation = dalBaseLocation,
+                FreeChargeSlots=printBase.FreeChargeSlots};
+           
+            List<IDAL.DO.DroneCharge> droneInCharge = AccessIdal.GetBaseChargeList(i => i.StationId == idForDisplayObject).ToList();
+            foreach (var item in droneInCharge)
+            {
+                blBase.DroneInChargsList.Add(new DroneInCharg { Id = item.DroneId, BatteryStatus = DronesBL.Find(x => x.Id == item.DroneId).BatteryStatus });
+            }
+            return blBase;
+        }
+
 
     }
 }

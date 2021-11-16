@@ -36,6 +36,13 @@ namespace DalObject
 
             UpdatePluseChargeSlots(baseStationId);
         }
-        
+        //public IEnumerable<DroneCharge> GetBaseChargeList()
+        //{
+        //    return DataSource.DroneChargeList.Take(DataSource.DroneChargeList.Count);
+        //}
+        public IEnumerable<DroneCharge> GetBaseChargeList(Predicate<DroneCharge> predicate = null)
+        {
+            return DataSource.DroneChargeList.FindAll(x => predicate == null ? true : predicate(x));
+        }
     }
 }

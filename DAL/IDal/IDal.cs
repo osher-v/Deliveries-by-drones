@@ -130,6 +130,7 @@ namespace IDal
         public Parcel GetParcel(int ID);
         #endregion Functions for display options
 
+
         #region Functions for listing options
         /// <summary>
         /// The function returns an array of all base stations.
@@ -154,6 +155,10 @@ namespace IDal
         /// </summary>
         /// <returns>returns a new List that hold all the data from the reqsted List</returns>
         public IEnumerable<Parcel> GetParcelList(Predicate<Parcel> prdicat = null);
+
+
+        public IEnumerable<DroneCharge> GetBaseChargeList(Predicate<DroneCharge> prdicat = null);
+
 
         //לבדוק מה קורה עם התחכום הזה
         /*
