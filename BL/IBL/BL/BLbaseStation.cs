@@ -67,5 +67,10 @@ namespace IBL
             }
             return blBase;
         }
+
+        public IEnumerable<BaseStationsToList> GetBaseStationList(Predicate<BaseStationsToList> predicate = null)
+        {
+            return IBL.BaseStationsList.FindAll(x => predicate == null ? true : predicate(x));
+        }
     }
 }
