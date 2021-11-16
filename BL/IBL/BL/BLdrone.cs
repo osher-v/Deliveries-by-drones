@@ -60,6 +60,11 @@ namespace IBL
             catch { }
 
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="idForDisplayObject"></param>
+        /// <returns></returns>
         public Drone GetDrone(int idForDisplayObject)
         {
             DroneToList droneToLIist = DronesBL.Find(x => x.Id == idForDisplayObject);
@@ -69,14 +74,32 @@ namespace IBL
                 Model= droneToLIist.Model,  Statuses= droneToLIist.Statuses };
 
            if(droneToLIist.Statuses == DroneStatuses.busy)
-            {
-                //List<IDAL.DO.Parcel> holdDalParcels = AccessIdal.GetParcelList(i => i.DroneId != 0).ToList();
-                //printDrone.Delivery = holdDalParcels.Find( x=>x.DroneId== idForDisplayObject);//מההההה אתהההה רוצההה ממניייי מההההההההה
-
+            {    
                 IDAL.DO.Parcel holdDalParcel = AccessIdal.GetParcel(droneToLIist.NumberOfLinkedParcel);
-                printDrone.Delivery.
+                IDAL.DO.Customer holdDalSender = AccessIdal.GetCustomer(holdDalParcel.SenderId);
+                IDAL.DO.Customer holdDalReciver= AccessIdal.GetCustomer(holdDalParcel.TargetId);
+                Location locationOfSender = new Location() { longitude= holdDalSender.Longitude, latitude=holdDalSender.Latitude };
+                Location locationOfReciver = new Location() { longitude = holdDalReciver.Longitude, latitude = holdDalReciver.Latitude };
 
+                // sender
+                printDrone.Delivery.Sender.Id = holdDalParcel.SenderId;
+                printDrone.Delivery.Sender.Name = holdDalSender.Name;
+                printDrone.Delivery.SourceLocation = locationOfSender;
+                // reciver
+                printDrone.Delivery.Receiver.Id = holdDalReciver.Id;
+                printDrone.Delivery.Receiver.Name = holdDalReciver.Name;
+                printDrone.Delivery.DestinationLocation = locationOfReciver;
 
+                printDrone.Delivery.TransportDistance = GetDistance(locationOfSender, locationOfReciver);
+
+                printDrone.Delivery.Id = holdDalParcel.Id;
+                printDrone.Delivery.Prior = (Priorities)holdDalParcel.Priority;
+                printDrone.Delivery.Weight = (WeightCategories)holdDalParcel.Weight;
+                if (holdDalParcel.PickedUp != DateTime.MinValue && holdDalParcel.Delivered==DateTime.MinValue)
+                {
+                    printDrone.Delivery.OnTheWayToTheDestination = true;
+                }  
+              else printDrone.Delivery.OnTheWayToTheDestination = false;
             }
             return printDrone;
         }

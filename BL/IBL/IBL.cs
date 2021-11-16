@@ -19,5 +19,9 @@ namespace IBL
         void UpdateCustomer(int customerId, string customerName, string phoneNumber);
         void SendingDroneforCharging(int droneId);
         void ReleaseDroneFromCharging(int droneId, DateTime time);
+        object GetBaseStation(int idForDisplayObject);
+        object GetDrone(int idForDisplayObject);
+        object GetCustomer(int idForDisplayObject);
+        object GetParcel(int idForDisplayObject);
     }
 }

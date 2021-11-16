@@ -345,7 +345,7 @@ Your choice:");
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="listToPrint"></param>
-        public static void printTheList<T>(List<T> listToPrint) where T : struct
+        public static void printTheList<T>(List<T> listToPrint) 
         {
             foreach (T item in listToPrint)
             {

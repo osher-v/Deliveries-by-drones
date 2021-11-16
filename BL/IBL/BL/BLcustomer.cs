@@ -53,6 +53,58 @@ namespace IBL
 
             }
         }
+        public Customer GetCustomer(int idForDisplayObject)
+        {
+            IDAL.DO.Customer printCustomer = AccessIdal.GetCustomer(idForDisplayObject);
+            Location dalCustomerLocation = new Location() { longitude = printCustomer.Longitude, latitude = printCustomer.Latitude };
+            Customer blCustomer = new Customer(){Id = printCustomer.Id, Name = printCustomer.Name,PhoneNumber = printCustomer.PhoneNumber,
+                LocationOfCustomer = dalCustomerLocation };
+            //List<IDAL.DO.Parcel> parcels = new List<IDAL.DO.Parcel>();
+            List<IDAL.DO.Parcel> holdDalParcels = AccessIdal.GetParcelList(i => i.SenderId == idForDisplayObject).ToList();
+
+            foreach (var item in holdDalParcels)
+            {
+                CustomerInDelivery customerInDelivery = new CustomerInDelivery { Id = item.TargetId, Name = AccessIdal.GetCustomer(item.TargetId).Name };
+                ParcelAtCustomer parcelAtCustomer = new ParcelAtCustomer() { Id = item.Id, Prior = (Priorities)item.Priority,
+                    Weight = (WeightCategories)item.Weight, OtherCustomer= customerInDelivery};
+                if (item.Requested != DateTime.MinValue && item.Assigned == DateTime.MinValue && item.PickedUp == DateTime.MinValue && item.Delivered == DateTime.MinValue)
+                    parcelAtCustomer.Status = DeliveryStatus.created;
+                else if (item.Requested != DateTime.MinValue && item.Assigned != DateTime.MinValue && item.PickedUp == DateTime.MinValue && item.Delivered == DateTime.MinValue)
+                    parcelAtCustomer.Status = DeliveryStatus.Assigned;
+                else if (item.Requested != DateTime.MinValue && item.Assigned != DateTime.MinValue && item.PickedUp != DateTime.MinValue && item.Delivered == DateTime.MinValue)
+                    parcelAtCustomer.Status = DeliveryStatus.PickedUp;
+                else if (item.Requested != DateTime.MinValue && item.Assigned != DateTime.MinValue && item.PickedUp != DateTime.MinValue && item.Delivered != DateTime.MinValue)
+                    parcelAtCustomer.Status = DeliveryStatus.Delivered;
+                else throw new Exception();
+                blCustomer.ParcelFromTheCustomer.Add(parcelAtCustomer);
+            }
+
+            List<IDAL.DO.Parcel> holdDalSentParcels = AccessIdal.GetParcelList(i => i.TargetId == idForDisplayObject).ToList();
+
+            foreach (var item in holdDalSentParcels)
+            {
+                CustomerInDelivery customerInDelivery = new CustomerInDelivery { Id = item.SenderId, Name = AccessIdal.GetCustomer(item.SenderId).Name };
+                ParcelAtCustomer parcelAtCustomer = new ParcelAtCustomer()
+                {
+                    Id = item.Id,
+                    Prior = (Priorities)item.Priority,
+                    Weight = (WeightCategories)item.Weight,
+                    OtherCustomer = customerInDelivery
+                };
+                if (item.Requested != DateTime.MinValue && item.Assigned == DateTime.MinValue && item.PickedUp == DateTime.MinValue && item.Delivered == DateTime.MinValue)
+                    parcelAtCustomer.Status = DeliveryStatus.created;
+                else if (item.Requested != DateTime.MinValue && item.Assigned != DateTime.MinValue && item.PickedUp == DateTime.MinValue && item.Delivered == DateTime.MinValue)
+                    parcelAtCustomer.Status = DeliveryStatus.Assigned;
+                else if (item.Requested != DateTime.MinValue && item.Assigned != DateTime.MinValue && item.PickedUp != DateTime.MinValue && item.Delivered == DateTime.MinValue)
+                    parcelAtCustomer.Status = DeliveryStatus.PickedUp;
+                else if (item.Requested != DateTime.MinValue && item.Assigned != DateTime.MinValue && item.PickedUp != DateTime.MinValue && item.Delivered != DateTime.MinValue)
+                    parcelAtCustomer.Status = DeliveryStatus.Delivered;
+                else throw new Exception();
+                blCustomer.ParcelToTheCustomer.Add(parcelAtCustomer);
+            }
+            return blCustomer;
+        }
+
     }
 
 }

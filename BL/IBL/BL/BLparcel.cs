@@ -29,5 +29,28 @@ namespace IBL
             }
             catch { }
         }
+        public Parcel GetParcel(int idForDisplayObject)
+        {
+            IDAL.DO.Parcel printParcel = AccessIdal.GetParcel(idForDisplayObject);
+            DroneToList droneToLIist= DronesBL.Find(x => x.Id == printParcel.DroneId);
+            CustomerInDelivery senderInDelivery = new CustomerInDelivery() {Id=printParcel.SenderId,Name = AccessIdal.GetCustomer(printParcel.SenderId).Name };
+            CustomerInDelivery reciverInDelivery = new CustomerInDelivery() { Id = printParcel.TargetId, Name = AccessIdal.GetCustomer(printParcel.TargetId).Name };
+            Parcel parcel = new Parcel() { Id=printParcel.Id,Weight= (WeightCategories)printParcel.Weight, Prior= (Priorities)printParcel.Priority ,
+                Sender=senderInDelivery, Receiver=reciverInDelivery, Requested=printParcel.Requested, Assigned=printParcel.Assigned,
+                PickedUp=printParcel.PickedUp, Delivered=printParcel.Delivered};
+            if (parcel.Assigned!=DateTime.MinValue)
+            {
+                DroneInThePackage droneInThePackage = new DroneInThePackage()
+                {
+                    Id = droneToLIist.Id,
+                    BatteryStatus = droneToLIist.BatteryStatus,
+                    CurrentLocation = droneToLIist.CurrentLocation
+                };
+                parcel.MyDrone = droneInThePackage;
+            }
+
+            return parcel;
+        }
+
     }
 }
