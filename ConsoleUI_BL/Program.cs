@@ -212,8 +212,8 @@ Update options:
 Your choice:");
             int.TryParse(Console.ReadLine(), out int choice);
 
-            int  droneId, baseStationId, chargeslots, customerId,phoneNumber;
-            string droneName, baseName, customerName;
+            int  droneId, baseStationId, chargeslots, customerId;
+            string phoneNumber, droneName, baseName, customerName;
             DateTime time;
             switch ((UpdatesOption)choice)
             {
@@ -241,7 +241,7 @@ Your choice:");
                     Console.WriteLine("Next Please enter the new base station name if not send empty line:");
                     customerName = Console.ReadLine();//אם נשלח ריק השדה לא מתעדכן
                     Console.WriteLine("please enter update for the Charge slots number:");
-                    int.TryParse(Console.ReadLine(), out phoneNumber);//אם נשלח ריק השדה לא מתעדכן
+                    phoneNumber = Console.ReadLine();//אם נשלח ריק השדה לא מתעדכן
                     bl.UpdateCustomer(customerId, customerName, phoneNumber);
                     break;
 

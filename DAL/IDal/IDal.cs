@@ -156,7 +156,11 @@ namespace IDal
         /// <returns>returns a new List that hold all the data from the reqsted List</returns>
         public IEnumerable<Parcel> GetParcelList(Predicate<Parcel> prdicat = null);
 
-
+        /// <summary>
+        /// The function returns an array of all drone charge.
+        /// </summary>
+        /// <param name="prdicat"></param>
+        /// <returns>returns a new List that hold all the data from the reqsted List</returns>
         public IEnumerable<DroneCharge> GetBaseChargeList(Predicate<DroneCharge> prdicat = null);
 
 

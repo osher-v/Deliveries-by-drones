@@ -16,7 +16,7 @@ namespace IBL
         void AddParcel(Parcel newParcel);
         void UpdateDroneName(int droneId, string droneName);
         void UpdateBaseStaison(int baseStationId, string baseName, int chargeslots);
-        void UpdateCustomer(int customerId, string customerName, int phoneNumber);
+        void UpdateCustomer(int customerId, string customerName, string phoneNumber);
         void SendingDroneforCharging(int droneId);
         void ReleaseDroneFromCharging(int droneId, DateTime time);
     }

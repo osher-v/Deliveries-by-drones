@@ -52,6 +52,7 @@ namespace IBL
             catch { }
 
         }
+
         public BaseStation GetBaseStation(int idForDisplayObject)
         {
             IDAL.DO.BaseStation printBase = AccessIdal.GetBaseStation(idForDisplayObject);
@@ -66,7 +67,5 @@ namespace IBL
             }
             return blBase;
         }
-
-
     }
 }

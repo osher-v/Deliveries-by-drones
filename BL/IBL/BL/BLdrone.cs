@@ -62,31 +62,21 @@ namespace IBL
         }
         public Drone GetDrone(int idForDisplayObject)
         {
+            DroneToList droneToLIist = DronesBL.Find(x => x.Id == idForDisplayObject);
 
-            //IDAL.DO.BaseStation printBase = AccessIdal.GetBaseStation(idForDisplayObject);
-            //Location dalBaseLocation = new Location() { longitude = printBase.Longitude, latitude = printBase.Latitude };
-            //BaseStation blBase = new BaseStation()
-            //{
-            //    Id = printBase.Id,
-            //    Name = printBase.StationName,
-            //    BaseStationLocation = dalBaseLocation,
-            //    FreeChargeSlots = printBase.FreeChargeSlots
-            //};
+            Drone printDrone = new Drone() {Id= droneToLIist.Id, BatteryStatus= droneToLIist.BatteryStatus, 
+                CurrentLocation= droneToLIist.CurrentLocation, MaxWeight= droneToLIist.MaxWeight,
+                Model= droneToLIist.Model,  Statuses= droneToLIist.Statuses };
 
-            //List<IDAL.DO.DroneCharge> droneInCharge = AccessIdal.GetBaseChargeList(i => i.StationId == idForDisplayObject).ToList();
-            //foreach (var item in droneInCharge)
-            //{
-            //    blBase.DroneInChargsList.Add(new DroneInCharg { Id = item.DroneId, BatteryStatus = DronesBL.Find(x => x.Id == item.DroneId).BatteryStatus });
-            //}
-            Drone printDrone = new Drone() {Id= idForDisplayObject, BatteryStatus= DronesBL.Find(x => x.Id == idForDisplayObject).BatteryStatus, 
-                CurrentLocation= DronesBL.Find(x => x.Id == idForDisplayObject).CurrentLocation,
-                MaxWeight= DronesBL.Find(x => x.Id == idForDisplayObject).MaxWeight,
-                Model= DronesBL.Find(x => x.Id == idForDisplayObject).Model,
-                Statuses= DronesBL.Find(x => x.Id == idForDisplayObject).Statuses };
-           if(DronesBL.Find(x => x.Id == idForDisplayObject).Statuses!= DroneStatuses.busy)
+           if(droneToLIist.Statuses == DroneStatuses.busy)
             {
-                List<IDAL.DO.Parcel> holdDalParcels = AccessIdal.GetParcelList(i => i.DroneId != 0).ToList();
-                printDrone.Delivery = holdDalParcels.Find( x=>x.DroneId== idForDisplayObject);//מההההה אתהההה רוצההה ממניייי מההההההההה
+                //List<IDAL.DO.Parcel> holdDalParcels = AccessIdal.GetParcelList(i => i.DroneId != 0).ToList();
+                //printDrone.Delivery = holdDalParcels.Find( x=>x.DroneId== idForDisplayObject);//מההההה אתהההה רוצההה ממניייי מההההההההה
+
+                IDAL.DO.Parcel holdDalParcel = AccessIdal.GetParcel(droneToLIist.NumberOfLinkedParcel);
+                printDrone.Delivery.
+
+
             }
             return printDrone;
         }
