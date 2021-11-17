@@ -6,12 +6,11 @@ using System.Threading.Tasks;
 
 using IDAL.DO;
 using IDal;
+
 namespace DalObject
 {
     public partial class DalObject 
     {
-        //בשתי הפונקציות הבאות אלו חריגות בדיוק לעשות????
-
         /// <summary>
         /// sending drone for charging at BaseStation.
         /// </summary>
@@ -22,6 +21,7 @@ namespace DalObject
             DataSource.DroneChargeList.Add(new DroneCharge() { StationId = baseStationId, DroneId = droneId });
             UpdateMinusChargeSlots(baseStationId);
         }
+
         /// <summary>
         /// release drone from charging at BaseStation.
         /// </summary>
@@ -36,10 +36,17 @@ namespace DalObject
 
             UpdatePluseChargeSlots(baseStationId);
         }
+
         //public IEnumerable<DroneCharge> GetBaseChargeList()
         //{
         //    return DataSource.DroneChargeList.Take(DataSource.DroneChargeList.Count);
         //}
+
+        /// <summary>
+        /// the fanction get baseCharge List.
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <returns>return baseCharge List. </returns>
         public IEnumerable<DroneCharge> GetBaseChargeList(Predicate<DroneCharge> predicate = null)
         {
             return DataSource.DroneChargeList.FindAll(x => predicate == null ? true : predicate(x));

@@ -100,8 +100,8 @@ namespace IBL
 
                     double electricityUse = DistanceBetweenReceiverAndNearestBaseStation * Free;
 
-                    WeightCategories WeightOfTheParcel = (WeightCategories)holdDalParcels[index].Weight;
-                    switch (WeightOfTheParcel)
+                    //WeightCategories WeightOfTheParcel = (WeightCategories)holdDalParcels[index].Weight;
+                    switch ((WeightCategories)holdDalParcels[index].Weight)
                     {
                         case WeightCategories.light:
                             electricityUse += distanceBetweenSenderAndReceiver * LightWeightCarrier;

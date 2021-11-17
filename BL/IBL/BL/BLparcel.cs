@@ -52,5 +52,12 @@ namespace IBL
             return parcel;
         }
 
+        public void PickedUpPackageByTheDrone(int droneId)
+        {
+            DroneToList drone = DronesBL.Find(x => x.Id == droneId);
+            IDAL.DO.Parcel parcelIDal = AccessIdal.GetParcel();
+           
+            
+        }
     }
 }
