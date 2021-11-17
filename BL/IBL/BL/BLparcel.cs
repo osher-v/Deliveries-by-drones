@@ -276,7 +276,7 @@ namespace IBL
         }
 
 
-        public IEnumerable<ParcelToList> GetParcelList()
+        public IEnumerable<ParcelToList> GetParcelList(Predicate<ParcelToList> predicate = null)
         {
             List<ParcelToList> parcels = new List<ParcelToList>();
             List<IDAL.DO.Parcel> holdDalParcels = AccessIdal.GetParcelList().ToList();
@@ -299,7 +299,7 @@ namespace IBL
                 });
             }
 
-            return parcels;
+            return parcels.FindAll(x => predicate == null ? true : predicate(x));
         }
     }
 }

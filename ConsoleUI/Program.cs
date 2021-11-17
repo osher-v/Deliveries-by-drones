@@ -322,7 +322,8 @@ Your choice:");
             switch ((DisplayListOption)choice)
             {
                 case DisplayListOption.ListOfBaseStationView:
-                    printTheList(dal.GetBaseStationList().ToList);
+                    //printTheList(dal.GetBaseStationList().ToList);
+
                     break;
                     
                 case DisplayListOption.ListOfDronedisplay:

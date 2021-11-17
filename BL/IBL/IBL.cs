@@ -10,36 +10,32 @@ namespace IBL
 {
     public interface IBL
     {
-        //internal static List<Drone> DronesList = new List<Drone>();
-        ///// <summary> list of base stations </summary>
-        //internal static List<BaseStationsToList> BaseStationsList = new List<BaseStationsToList>();
-        ///// <summary>list of customers</summary>
-        //internal static List<Customer> CustomersList = new List<Customer>();
-        ///// <summary> list of parcels </summary>
-        //internal static List<Parcel> ParcelsList = new List<Parcel>();
-        ///// <summary> class that responsible for counters </summary>
-
+  
         void AddStation(BaseStation newbaseStation);
         void AddDrone(DroneToList newdrone, int firstChargingStation);
         void AddCustomer(Customer newCustomer);
         void AddParcel(Parcel newParcel);
+
+
         void UpdateDroneName(int droneId, string droneName);
         void UpdateBaseStaison(int baseStationId, string baseName, int chargeslots);
         void UpdateCustomer(int customerId, string customerName, string phoneNumber);
         void SendingDroneforCharging(int droneId);
         void ReleaseDroneFromCharging(int droneId, DateTime time);
-        object GetBaseStation(int idForDisplayObject);
-        object GetDrone(int idForDisplayObject);
-        object GetCustomer(int idForDisplayObject);
-        object GetParcel(int idForDisplayObject);
-        object GetBaseStationList();
-        void PickedUpPackageByTheDrone(int droneId);
         void AssignPackageToDdrone(int droneId);
+        void PickedUpPackageByTheDrone(int droneId);
         void DeliveryPackageToTheCustomer(int droneId);
-        object GetDroneList();
-        object GetCustomerList();
-        object GetParcelList();
-        object GetParcelWithoutDrone();
-        object GetBaseStationsWithFreeChargSlots();
+
+
+        BaseStation GetBaseStation(int idForDisplayObject);
+        Drone GetDrone(int idForDisplayObject);
+        Customer GetCustomer(int idForDisplayObject);
+        Parcel GetParcel(int idForDisplayObject);
+        
+       
+        IEnumerable<BaseStationsToList> GetBaseStationList(Predicate<BaseStationsToList> predicate = null);
+        IEnumerable<DroneToList> GetDroneList(Predicate<DroneToList> predicate = null);
+        IEnumerable<CustomerToList> GetCustomerList(Predicate<CustomerToList> predicate = null);
+        IEnumerable<ParcelToList> GetParcelList(Predicate<ParcelToList> predicate = null);
     }
 }

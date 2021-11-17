@@ -104,9 +104,9 @@ namespace IBL
             return printDrone;
         }
 
-        public IEnumerable<DroneToList> GetDroneList()
+        public IEnumerable<DroneToList> GetDroneList(Predicate<DroneToList> predicate = null)
         {
-            return DronesBL;
+            return DronesBL.FindAll(x => predicate == null ? true : predicate(x));
         }
     }
 }

@@ -1,5 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
 using IBL;
 using IBL.BO;
 
@@ -146,7 +150,7 @@ Please enter an ID number for the new Customer:");
 
                 case InsertrOption.Parcel:
                     int newSenderId, newTargetId, newWeight, newPriorities;
-                    string senderName,reciverName;
+                    //string senderName,reciverName;
 
                     Console.WriteLine(@"
 You have selected to add a new Parcel.
@@ -390,11 +394,11 @@ Your choice:");
                     break;
 
                 case DisplayListOption.ListOfFreePackageView:
-                    printTheList(bl.GetParcelWithoutDrone().ToList());
+                    printTheList(bl.GetParcelList(x => x.Status == DeliveryStatus.created).ToList());
                     break;
 
                 case DisplayListOption.ListOfBaseStationsWithFreeChargSlots:
-                    printTheList(bl.GetBaseStationsWithFreeChargSlots().ToList());
+                    printTheList(bl.GetBaseStationList(x => x.FreeChargeSlots > 0).ToList());
                     break;
 
                 default:
@@ -421,8 +425,7 @@ choose from the following options (type the selected number):
 2. Update options.
 3. Display options(singel).
 4. Display options (for the whole list).
-5. Calculate distance between points.
-6. EXIT.
+5. EXIT.
 Your choice:");
                 int.TryParse(Console.ReadLine(), out choice);
 
