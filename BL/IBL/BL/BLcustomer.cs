@@ -115,6 +115,31 @@ namespace IBL
             return blCustomer;
         }
 
+
+        public IEnumerable<CustomerToList> GetCustomerList(Predicate<CustomerToList> predicate = null)
+        {
+            List<CustomerToList> CustomerBL = new List<CustomerToList>();
+            List<IDAL.DO.Customer> holdDalCustomer = AccessIdal.GetCustomerList().ToList();
+            foreach (var item in holdDalCustomer)
+            {
+                CustomerBL.Add(new CustomerToList
+                {  Id=item.Id, Name=item.Name ,PhoneNumber=item.PhoneNumber, 
+                    NumberOfPackagesSentAndDelivered= AccessIdal.GetParcelList
+                    (x => x.Delivered!=DateTime.MinValue && x.SenderId==item.Id).ToList().Count,
+
+                     NumberOfPackagesSentAndNotYetDelivered= AccessIdal.GetParcelList
+                    (x => x.Delivered == DateTime.MinValue && x.SenderId == item.Id).ToList().Count,
+                        
+                      NumberOfPackagesWhoReceived = AccessIdal.GetParcelList
+                    (x => x.Delivered != DateTime.MinValue && x.TargetId == item.Id).ToList().Count,
+
+                       NumberPackagesOnTheWayToTheCustomer = AccessIdal.GetParcelList
+                    (x => x.Delivered == DateTime.MinValue && x.TargetId == item.Id).ToList().Count,
+                });
+            }
+
+            return CustomerBL.FindAll(x => predicate == null ? true : predicate(x));
+        }
     }
 
 }
