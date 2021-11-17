@@ -404,49 +404,6 @@ Your choice:");
         }
         #endregion Handling the list display options
 
-//        #region Handling calculat the distance of coordinates
-//        /// <summary>
-//        /// The function checks the distance between points.
-//        /// </summary>
-//        /// <param name="dal">DalObject object that is passed as a parameter to enable the functions in the DalObject class</param>
-//        static public void DistanceBetweenPoints(DalObject.DalObject dal)
-//        {
-//            Console.WriteLine(@"
-//You have chosen the option of calculating distance from a point to a customer or station.
-//Please enter your point.
-//longitude:");
-//            Double longitudeNew, latitudeNew;
-
-//            while (!double.TryParse(Console.ReadLine(), out longitudeNew)) ;
-//            Console.WriteLine("latitude:");
-//            while (!double.TryParse(Console.ReadLine(), out latitudeNew)) ;
-//            Console.WriteLine(@"Would you like to check distance from a station or customer? 
-//Choose 1 for a station or 2 for a customer");
-//            int.TryParse(Console.ReadLine(), out int choice);
-
-//            switch ((chackDistance)choice)
-//            {
-//                case chackDistance.BasePoint:
-//                    Console.WriteLine("please enter base ID:");
-//                    int.TryParse(Console.ReadLine(), out int baseID);
-
-//                    Console.WriteLine(DalObject.DalObject.GetDistance(longitudeNew, latitudeNew, baseID, choice));
-//                    break;
-
-//                case chackDistance.CustomerPoint:
-//                    Console.WriteLine("please enter Customer ID:");
-//                    int.TryParse(Console.ReadLine(), out int customerID);
-
-//                    Console.WriteLine(DalObject.DalObject.GetDistance(longitudeNew, latitudeNew, customerID, choice));
-
-//                    break;
-
-//                default:
-//                    break;
-//            }
-//        }
-//        #endregion Handling calculat the distance of coordinates
-
         #endregion fanction of main
 
         static void Main(string[] args)

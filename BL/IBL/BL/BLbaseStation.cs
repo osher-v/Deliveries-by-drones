@@ -68,9 +68,17 @@ namespace IBL
             return blBase;
         }
 
-        //public IEnumerable<BaseStationsToList> GetBaseStationList(Predicate<BaseStationsToList> predicate = null)
-        //{
-        //    return IBL.BaseStationsList.FindAll(x => predicate == null ? true : predicate(x));
-        //}
+        public IEnumerable<BaseStationsToList> GetBaseStationList(Predicate<BaseStationsToList> predicate = null)
+        {
+            List<BaseStationsToList> baseStationBL = new List<BaseStationsToList>();
+            List<IDAL.DO.BaseStation> holdDalBaseStation = AccessIdal.GetBaseStationList().ToList();
+            foreach (var item in holdDalBaseStation)
+            {
+                baseStationBL.Add(new BaseStationsToList { Id = item.Id, Name = item.StationName, FreeChargeSlots = item.FreeChargeSlots,
+                     BusyChargeSlots = AccessIdal.GetBaseChargeList(x => x.StationId == item.Id).ToList().Count });
+            }
+
+            return baseStationBL.FindAll(x => predicate == null ? true : predicate(x));
+        }
     }
 }

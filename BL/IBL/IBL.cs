@@ -33,5 +33,13 @@ namespace IBL
         object GetCustomer(int idForDisplayObject);
         object GetParcel(int idForDisplayObject);
         object GetBaseStationList();
+        void PickedUpPackageByTheDrone(int droneId);
+        void AssignPackageToDdrone(int droneId);
+        void DeliveryPackageToTheCustomer(int droneId);
+        object GetDroneList();
+        object GetCustomerList();
+        object GetParcelList();
+        object GetParcelWithoutDrone();
+        object GetBaseStationsWithFreeChargSlots();
     }
 }
