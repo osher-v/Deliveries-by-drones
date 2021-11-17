@@ -103,6 +103,36 @@ namespace IBL
             }
             return printDrone;
         }
-
+        /// <summary>
+        /// the fanction set delivere time and update all relvent data. 
+        /// </summary>
+        /// <param name="droneId">the reqsted drone</param>
+        public void DeliveryPackageToTheCustomer(int droneId)
+        {
+            DroneToList drone = DronesBL.Find(x => x.Id == droneId);
+            IDAL.DO.Parcel parcelIDal = AccessIdal.GetParcel(drone.NumberOfLinkedParcel);
+            if (parcelIDal.PickedUp != DateTime.MinValue && parcelIDal.Delivered == DateTime.MinValue)
+            {
+                Location locationOfTarget = GetCustomer(parcelIDal.TargetId).LocationOfCustomer;
+                switch ((WeightCategories)parcelIDal.Weight)
+                {
+                    case WeightCategories.light:
+                        drone.BatteryStatus -= GetDistance(locationOfTarget, drone.CurrentLocation) * LightWeightCarrier;
+                        break;
+                    case WeightCategories.medium:
+                        drone.BatteryStatus -= GetDistance(locationOfTarget, drone.CurrentLocation) * MediumWeightBearing;
+                        break;
+                    case WeightCategories.heavy:
+                        drone.BatteryStatus -= GetDistance(locationOfTarget, drone.CurrentLocation) * CarriesHeavyWeight;
+                        break;
+                    default:
+                        break;
+                }
+                drone.CurrentLocation = locationOfTarget;
+                drone.Statuses = DroneStatuses.free;
+                AccessIdal.DeliveryPackageToTheCustomer(parcelIDal.Id);
+            }
+            else throw new Exception();
+        }
     }
 }
