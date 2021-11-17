@@ -7,7 +7,6 @@ using IBL.BO;
 
 namespace IBL
 {
-    //public partial class BLparcel
     public partial class BL
     {
         public void AddParcel(Parcel newParcel)
@@ -274,6 +273,33 @@ namespace IBL
                 AccessIdal.DeliveryPackageToTheCustomer(parcelIDal.Id);
             }
             else throw new Exception();
+        }
+
+
+        public IEnumerable<ParcelToList> GetParcelList()
+        {
+            List<ParcelToList> parcels = new List<ParcelToList>();
+            List<IDAL.DO.Parcel> holdDalParcels = AccessIdal.GetParcelList().ToList();
+
+            foreach (var item in holdDalParcels)
+            {
+                DeliveryStatus st;
+                if (item.Delivered != DateTime.MinValue)
+                    st = DeliveryStatus.Delivered;
+                else if (item.PickedUp != DateTime.MinValue)
+                    st = DeliveryStatus.PickedUp;
+                else if (item.Assigned != DateTime.MinValue)
+                    st = DeliveryStatus.Assigned;
+                else
+                    st = DeliveryStatus.created;
+
+                parcels.Add(new ParcelToList {Id = item.Id, Weight = (WeightCategories)item.Weight,
+                    Prior = (Priorities)item.Priority, CustomerSenderName = AccessIdal.GetCustomer(item.SenderId).Name,
+                    CustomerReceiverName = AccessIdal.GetCustomer(item.TargetId).Name, Status = st
+                });
+            }
+
+            return parcels;
         }
     }
 }

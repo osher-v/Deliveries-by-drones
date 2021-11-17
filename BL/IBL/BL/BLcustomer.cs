@@ -67,15 +67,25 @@ namespace IBL
                 CustomerInDelivery customerInDelivery = new CustomerInDelivery { Id = item.TargetId, Name = AccessIdal.GetCustomer(item.TargetId).Name };
                 ParcelAtCustomer parcelAtCustomer = new ParcelAtCustomer() { Id = item.Id, Prior = (Priorities)item.Priority,
                     Weight = (WeightCategories)item.Weight, OtherCustomer= customerInDelivery};
-                if (item.Requested != DateTime.MinValue && item.Assigned == DateTime.MinValue && item.PickedUp == DateTime.MinValue && item.Delivered == DateTime.MinValue)
-                    parcelAtCustomer.Status = DeliveryStatus.created;
-                else if (item.Requested != DateTime.MinValue && item.Assigned != DateTime.MinValue && item.PickedUp == DateTime.MinValue && item.Delivered == DateTime.MinValue)
-                    parcelAtCustomer.Status = DeliveryStatus.Assigned;
-                else if (item.Requested != DateTime.MinValue && item.Assigned != DateTime.MinValue && item.PickedUp != DateTime.MinValue && item.Delivered == DateTime.MinValue)
-                    parcelAtCustomer.Status = DeliveryStatus.PickedUp;
-                else if (item.Requested != DateTime.MinValue && item.Assigned != DateTime.MinValue && item.PickedUp != DateTime.MinValue && item.Delivered != DateTime.MinValue)
-                    parcelAtCustomer.Status = DeliveryStatus.Delivered;
-                else throw new Exception();
+                //if (item.Requested != DateTime.MinValue && item.Assigned == DateTime.MinValue && item.PickedUp == DateTime.MinValue && item.Delivered == DateTime.MinValue)
+                //    parcelAtCustomer.Status = DeliveryStatus.created;
+                //else if (item.Requested != DateTime.MinValue && item.Assigned != DateTime.MinValue && item.PickedUp == DateTime.MinValue && item.Delivered == DateTime.MinValue)
+                //    parcelAtCustomer.Status = DeliveryStatus.Assigned;
+                //else if (item.Requested != DateTime.MinValue && item.Assigned != DateTime.MinValue && item.PickedUp != DateTime.MinValue && item.Delivered == DateTime.MinValue)
+                //    parcelAtCustomer.Status = DeliveryStatus.PickedUp;
+                //else if (item.Requested != DateTime.MinValue && item.Assigned != DateTime.MinValue && item.PickedUp != DateTime.MinValue && item.Delivered != DateTime.MinValue)
+                //    parcelAtCustomer.Status = DeliveryStatus.Delivered;
+                //else throw new Exception();
+
+                if (item.Delivered != DateTime.MinValue)
+                    st = DeliveryStatus.Delivered;
+                else if (item.PickedUp != DateTime.MinValue)
+                    st = DeliveryStatus.PickedUp;
+                else if (item.Assigned != DateTime.MinValue)
+                    st = DeliveryStatus.Assigned;
+                else
+                    st = DeliveryStatus.created;
+
                 blCustomer.ParcelFromTheCustomer.Add(parcelAtCustomer);
             }
 

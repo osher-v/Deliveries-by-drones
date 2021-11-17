@@ -103,6 +103,10 @@ namespace IBL
             }
             return printDrone;
         }
-        
+
+        public IEnumerable<DroneToList> GetDroneList()
+        {
+            return DronesBL;
+        }
     }
 }
