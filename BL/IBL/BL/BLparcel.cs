@@ -52,6 +52,171 @@ namespace IBL
             return parcel;
         }
 
+
+        public void AssignPackageToDdrone(int droneId)
+        {
+            DroneToList myDrone =  DronesBL.Find(x => x.Id == droneId);
+
+            if (myDrone.Statuses != DroneStatuses.free)
+                throw new Exception();
+
+            try
+            {
+                List<IDAL.DO.Parcel> highestPriority = highestPriorityList(myDrone);
+
+                List<IDAL.DO.Parcel> highestWeight = highestWeightList(highestPriority, myDrone);
+
+                IDAL.DO.Parcel theRightPackage = minDistance(highestWeight, myDrone.CurrentLocation);
+
+                DronesBL.Find(x => x.Id == droneId).Statuses = DroneStatuses.busy;
+                DronesBL.Find(x => x.Id == droneId).NumberOfLinkedParcel = theRightPackage.Id;
+
+                AccessIdal.AssignPackageToDdrone(theRightPackage.Id, droneId);
+            }
+            catch
+            {
+
+            }
+        }
+
+        private List<IDAL.DO.Parcel> highestPriorityList(DroneToList myDrone)
+        {
+            List<IDAL.DO.Parcel> parcels = AccessIdal.GetParcelList(x => x.DroneId == 0).ToList();
+
+            List<IDAL.DO.Parcel> parcelsWithHighestPriority = new List<IDAL.DO.Parcel>();
+            List<IDAL.DO.Parcel> parcelsWithMediumPriority = new List<IDAL.DO.Parcel>();
+            List<IDAL.DO.Parcel> parcelsWithRegulerPriority = new List<IDAL.DO.Parcel>();
+            
+            foreach (var item in parcels)
+            {
+                if(myDrone.MaxWeight >= (WeightCategories)item.Weight && possibleDistance(item, myDrone))
+                {
+                    switch ((Priorities)item.Priority)
+                    {
+                        case Priorities.regular:
+                            parcelsWithRegulerPriority.Add(item);
+                            break;
+
+                        case Priorities.fast:
+                            parcelsWithMediumPriority.Add(item);
+                            break;
+
+                        case Priorities.urgent:
+                            parcelsWithHighestPriority.Add(item);
+                            break;
+
+                        default:
+                            break;
+                    }
+                }    
+            }
+
+            //if (parcelsWithHighestPriority.Any())
+            //    return parcelsWithHighestPriority;
+            //else if (parcelsWithMediumPriority.Any())
+            //    return parcelsWithMediumPriority;
+            //else
+            //    return parcelsWithRegulerPriority;
+
+            return (parcelsWithHighestPriority.Any() ? parcelsWithHighestPriority : (parcelsWithMediumPriority.Any() ?
+                parcelsWithMediumPriority : parcelsWithRegulerPriority));
+        }
+
+        private List<IDAL.DO.Parcel> highestWeightList(List<IDAL.DO.Parcel> parcels, DroneToList myDrone)
+        {
+            List<IDAL.DO.Parcel> parcelsHeavy = new List<IDAL.DO.Parcel>();
+            List<IDAL.DO.Parcel> parcelsMedium = new List<IDAL.DO.Parcel>();
+            List<IDAL.DO.Parcel> parcelsLight = new List<IDAL.DO.Parcel>();
+
+            foreach (var item in parcels)
+            {
+                switch ((WeightCategories)item.Weight)
+                {
+                    case WeightCategories.light:
+                        parcelsLight.Add(item);
+                        break;
+                    case WeightCategories.medium:
+                        parcelsMedium.Add(item);
+                        break;
+                    case WeightCategories.heavy:
+                        parcelsHeavy.Add(item);
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            //if (parcelsWithHighestPriority.Any())
+            //    return parcelsWithHighestPriority;
+            //else if (parcelsWithMediumPriority.Any())
+            //    return parcelsWithMediumPriority;
+            //else
+            //    return parcelsWithRegulerPriority;
+
+            return (parcelsHeavy.Any() ? parcelsHeavy : (parcelsMedium.Any() ?
+                parcelsMedium : parcelsLight));
+        }
+
+        private bool possibleDistance(IDAL.DO.Parcel parcel, DroneToList myDrone)
+        {
+
+            //Customer senderCustomer = GetCustomer(parcel.SenderId);
+            double electricityUse = GetDistance(myDrone.CurrentLocation, GetCustomer(parcel.SenderId).LocationOfCustomer) * Free;
+            double distanceSenderToDestination = GetDistance(GetCustomer(parcel.SenderId).LocationOfCustomer, GetCustomer(parcel.TargetId).LocationOfCustomer);
+            switch ((WeightCategories)parcel.Weight)
+            {
+                case WeightCategories.light:
+                    electricityUse += distanceSenderToDestination* LightWeightCarrier;
+                    break;
+                case WeightCategories.medium:
+                    electricityUse += distanceSenderToDestination * MediumWeightBearing;
+                    break;
+                case WeightCategories.heavy:
+                    electricityUse += distanceSenderToDestination * CarriesHeavyWeight;
+                    break;
+                default:
+                    break;
+            }
+
+            //לזכור בעתיד לשנות את הפונקציה שמחזירה את המרחק הקצר ביותר לתחנה
+            List<BaseStation> baseStationBL = new List<BaseStation>();
+            List<IDAL.DO.BaseStation> holdDalBaseStation = AccessIdal.GetBaseStationList().ToList();
+            foreach (var item in holdDalBaseStation)
+            {
+                Location LocationOfItem = new Location() { longitude = item.Longitude, latitude = item.Latitude };
+                baseStationBL.Add(new BaseStation
+                {
+                    Id = item.Id,
+                    Name = item.StationName,
+                    FreeChargeSlots = item.FreeChargeSlots,
+                    BaseStationLocation = LocationOfItem
+                });
+            }
+
+            electricityUse += minDistanceBetweenBaseStationsAndLocation(baseStationBL, GetCustomer(parcel.TargetId).LocationOfCustomer).Item2 * Free; 
+
+            if(myDrone.BatteryStatus - electricityUse < 0)
+                return false;
+            return true;
+        }
+
+        private IDAL.DO.Parcel minDistance(List<IDAL.DO.Parcel> parcels, Location location)
+        {
+            List<double> listOfDistance = new List<double>();
+            foreach (var obj in parcels)
+            {
+                Location locationOfSender = GetCustomer(obj.SenderId).LocationOfCustomer;
+                listOfDistance.Add(GetDistance(location, locationOfSender));
+            }
+            return parcels[listOfDistance.FindIndex(x => x == listOfDistance.Min())];
+        }
+
+
+
+
+
+
+
         public void PickedUpPackageByTheDrone(int droneId)
         {
             DroneToList drone = DronesBL.Find(x => x.Id == droneId);

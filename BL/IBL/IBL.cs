@@ -10,14 +10,14 @@ namespace IBL
 {
     public interface IBL
     {
-        internal static List<Drone> DronesList = new List<Drone>();
-        /// <summary> list of base stations </summary>
-        internal static List<BaseStationsToList> BaseStationsList = new List<BaseStationsToList>();
-        /// <summary>list of customers</summary>
-        internal static List<Customer> CustomersList = new List<Customer>();
-        /// <summary> list of parcels </summary>
-        internal static List<Parcel> ParcelsList = new List<Parcel>();
-        /// <summary> class that responsible for counters </summary>
+        //internal static List<Drone> DronesList = new List<Drone>();
+        ///// <summary> list of base stations </summary>
+        //internal static List<BaseStationsToList> BaseStationsList = new List<BaseStationsToList>();
+        ///// <summary>list of customers</summary>
+        //internal static List<Customer> CustomersList = new List<Customer>();
+        ///// <summary> list of parcels </summary>
+        //internal static List<Parcel> ParcelsList = new List<Parcel>();
+        ///// <summary> class that responsible for counters </summary>
 
         void AddStation(BaseStation newbaseStation);
         void AddDrone(DroneToList newdrone, int firstChargingStation);
