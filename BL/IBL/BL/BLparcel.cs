@@ -32,13 +32,22 @@ namespace IBL
         public Parcel GetParcel(int idForDisplayObject)
         {
             IDAL.DO.Parcel printParcel = AccessIdal.GetParcel(idForDisplayObject);
-            DroneToList droneToLIist= DronesBL.Find(x => x.Id == printParcel.DroneId);
-            CustomerInDelivery senderInDelivery = new CustomerInDelivery() {Id=printParcel.SenderId,Name = AccessIdal.GetCustomer(printParcel.SenderId).Name };
+            DroneToList droneToLIist = DronesBL.Find(x => x.Id == printParcel.DroneId);
+            CustomerInDelivery senderInDelivery = new CustomerInDelivery() { Id = printParcel.SenderId, Name = AccessIdal.GetCustomer(printParcel.SenderId).Name };
             CustomerInDelivery reciverInDelivery = new CustomerInDelivery() { Id = printParcel.TargetId, Name = AccessIdal.GetCustomer(printParcel.TargetId).Name };
-            Parcel parcel = new Parcel() { Id=printParcel.Id,Weight= (WeightCategories)printParcel.Weight, Prior= (Priorities)printParcel.Priority ,
-                Sender=senderInDelivery, Receiver=reciverInDelivery, Requested=printParcel.Requested, Assigned=printParcel.Assigned,
-                PickedUp=printParcel.PickedUp, Delivered=printParcel.Delivered};
-            if (parcel.Assigned!=DateTime.MinValue)
+            Parcel parcel = new Parcel()
+            {
+                Id = printParcel.Id,
+                Weight = (WeightCategories)printParcel.Weight,
+                Prior = (Priorities)printParcel.Priority,
+                Sender = senderInDelivery,
+                Receiver = reciverInDelivery,
+                Requested = printParcel.Requested,
+                Assigned = printParcel.Assigned,
+                PickedUp = printParcel.PickedUp,
+                Delivered = printParcel.Delivered
+            };
+            if (parcel.Assigned != DateTime.MinValue)
             {
                 DroneInThePackage droneInThePackage = new DroneInThePackage()
                 {
@@ -52,10 +61,13 @@ namespace IBL
             return parcel;
         }
 
-
+        /// <summary>
+        /// The function assigns a drone to the parcel.
+        /// </summary>
+        /// <param name="droneId">drone Id</param>
         public void AssignPackageToDdrone(int droneId)
         {
-            DroneToList myDrone =  DronesBL.Find(x => x.Id == droneId);
+            DroneToList myDrone = DronesBL.Find(x => x.Id == droneId);
 
             if (myDrone.Statuses != DroneStatuses.free)
                 throw new Exception();
@@ -79,6 +91,7 @@ namespace IBL
             }
         }
 
+        //********************* Auxiliary functions for the AssignPackageToDdrone function *****************************
         private List<IDAL.DO.Parcel> highestPriorityList(DroneToList myDrone)
         {
             List<IDAL.DO.Parcel> parcels = AccessIdal.GetParcelList(x => x.DroneId == 0).ToList();
@@ -86,10 +99,10 @@ namespace IBL
             List<IDAL.DO.Parcel> parcelsWithHighestPriority = new List<IDAL.DO.Parcel>();
             List<IDAL.DO.Parcel> parcelsWithMediumPriority = new List<IDAL.DO.Parcel>();
             List<IDAL.DO.Parcel> parcelsWithRegulerPriority = new List<IDAL.DO.Parcel>();
-            
+
             foreach (var item in parcels)
             {
-                if(myDrone.MaxWeight >= (WeightCategories)item.Weight && possibleDistance(item, myDrone))
+                if (myDrone.MaxWeight >= (WeightCategories)item.Weight && possibleDistance(item, myDrone))
                 {
                     switch ((Priorities)item.Priority)
                     {
@@ -108,7 +121,7 @@ namespace IBL
                         default:
                             break;
                     }
-                }    
+                }
             }
 
             //if (parcelsWithHighestPriority.Any())
@@ -166,7 +179,7 @@ namespace IBL
             switch ((WeightCategories)parcel.Weight)
             {
                 case WeightCategories.light:
-                    electricityUse += distanceSenderToDestination* LightWeightCarrier;
+                    electricityUse += distanceSenderToDestination * LightWeightCarrier;
                     break;
                 case WeightCategories.medium:
                     electricityUse += distanceSenderToDestination * MediumWeightBearing;
@@ -193,9 +206,9 @@ namespace IBL
                 });
             }
 
-            electricityUse += minDistanceBetweenBaseStationsAndLocation(baseStationBL, GetCustomer(parcel.TargetId).LocationOfCustomer).Item2 * Free; 
+            electricityUse += minDistanceBetweenBaseStationsAndLocation(baseStationBL, GetCustomer(parcel.TargetId).LocationOfCustomer).Item2 * Free;
 
-            if(myDrone.BatteryStatus - electricityUse < 0)
+            if (myDrone.BatteryStatus - electricityUse < 0)
                 return false;
             return true;
         }
@@ -210,19 +223,25 @@ namespace IBL
             }
             return parcels[listOfDistance.FindIndex(x => x == listOfDistance.Min())];
         }
+        //**************************************************************************************************************
 
-
-
-
-
-
-
+        /// <summary>
+        /// The function updates the package pickedUp time.
+        /// </summary>
+        /// <param name="droneId">drone Id</param>
         public void PickedUpPackageByTheDrone(int droneId)
         {
             DroneToList drone = DronesBL.Find(x => x.Id == droneId);
-            IDAL.DO.Parcel parcelIDal = AccessIdal.GetParcel();
-           
-            
+            IDAL.DO.Parcel parcelIDal = AccessIdal.GetParcel(drone.NumberOfLinkedParcel);
+
+            if (parcelIDal.PickedUp != DateTime.MinValue)
+                throw new Exception();
+
+            Location locationOfSender = GetCustomer(parcelIDal.SenderId).LocationOfCustomer;
+            drone.BatteryStatus -= GetDistance(drone.CurrentLocation, locationOfSender) * Free;
+            drone.CurrentLocation = locationOfSender;
+
+            AccessIdal.PickedUpPackageByTheDrone(parcelIDal.Id);
         }
     }
 }
