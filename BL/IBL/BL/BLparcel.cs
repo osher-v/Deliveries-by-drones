@@ -35,24 +35,18 @@ namespace IBL
 
             if (myDrone.Statuses != DroneStatuses.free)
                 throw new Exception();
+        
+            List<IDAL.DO.Parcel> highestPriority = highestPriorityList(myDrone);
 
-            try
-            {
-                List<IDAL.DO.Parcel> highestPriority = highestPriorityList(myDrone);
+            List<IDAL.DO.Parcel> highestWeight = highestWeightList(highestPriority, myDrone);
 
-                List<IDAL.DO.Parcel> highestWeight = highestWeightList(highestPriority, myDrone);
+            IDAL.DO.Parcel theRightPackage = minDistance(highestWeight, myDrone.CurrentLocation);
 
-                IDAL.DO.Parcel theRightPackage = minDistance(highestWeight, myDrone.CurrentLocation);
+            myDrone.Statuses = DroneStatuses.busy;
+            myDrone.NumberOfLinkedParcel = theRightPackage.Id;
 
-                myDrone.Statuses = DroneStatuses.busy;
-                myDrone.NumberOfLinkedParcel = theRightPackage.Id;
-
-                AccessIdal.AssignPackageToDdrone(theRightPackage.Id, droneId);
-            }
-            catch
-            {
-
-            }
+            AccessIdal.AssignPackageToDdrone(theRightPackage.Id, droneId);
+           
         }
 
         //********************* Auxiliary functions for the AssignPackageToDdrone function *****************************
@@ -136,8 +130,6 @@ namespace IBL
 
         private bool possibleDistance(IDAL.DO.Parcel parcel, DroneToList myDrone)
         {
-
-            //Customer senderCustomer = GetCustomer(parcel.SenderId);
             double electricityUse = GetDistance(myDrone.CurrentLocation, GetCustomer(parcel.SenderId).LocationOfCustomer) * Free;
             double distanceSenderToDestination = GetDistance(GetCustomer(parcel.SenderId).LocationOfCustomer, GetCustomer(parcel.TargetId).LocationOfCustomer);
             switch ((WeightCategories)parcel.Weight)
@@ -155,19 +147,13 @@ namespace IBL
                     break;
             }
 
-            //לזכור בעתיד לשנות את הפונקציה שמחזירה את המרחק הקצר ביותר לתחנה
             List<BaseStation> baseStationBL = new List<BaseStation>();
             List<IDAL.DO.BaseStation> holdDalBaseStation = AccessIdal.GetBaseStationList().ToList();
             foreach (var item in holdDalBaseStation)
             {
                 Location LocationOfItem = new Location() { longitude = item.Longitude, latitude = item.Latitude };
-                baseStationBL.Add(new BaseStation
-                {
-                    Id = item.Id,
-                    Name = item.StationName,
-                    FreeChargeSlots = item.FreeChargeSlots,
-                    BaseStationLocation = LocationOfItem
-                });
+                baseStationBL.Add(new BaseStation {Id = item.Id, Name = item.StationName,FreeChargeSlots = item.FreeChargeSlots,
+                    BaseStationLocation = LocationOfItem});
             }
 
             electricityUse += minDistanceBetweenBaseStationsAndLocation(baseStationBL, GetCustomer(parcel.TargetId).LocationOfCustomer).Item2 * Free;

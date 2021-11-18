@@ -72,14 +72,14 @@ namespace IBL
                 //    parcelAtCustomer.Status = DeliveryStatus.Delivered;
                 //else throw new Exception();
 
-                //if (item.Delivered != DateTime.MinValue)
-                //    st = DeliveryStatus.Delivered;
-                //else if (item.PickedUp != DateTime.MinValue)
-                //    st = DeliveryStatus.PickedUp;
-                //else if (item.Assigned != DateTime.MinValue)
-                //    st = DeliveryStatus.Assigned;
-                //else
-                //    st = DeliveryStatus.created;
+                if (item.Delivered != DateTime.MinValue)
+                    parcelAtCustomer.Status = DeliveryStatus.Delivered;
+                else if (item.PickedUp != DateTime.MinValue)
+                    parcelAtCustomer.Status = DeliveryStatus.PickedUp;
+                else if (item.Assigned != DateTime.MinValue)
+                    parcelAtCustomer.Status = DeliveryStatus.Assigned;
+                else
+                    parcelAtCustomer.Status = DeliveryStatus.created;
 
                 blCustomer.ParcelFromTheCustomer.Add(parcelAtCustomer);
             }
