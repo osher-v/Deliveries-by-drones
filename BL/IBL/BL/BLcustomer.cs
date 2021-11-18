@@ -28,7 +28,10 @@ namespace IBL
             {
                 AccessIdal.AddCustomer(newCustomer);
             }
-            catch { }
+            catch (IDAL.DO.AddAnExistingObjectException)
+            {
+                throw new AddAnExistingObjectException();
+            }
         }
 
         public void UpdateCustomer(int customerId, string customerName, string phoneNumber)

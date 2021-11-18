@@ -11,9 +11,19 @@ namespace IBL
     {
         public void AddParcel(Parcel newParcel)
         {
+            //Check if the customers exist in the system.
+            try
+            {
+                AccessIdal.GetCustomer(newParcel.Sender.Id);
+                AccessIdal.GetCustomer(newParcel.Sender.Id);
+            }
+            catch (NonExistentObjectException)
+            {
+                throw new NonExistentObjectException("Erorr is no Customer id");
+            }
+            
             IDAL.DO.Parcel parcel = new IDAL.DO.Parcel()
             {
-                Id = newParcel.Id,
                 SenderId = newParcel.Sender.Id,
                 TargetId = newParcel.Receiver.Id,
                 Weight = (IDAL.DO.WeightCategories)newParcel.Weight,
@@ -22,11 +32,7 @@ namespace IBL
                 DroneId = 0 // לשאול את דן   
             };
 
-            try
-            {
-                AccessIdal.AddParcel(parcel);
-            }
-            catch { }
+            AccessIdal.AddParcel(parcel);
         }
 
         public void AssignPackageToDdrone(int droneId)

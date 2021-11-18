@@ -151,12 +151,14 @@ Please enter an ID number for the new Customer:");
                     Console.WriteLine("Next Please enter the longitude of the station:");
                     while (!double.TryParse(Console.ReadLine(), out newCustomerLongitude)) ;
                     Console.WriteLine("Next Please enter the latitude of the station:");
-                    while (!double.TryParse(Console.ReadLine(), out newCustomerLatitude)) ;
+                    while (!double.TryParse(Console.ReadLine(), out newCustomerLatitude));
+
                     Location customerlocation = new Location
                     {
                         longitude = newCustomerLongitude,
                         latitude = newCustomerLatitude
                     };
+
                     Customer newCustomer = new Customer
                     {
                         Id = newCustomerID,
@@ -164,39 +166,35 @@ Please enter an ID number for the new Customer:");
                         PhoneNumber = newPhoneNumber,
                         LocationOfCustomer=customerlocation
                     };
-                    bl.AddCustomer(newCustomer);
+
+                    try
+                    {
+                        bl.AddCustomer(newCustomer);
+                    }
+
+                    catch (AddAnExistingObjectException ex)
+                    {
+                        Console.WriteLine(ex);
+                    }
                     break;
 
                 case InsertrOption.Parcel:
                     int newSenderId, newTargetId, newWeight, newPriorities;
-                    //string senderName,reciverName;
 
                     Console.WriteLine(@"
 You have selected to add a new Parcel.
 Next Please enter the sender ID number:");
                     while (!int.TryParse(Console.ReadLine(), out newSenderId)) ;
-                    //Console.WriteLine("Next Please enter the name of the customer:");
-                    //senderName = Console.ReadLine();
                     Console.WriteLine("Next Please enter the target ID number:");
                     while (!int.TryParse(Console.ReadLine(), out newTargetId)) ;
-                    //Console.WriteLine("Next Please enter the name of the customer:");
-                    //reciverName = Console.ReadLine();
                     Console.WriteLine("Next enter the weight category of the new Parcel: 0 for free, 1 for inMaintenance and 2 for busy");
                     while (!int.TryParse(Console.ReadLine(), out newWeight)) ;
                     Console.WriteLine("Next enter the priorities of the new Parcel: 0 for regular, 1 for fast and 2 for urgent");
                     while (!int.TryParse(Console.ReadLine(), out newPriorities)) ;
 
 
-                    CustomerInDelivery newSender = new CustomerInDelivery
-                    {
-                        Id = newSenderId,
-                        //Name = senderName,
-                    };
-                    CustomerInDelivery newReciver = new CustomerInDelivery
-                    {
-                        Id = newTargetId,
-                        //Name = reciverName,
-                    };
+                    CustomerInDelivery newSender = new CustomerInDelivery{Id = newSenderId,};
+                    CustomerInDelivery newReciver = new CustomerInDelivery {Id = newTargetId,};
 
                     Parcel newParcel = new Parcel
                     {
@@ -205,8 +203,15 @@ Next Please enter the sender ID number:");
                         Weight = (WeightCategories)newWeight,
                         Prior = (Priorities)newPriorities
                     };
-                    //int counterParcelSerialNumber = 
+
+                    try
+                    {
                         bl.AddParcel(newParcel);
+                    }
+                    catch (NonExistentObjectException ex)
+                    {
+                        Console.WriteLine(ex);
+                    }
                     break;
 
                 default:
@@ -373,11 +378,11 @@ Your choice:");
         /// <param name="listToPrint"></param>
         public static void printTheList<T>(List<T> listToPrint) 
         {
-           Console.WriteLine(String.Join(" ",listToPrint));
-            //foreach (T item in listToPrint)
-            //{
-            //    Console.WriteLine(item);
-            //}
+            //Console.WriteLine(String.Join(" ",listToPrint));
+            foreach (T item in listToPrint)
+            {
+                Console.WriteLine(item);
+            }
         }
         /// <summary>
         /// The function handles list view options.

@@ -10,22 +10,13 @@ namespace DalObject
 {
     public partial class DalObject : IDal.IDal
     {
-        /// <summary>
-        /// The function adds a Parcel to the list of Parcels.
-        /// </summary>
-        /// <param name="newParcel"></param>
-        /// <returns></returns>
         public int AddParcel(Parcel newParcel)
         {
             newParcel.Id = DataSource.Config.CountIdPackage++;
             DataSource.ParcelsList.Add(newParcel);
             return newParcel.Id; //Returns the id of the current Parcel.
         }
-        /// <summary>
-        /// The function assigns a package to the drone.
-        /// </summary>
-        /// <param name="ParcelId">Id of Parcel</param>
-        /// <param name="droneId">Id of drone</param>
+        
         public void AssignPackageToDdrone(int ParcelId, int droneId)
         {
             //Update the package.
