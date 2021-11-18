@@ -42,7 +42,8 @@ namespace IBL
 
                 if (chargeslots != "") ////if it is not empty.
                 {
-                    int.TryParse(Console.ReadLine(), out int totalQuantityChargeSlots);
+                    int totalQuantityChargeSlots;
+                    while (!int.TryParse(Console.ReadLine(), out  totalQuantityChargeSlots));
                     int numOfBuzeChargeslots = AccessIdal.GetBaseChargeList(x => x.StationId == baseStationId).ToList().Count;
                     if (totalQuantityChargeSlots - numOfBuzeChargeslots < 0)
                         throw new Exception();

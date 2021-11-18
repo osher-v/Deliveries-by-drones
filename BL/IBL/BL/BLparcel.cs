@@ -52,7 +52,7 @@ namespace IBL
         //********************* Auxiliary functions for the AssignPackageToDdrone function *****************************
         private List<IDAL.DO.Parcel> highestPriorityList(DroneToList myDrone)
         {
-            List<IDAL.DO.Parcel> parcels = AccessIdal.GetParcelList(x => x.DroneId == 0).ToList();
+            List<IDAL.DO.Parcel> parcels = AccessIdal.GetParcelList(x => x.DroneId == 0 ).ToList();
 
             List<IDAL.DO.Parcel> parcelsWithHighestPriority = new List<IDAL.DO.Parcel>();
             List<IDAL.DO.Parcel> parcelsWithMediumPriority = new List<IDAL.DO.Parcel>();
@@ -82,15 +82,8 @@ namespace IBL
                 }
             }
 
-            //if (parcelsWithHighestPriority.Any())
-            //    return parcelsWithHighestPriority;
-            //else if (parcelsWithMediumPriority.Any())
-            //    return parcelsWithMediumPriority;
-            //else
-            //    return parcelsWithRegulerPriority;
-
-            return (parcelsWithHighestPriority.Any() ? parcelsWithHighestPriority : (parcelsWithMediumPriority.Any() ?
-                parcelsWithMediumPriority : parcelsWithRegulerPriority));
+            return (parcelsWithHighestPriority.Any() ? parcelsWithHighestPriority : parcelsWithMediumPriority.Any() ?
+                parcelsWithMediumPriority : parcelsWithRegulerPriority);
         }
 
         private List<IDAL.DO.Parcel> highestWeightList(List<IDAL.DO.Parcel> parcels, DroneToList myDrone)
@@ -124,8 +117,8 @@ namespace IBL
             //else
             //    return parcelsWithRegulerPriority;
 
-            return (parcelsHeavy.Any() ? parcelsHeavy : (parcelsMedium.Any() ?
-                parcelsMedium : parcelsLight));
+            return (parcelsHeavy.Any() ? parcelsHeavy : parcelsMedium.Any() ?
+                parcelsMedium : parcelsLight);
         }
 
         private bool possibleDistance(IDAL.DO.Parcel parcel, DroneToList myDrone)
@@ -146,6 +139,9 @@ namespace IBL
                 default:
                     break;
             }
+
+            if (myDrone.BatteryStatus - electricityUse < 0)
+                return false;
 
             List<BaseStation> baseStationBL = new List<BaseStation>();
             List<IDAL.DO.BaseStation> holdDalBaseStation = AccessIdal.GetBaseStationList().ToList();

@@ -17,7 +17,7 @@ namespace IBL
 
             public override string ToString()
             {
-                return base.ToString() + string.Format("number of busy charge slots: ", BusyChargeSlots);
+                return base.ToString() + string.Format("number of busy charge slots:{0,-5}", BusyChargeSlots);
             }
         }
     }

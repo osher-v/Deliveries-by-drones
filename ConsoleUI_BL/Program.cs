@@ -48,7 +48,8 @@ Insert options:
 4. Admission of package for shipment.
 
 Your choice:");
-            int.TryParse(Console.ReadLine(), out int choice);
+            int choice;
+            while(!int.TryParse(Console.ReadLine(), out  choice));
 
             switch ((InsertrOption)choice)
             {
@@ -203,16 +204,17 @@ Next Please enter the sender ID number:");
         {
             Console.WriteLine(@"
 Update options:
-1. drone        (new modal name)
-2. base station (new name or new chrage slots number )
-3. costomer     (new name or new phone number)
-4. Assigning a package to a drone
-5. Collection of a package by drone
-6. Delivery package to customer
-7. Sending a drone for charging at a base station
-8. Release drone from charging at base station
+1. Drone        (new modal name)
+2. Base station (new name or new chrage slots number )
+3. Customer     (new name or new phone number)
+4. Sending a drone for charging at a base station
+5. Release drone from charging at base station
+6. Assigning a package to a drone  
+7. Collection of a package by drone
+8. Delivery package to customer
 Your choice:");
-            int.TryParse(Console.ReadLine(), out int choice);
+            int choice;
+            while (!int.TryParse(Console.ReadLine(), out choice));
 
             int  droneId, baseStationId, customerId;
             string phoneNumber, droneName, baseName, customerName, chargeslots;
@@ -222,7 +224,7 @@ Your choice:");
             {
                 case UpdatesOption.DroneUpdate:
                     Console.WriteLine("please enter drone ID for update:");
-                    int.TryParse(Console.ReadLine(), out droneId);
+                    while(!int.TryParse(Console.ReadLine(), out droneId));
                     Console.WriteLine("Next Please enter the new Modal name:");
                     droneName = Console.ReadLine();
                     bl.UpdateDroneName(droneId, droneName);
@@ -230,7 +232,7 @@ Your choice:");
 
                 case UpdatesOption.BaseStaitonUpdate:
                     Console.WriteLine("please enter base station ID for update:");
-                    int.TryParse(Console.ReadLine(), out baseStationId);
+                    while (!int.TryParse(Console.ReadLine(), out baseStationId));
                     Console.WriteLine("Next Please enter the new base station name if not send empty line:");
                     baseName = Console.ReadLine();
                     Console.WriteLine("please enter update for the Charge slots number:");
@@ -240,7 +242,7 @@ Your choice:");
 
                 case UpdatesOption.CustomerUpdate:
                     Console.WriteLine("please enter Customer ID for update:");
-                    int.TryParse(Console.ReadLine(), out customerId);
+                    while (!int.TryParse(Console.ReadLine(), out customerId));
                     Console.WriteLine("Next Please enter the new base station name if not send empty line:");
                     customerName = Console.ReadLine();//אם נשלח ריק השדה לא מתעדכן
                     Console.WriteLine("please enter update for the Charge slots number:");
@@ -250,13 +252,13 @@ Your choice:");
 
                 case UpdatesOption.InCharging:
                     Console.WriteLine("please enter Drone ID:");
-                    int.TryParse(Console.ReadLine(), out droneId);   
+                    while (!int.TryParse(Console.ReadLine(), out droneId));   
                     bl.SendingDroneforCharging(droneId);
                     break;
 
                 case UpdatesOption.Outcharging:
                     Console.WriteLine("please enter Drone ID:");
-                    int.TryParse(Console.ReadLine(), out droneId);
+                    while (!int.TryParse(Console.ReadLine(), out droneId));
                     Console.WriteLine("Please enter the length of time the drone has been charging:");
                     DateTime.TryParse(Console.ReadLine(), out time);
                     bl.ReleaseDroneFromCharging(droneId, time);
@@ -264,19 +266,19 @@ Your choice:");
 
                 case UpdatesOption.AssignDrone:          
                     Console.WriteLine("please enter Drone ID:");
-                    int.TryParse(Console.ReadLine(), out droneId);
+                    while (!int.TryParse(Console.ReadLine(), out droneId));
                     bl.AssignPackageToDdrone( droneId);
                     break;
 
                 case UpdatesOption.PickUp:
                     Console.WriteLine("please enter Drone ID:");
-                    int.TryParse(Console.ReadLine(), out droneId);
+                    while (!int.TryParse(Console.ReadLine(), out droneId));
                     bl.PickedUpPackageByTheDrone(droneId);
                     break;
 
                 case UpdatesOption.Deliverd:
                     Console.WriteLine("please enter Drone ID:");
-                    int.TryParse(Console.ReadLine(), out droneId);
+                    while (!int.TryParse(Console.ReadLine(), out droneId));
                     bl.DeliveryPackageToTheCustomer(droneId);
                     break;
 
@@ -302,7 +304,8 @@ Display options(single):
 4. Package view.
 
 Your choice:");
-            int.TryParse(Console.ReadLine(), out int choice);
+            int choice;
+            while (!int.TryParse(Console.ReadLine(), out choice));
 
             int idForDisplayObject;
 
@@ -310,28 +313,28 @@ Your choice:");
             {
                 case DisplaySingleOption.BaseStationView:
                     Console.WriteLine("Insert ID number of base station:");
-                    int.TryParse(Console.ReadLine(), out idForDisplayObject);
+                    while (!int.TryParse(Console.ReadLine(), out idForDisplayObject));
 
                     Console.WriteLine(bl.GetBaseStation(idForDisplayObject).ToString());
                     break;
 
                 case DisplaySingleOption.DroneDisplay:
                     Console.WriteLine("Insert ID number of requsted drone:");
-                    int.TryParse(Console.ReadLine(), out idForDisplayObject);
+                    while (!int.TryParse(Console.ReadLine(), out idForDisplayObject));
 
                     Console.WriteLine(bl.GetDrone(idForDisplayObject).ToString());
                     break;
 
                 case DisplaySingleOption.CustomerView:
                     Console.WriteLine("Insert ID number of requsted Customer:");
-                    int.TryParse(Console.ReadLine(), out idForDisplayObject);
+                    while (!int.TryParse(Console.ReadLine(), out idForDisplayObject));
 
                     Console.WriteLine(bl.GetCustomer(idForDisplayObject).ToString());
                     break;
 
                 case DisplaySingleOption.PackageView:
                     Console.WriteLine("Insert ID number of reqused parcel:");
-                    int.TryParse(Console.ReadLine(), out idForDisplayObject);
+                    while (!int.TryParse(Console.ReadLine(), out idForDisplayObject));
 
                     Console.WriteLine(bl.GetParcel(idForDisplayObject).ToString());
                     break;
@@ -350,10 +353,11 @@ Your choice:");
         /// <param name="listToPrint"></param>
         public static void printTheList<T>(List<T> listToPrint) 
         {
-            foreach (T item in listToPrint)
-            {
-                Console.WriteLine(item);
-            }
+           Console.WriteLine(String.Join(" ",listToPrint));
+            //foreach (T item in listToPrint)
+            //{
+            //    Console.WriteLine(item);
+            //}
         }
         /// <summary>
         /// The function handles list view options.
@@ -372,7 +376,8 @@ Display options (for the whole list):
 6. Display base stations with available charging stations.
 
 Your choice:");
-            int.TryParse(Console.ReadLine(), out int choice);
+            int choice;
+            while (!int.TryParse(Console.ReadLine(), out choice));
 
             switch ((DisplayListOption)choice)
             {
@@ -425,7 +430,7 @@ choose from the following options (type the selected number):
 4. Display options (for the whole list).
 5. EXIT.
 Your choice:");
-                int.TryParse(Console.ReadLine(), out choice);
+                while (!int.TryParse(Console.ReadLine(), out choice));
 
                 switch ((Options)choice)
                 {
