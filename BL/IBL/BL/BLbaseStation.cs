@@ -20,13 +20,14 @@ namespace IBL
                 Longitude = newbaseStation.BaseStationLocation.longitude,
                 Latitude = newbaseStation.BaseStationLocation.latitude
             };
+
             try
             {
                 AccessIdal.AddStation(newStation);
             }
-            catch (IDAL.DO.AddAnExistingObjectException ex)
+            catch (IDAL.DO.AddAnExistingObjectException)
             {
-                throw new Exception("", ex);
+                throw new AddAnExistingObjectException();
             }
         }
 

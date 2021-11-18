@@ -71,11 +71,8 @@ Please enter an ID number for the new station:");
                     Console.WriteLine("Next Please enter the latitude of the station:");
                     while (!double.TryParse(Console.ReadLine(), out newlatitude)) ;
 
-                    Location location = new Location
-                    {
-                        longitude = newlongitude,
-                        latitude = newlatitude
-                    };
+                    Location location = new Location { longitude = newlongitude,latitude = newlatitude};
+
                     BaseStation newbaseStation = new BaseStation
                     {
                         Id = newBaseStationID,
@@ -84,35 +81,54 @@ Please enter an ID number for the new station:");
                         BaseStationLocation = location,
                         DroneInChargsList = new List<DroneInCharg>()     
                     };
-                    bl.AddStation(newbaseStation);
+                    try
+                    {
+                        bl.AddStation(newbaseStation);
+                    }
+                    catch (AddAnExistingObjectException ex)
+                    {
+                        Console.WriteLine(ex);
+                    }
                     break;
 
                 case InsertrOption.Drone:
                     int newDroneID, newMaxWeight, firstChargingStation;
-                    string newmodel;
-                    double newBatteryLevel;
+                    string newModel;
 
                     Console.WriteLine(@"
 You have selected to add a new Drone.
 Please enter an ID number for the new drone:");
                     while (!int.TryParse(Console.ReadLine(), out newDroneID)) ;
                     Console.WriteLine("Next Please enter the model of the Drone:");
-                    newmodel = Console.ReadLine();
+                    newModel = Console.ReadLine();
                     Console.WriteLine("Next enter the weight category of the new Drone: 0 for light, 1 for medium and 2 for heavy");
-                    while (!int.TryParse(Console.ReadLine(), out newMaxWeight)) ;
-                    Console.WriteLine("Next enter the charge level of the battery:");
-                    while (!double.TryParse(Console.ReadLine(), out newBatteryLevel)) ;
-                    Console.WriteLine("Next enter the ID of the Station to Put the drone for first charge : 0 for free, 1 for inMaintenance and 2 for busy");
+                    while (!int.TryParse(Console.ReadLine(), out newMaxWeight));
+                    Console.WriteLine("Next enter the ID of the Station to Put the drone for first charge");
                     while (!int.TryParse(Console.ReadLine(), out firstChargingStation)) ;
 
                     DroneToList newdrone = new DroneToList
                     {
                         Id = newDroneID,
-                        Model = newmodel,
+                        Model = newModel,
                         MaxWeight = (WeightCategories)newMaxWeight
                     };
 
-                    bl.AddDrone(newdrone,firstChargingStation);
+                    try
+                    {
+                        bl.AddDrone(newdrone, firstChargingStation);
+                    }
+                    catch (AddAnExistingObjectException ex)
+                    {
+                        Console.WriteLine(ex);
+                    }
+                    catch (NonExistentObjectException ex)
+                    {
+                        Console.WriteLine(ex);
+                    }
+                    catch (NonExistentEnumException ex)
+                    {
+                        Console.WriteLine(ex);
+                    }
                     break;
 
                 case InsertrOption.Customer:

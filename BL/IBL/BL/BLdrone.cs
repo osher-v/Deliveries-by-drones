@@ -10,34 +10,34 @@ namespace IBL
     //public partial class BLdrone
     public partial class BL
     {
-        /// <summary>
-        /// add a new drine ti both places suce as idal list and bl list 
-        /// </summary>
-        /// <param name="newDrone">the name of the new drone</param>
-        /// <param name="firstChargingStation">the first to put the drone in for charg</param>
         public void AddDrone(DroneToList newDrone, int firstChargingStation)
         {
-            IDAL.DO.Drone Drone = new IDAL.DO.Drone()
-            {
-                Id = newDrone.Id,
-                MaxWeight = (IDAL.DO.WeightCategories)newDrone.MaxWeight,
-                Model = newDrone.Model
-            };
+            if ((int)newDrone.MaxWeight < 0 || (int)newDrone.MaxWeight > 2)
+                throw new NonExistentEnumException("(0 - 2)");
+
+            IDAL.DO.Drone Drone = new IDAL.DO.Drone() { Id = newDrone.Id, MaxWeight = (IDAL.DO.WeightCategories)newDrone.MaxWeight,
+                Model = newDrone.Model};
+
             try
             {
                 AccessIdal.AddDrone(Drone);
-            }
-            catch { }
-            try
-            {
+
                 newDrone.BatteryStatus = random.Next(20, 41);
                 newDrone.Statuses = DroneStatuses.inMaintenance;
                 newDrone.CurrentLocation.longitude = AccessIdal.GetBaseStation(firstChargingStation).Longitude;
                 newDrone.CurrentLocation.latitude = AccessIdal.GetBaseStation(firstChargingStation).Latitude;
                 DronesBL.Add(newDrone);
-                AccessIdal.SendingDroneforChargingAtBaseStation(firstChargingStation, newDrone.Id);// לשאול את דן 
+                AccessIdal.SendingDroneforChargingAtBaseStation(firstChargingStation, newDrone.Id);
+                AccessIdal.UpdateMinusChargeSlots(firstChargingStation);
             }
-            catch { }
+            catch (IDAL.DO.AddAnExistingObjectException)
+            {
+                throw new AddAnExistingObjectException();
+            }
+            catch (IDAL.DO.NonExistentObjectException)
+            {
+                throw new NonExistentObjectException("BaseStation");
+            }
         }
 
         public void UpdateDroneName(int droneId, string droneName)

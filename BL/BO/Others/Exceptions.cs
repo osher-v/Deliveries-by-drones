@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using System.Runtime.Serialization;
+
 namespace IBL
 {
     namespace BO
@@ -11,6 +13,53 @@ namespace IBL
         public class Exceptions : Exception
         {
 
+        }
+
+        [Serializable]
+        public class AddAnExistingObjectException : Exception
+        {
+            public AddAnExistingObjectException() : base() { }
+            public AddAnExistingObjectException(string message) : base(message) { }
+            public AddAnExistingObjectException(string message, Exception inner) : base(message, inner) { }
+            protected AddAnExistingObjectException(SerializationInfo info, StreamingContext context)
+            : base(info, context) { }
+
+            public override string ToString()
+            {
+                return "Error adding an object with an existing ID number";
+            }
+        }
+
+        [Serializable]
+        //class UpdateOfANonExistentObjectException : Exception
+        public class NonExistentObjectException : Exception
+        {
+            public NonExistentObjectException() : base() { }
+            public NonExistentObjectException(string message) : base(message) { }
+            public NonExistentObjectException(string message, Exception inner) : base(message, inner) { }
+            protected NonExistentObjectException(SerializationInfo info, StreamingContext context)
+            : base(info, context) { }
+
+            public override string ToString()
+            {   
+                return string.Format("{0} Error non-existing ID number ", Message);
+            }
+        }
+
+        [Serializable]
+        //class UpdateOfANonExistentObjectException : Exception
+        public class NonExistentEnumException : Exception
+        {
+            public NonExistentEnumException() : base() { }
+            public NonExistentEnumException(string message) : base(message) { }
+            public NonExistentEnumException(string message, Exception inner) : base(message, inner) { }
+            protected NonExistentEnumException(SerializationInfo info, StreamingContext context)
+            : base(info, context) { }
+
+            public override string ToString()
+            {
+                return string.Format("Error Exceeding the range of options {0}", Message);
+            }
         }
     }
 }
