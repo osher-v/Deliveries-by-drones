@@ -39,11 +39,7 @@ namespace IBL
             }
             catch { }
         }
-        /// <summary>
-        /// the function get ID for a drone that will be updated (name only)
-        /// </summary>
-        /// <param name="droneId">the reqsted drone</param>
-        /// <param name="droneName">the new name </param>
+
         public void UpdateDroneName(int droneId, string droneName)
         {
             try
@@ -60,6 +56,7 @@ namespace IBL
             catch { }
 
         }
+
         /// <summary>
         /// 
         /// </summary>

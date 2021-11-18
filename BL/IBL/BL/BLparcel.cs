@@ -28,42 +28,7 @@ namespace IBL
             }
             catch { }
         }
-        public Parcel GetParcel(int idForDisplayObject)
-        {
-            IDAL.DO.Parcel printParcel = AccessIdal.GetParcel(idForDisplayObject);
-            DroneToList droneToLIist = DronesBL.Find(x => x.Id == printParcel.DroneId);
-            CustomerInDelivery senderInDelivery = new CustomerInDelivery() { Id = printParcel.SenderId, Name = AccessIdal.GetCustomer(printParcel.SenderId).Name };
-            CustomerInDelivery reciverInDelivery = new CustomerInDelivery() { Id = printParcel.TargetId, Name = AccessIdal.GetCustomer(printParcel.TargetId).Name };
-            Parcel parcel = new Parcel()
-            {
-                Id = printParcel.Id,
-                Weight = (WeightCategories)printParcel.Weight,
-                Prior = (Priorities)printParcel.Priority,
-                Sender = senderInDelivery,
-                Receiver = reciverInDelivery,
-                Requested = printParcel.Requested,
-                Assigned = printParcel.Assigned,
-                PickedUp = printParcel.PickedUp,
-                Delivered = printParcel.Delivered
-            };
-            if (parcel.Assigned != DateTime.MinValue)
-            {
-                DroneInThePackage droneInThePackage = new DroneInThePackage()
-                {
-                    Id = droneToLIist.Id,
-                    BatteryStatus = droneToLIist.BatteryStatus,
-                    CurrentLocation = droneToLIist.CurrentLocation
-                };
-                parcel.MyDrone = droneInThePackage;
-            }
 
-            return parcel;
-        }
-
-        /// <summary>
-        /// The function assigns a drone to the parcel.
-        /// </summary>
-        /// <param name="droneId">drone Id</param>
         public void AssignPackageToDdrone(int droneId)
         {
             DroneToList myDrone = DronesBL.Find(x => x.Id == droneId);
@@ -79,8 +44,8 @@ namespace IBL
 
                 IDAL.DO.Parcel theRightPackage = minDistance(highestWeight, myDrone.CurrentLocation);
 
-                DronesBL.Find(x => x.Id == droneId).Statuses = DroneStatuses.busy;
-                DronesBL.Find(x => x.Id == droneId).NumberOfLinkedParcel = theRightPackage.Id;
+                myDrone.Statuses = DroneStatuses.busy;
+                myDrone.NumberOfLinkedParcel = theRightPackage.Id;
 
                 AccessIdal.AssignPackageToDdrone(theRightPackage.Id, droneId);
             }
@@ -223,14 +188,14 @@ namespace IBL
             return parcels[listOfDistance.FindIndex(x => x == listOfDistance.Min())];
         }
         //**************************************************************************************************************
-
-        /// <summary>
-        /// The function updates the package pickedUp time.
-        /// </summary>
-        /// <param name="droneId">drone Id</param>
+ 
         public void PickedUpPackageByTheDrone(int droneId)
         {
             DroneToList drone = DronesBL.Find(x => x.Id == droneId);
+
+            if (drone.NumberOfLinkedParcel == 0)//Deafult if he do not Assign to parcel.
+                throw new Exception();
+
             IDAL.DO.Parcel parcelIDal = AccessIdal.GetParcel(drone.NumberOfLinkedParcel);
 
             if (parcelIDal.PickedUp != DateTime.MinValue)
@@ -242,15 +207,16 @@ namespace IBL
 
             AccessIdal.PickedUpPackageByTheDrone(parcelIDal.Id);
         }
-
-        /// <summary>
-        /// the fanction set delivere time and update all relvent data. 
-        /// </summary>
-        /// <param name="droneId">the reqsted drone</param>
+    
         public void DeliveryPackageToTheCustomer(int droneId)
         {
             DroneToList drone = DronesBL.Find(x => x.Id == droneId);
+
+            if (drone.NumberOfLinkedParcel == 0)//Deafult if he do not Assign to parcel.
+                throw new Exception();
+
             IDAL.DO.Parcel parcelIDal = AccessIdal.GetParcel(drone.NumberOfLinkedParcel);
+
             if (parcelIDal.PickedUp != DateTime.MinValue && parcelIDal.Delivered == DateTime.MinValue)
             {
                 Location locationOfTarget = GetCustomer(parcelIDal.TargetId).LocationOfCustomer;
@@ -270,11 +236,44 @@ namespace IBL
                 }
                 drone.CurrentLocation = locationOfTarget;
                 drone.Statuses = DroneStatuses.free;
-                AccessIdal.DeliveryPackageToTheCustomer(parcelIDal.Id);
+                drone.NumberOfLinkedParcel = 0; //importent.
+                AccessIdal.DeliveryPackageToTheCustomer(parcelIDal.Id);    
             }
-            else throw new Exception();
+            else 
+                throw new Exception();
         }
 
+        public Parcel GetParcel(int idForDisplayObject)
+        {
+            IDAL.DO.Parcel printParcel = AccessIdal.GetParcel(idForDisplayObject);
+            DroneToList droneToLIist = DronesBL.Find(x => x.Id == printParcel.DroneId);
+            CustomerInDelivery senderInDelivery = new CustomerInDelivery() { Id = printParcel.SenderId, Name = AccessIdal.GetCustomer(printParcel.SenderId).Name };
+            CustomerInDelivery reciverInDelivery = new CustomerInDelivery() { Id = printParcel.TargetId, Name = AccessIdal.GetCustomer(printParcel.TargetId).Name };
+            Parcel parcel = new Parcel()
+            {
+                Id = printParcel.Id,
+                Weight = (WeightCategories)printParcel.Weight,
+                Prior = (Priorities)printParcel.Priority,
+                Sender = senderInDelivery,
+                Receiver = reciverInDelivery,
+                Requested = printParcel.Requested,
+                Assigned = printParcel.Assigned,
+                PickedUp = printParcel.PickedUp,
+                Delivered = printParcel.Delivered
+            };
+            if (parcel.Assigned != DateTime.MinValue)
+            {
+                DroneInThePackage droneInThePackage = new DroneInThePackage()
+                {
+                    Id = droneToLIist.Id,
+                    BatteryStatus = droneToLIist.BatteryStatus,
+                    CurrentLocation = droneToLIist.CurrentLocation
+                };
+                parcel.MyDrone = droneInThePackage;
+            }
+
+            return parcel;
+        }
 
         public IEnumerable<ParcelToList> GetParcelList(Predicate<ParcelToList> predicate = null)
         {

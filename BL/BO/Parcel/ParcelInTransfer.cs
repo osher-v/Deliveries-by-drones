@@ -8,9 +8,11 @@ namespace IBL
 {
     namespace BO
     {
+        /// <summary>
+        /// class of parcel in transfer.
+        /// </summary>
         public class ParcelInTransfer :ParcelParent
         {
-
             public bool OnTheWayToTheDestination { get; set; } 
 
             public CustomerInDelivery Sender { get; set; }
@@ -25,9 +27,9 @@ namespace IBL
 
             public override string ToString()
             {
-                return string.Format(" {0,-2}\t the customar in hold is:{1,-8}\treciver ID:{2,8}\t  the Source Location is:{3,-8}\t" +
-                    " the Destination Location is:{4,-8}\t destiniton is:{5,-8}\t  ", OnTheWayToTheDestination, Sender, Receiver, SourceLocation, 
-                    DestinationLocation, TransportDistance);
+                return base.ToString() + string.Format("on the way to the destination? {0,-2}\t the customar in hold is:{1,-8} \t the reciver is:{2,8}\t" +
+                    "the Source Location is:{3,-8} \t the Destination Location is:{4,-8} \t destiniton is:{5,-8} \t"
+                    ,OnTheWayToTheDestination, Sender, Receiver, SourceLocation, DestinationLocation, TransportDistance);
             }
         }
     }

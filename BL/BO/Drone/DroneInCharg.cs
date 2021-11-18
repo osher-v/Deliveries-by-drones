@@ -8,6 +8,9 @@ namespace IBL
 {
     namespace BO
     {
+        /// <summary>
+        /// class of drone in charg.
+        /// </summary>
         public class DroneInCharg
         {
             public int Id { get; set; }
@@ -15,9 +18,8 @@ namespace IBL
 
             public override string ToString()
             {
-                return string.Format("id is:{0,-8}\t Battery Status is:{1,5}\t",Id,BatteryStatus);
+                return string.Format("id is:{0,-8}\t Battery Status is:{1,5}\t", Id, BatteryStatus);
             }
-
         }
     }
 }

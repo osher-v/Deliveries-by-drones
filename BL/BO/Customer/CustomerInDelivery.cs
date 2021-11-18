@@ -10,7 +10,7 @@ namespace IBL
     {
         //לקוח בחבילה
         /// <summary>
-        /// 
+        /// class of customer in delivery.
         /// </summary>
         public class CustomerInDelivery
         {

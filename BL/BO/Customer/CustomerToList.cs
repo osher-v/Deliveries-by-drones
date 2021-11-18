@@ -8,6 +8,9 @@ namespace IBL
 {
     namespace BO
     {
+        /// <summary>
+        /// class of customer to List.
+        /// </summary>
         public class CustomerToList : CustomerParent
         {
             public int NumberOfPackagesSentAndDelivered { get; set; }

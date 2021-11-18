@@ -8,6 +8,9 @@ namespace IBL
 {
     namespace BO
     {
+        /// <summary>
+        /// abstract class of customer.
+        /// </summary>
         public abstract class CustomerParent
         {
             public int Id { get; set; }

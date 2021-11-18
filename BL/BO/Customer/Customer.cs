@@ -8,6 +8,9 @@ namespace IBL
 {
     namespace BO
     {
+        /// <summary>
+        /// class of customer.
+        /// </summary>
         public class Customer : CustomerParent
         {
             public Location LocationOfCustomer { get; set; }
@@ -20,7 +23,7 @@ namespace IBL
             {
                 return base.ToString() + string.Format("location:{0,-8}\t ", LocationOfCustomer)
                    + "the list of delivery from the customer is:" + string.Join("\t", ParcelFromTheCustomer)
-                   + "the list of delivery from the customer is:" + string.Join("\t,",ParcelToTheCustomer);
+                   + "the list of delivery to the customer is:" + string.Join("\t,",ParcelToTheCustomer);
             }
         }
     }   

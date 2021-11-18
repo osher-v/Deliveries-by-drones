@@ -19,7 +19,7 @@ namespace DalObject
         public void SendingDroneforChargingAtBaseStation(int baseStationId, int droneId)
         {
             DataSource.DroneChargeList.Add(new DroneCharge() { StationId = baseStationId, DroneId = droneId });
-            UpdateMinusChargeSlots(baseStationId);
+            //UpdateMinusChargeSlots(baseStationId);
         }
 
         /// <summary>
@@ -28,19 +28,22 @@ namespace DalObject
         /// <param name="droneId">Id of drone</param>
         public void ReleaseDroneFromChargingAtBaseStation(int droneId)
         {
-            //find the Station Id and remove from the DroneChargeList.
-            int indexafordroneCharge = DataSource.DroneChargeList.FindIndex(x => x.DroneId == droneId);
-            DroneCharge help2 = DataSource.DroneChargeList[indexafordroneCharge];
-            int baseStationId = help2.StationId;
-            DataSource.DroneChargeList.RemoveAt(DataSource.DroneChargeList.FindIndex(x => x.DroneId == droneId));
+            ////find the Station Id and remove from the DroneChargeList.
+            //int indexafordroneCharge = DataSource.DroneChargeList.FindIndex(x => x.DroneId == droneId);
+            //DroneCharge help2 = DataSource.DroneChargeList[indexafordroneCharge];
+            //int baseStationId = help2.StationId;
+            //DataSource.DroneChargeList.RemoveAt(DataSource.DroneChargeList.FindIndex(x => x.DroneId == droneId));
 
-            UpdatePluseChargeSlots(baseStationId);
+            //UpdatePluseChargeSlots(baseStationId);
+            DataSource.DroneChargeList.RemoveAt(DataSource.DroneChargeList.FindIndex(x => x.DroneId == droneId));
         }
 
-        //public IEnumerable<DroneCharge> GetBaseChargeList()
-        //{
-        //    return DataSource.DroneChargeList.Take(DataSource.DroneChargeList.Count);
-        //}
+        public DroneCharge GetBaseCharge(int droneID)
+        {
+            if (!(DataSource.DroneChargeList.Exists(x => x.DroneId == droneID)))
+                throw new NonExistentObjectException();
+            return DataSource.DroneChargeList.Find(x => x.DroneId == droneID);
+        }
 
         /// <summary>
         /// the fanction get baseCharge List.

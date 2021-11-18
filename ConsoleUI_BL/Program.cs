@@ -25,8 +25,6 @@ namespace ConsoleUI_BL
         ListOfBaseStationView = 1, ListOfDronedisplay, ListOfCustomerView,
         ListOfPackageView, ListOfFreePackageView, ListOfBaseStationsWithFreeChargSlots
     }
-    /// <summary>enum for chackDistance</summary>
-    enum chackDistance { BasePoint = 1, CustomerPoint }
     #endregion enums
 
     ///<summary> main class </summary> 
@@ -200,7 +198,7 @@ Next Please enter the sender ID number:");
         /// <summary>
         /// The function handles various update options.
         /// </summary>
-        /// <param name="dal">DalObject object that is passed as a parameter to enable the functions in the DalObject class</param>
+        /// <param name="bl">bl object that is passed as a parameter to enable the functions in the BL class</param>
         static public void UpdateOptions(IBL.IBL bl)
         {
             Console.WriteLine(@"
@@ -216,9 +214,10 @@ Update options:
 Your choice:");
             int.TryParse(Console.ReadLine(), out int choice);
 
-            int  droneId, baseStationId, chargeslots, customerId;
-            string phoneNumber, droneName, baseName, customerName;
+            int  droneId, baseStationId, customerId;
+            string phoneNumber, droneName, baseName, customerName, chargeslots;
             DateTime time;
+
             switch ((UpdatesOption)choice)
             {
                 case UpdatesOption.DroneUpdate:
@@ -233,9 +232,9 @@ Your choice:");
                     Console.WriteLine("please enter base station ID for update:");
                     int.TryParse(Console.ReadLine(), out baseStationId);
                     Console.WriteLine("Next Please enter the new base station name if not send empty line:");
-                    baseName = Console.ReadLine();//אם נשלח ריק השדה לא מתעדכן
+                    baseName = Console.ReadLine();
                     Console.WriteLine("please enter update for the Charge slots number:");
-                    int.TryParse(Console.ReadLine(), out chargeslots);//אם נשלח ריק השדה לא מתעדכן
+                    chargeslots = Console.ReadLine();
                     bl.UpdateBaseStaison(baseStationId, baseName, chargeslots);
                     break;
 
@@ -413,7 +412,6 @@ Your choice:");
         static void Main(string[] args)
         {
             IBL.IBL BLObject = new IBL.BL();
-            //IDal.IDal idal = dalObject;
 
             int choice;
             do
@@ -457,6 +455,4 @@ Your choice:");
             } while (!(choice == 5));
         }
     }
-
-
 }

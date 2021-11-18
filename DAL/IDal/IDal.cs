@@ -128,8 +128,14 @@ namespace IDal
         /// <param name="ID">Id of a selected Parcel</param>
         /// <returns>return empty ubjact if its not there</returns>
         public Parcel GetParcel(int ID);
-        #endregion Functions for display options
 
+        /// <summary>
+        /// The function returns the selected Base Charge.
+        /// </summary>
+        /// <param name="droneID">drone ID</param>
+        /// <returns>the selected Base Charge</returns>
+        public DroneCharge GetBaseCharge(int droneID);
+        #endregion Functions for display options
 
         #region Functions for listing options
         /// <summary>
@@ -161,25 +167,7 @@ namespace IDal
         /// </summary>
         /// <param name="prdicat"></param>
         /// <returns>returns a new List that hold all the data from the reqsted List</returns>
-        public IEnumerable<DroneCharge> GetBaseChargeList(Predicate<DroneCharge> prdicat = null);
-
-
-        //לבדוק מה קורה עם התחכום הזה
-        /*
-        /// <summary>
-        /// The function returns an array of all packages not associated with the Drone.
-        /// </summary>
-        /// <returns>returns a new List that hold all the data from the reqsted List</returns>
-        public IEnumerable<Parcel> GetParcelWithoutDrone();
-        */
-
-        /*
-        /// <summary>
-        /// The function returns base stations with free charge positions.
-        /// </summary>
-        /// <returns>returns a new List that hold all the data from the reqsted List</returns>
-        public IEnumerable<BaseStation> GetBaseStationsWithFreeChargSlots();
-        */
+        public IEnumerable<DroneCharge> GetBaseChargeList(Predicate<DroneCharge> prdicat = null);  
         #endregion Functions for listing options
 
         public double[] RequestPowerConsumptionByDrone();

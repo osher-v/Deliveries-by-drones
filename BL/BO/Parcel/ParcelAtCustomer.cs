@@ -9,6 +9,9 @@ namespace IBL
     namespace BO
     {
         //חבילה אצל לקוח
+        /// <summary>
+        /// class of parcel at customer.
+        /// </summary>
         public class ParcelAtCustomer : ParcelParent
         {
 
@@ -18,7 +21,7 @@ namespace IBL
 
             public override string ToString()
             {
-                return string.Format("status is: {3,-5} \t the InDelivery is: {4,-6}",Status, OtherCustomer);
+                return base.ToString() + string.Format("status is: {0,-5} \t the other customer is: {1,-6}", Status, OtherCustomer);
             }
         }
     } 

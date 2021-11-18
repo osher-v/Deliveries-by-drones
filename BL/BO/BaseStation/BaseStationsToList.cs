@@ -8,6 +8,9 @@ namespace IBL
 {
     namespace BO
     {
+        /// <summary>
+        /// class of baseStations to List.
+        /// </summary>
         public class BaseStationsToList : BaseStationParnt
         {
             public int BusyChargeSlots { get; set; }
@@ -16,7 +19,6 @@ namespace IBL
             {
                 return base.ToString() + string.Format("number of busy charge slots: ", BusyChargeSlots);
             }
-
         }
     }
 }

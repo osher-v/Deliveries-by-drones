@@ -31,12 +31,6 @@ namespace IBL
             catch { }
         }
 
-        /// <summary>
-        /// The function updates a customer object.
-        /// </summary>
-        /// <param name="customerId">customer ID</param>
-        /// <param name="customerName">customer name</param>
-        /// <param name="phoneNumber">phone number</param>
         public void UpdateCustomer(int customerId, string customerName, string phoneNumber)
         {
             try
@@ -53,6 +47,7 @@ namespace IBL
 
             }
         }
+
         public Customer GetCustomer(int idForDisplayObject)
         {
             IDAL.DO.Customer printCustomer = AccessIdal.GetCustomer(idForDisplayObject);
@@ -115,7 +110,6 @@ namespace IBL
             return blCustomer;
         }
 
-
         public IEnumerable<CustomerToList> GetCustomerList(Predicate<CustomerToList> predicate = null)
         {
             List<CustomerToList> CustomerBL = new List<CustomerToList>();
@@ -141,7 +135,6 @@ namespace IBL
             return CustomerBL.FindAll(x => predicate == null ? true : predicate(x));
         }
     }
-
 }
 
 

@@ -8,6 +8,9 @@ namespace IBL
 {
     namespace BO
     {
+        /// <summary>
+        /// class of parcel to List.
+        /// </summary>
         public class ParcelToList : ParcelParent
         {
             public string CustomerSenderName  { get; set; }

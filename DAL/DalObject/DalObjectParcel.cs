@@ -28,7 +28,6 @@ namespace DalObject
         /// <param name="droneId">Id of drone</param>
         public void AssignPackageToDdrone(int ParcelId, int droneId)
         {
-            //האם להוסיף בדיקה גם על תקינות הרחפן??
             //Update the package.
             int indexaforParcel = DataSource.ParcelsList.FindIndex(x => x.Id == ParcelId);
 
@@ -38,15 +37,7 @@ namespace DalObject
             Parcel temp = DataSource.ParcelsList[indexaforParcel];
             temp.DroneId = droneId;
             temp.Assigned = DateTime.Now;
-            DataSource.ParcelsList[indexaforParcel] = temp;
-
-            /*
-            //drone update.
-            int indexaforDrone = DataSource.DronesList.FindIndex(x => x.Id == droneId);
-            Drone help = DataSource.DronesList[indexaforDrone];
-            help.Status = (DroneStatuses)2; //busy
-            DataSource.DronesList[indexaforDrone] = help;
-            */
+            DataSource.ParcelsList[indexaforParcel] = temp; 
         }
         /// <summary>
         /// picked up package by the drone.

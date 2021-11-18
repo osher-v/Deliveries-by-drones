@@ -8,15 +8,16 @@ namespace IBL
 {
     namespace BO
     {
-        //רחפן בחבילה
+        /// <summary>
+        /// class of drone in the package.
+        /// </summary>
         public class DroneInThePackage : DroneInCharg
         {
             public Location CurrentLocation { get; set; }
 
             public override string ToString()
             {
-                return string.Format("the Id is {0,-6} \t the BatteryStatus is {1,-6} \t" +
-                    "the CurrentLocation is {2,-6}", Id, BatteryStatus, CurrentLocation);
+                return base.ToString() + string.Format("the CurrentLocation is {0,-6}", CurrentLocation);
             }
         }
     }

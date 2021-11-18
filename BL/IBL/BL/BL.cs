@@ -7,12 +7,17 @@ using IBL.BO;
 
 namespace IBL
 {
+    /// <summary>
+    /// These partial classes will implement the IBL interface and
+    /// take care of updating the data layer and in addition a BL object will maintain a skimmer list.
+    /// </summary>
     public partial class BL : IBL
     {
-        public IDal.IDal AccessIdal; 
+        public IDal.IDal AccessIdal; //Create an object that we will use to access the data layer. 
 
-        public List<DroneToList> DronesBL;
+        public List<DroneToList> DronesBL; //Creating a list of dronse.
 
+        //Creating fields of power consumption per kilometer and on the rate of drone charging
         public double Free;
         public double LightWeightCarrier;
         public double MediumWeightBearing;
@@ -20,14 +25,17 @@ namespace IBL
         public double DroneLoadingRate;
 
         //Create a Random object to be used to draw the battery status and Location of the drones.
-        Random random = new Random(DateTime.Now.Millisecond); 
+        Random random = new Random(DateTime.Now.Millisecond);
 
+        /// <summary>
+        /// The constructor will build the list of dronse and especially will calculate the location and battery status of the drone.
+        /// </summary>
         public BL()
         {
-            //Creates an object that will serve as an access point to methods in DAL.
+            //initialization an object that will serve as an access point to methods in DAL.
             AccessIdal = new DalObject.DalObject();
 
-            //צריכת החשמל של הרחפנים וקצב טעינתם
+            //Placement in the fields of power consumption and charging rate.
             double[] arr = AccessIdal.RequestPowerConsumptionByDrone();
             Free = arr[0];
             LightWeightCarrier = arr[1];
@@ -35,7 +43,7 @@ namespace IBL
             CarriesHeavyWeight = arr[3];
             DroneLoadingRate = arr[4];
 
-            //המרת מערך הרחפנים של שכבת הנתונים למערך רחפנים של השכבה הלוגית
+            //Conversion of a drone list from the data layer to a Drone list of the BL layer.
             DronesBL = new List<DroneToList>();
             List<IDAL.DO.Drone> holdDalDrones = AccessIdal.GetDroneList().ToList();
             foreach (var item in holdDalDrones)
@@ -44,51 +52,43 @@ namespace IBL
                      MaxWeight = (WeightCategories)item.MaxWeight });
             }
 
-            //יצירת רשימת לקוחות משכבת הנתונים
+            Location LocationOfItem = new Location(); //Create a Location object.
+
+            //Convert a customer list from the data layer to a customer list of the BL layer.
             List<Customer> CustomerBL = new List<Customer>();
             List<IDAL.DO.Customer> holdDalCustomer = AccessIdal.GetCustomerList().ToList();
             foreach (var item in holdDalCustomer)
             {
-                Location LocationOfItem = new Location() { longitude = item.Longitude, latitude = item.Latitude };
+                LocationOfItem.longitude = item.Longitude; LocationOfItem.latitude = item.Latitude;
                 CustomerBL.Add(new Customer { Id = item.Id, Name = item.Name, PhoneNumber
                 = item.PhoneNumber, LocationOfCustomer = LocationOfItem});
             }
-            
-            //יצירת רשימת תחנות בסיס משכבת הנתונים
+
+            //Converts a list of base stations from the data layer to a list of base stations of the BL layer.
             List<BaseStation> baseStationBL = new List<BaseStation>();
             List <IDAL.DO.BaseStation> holdDalBaseStation = AccessIdal.GetBaseStationList().ToList();
             foreach (var item in holdDalBaseStation)
             {
-                Location LocationOfItem = new Location() { longitude = item.Longitude, latitude = item.Latitude };
+                LocationOfItem.longitude = item.Longitude; LocationOfItem.latitude = item.Latitude;
                 baseStationBL.Add(new BaseStation { Id = item.Id, Name = item.StationName,
                     FreeChargeSlots = item.FreeChargeSlots, BaseStationLocation = LocationOfItem});
             }
 
-            //יצירת רשימת חבילות עם תנאי משכבת הנתונים
+            //bring of the list of package from the data layer.
             List<IDAL.DO.Parcel> holdDalParcels = AccessIdal.GetParcelList(i => i.DroneId != 0).ToList();
 
 
             //The loop will go through the dronesBL list and check if the drone is associated with the package
             //or if it does not makes a delivery. and will update its status, location and battery status.
             foreach (var item in DronesBL)
-            {
+            {            
+                int index = holdDalParcels.FindIndex(x => x.DroneId == item.Id && x.Delivered == DateTime.MinValue); //Finding the package linked to the drone.
 
-                // לשנות את השם לindex 
-                int index = holdDalParcels.FindIndex(x => x.DroneId == item.Id && x.Delivered == DateTime.MinValue);
                 if (index != -1) //If the drone is indeed associated with one of the Parcels in the list.
                 {
                     item.Statuses = DroneStatuses.busy; //Update drone status for shipping operation.
-
-                    /*
-                    IDAL.DO.Customer senderCustomer = AccessIdal.GetCustomer(holdDalParcels[index].SenderId);
-                    Location locationOfsender = new Location { longitude = senderCustomer.Longitude, latitude = senderCustomer.Latitude };
-                    */
-                    Location locationOfsender = CustomerBL.Find(x => x.Id == holdDalParcels[index].SenderId).LocationOfCustomer;
-
-                    /*
-                    IDAL.DO.Customer receiverCustomer = AccessIdal.GetCustomer(holdDalParcels[index].TargetId);
-                    Location locationOfReceiver = new Location { longitude = receiverCustomer.Longitude, latitude = receiverCustomer.Latitude };
-                    */
+                 
+                    Location locationOfsender = CustomerBL.Find(x => x.Id == holdDalParcels[index].SenderId).LocationOfCustomer; 
                     Location locationOfReceiver = CustomerBL.Find(x => x.Id == holdDalParcels[index].TargetId).LocationOfCustomer;
 
                     //Distance between sender and receiver.
@@ -98,9 +98,9 @@ namespace IBL
                     double DistanceBetweenReceiverAndNearestBaseStation = minDistanceBetweenBaseStationsAndLocation
                         (baseStationBL, locationOfReceiver).Item2; //*Free;
 
-                    double electricityUse = DistanceBetweenReceiverAndNearestBaseStation * Free;
+                    double electricityUse = DistanceBetweenReceiverAndNearestBaseStation * Free; //Power consumption from the destination to the nearest station.
 
-                    //WeightCategories WeightOfTheParcel = (WeightCategories)holdDalParcels[index].Weight;
+                    //Power consumption from the sender to the destination according to the size of the package.
                     switch ((WeightCategories)holdDalParcels[index].Weight)
                     {
                         case WeightCategories.light:
@@ -130,6 +130,8 @@ namespace IBL
     
                     // random number battery status between minimum charge to make the shipment and full charge.     
                     item.BatteryStatus = (float)((float)(random.NextDouble() * (100 - electricityUse)) + electricityUse);
+
+                    item.NumberOfLinkedParcel = holdDalParcels[index].Id; //Update field in BL drone.
                 }
                 else //If the drone is not associated with one of the parcels on the list and is actually available and does not ship.
                 {
@@ -137,11 +139,11 @@ namespace IBL
 
                     if (item.Statuses == DroneStatuses.inMaintenance)
                     {
-                        //item.CurrentLocation = baseStationBL[random.Next(0, baseStationBL.Count)].BaseStationLocation;
                         BaseStation baseStation = baseStationBL[random.Next(0, baseStationBL.Count)];
                         item.CurrentLocation = baseStation.BaseStationLocation;
 
                         AccessIdal.SendingDroneforChargingAtBaseStation(baseStation.Id, item.Id);
+                        AccessIdal.UpdateMinusChargeSlots(baseStation.Id);
 
                         item.BatteryStatus = random.Next(0, 21);
                     }

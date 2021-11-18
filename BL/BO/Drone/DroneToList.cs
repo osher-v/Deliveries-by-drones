@@ -8,14 +8,16 @@ namespace IBL
 {
     namespace BO
     {
+        /// <summary>
+        /// class of drone to List.
+        /// </summary>
         public class DroneToList : DroneParent
         {
-            //מספר חבילה מועברת אם יש?
             public int NumberOfLinkedParcel { get; set; }
 
             public override string ToString()
             {
-                return base.ToString()+ string.Format("the Linked Parcel is: {0,-5}", NumberOfLinkedParcel); ;
+                return base.ToString()+ string.Format("the number of Linked Parcel is: {0,-5}", NumberOfLinkedParcel); ;
             }
         }
     }

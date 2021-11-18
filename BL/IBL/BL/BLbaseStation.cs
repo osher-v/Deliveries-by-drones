@@ -30,26 +30,31 @@ namespace IBL
             }
         }
 
-        public void UpdateBaseStaison(int baseStationId, string baseName, int chargeslots)
+        public void UpdateBaseStaison(int baseStationId, string baseName, string chargeslots)
         {
             try
             {
                 IDAL.DO.BaseStation newbase = AccessIdal.GetBaseStation(baseStationId);
-                if (baseName != "")
+                if (baseName != "") //if it is not empty.
                 {
                     newbase.StationName = baseName;
                 }
 
-                //if (!(chargeslots==0))
-                //{
-                //    IDAL.DO.BaseStation newbase = AccessIdal.GetBaseStation(baseStationId);
-                //    newbase.StationName = baseName;
-                //    AccessIdal.UpdateBaseStation(newbase);
-                //}
+                if (chargeslots != "") ////if it is not empty.
+                {
+                    int.TryParse(Console.ReadLine(), out int totalQuantityChargeSlots);
+                    int numOfBuzeChargeslots = AccessIdal.GetBaseChargeList(x => x.StationId == baseStationId).ToList().Count;
+                    if (totalQuantityChargeSlots - numOfBuzeChargeslots < 0)
+                        throw new Exception();
+                    newbase.FreeChargeSlots = totalQuantityChargeSlots - numOfBuzeChargeslots;
+                }
 
                 AccessIdal.UpdateBaseStation(newbase);
             }
-            catch { }
+            catch
+            {
+
+            }
 
         }
 
