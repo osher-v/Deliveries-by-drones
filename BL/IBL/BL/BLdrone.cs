@@ -15,6 +15,9 @@ namespace IBL
             if ((int)newDrone.MaxWeight < 0 || (int)newDrone.MaxWeight > 2)
                 throw new NonExistentEnumException("(0 - 2)");
 
+            if(AccessIdal.GetBaseStation(firstChargingStation).FreeChargeSlots <= 0)
+                throw new NoFreeChargingStations();
+
             IDAL.DO.Drone Drone = new IDAL.DO.Drone() { Id = newDrone.Id, MaxWeight = (IDAL.DO.WeightCategories)newDrone.MaxWeight,
                 Model = newDrone.Model};
 
@@ -24,11 +27,19 @@ namespace IBL
 
                 newDrone.BatteryStatus = random.Next(20, 41);
                 newDrone.Statuses = DroneStatuses.inMaintenance;
-                newDrone.CurrentLocation.longitude = AccessIdal.GetBaseStation(firstChargingStation).Longitude;
-                newDrone.CurrentLocation.latitude = AccessIdal.GetBaseStation(firstChargingStation).Latitude;
-                DronesBL.Add(newDrone);
-                AccessIdal.SendingDroneforChargingAtBaseStation(firstChargingStation, newDrone.Id);
+
+                Location location = new Location()
+                {
+                    longitude = AccessIdal.GetBaseStation(firstChargingStation).Longitude,
+                    latitude = AccessIdal.GetBaseStation(firstChargingStation).Latitude
+                };
+
+                newDrone.CurrentLocation = location;
+
                 AccessIdal.UpdateMinusChargeSlots(firstChargingStation);
+                AccessIdal.SendingDroneforChargingAtBaseStation(firstChargingStation, newDrone.Id);
+
+                DronesBL.Add(newDrone);
             }
             catch (IDAL.DO.AddAnExistingObjectException)
             {

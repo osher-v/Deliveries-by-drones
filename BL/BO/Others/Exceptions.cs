@@ -61,5 +61,22 @@ namespace IBL
                 return string.Format("Error Exceeding the range of options {0}", Message);
             }
         }
+
+        [Serializable]
+        //class UpdateOfANonExistentObjectException : Exception
+        public class NoFreeChargingStations : Exception
+        {
+            public NoFreeChargingStations() : base() { }
+            public NoFreeChargingStations(string message) : base(message) { }
+            public NoFreeChargingStations(string message, Exception inner) : base(message, inner) { }
+            protected NoFreeChargingStations(SerializationInfo info, StreamingContext context)
+            : base(info, context) { }
+
+            public override string ToString()
+            {
+                //return string.Format("Error {0} There are no free charging stations ", Message );
+                return "Error There are no free charging stations in this basestation";
+            }
+        }
     }
 }

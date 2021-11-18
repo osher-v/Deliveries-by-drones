@@ -125,6 +125,10 @@ Please enter an ID number for the new drone:");
                     {
                         Console.WriteLine(ex);
                     }
+                    catch (NoFreeChargingStations ex)
+                    {
+                        Console.WriteLine(ex);
+                    }
                     catch (NonExistentEnumException ex)
                     {
                         Console.WriteLine(ex);
