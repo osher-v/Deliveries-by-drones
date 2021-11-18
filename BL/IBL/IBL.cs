@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 using IBL.BO;
 using IBL;
 
@@ -10,12 +11,37 @@ namespace IBL
 {
     public interface IBL
     {
+        #region Adding functions
+
         //Adding functions.
 
+        /// <summary>
+        /// The function adds a base station.
+        /// </summary>
+        /// <param name="newbaseStation">newbaseStation object</param>
         void AddStation(BaseStation newbaseStation);
+
+        /// <summary>
+        /// The function adds a Drone.
+        /// </summary>
+        /// <param name="newdrone">newdrone object</param>
+        /// <param name="firstChargingStation">first charging station</param>
         void AddDrone(DroneToList newdrone, int firstChargingStation);
+
+        /// <summary>
+        /// The function adds a Customer.
+        /// </summary>
+        /// <param name="newCustomer">newCustomer object</param>
         void AddCustomer(Customer newCustomer);
+
+        /// <summary>
+        /// The function adds a Parcel.
+        /// </summary>
+        /// <param name="newParcel">newParcel object</param>
         void AddParcel(Parcel newParcel);
+        #endregion Adding functions
+
+        #region Update functions
 
         //Update functions.
 
@@ -72,19 +98,72 @@ namespace IBL
         /// </summary>
         /// <param name="droneId">the reqsted drone</param>
         void DeliveryPackageToTheCustomer(int droneId);
+        #endregion Update functions
 
-        //
+        #region Functions that return object.
 
+        //Functions that return object.
+
+        /// <summary>
+        /// The function returns a BaseStation.
+        /// </summary>
+        /// <param name="idForDisplayObject">Id for display object</param>
+        /// <returns>a BaseStation.</returns>
         BaseStation GetBaseStation(int idForDisplayObject);
-        Drone GetDrone(int idForDisplayObject);
-        Customer GetCustomer(int idForDisplayObject);
-        Parcel GetParcel(int idForDisplayObject);
-        
-        //
 
+        /// <summary>
+        /// The function returns a Drone.
+        /// </summary>
+        /// <param name="idForDisplayObject">Id for display object</param>
+        /// <returns>a Drone</returns>
+        Drone GetDrone(int idForDisplayObject);
+
+        /// <summary>
+        /// The function returns a Customer.
+        /// </summary>
+        /// <param name="idForDisplayObject">Id for display object</param>
+        /// <returns>a Customer</returns>
+        Customer GetCustomer(int idForDisplayObject);
+
+        /// <summary>
+        /// The function returns a Parcel.
+        /// </summary>
+        /// <param name="idForDisplayObject">Id for display object</param>
+        /// <returns>a Parcel</returns>
+        Parcel GetParcel(int idForDisplayObject);
+        #endregion Functions that return object.
+
+        #region Functions that return a list of objects
+
+        //Functions that return a list of objects.
+
+        /// <summary>
+        /// The function returns a list of BaseStation by condition.
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <returns>a list of BaseStation by condition</returns>
         IEnumerable<BaseStationsToList> GetBaseStationList(Predicate<BaseStationsToList> predicate = null);
+
+        /// <summary>
+        /// The function returns a list of Drone by condition.
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <returns>a list of Drone by condition</returns>
         IEnumerable<DroneToList> GetDroneList(Predicate<DroneToList> predicate = null);
+
+        /// <summary>
+        /// The function returns a list of Customer by condition.
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <returns>a list of Customer by condition</returns>
         IEnumerable<CustomerToList> GetCustomerList(Predicate<CustomerToList> predicate = null);
+
+        /// <summary>
+        /// The function returns a list of Parcel by condition.
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <returns>a list of Parcel by condition</returns>
         IEnumerable<ParcelToList> GetParcelList(Predicate<ParcelToList> predicate = null);
+        #endregion Functions that return a list of objects
     }
 }

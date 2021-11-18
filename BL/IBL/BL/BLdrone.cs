@@ -57,11 +57,6 @@ namespace IBL
 
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="idForDisplayObject"></param>
-        /// <returns></returns>
         public Drone GetDrone(int idForDisplayObject)
         {
             DroneToList droneToLIist = DronesBL.Find(x => x.Id == idForDisplayObject);
@@ -73,8 +68,10 @@ namespace IBL
            if(droneToLIist.Statuses == DroneStatuses.busy)
             {    
                 IDAL.DO.Parcel holdDalParcel = AccessIdal.GetParcel(droneToLIist.NumberOfLinkedParcel);
+
                 IDAL.DO.Customer holdDalSender = AccessIdal.GetCustomer(holdDalParcel.SenderId);
                 IDAL.DO.Customer holdDalReciver= AccessIdal.GetCustomer(holdDalParcel.TargetId);
+
                 Location locationOfSender = new Location() { longitude= holdDalSender.Longitude, latitude=holdDalSender.Latitude };
                 Location locationOfReciver = new Location() { longitude = holdDalReciver.Longitude, latitude = holdDalReciver.Latitude };
 
@@ -82,6 +79,7 @@ namespace IBL
                 printDrone.Delivery.Sender.Id = holdDalParcel.SenderId;
                 printDrone.Delivery.Sender.Name = holdDalSender.Name;
                 printDrone.Delivery.SourceLocation = locationOfSender;
+
                 // reciver
                 printDrone.Delivery.Receiver.Id = holdDalReciver.Id;
                 printDrone.Delivery.Receiver.Name = holdDalReciver.Name;
@@ -92,12 +90,16 @@ namespace IBL
                 printDrone.Delivery.Id = holdDalParcel.Id;
                 printDrone.Delivery.Prior = (Priorities)holdDalParcel.Priority;
                 printDrone.Delivery.Weight = (WeightCategories)holdDalParcel.Weight;
-                if (holdDalParcel.PickedUp != DateTime.MinValue && holdDalParcel.Delivered==DateTime.MinValue)
+
+                if (holdDalParcel.PickedUp != DateTime.MinValue) // && holdDalParcel.Delivered==DateTime.MinValue
                 {
                     printDrone.Delivery.OnTheWayToTheDestination = true;
                 }  
-              else printDrone.Delivery.OnTheWayToTheDestination = false;
+                else
+                    printDrone.Delivery.OnTheWayToTheDestination = false;
+
             }
+
             return printDrone;
         }
 
