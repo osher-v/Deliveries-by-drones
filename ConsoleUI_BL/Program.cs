@@ -187,7 +187,7 @@ Next Please enter the sender ID number:");
                     while (!int.TryParse(Console.ReadLine(), out newSenderId)) ;
                     Console.WriteLine("Next Please enter the target ID number:");
                     while (!int.TryParse(Console.ReadLine(), out newTargetId)) ;
-                    Console.WriteLine("Next enter the weight category of the new Parcel: 0 for free, 1 for inMaintenance and 2 for busy");
+                    Console.WriteLine("Next enter the weight category of the new Parcel: 0 for light, 1 for medium and 2 for heavy ");
                     while (!int.TryParse(Console.ReadLine(), out newWeight)) ;
                     Console.WriteLine("Next enter the priorities of the new Parcel: 0 for regular, 1 for fast and 2 for urgent");
                     while (!int.TryParse(Console.ReadLine(), out newPriorities)) ;
