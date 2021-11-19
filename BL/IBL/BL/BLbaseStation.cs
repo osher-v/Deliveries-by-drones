@@ -44,7 +44,7 @@ namespace IBL
                 if (chargeslots != "") ////if it is not empty.
                 {
                     int totalQuantityChargeSlots;
-                    while (!int.TryParse(Console.ReadLine(), out  totalQuantityChargeSlots));
+                    while (!int.TryParse(chargeslots, out  totalQuantityChargeSlots));
                     int numOfBuzeChargeslots = AccessIdal.GetBaseChargeList(x => x.StationId == baseStationId).ToList().Count;
                     if (totalQuantityChargeSlots - numOfBuzeChargeslots < 0)
                         throw new Exception();
@@ -65,7 +65,7 @@ namespace IBL
             IDAL.DO.BaseStation printBase = AccessIdal.GetBaseStation(idForDisplayObject);
             Location dalBaseLocation = new Location() { longitude = printBase.Longitude, latitude=printBase.Latitude };
             BaseStation blBase = new BaseStation() { Id = printBase.Id, Name=printBase.StationName, BaseStationLocation = dalBaseLocation,
-                FreeChargeSlots=printBase.FreeChargeSlots};
+                FreeChargeSlots=printBase.FreeChargeSlots, DroneInChargsList=new List<DroneInCharg>()};
            
             List<IDAL.DO.DroneCharge> droneInCharge = AccessIdal.GetBaseChargeList(i => i.StationId == idForDisplayObject).ToList();
             foreach (var item in droneInCharge)

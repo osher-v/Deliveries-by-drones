@@ -270,19 +270,19 @@ namespace IBL
 
             foreach (var item in holdDalParcels)
             {
-                DeliveryStatus st;
+                DeliveryStatus currentStatus;
                 if (item.Delivered != DateTime.MinValue)
-                    st = DeliveryStatus.Delivered;
+                    currentStatus = DeliveryStatus.Delivered;
                 else if (item.PickedUp != DateTime.MinValue)
-                    st = DeliveryStatus.PickedUp;
+                    currentStatus = DeliveryStatus.PickedUp;
                 else if (item.Assigned != DateTime.MinValue)
-                    st = DeliveryStatus.Assigned;
+                    currentStatus = DeliveryStatus.Assigned;
                 else
-                    st = DeliveryStatus.created;
+                    currentStatus = DeliveryStatus.created;
 
                 parcels.Add(new ParcelToList {Id = item.Id, Weight = (WeightCategories)item.Weight,
                     Prior = (Priorities)item.Priority, CustomerSenderName = AccessIdal.GetCustomer(item.SenderId).Name,
-                    CustomerReceiverName = AccessIdal.GetCustomer(item.TargetId).Name, Status = st
+                    CustomerReceiverName = AccessIdal.GetCustomer(item.TargetId).Name, Status = currentStatus
                 });
             }
 

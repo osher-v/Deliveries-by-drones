@@ -27,9 +27,9 @@ namespace IBL
 
             public override string ToString()
             {
-                return string.Format("the Id is {0,-5} \t the Model is {1,-5} \t" +
-                    "the MaxWeight is {2,-5} \t the BatteryStatus is {3,-5}" +
-                    "the Statuses is {4,-5} \t the CurrentLocation is {5,-5} "
+                return string.Format("the Id is {0,-5} \t the Model is {1,-5} \n" +
+                    "the MaxWeight is {2,-5} \t the BatteryStatus is {3}%\t" +
+                    "the Statuses is {4,-5} \n the CurrentLocation is {5,-5} "
                     , Id, Model, MaxWeight, BatteryStatus, Statuses, CurrentLocation);
             }
         }

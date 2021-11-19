@@ -17,7 +17,7 @@ namespace IBL
 
             public override string ToString()
             {
-                return base.ToString() + string.Format("the delivery details is: {0,-5}", Delivery);
+                return base.ToString() + string.Format("the delivery details is: {0,-5}\n", Delivery);
             }
         }
     } 

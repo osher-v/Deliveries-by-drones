@@ -23,10 +23,10 @@ namespace IBL
 
             public override string ToString()
             {
-                return base.ToString() + string.Format("the Number Of Packages Sent And Delivered is {0,-5} \t " +
-                    "the Number Of Packages Sent And Not Yet Delivered is {1,-5} \t" +
-                    "the Number Of Packages Who received is {2,-5} \t" +
-                    "the Number Packages On The Way To The Customer is {3,-5}"
+                return base.ToString() + string.Format("the Number Of Packages Sent And Delivered is {0,-5} \n " +
+                    "the Number Of Packages Sent And Not Yet Delivered is {1,-5} \n" +
+                    "the Number Of Packages Who received is {2,-5} \n" +
+                    "the Number Packages On The Way To The Customer is {3,-5}\n"+"~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
                     , NumberOfPackagesSentAndDelivered, NumberOfPackagesSentAndNotYetDelivered,
                     NumberOfPackagesWhoReceived, NumberPackagesOnTheWayToTheCustomer);
             }

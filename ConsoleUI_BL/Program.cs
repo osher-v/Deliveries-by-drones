@@ -148,9 +148,9 @@ Please enter an ID number for the new Customer:");
                     newCustomerName = Console.ReadLine();
                     Console.WriteLine("Next enter the phone number of the new customer:");
                     newPhoneNumber = Console.ReadLine();
-                    Console.WriteLine("Next Please enter the longitude of the station:");
+                    Console.WriteLine("Next Please enter the longitude of the Customer:");
                     while (!double.TryParse(Console.ReadLine(), out newCustomerLongitude)) ;
-                    Console.WriteLine("Next Please enter the latitude of the station:");
+                    Console.WriteLine("Next Please enter the latitude of the Customer:");
                     while (!double.TryParse(Console.ReadLine(), out newCustomerLatitude));
 
                     Location customerlocation = new Location
@@ -268,9 +268,9 @@ Your choice:");
                 case UpdatesOption.CustomerUpdate:
                     Console.WriteLine("please enter Customer ID for update:");
                     while (!int.TryParse(Console.ReadLine(), out customerId));
-                    Console.WriteLine("Next Please enter the new base station name if not send empty line:");
+                    Console.WriteLine("Next Please enter the new customer Name:");
                     customerName = Console.ReadLine();//אם נשלח ריק השדה לא מתעדכן
-                    Console.WriteLine("please enter update for the Charge slots number:");
+                    Console.WriteLine("please enter update for the new phone Number:");
                     phoneNumber = Console.ReadLine();//אם נשלח ריק השדה לא מתעדכן
                     bl.UpdateCustomer(customerId, customerName, phoneNumber);
                     break;

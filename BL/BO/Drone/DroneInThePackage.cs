@@ -17,7 +17,7 @@ namespace IBL
 
             public override string ToString()
             {
-                return base.ToString() + string.Format("the CurrentLocation is {0,-6}", CurrentLocation);
+                return base.ToString() + string.Format("the CurrentLocation is {0,-6}\n", CurrentLocation);
             }
         }
     }

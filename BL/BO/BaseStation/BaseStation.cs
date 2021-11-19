@@ -20,7 +20,7 @@ namespace IBL
             public override string ToString()
             {
                 return base.ToString() + string.Format("location:{0,-8}\t ", BaseStationLocation)
-                    + "Drone in chargs: " + string.Join("\t", DroneInChargsList);
+                    + "Drone in chargs: " + string.Join("\n", DroneInChargsList)+"\n";
             }
 
         }

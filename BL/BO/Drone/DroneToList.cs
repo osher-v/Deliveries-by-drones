@@ -17,7 +17,7 @@ namespace IBL
 
             public override string ToString()
             {
-                return base.ToString()+ string.Format("the number of Linked Parcel is: {0,-5}", NumberOfLinkedParcel); ;
+                return base.ToString()+ string.Format("the number of Linked Parcel is: {0,-5}\n ~~~~~~~~~~~~~", NumberOfLinkedParcel); ;
             }
         }
     }

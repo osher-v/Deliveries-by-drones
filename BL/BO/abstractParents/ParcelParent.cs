@@ -21,7 +21,7 @@ namespace IBL
 
             public override string ToString()
             {
-                return string.Format("ID is:{0,-8}\t Weight Categorie:{1,-8}\t Prioritie:{2,-8}", Id, Weight, Prior);
+                return string.Format("ID is:{0,-8}\n Weight Categorie:{1,-8}\t Prioritie:{2,-8}\n", Id, Weight, Prior);
             }
         }
     }
