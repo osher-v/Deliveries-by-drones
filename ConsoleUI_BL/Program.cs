@@ -344,7 +344,19 @@ Your choice:");
                 case UpdatesOption.AssignDrone:          
                     Console.WriteLine("please enter Drone ID:");
                     while (!int.TryParse(Console.ReadLine(), out droneId));
-                    bl.AssignPackageToDdrone( droneId);
+
+                    try
+                    {
+                        bl.AssignPackageToDdrone(droneId);
+                    } 
+                    catch (NonExistentObjectException ex)
+                    {
+                        Console.WriteLine(ex);
+                    }
+                    catch ()
+                    {
+
+                    }
                     break;
 
                 case UpdatesOption.PickUp:

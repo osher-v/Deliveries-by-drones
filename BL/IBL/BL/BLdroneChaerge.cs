@@ -34,7 +34,7 @@ namespace IBL
             double distence = minDistanceBetweenBaseStationsAndLocation(BLbaseStations, drone.CurrentLocation).Item2;
             if (drone.BatteryStatus - distence * Free < 0)
             {
-                throw new Exception("Error, to the drone does not have enough battery to go to recharge at the nearest available station");
+                throw new TheDroneCanNotBeSentForCharging("Error, to the drone does not have enough battery to go to recharge at the nearest available station");
             }
 
             drone.BatteryStatus -= distence * Free;

@@ -38,6 +38,8 @@ namespace IBL
         public void AssignPackageToDdrone(int droneId)
         {
             DroneToList myDrone = DronesBL.Find(x => x.Id == droneId);
+            if(myDrone == default)
+                throw new NonExistentObjectException();
 
             if (myDrone.Statuses != DroneStatuses.free)
                 throw new Exception();
