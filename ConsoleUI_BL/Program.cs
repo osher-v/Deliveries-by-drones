@@ -306,13 +306,18 @@ Your choice:");
                 case UpdatesOption.InCharging:
                     Console.WriteLine("please enter Drone ID:");
                     while (!int.TryParse(Console.ReadLine(), out droneId)); 
+
                     try
                     {
                         bl.SendingDroneforCharging(droneId);
                     }
-                    catch
+                    catch (NonExistentObjectException ex)
                     {
-
+                        Console.WriteLine(ex);
+                    }
+                    catch (TheDroneCanNotBeSentForCharging ex)
+                    {
+                        Console.WriteLine(ex.Message);
                     }
                     break;
 
@@ -321,7 +326,19 @@ Your choice:");
                     while (!int.TryParse(Console.ReadLine(), out droneId));
                     Console.WriteLine("Please enter the length of time the drone has been charging:");
                     DateTime.TryParse(Console.ReadLine(), out time);
-                    bl.ReleaseDroneFromCharging(droneId, time);
+
+                    try
+                    {
+                        bl.ReleaseDroneFromCharging(droneId, time);
+                    }
+                    catch (NonExistentObjectException ex)
+                    {
+                        Console.WriteLine(ex);
+                    }
+                    catch (OnlyMaintenanceDroneWillBeAbleToBeReleasedFromCharging ex)
+                    {
+                        Console.WriteLine(ex);
+                    }
                     break;
 
                 case UpdatesOption.AssignDrone:          

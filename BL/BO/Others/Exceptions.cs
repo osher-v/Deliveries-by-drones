@@ -90,5 +90,36 @@ namespace IBL
                 return "More drone in charging than the proposed charging stations";
             }
         }
+
+        [Serializable]
+        public class TheDroneCanNotBeSentForCharging : Exception
+        {
+            public TheDroneCanNotBeSentForCharging() : base() { }
+            public TheDroneCanNotBeSentForCharging(string message) : base(message) { }
+            public TheDroneCanNotBeSentForCharging(string message, Exception inner) : base(message, inner) { }
+            protected TheDroneCanNotBeSentForCharging(SerializationInfo info, StreamingContext context)
+            : base(info, context) { }
+
+            public override string ToString()
+            {
+                return Message;
+            }
+        }
+
+        [Serializable]
+        public class OnlyMaintenanceDroneWillBeAbleToBeReleasedFromCharging : Exception
+        {
+            public OnlyMaintenanceDroneWillBeAbleToBeReleasedFromCharging() : base() { }
+            public OnlyMaintenanceDroneWillBeAbleToBeReleasedFromCharging(string message) : base(message) { }
+            public OnlyMaintenanceDroneWillBeAbleToBeReleasedFromCharging(string message, Exception inner) : base(message, inner) { }
+            protected OnlyMaintenanceDroneWillBeAbleToBeReleasedFromCharging(SerializationInfo info, StreamingContext context)
+            : base(info, context) { }
+
+            public override string ToString()
+            {
+                return "Only a maintenance drone will be able to be released from charging";
+            }
+        }
+        
     }
 }
