@@ -84,6 +84,7 @@ Please enter an ID number for the new station:");
                     try
                     {
                         bl.AddStation(newbaseStation);
+                        Console.WriteLine("The operation was successful");
                     }
                     catch (AddAnExistingObjectException ex)
                     {
@@ -116,6 +117,7 @@ Please enter an ID number for the new drone:");
                     try
                     {
                         bl.AddDrone(newdrone, firstChargingStation);
+                        Console.WriteLine("The operation was successful");
                     }
                     catch (AddAnExistingObjectException ex)
                     {
@@ -170,6 +172,7 @@ Please enter an ID number for the new Customer:");
                     try
                     {
                         bl.AddCustomer(newCustomer);
+                        Console.WriteLine("The operation was successful");
                     }
 
                     catch (AddAnExistingObjectException ex)
@@ -207,6 +210,7 @@ Next Please enter the sender ID number:");
                     try
                     {
                         bl.AddParcel(newParcel);
+                        Console.WriteLine("The operation was successful");
                     }
                     catch (NonExistentObjectException ex)
                     {
@@ -256,6 +260,7 @@ Your choice:");
                     try
                     {
                         bl.UpdateDroneName(droneId, droneName);
+                        Console.WriteLine("The operation was successful");
                     }
                     catch (NonExistentObjectException ex)
                     {
@@ -274,6 +279,7 @@ Your choice:");
                     try
                     {
                         bl.UpdateBaseStaison(baseStationId, baseName, chargeslots);
+                        Console.WriteLine("The operation was successful");
                     }
                     catch (NonExistentObjectException ex)
                     {
@@ -296,6 +302,7 @@ Your choice:");
                     try
                     {
                         bl.UpdateCustomer(customerId, customerName, phoneNumber);
+                        Console.WriteLine("The operation was successful");
                     }
                     catch (NonExistentObjectException ex)
                     {
@@ -310,6 +317,7 @@ Your choice:");
                     try
                     {
                         bl.SendingDroneforCharging(droneId);
+                        Console.WriteLine("The operation was successful");
                     }
                     catch (NonExistentObjectException ex)
                     {
@@ -330,6 +338,7 @@ Your choice:");
                     try
                     {
                         bl.ReleaseDroneFromCharging(droneId, time);
+                        Console.WriteLine("The operation was successful");
                     }
                     catch (NonExistentObjectException ex)
                     {
@@ -348,27 +357,54 @@ Your choice:");
                     try
                     {
                         bl.AssignPackageToDdrone(droneId);
+                        Console.WriteLine("The operation was successful");
                     } 
                     catch (NonExistentObjectException ex)
                     {
                         Console.WriteLine(ex);
                     }
-                    catch ()
+                    catch (NoSuitablePsrcelWasFoundToBelongToTheDrone ex) 
                     {
-
+                        Console.WriteLine(ex);
                     }
                     break;
 
                 case UpdatesOption.PickUp:
                     Console.WriteLine("please enter Drone ID:");
                     while (!int.TryParse(Console.ReadLine(), out droneId));
-                    bl.PickedUpPackageByTheDrone(droneId);
+
+                    try
+                    {
+                        bl.PickedUpPackageByTheDrone(droneId);
+                        Console.WriteLine("The operation was successful");
+                    }
+                    catch (NonExistentObjectException ex)
+                    {
+                        Console.WriteLine(ex);
+                    }
+                    catch (UnableToCollectParcel ex)
+                    {
+                        Console.WriteLine(ex);
+                    }
                     break;
 
                 case UpdatesOption.Deliverd:
                     Console.WriteLine("please enter Drone ID:");
                     while (!int.TryParse(Console.ReadLine(), out droneId));
-                    bl.DeliveryPackageToTheCustomer(droneId);
+
+                    try
+                    {
+                        bl.DeliveryPackageToTheCustomer(droneId);
+                        Console.WriteLine("The operation was successful");
+                    }
+                    catch (NonExistentObjectException ex)
+                    {
+                        Console.WriteLine(ex);
+                    }
+                    catch (DeliveryCannotBeMade ex)
+                    {
+                        Console.WriteLine(ex);
+                    }
                     break;
 
                 default:
@@ -407,6 +443,7 @@ Your choice:");
                     try
                     {
                         Console.WriteLine(bl.GetBaseStation(idForDisplayObject).ToString());
+                        Console.WriteLine("The operation was successful");
                     }
                     catch (NonExistentObjectException ex)
                     {
@@ -421,6 +458,7 @@ Your choice:");
                     try
                     {
                         Console.WriteLine(bl.GetDrone(idForDisplayObject).ToString());
+                        Console.WriteLine("The operation was successful");
                     }
                     catch (NonExistentObjectException ex)
                     {
@@ -435,6 +473,7 @@ Your choice:");
                     try
                     {
                         Console.WriteLine(bl.GetCustomer(idForDisplayObject).ToString());
+                        Console.WriteLine("The operation was successful");
                     }
                     catch (NonExistentObjectException ex)
                     {
@@ -449,6 +488,7 @@ Your choice:");
                     try
                     {
                         Console.WriteLine(bl.GetParcel(idForDisplayObject).ToString());
+                        Console.WriteLine("The operation was successful");
                     }
                     catch (NonExistentObjectException ex)
                     {

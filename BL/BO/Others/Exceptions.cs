@@ -10,11 +10,6 @@ namespace IBL
 {
     namespace BO
     {
-        //public class Exceptions : Exception
-        //{
-
-        //}
-
         [Serializable]
         public class AddAnExistingObjectException : Exception
         {
@@ -71,7 +66,6 @@ namespace IBL
 
             public override string ToString()
             {
-                //return string.Format("Error {0} There are no free charging stations ", Message );
                 return "Error There are no free charging stations in this basestation";
             }
         }
@@ -120,6 +114,50 @@ namespace IBL
                 return "Only a maintenance drone will be able to be released from charging";
             }
         }
-        
+
+        [Serializable]
+        public class NoSuitablePsrcelWasFoundToBelongToTheDrone : Exception
+        {
+            public NoSuitablePsrcelWasFoundToBelongToTheDrone() : base() { }
+            public NoSuitablePsrcelWasFoundToBelongToTheDrone(string message) : base(message) { }
+            public NoSuitablePsrcelWasFoundToBelongToTheDrone(string message, Exception inner) : base(message, inner) { }
+            protected NoSuitablePsrcelWasFoundToBelongToTheDrone(SerializationInfo info, StreamingContext context)
+            : base(info, context) { }
+
+            public override string ToString()
+            {
+                return "No suitable package was found to belong to the drone";
+            }
+        }
+
+        [Serializable]
+        public class UnableToCollectParcel : Exception
+        {
+            public UnableToCollectParcel() : base() { }
+            public UnableToCollectParcel(string message) : base(message) { }
+            public UnableToCollectParcel(string message, Exception inner) : base(message, inner) { }
+            protected UnableToCollectParcel(SerializationInfo info, StreamingContext context)
+            : base(info, context) { }
+
+            public override string ToString()
+            {
+                return Message;
+            }
+        }
+
+        [Serializable]
+        public class DeliveryCannotBeMade : Exception
+        {
+            public DeliveryCannotBeMade() : base() { }
+            public DeliveryCannotBeMade(string message) : base(message) { }
+            public DeliveryCannotBeMade(string message, Exception inner) : base(message, inner) { }
+            protected DeliveryCannotBeMade(SerializationInfo info, StreamingContext context)
+            : base(info, context) { }
+
+            public override string ToString()
+            {
+                return Message;
+            }
+        }
     }
 }

@@ -48,6 +48,9 @@ namespace IBL
 
             List<IDAL.DO.Parcel> highestWeight = highestWeightList(highestPriority, myDrone);
 
+            if (!highestWeight.Any())
+                throw new NoSuitablePsrcelWasFoundToBelongToTheDrone();
+
             IDAL.DO.Parcel theRightPackage = minDistance(highestWeight, myDrone.CurrentLocation);
 
             myDrone.Statuses = DroneStatuses.busy;
@@ -201,14 +204,16 @@ namespace IBL
         public void PickedUpPackageByTheDrone(int droneId)
         {
             DroneToList drone = DronesBL.Find(x => x.Id == droneId);
+            if (drone == default)
+                throw new NonExistentObjectException();
 
             if (drone.NumberOfLinkedParcel == 0)//Deafult if he do not Assign to parcel.
-                throw new Exception();
+                throw new UnableToCollectParcel("The drone is not associated with the package");
 
             IDAL.DO.Parcel parcelIDal = AccessIdal.GetParcel(drone.NumberOfLinkedParcel);
 
             if (parcelIDal.PickedUp != DateTime.MinValue)
-                throw new Exception();
+                throw new UnableToCollectParcel("The parcel has already been collected");
 
             Location locationOfSender = GetCustomer(parcelIDal.SenderId).LocationOfCustomer;
             drone.BatteryStatus -= GetDistance(drone.CurrentLocation, locationOfSender) * Free;
@@ -220,9 +225,11 @@ namespace IBL
         public void DeliveryPackageToTheCustomer(int droneId)
         {
             DroneToList drone = DronesBL.Find(x => x.Id == droneId);
+            if (drone == default)
+                throw new NonExistentObjectException();
 
             if (drone.NumberOfLinkedParcel == 0)//Deafult if he do not Assign to parcel.
-                throw new Exception();
+                throw new DeliveryCannotBeMade("The drone is not associated with the package");
 
             IDAL.DO.Parcel parcelIDal = AccessIdal.GetParcel(drone.NumberOfLinkedParcel);
 
@@ -248,8 +255,10 @@ namespace IBL
                 drone.NumberOfLinkedParcel = 0; //importent.
                 AccessIdal.DeliveryPackageToTheCustomer(parcelIDal.Id);    
             }
-            else 
-                throw new Exception();
+            else if(parcelIDal.PickedUp == DateTime.MinValue)
+                throw new DeliveryCannotBeMade("Error: parcel not yet collected");
+            else if(parcelIDal.Delivered != DateTime.MinValue)
+                throw new DeliveryCannotBeMade("Error: The parcel has already been delivered");
         }
 
         public Parcel GetParcel(int idForDisplayObject)
