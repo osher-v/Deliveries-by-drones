@@ -18,9 +18,9 @@ namespace IBL
 
             public override string ToString()
             {
-                //string convertLongitude = DalObject.DalObject.ConvertDecimalDegreesToSexagesimal(longitude, (IDAL.DO.LongitudeAndLatitude)0);
-                //string convertLatitude = DalObject.DalObject.ConvertDecimalDegreesToSexagesimal(latitude, (IDAL.DO.LongitudeAndLatitude)1);
-                return string.Format(" longitude is {0,-8} \t  latitude is {1,-8} ", longitude, latitude);
+                string convertLongitude = DalObject.DalObject.ConvertDecimalDegreesToSexagesimal(longitude, (IDAL.DO.LongitudeAndLatitude)0);
+                string convertLatitude = DalObject.DalObject.ConvertDecimalDegreesToSexagesimal(latitude, (IDAL.DO.LongitudeAndLatitude)1);
+                return string.Format(" longitude is {0,-8} \t  latitude is {1,-8} ", convertLongitude, convertLatitude);
             }
         }
     }

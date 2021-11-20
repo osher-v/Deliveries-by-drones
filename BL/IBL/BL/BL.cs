@@ -67,12 +67,34 @@ namespace IBL
             //Converts a list of base stations from the data layer to a list of base stations of the BL layer.
             List<BaseStation> baseStationBL = new List<BaseStation>();
             List <IDAL.DO.BaseStation> holdDalBaseStation = AccessIdal.GetBaseStationList().ToList();
+            Console.WriteLine(holdDalBaseStation[0].Longitude );
+            Console.WriteLine( holdDalBaseStation[0].Latitude);
+            Console.WriteLine(holdDalBaseStation[1].Longitude);
+            Console.WriteLine( holdDalBaseStation[1].Latitude);
+            Console.WriteLine("-----------");
+
+            int i = 0;
             foreach (var item in holdDalBaseStation)
             {
-                LocationOfItem.longitude = item.Longitude; LocationOfItem.latitude = item.Latitude;
+                LocationOfItem.longitude = item.Longitude;
+                LocationOfItem.latitude = item.Latitude;
+                Console.WriteLine(LocationOfItem);
+                Console.WriteLine("~~~~~~~~~~");
+
                 baseStationBL.Add(new BaseStation { Id = item.Id, Name = item.StationName,
-                    FreeChargeSlots = item.FreeChargeSlots, BaseStationLocation = LocationOfItem});
+                    FreeChargeSlots = item.FreeChargeSlots, BaseStationLocation = LocationOfItem, DroneInChargsList=new List<DroneInCharg>()});
+                Console.WriteLine(baseStationBL[i]);
+                Console.WriteLine("               ");
+
+                i++;
             }
+            Console.WriteLine("--------------");
+            Console.WriteLine(baseStationBL[0]);
+            Console.WriteLine(baseStationBL[1]);
+            Console.WriteLine("-------------");
+
+
+
 
             //bring of the list of package from the data layer.
             List<IDAL.DO.Parcel> holdDalParcels = AccessIdal.GetParcelList(i => i.DroneId != 0).ToList();
