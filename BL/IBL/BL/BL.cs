@@ -52,16 +52,14 @@ namespace IBL
                      MaxWeight = (WeightCategories)item.MaxWeight });
             }
 
-            Location LocationOfItem = new Location(); //Create a Location object.
-
             //Convert a customer list from the data layer to a customer list of the BL layer.
             List<Customer> CustomerBL = new List<Customer>();
             List<IDAL.DO.Customer> holdDalCustomer = AccessIdal.GetCustomerList().ToList();
             foreach (var item in holdDalCustomer)
             {
-                LocationOfItem.longitude = item.Longitude; LocationOfItem.latitude = item.Latitude;
                 CustomerBL.Add(new Customer { Id = item.Id, Name = item.Name, PhoneNumber
-                = item.PhoneNumber, LocationOfCustomer = LocationOfItem});
+                = item.PhoneNumber, LocationOfCustomer = new Location() { longitude = item.Longitude, latitude = item.Latitude }
+                });
             }
 
             //Converts a list of base stations from the data layer to a list of base stations of the BL layer.
