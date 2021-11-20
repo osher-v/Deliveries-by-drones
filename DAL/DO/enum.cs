@@ -26,7 +26,7 @@ namespace IDAL
         /// <summary>
         /// Enum to know the Latitude and longitude
         /// </summary>
-        public enum LongitudeAndLatitude { Longitude, Latitude}
+        public enum LongitudeAndLatitude { Longitude = 1, Latitude}
 
     }
 

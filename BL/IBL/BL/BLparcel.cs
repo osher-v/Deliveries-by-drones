@@ -56,6 +56,12 @@ namespace IBL
         }
 
         //********************* Auxiliary functions for the AssignPackageToDdrone function *****************************
+
+        /// <summary>
+        /// The function finds a list of the most urgent parcels.
+        /// </summary>
+        /// <param name="myDrone">drone object</param>
+        /// <returns>list of the most urgent packages</returns>
         private List<IDAL.DO.Parcel> highestPriorityList(DroneToList myDrone)
         {
             List<IDAL.DO.Parcel> parcels = AccessIdal.GetParcelList(x => x.DroneId == 0 ).ToList();
@@ -92,6 +98,12 @@ namespace IBL
                 parcelsWithMediumPriority : parcelsWithRegulerPriority);
         }
 
+        /// <summary>
+        /// The function finds a list of the heaviest packages for the drone.
+        /// </summary>
+        /// <param name="parcels">list of the most urgent parcels</param>
+        /// <param name="myDrone">drone object</param>
+        /// <returns></returns>
         private List<IDAL.DO.Parcel> highestWeightList(List<IDAL.DO.Parcel> parcels, DroneToList myDrone)
         {
             List<IDAL.DO.Parcel> parcelsHeavy = new List<IDAL.DO.Parcel>();
@@ -127,6 +139,12 @@ namespace IBL
                 parcelsMedium : parcelsLight);
         }
 
+        /// <summary>
+        /// The function calculates whether the drone can reach the parcel.
+        /// </summary>
+        /// <param name="parcel">list of the most urgent parcels</param>
+        /// <param name="myDrone">drone object</param>
+        /// <returns></returns>
         private bool possibleDistance(IDAL.DO.Parcel parcel, DroneToList myDrone)
         {
             double electricityUse = GetDistance(myDrone.CurrentLocation, GetCustomer(parcel.SenderId).LocationOfCustomer) * Free;
@@ -175,6 +193,7 @@ namespace IBL
             }
             return parcels[listOfDistance.FindIndex(x => x == listOfDistance.Min())];
         }
+
         //**************************************************************************************************************
  
         public void PickedUpPackageByTheDrone(int droneId)
@@ -233,7 +252,16 @@ namespace IBL
 
         public Parcel GetParcel(int idForDisplayObject)
         {
-            IDAL.DO.Parcel printParcel = AccessIdal.GetParcel(idForDisplayObject);
+            IDAL.DO.Parcel printParcel = new IDAL.DO.Parcel();
+            try
+            {
+                printParcel = AccessIdal.GetParcel(idForDisplayObject);
+            }
+            catch (IDAL.DO.NonExistentObjectException)
+            {
+                throw new NonExistentObjectException("Parcel");
+            }
+
             DroneToList droneToLIist = DronesBL.Find(x => x.Id == printParcel.DroneId);
             CustomerInDelivery senderInDelivery = new CustomerInDelivery() { Id = printParcel.SenderId, Name = AccessIdal.GetCustomer(printParcel.SenderId).Name };
             CustomerInDelivery reciverInDelivery = new CustomerInDelivery() { Id = printParcel.TargetId, Name = AccessIdal.GetCustomer(printParcel.TargetId).Name };

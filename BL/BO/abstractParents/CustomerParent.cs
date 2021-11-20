@@ -21,8 +21,8 @@ namespace IBL
 
             public override string ToString()
             {
-                return string.Format("the Id is {0,-5} \t the name is {1,-5} \n" +
-                    "the PhoneNumber is {2,-5}", Id, Name, PhoneNumber);
+                return string.Format("the Id is: {0,-5} \t the name is: {1,-5} \n" +
+                    "the PhoneNumber is: {2,-12}", Id, Name, PhoneNumber);
             }
 
         }

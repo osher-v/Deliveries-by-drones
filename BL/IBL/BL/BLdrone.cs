@@ -53,24 +53,26 @@ namespace IBL
 
         public void UpdateDroneName(int droneId, string droneName)
         {
-            try
-            {
-                DronesBL.Find(x => x.Id == droneId).Model = droneName;
-            }
-            catch { }
             try 
             {
                 IDAL.DO.Drone newDrone = AccessIdal.GetDrone(droneId);
                 newDrone.Model = droneName;
                 AccessIdal.UpdateDrone(newDrone);
             }
-            catch { }
+            catch (IDAL.DO.NonExistentObjectException)
+            {
+                throw new NonExistentObjectException("drone");
+            }
+
+            DronesBL.Find(x => x.Id == droneId).Model = droneName;
 
         }
 
         public Drone GetDrone(int idForDisplayObject)
         {
             DroneToList droneToLIist = DronesBL.Find(x => x.Id == idForDisplayObject);
+            if (droneToLIist == default)
+                throw new NonExistentObjectException("drone");
 
             Drone printDrone = new Drone() {Id= droneToLIist.Id, BatteryStatus= droneToLIist.BatteryStatus, 
                 CurrentLocation= droneToLIist.CurrentLocation, MaxWeight= droneToLIist.MaxWeight,

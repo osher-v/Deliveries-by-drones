@@ -10,10 +10,10 @@ namespace IBL
 {
     namespace BO
     {
-        public class Exceptions : Exception
-        {
+        //public class Exceptions : Exception
+        //{
 
-        }
+        //}
 
         [Serializable]
         public class AddAnExistingObjectException : Exception
@@ -31,7 +31,6 @@ namespace IBL
         }
 
         [Serializable]
-        //class UpdateOfANonExistentObjectException : Exception
         public class NonExistentObjectException : Exception
         {
             public NonExistentObjectException() : base() { }
@@ -47,7 +46,6 @@ namespace IBL
         }
 
         [Serializable]
-        //class UpdateOfANonExistentObjectException : Exception
         public class NonExistentEnumException : Exception
         {
             public NonExistentEnumException() : base() { }
@@ -63,7 +61,6 @@ namespace IBL
         }
 
         [Serializable]
-        //class UpdateOfANonExistentObjectException : Exception
         public class NoFreeChargingStations : Exception
         {
             public NoFreeChargingStations() : base() { }
@@ -76,6 +73,21 @@ namespace IBL
             {
                 //return string.Format("Error {0} There are no free charging stations ", Message );
                 return "Error There are no free charging stations in this basestation";
+            }
+        }
+
+        [Serializable]
+        public class MoreDroneInChargingThanTheProposedChargingStations : Exception
+        {
+            public MoreDroneInChargingThanTheProposedChargingStations() : base() { }
+            public MoreDroneInChargingThanTheProposedChargingStations(string message) : base(message) { }
+            public MoreDroneInChargingThanTheProposedChargingStations(string message, Exception inner) : base(message, inner) { }
+            protected MoreDroneInChargingThanTheProposedChargingStations(SerializationInfo info, StreamingContext context)
+            : base(info, context) { }
+
+            public override string ToString()
+            {
+                return "More drone in charging than the proposed charging stations";
             }
         }
     }

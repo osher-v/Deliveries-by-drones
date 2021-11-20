@@ -10,10 +10,6 @@ namespace IBL
     //public partial class BLcustomer
     public partial class BL
     {
-        /// <summary>
-        /// The function adds a customer object.
-        /// </summary>
-        /// <param name="customer">customer</param>
         public void AddCustomer(Customer customer)
         {
             IDAL.DO.Customer newCustomer = new IDAL.DO.Customer()
@@ -45,15 +41,24 @@ namespace IBL
                     customer.PhoneNumber = phoneNumber;
                 AccessIdal.UpdateCustomer(customer);
             }
-            catch
+            catch (IDAL.DO.NonExistentObjectException)
             {
-
+                throw new NonExistentObjectException("customer");
             }
         }
 
         public Customer GetCustomer(int idForDisplayObject)
         {
-            IDAL.DO.Customer printCustomer = AccessIdal.GetCustomer(idForDisplayObject);
+            IDAL.DO.Customer printCustomer = new IDAL.DO.Customer();
+            try
+            {
+                printCustomer = AccessIdal.GetCustomer(idForDisplayObject);
+            }
+            catch (IDAL.DO.NonExistentObjectException)
+            {
+                throw new NonExistentObjectException("Customer");
+            }
+
             Location dalCustomerLocation = new Location() { longitude = printCustomer.Longitude, latitude = printCustomer.Latitude };
             Customer blCustomer = new Customer(){Id = printCustomer.Id, Name = printCustomer.Name,PhoneNumber = printCustomer.PhoneNumber,
                 LocationOfCustomer = dalCustomerLocation, ParcelFromTheCustomer=new List<ParcelAtCustomer>(),  ParcelToTheCustomer =new List<ParcelAtCustomer>() };

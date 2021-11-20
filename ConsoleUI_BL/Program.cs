@@ -36,7 +36,7 @@ namespace ConsoleUI_BL
         /// <summary>
         /// The function handles various addition options.
         /// </summary>
-        /// <param name="dal">DalObject object that is passed as a parameter to enable the functions in the DalObject class</param>
+        /// <param name="bl">BL object that is passed as a parameter to enable the functions in the bl class</param>
         static public void InsertOptions(IBL.IBL bl)
         {
             Console.WriteLine(@"
@@ -252,7 +252,15 @@ Your choice:");
                     while(!int.TryParse(Console.ReadLine(), out droneId));
                     Console.WriteLine("Next Please enter the new Modal name:");
                     droneName = Console.ReadLine();
-                    bl.UpdateDroneName(droneId, droneName);
+
+                    try
+                    {
+                        bl.UpdateDroneName(droneId, droneName);
+                    }
+                    catch (NonExistentObjectException ex)
+                    {
+                        Console.WriteLine(ex);
+                    }
                     break;
 
                 case UpdatesOption.BaseStaitonUpdate:
@@ -262,23 +270,50 @@ Your choice:");
                     baseName = Console.ReadLine();
                     Console.WriteLine("please enter update for the Charge slots number:");
                     chargeslots = Console.ReadLine();
-                    bl.UpdateBaseStaison(baseStationId, baseName, chargeslots);
+
+                    try
+                    {
+                        bl.UpdateBaseStaison(baseStationId, baseName, chargeslots);
+                    }
+                    catch (NonExistentObjectException ex)
+                    {
+                        Console.WriteLine(ex);
+                    }
+                    catch (MoreDroneInChargingThanTheProposedChargingStations ex)
+                    {
+                        Console.WriteLine(ex);
+                    }
                     break;
 
                 case UpdatesOption.CustomerUpdate:
                     Console.WriteLine("please enter Customer ID for update:");
                     while (!int.TryParse(Console.ReadLine(), out customerId));
                     Console.WriteLine("Next Please enter the new customer Name:");
-                    customerName = Console.ReadLine();//אם נשלח ריק השדה לא מתעדכן
+                    customerName = Console.ReadLine();
                     Console.WriteLine("please enter update for the new phone Number:");
-                    phoneNumber = Console.ReadLine();//אם נשלח ריק השדה לא מתעדכן
-                    bl.UpdateCustomer(customerId, customerName, phoneNumber);
+                    phoneNumber = Console.ReadLine();
+
+                    try
+                    {
+                        bl.UpdateCustomer(customerId, customerName, phoneNumber);
+                    }
+                    catch (NonExistentObjectException ex)
+                    {
+                        Console.WriteLine(ex);
+                    }
                     break;
 
                 case UpdatesOption.InCharging:
                     Console.WriteLine("please enter Drone ID:");
-                    while (!int.TryParse(Console.ReadLine(), out droneId));   
-                    bl.SendingDroneforCharging(droneId);
+                    while (!int.TryParse(Console.ReadLine(), out droneId)); 
+                    try
+                    {
+                        bl.SendingDroneforCharging(droneId);
+                    }
+                    catch
+                    {
+
+                    }
                     break;
 
                 case UpdatesOption.Outcharging:
@@ -317,7 +352,7 @@ Your choice:");
         /// <summary>
         /// The function handles display options.
         /// </summary>
-        /// <param name="dal">DalObject object that is passed as a parameter to enable the functions in the DalObject class</param>
+        /// <param name="bl">BL object that is passed as a parameter to enable the functions in the bl class</param>
         static public void DisplaySingleOptions(IBL.IBL bl)
         {
             Console.WriteLine(@"
@@ -340,28 +375,57 @@ Your choice:");
                     Console.WriteLine("Insert ID number of base station:");
                     while (!int.TryParse(Console.ReadLine(), out idForDisplayObject));
 
-                    Console.WriteLine(bl.GetBaseStation(idForDisplayObject).ToString());
+                    try
+                    {
+                        Console.WriteLine(bl.GetBaseStation(idForDisplayObject).ToString());
+                    }
+                    catch (NonExistentObjectException ex)
+                    {
+                        Console.WriteLine(ex);
+                    }
                     break;
 
                 case DisplaySingleOption.DroneDisplay:
                     Console.WriteLine("Insert ID number of requsted drone:");
                     while (!int.TryParse(Console.ReadLine(), out idForDisplayObject));
 
-                    Console.WriteLine(bl.GetDrone(idForDisplayObject).ToString());
+                    try
+                    {
+                        Console.WriteLine(bl.GetDrone(idForDisplayObject).ToString());
+                    }
+                    catch (NonExistentObjectException ex)
+                    {
+                        Console.WriteLine(ex);
+                    }
                     break;
 
                 case DisplaySingleOption.CustomerView:
                     Console.WriteLine("Insert ID number of requsted Customer:");
                     while (!int.TryParse(Console.ReadLine(), out idForDisplayObject));
 
-                    Console.WriteLine(bl.GetCustomer(idForDisplayObject).ToString());
+                    try
+                    {
+                        Console.WriteLine(bl.GetCustomer(idForDisplayObject).ToString());
+                    }
+                    catch (NonExistentObjectException ex)
+                    {
+                        Console.WriteLine(ex);
+                    }
                     break;
 
                 case DisplaySingleOption.PackageView:
                     Console.WriteLine("Insert ID number of reqused parcel:");
                     while (!int.TryParse(Console.ReadLine(), out idForDisplayObject));
 
-                    Console.WriteLine(bl.GetParcel(idForDisplayObject).ToString());
+                    try
+                    {
+                        Console.WriteLine(bl.GetParcel(idForDisplayObject).ToString());
+                    }
+                    catch (NonExistentObjectException ex)
+                    {
+                        Console.WriteLine(ex);
+                    }
+
                     break;
 
                 default:
@@ -387,7 +451,7 @@ Your choice:");
         /// <summary>
         /// The function handles list view options.
         /// </summary>
-        /// <param name="bl">DalObject object that is passed as a parameter to enable the functions in the DalObject class</param>
+        /// <param name="bl">BL object that is passed as a parameter to enable the functions in the bl class</param>
         static public void DisplayListOptions(IBL.IBL bl)
         {
             Console.WriteLine(@"

@@ -33,36 +33,45 @@ namespace IBL
 
         public void UpdateBaseStaison(int baseStationId, string baseName, string chargeslots)
         {
+            IDAL.DO.BaseStation newbase = new IDAL.DO.BaseStation();
             try
             {
-                IDAL.DO.BaseStation newbase = AccessIdal.GetBaseStation(baseStationId);
+                newbase = AccessIdal.GetBaseStation(baseStationId);
                 if (baseName != "") //if it is not empty.
                 {
                     newbase.StationName = baseName;
                 }
+            }
+            catch (IDAL.DO.NonExistentObjectException)
+            {
+                throw new NonExistentObjectException("BaseStation");
+            }
 
-                if (chargeslots != "") ////if it is not empty.
-                {
-                    int totalQuantityChargeSlots;
-                    while (!int.TryParse(chargeslots, out  totalQuantityChargeSlots));
-                    int numOfBuzeChargeslots = AccessIdal.GetBaseChargeList(x => x.StationId == baseStationId).ToList().Count;
-                    if (totalQuantityChargeSlots - numOfBuzeChargeslots < 0)
-                        throw new Exception();
-                    newbase.FreeChargeSlots = totalQuantityChargeSlots - numOfBuzeChargeslots;
-                }
+            if (chargeslots != "") ////if it is not empty.
+            {
+                int totalQuantityChargeSlots;
+                while (!int.TryParse(chargeslots, out  totalQuantityChargeSlots));
+                int numOfBuzeChargeslots = AccessIdal.GetBaseChargeList(x => x.StationId == baseStationId).ToList().Count;
+                if (totalQuantityChargeSlots - numOfBuzeChargeslots < 0)
+                   throw new MoreDroneInChargingThanTheProposedChargingStations();
 
+                newbase.FreeChargeSlots = totalQuantityChargeSlots - numOfBuzeChargeslots;
                 AccessIdal.UpdateBaseStation(newbase);
             }
-            catch
-            {
-
-            }
-
         }
 
         public BaseStation GetBaseStation(int idForDisplayObject)
         {
-            IDAL.DO.BaseStation printBase = AccessIdal.GetBaseStation(idForDisplayObject);
+            IDAL.DO.BaseStation printBase = new IDAL.DO.BaseStation();
+            try
+            {
+                printBase = AccessIdal.GetBaseStation(idForDisplayObject);
+            }
+            catch (IDAL.DO.NonExistentObjectException)
+            {
+                throw new NonExistentObjectException("BaseStation");
+            }
+
             Location dalBaseLocation = new Location() { longitude = printBase.Longitude, latitude=printBase.Latitude };
             BaseStation blBase = new BaseStation() { Id = printBase.Id, Name=printBase.StationName, BaseStationLocation = dalBaseLocation,
                 FreeChargeSlots=printBase.FreeChargeSlots, DroneInChargsList=new List<DroneInCharg>()};
