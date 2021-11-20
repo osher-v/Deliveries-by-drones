@@ -19,7 +19,7 @@ namespace IBL
 
             public override string ToString()
             {
-                return base.ToString() + string.Format("location:{0,-8}\t ", BaseStationLocation)
+                return base.ToString() + string.Format("location:{0}\t ", BaseStationLocation)
                     + "Drone in chargs: " + string.Join("\n", DroneInChargsList)+"\n";
             }
 
