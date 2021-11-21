@@ -15,6 +15,15 @@ namespace IBL
             if ((int)newDrone.MaxWeight < 0 || (int)newDrone.MaxWeight > 2)
                 throw new NonExistentEnumException("(0 - 2)");
 
+            try //
+            {
+                AccessIdal.GetBaseStation(firstChargingStation);
+            }
+            catch (IDAL.DO.NonExistentObjectException)
+            {
+                throw new NonExistentObjectException("BaseStation");
+            }
+
             if(AccessIdal.GetBaseStation(firstChargingStation).FreeChargeSlots <= 0)
                 throw new NoFreeChargingStations();
 
@@ -24,31 +33,27 @@ namespace IBL
             try
             {
                 AccessIdal.AddDrone(Drone);
-
-                newDrone.BatteryStatus = random.Next(20, 41);
-                newDrone.Statuses = DroneStatuses.inMaintenance;
-
-                Location location = new Location()
-                {
-                    longitude = AccessIdal.GetBaseStation(firstChargingStation).Longitude,
-                    latitude = AccessIdal.GetBaseStation(firstChargingStation).Latitude
-                };
-
-                newDrone.CurrentLocation = location;
-
-                AccessIdal.UpdateMinusChargeSlots(firstChargingStation);
-                AccessIdal.SendingDroneforChargingAtBaseStation(firstChargingStation, newDrone.Id);
-
-                DronesBL.Add(newDrone);
             }
             catch (IDAL.DO.AddAnExistingObjectException)
             {
                 throw new AddAnExistingObjectException();
             }
-            catch (IDAL.DO.NonExistentObjectException)
+
+            newDrone.BatteryStatus = random.Next(20, 41);
+            newDrone.Statuses = DroneStatuses.inMaintenance;
+
+            Location location = new Location()
             {
-                throw new NonExistentObjectException("BaseStation");
-            }
+                 longitude = AccessIdal.GetBaseStation(firstChargingStation).Longitude,
+                 latitude = AccessIdal.GetBaseStation(firstChargingStation).Latitude
+            };
+
+            newDrone.CurrentLocation = location;
+
+            AccessIdal.UpdateMinusChargeSlots(firstChargingStation);
+            AccessIdal.SendingDroneforChargingAtBaseStation(firstChargingStation, newDrone.Id);
+
+            DronesBL.Add(newDrone);
         }
 
         public void UpdateDroneName(int droneId, string droneName)
@@ -76,10 +81,10 @@ namespace IBL
 
             Drone printDrone = new Drone() {Id= droneToLIist.Id, BatteryStatus= droneToLIist.BatteryStatus, 
                 CurrentLocation= droneToLIist.CurrentLocation, MaxWeight= droneToLIist.MaxWeight,
-                Model= droneToLIist.Model,  Statuses= droneToLIist.Statuses };
+                Model= droneToLIist.Model,  Statuses= droneToLIist.Statuses, Delivery = new ParcelInTransfer() };
 
            if(droneToLIist.Statuses == DroneStatuses.busy)
-            {    
+           {    
                 IDAL.DO.Parcel holdDalParcel = AccessIdal.GetParcel(droneToLIist.NumberOfLinkedParcel);
 
                 IDAL.DO.Customer holdDalSender = AccessIdal.GetCustomer(holdDalParcel.SenderId);
@@ -89,13 +94,15 @@ namespace IBL
                 Location locationOfReciver = new Location() { longitude = holdDalReciver.Longitude, latitude = holdDalReciver.Latitude };
 
                 // sender
-                printDrone.Delivery.Sender.Id = holdDalParcel.SenderId;
-                printDrone.Delivery.Sender.Name = holdDalSender.Name;
+                //printDrone.Delivery.Sender.Id = holdDalParcel.SenderId;
+                //printDrone.Delivery.Sender.Name = holdDalSender.Name;
+                printDrone.Delivery.Sender = new CustomerInDelivery() { Id = holdDalParcel.SenderId, Name = holdDalSender.Name };
                 printDrone.Delivery.SourceLocation = locationOfSender;
 
                 // reciver
-                printDrone.Delivery.Receiver.Id = holdDalReciver.Id;
-                printDrone.Delivery.Receiver.Name = holdDalReciver.Name;
+                //printDrone.Delivery.Receiver.Id = holdDalReciver.Id;
+                //printDrone.Delivery.Receiver.Name = holdDalReciver.Name;
+                printDrone.Delivery.Receiver = new CustomerInDelivery() { Id = holdDalReciver.Id, Name = holdDalReciver.Name };
                 printDrone.Delivery.DestinationLocation = locationOfReciver;
 
                 printDrone.Delivery.TransportDistance = GetDistance(locationOfSender, locationOfReciver);
@@ -111,7 +118,7 @@ namespace IBL
                 else
                     printDrone.Delivery.OnTheWayToTheDestination = false;
 
-            }
+           }
 
             return printDrone;
         }

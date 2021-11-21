@@ -15,7 +15,7 @@ namespace IBL
             try
             {
                 AccessIdal.GetCustomer(newParcel.Sender.Id);
-                AccessIdal.GetCustomer(newParcel.Sender.Id);
+                AccessIdal.GetCustomer(newParcel.Receiver.Id);
             }
             catch (NonExistentObjectException)
             {
@@ -28,8 +28,8 @@ namespace IBL
                 TargetId = newParcel.Receiver.Id,
                 Weight = (IDAL.DO.WeightCategories)newParcel.Weight,
                 Priority = (IDAL.DO.Priorities)newParcel.Prior,
-                Assigned = DateTime.Now,
-                DroneId = 0 // לשאול את דן   
+                Requested = DateTime.Now,
+                DroneId = 0    
             };
 
             AccessIdal.AddParcel(parcel);
@@ -56,8 +56,7 @@ namespace IBL
             myDrone.Statuses = DroneStatuses.busy;
             myDrone.NumberOfLinkedParcel = theRightPackage.Id;
 
-            AccessIdal.AssignPackageToDdrone(theRightPackage.Id, droneId);
-           
+            AccessIdal.AssignPackageToDdrone(theRightPackage.Id, droneId);   
         }
 
         //********************* Auxiliary functions for the AssignPackageToDdrone function *****************************
@@ -176,9 +175,8 @@ namespace IBL
             List<IDAL.DO.BaseStation> holdDalBaseStation = AccessIdal.GetBaseStationList().ToList();
             foreach (var item in holdDalBaseStation)
             {
-                Location LocationOfItem = new Location() { longitude = item.Longitude, latitude = item.Latitude };
                 baseStationBL.Add(new BaseStation {Id = item.Id, Name = item.StationName,FreeChargeSlots = item.FreeChargeSlots,
-                    BaseStationLocation = LocationOfItem});
+                    BaseStationLocation = new Location() { longitude = item.Longitude, latitude = item.Latitude }});
             }
 
             electricityUse += minDistanceBetweenBaseStationsAndLocation(baseStationBL, GetCustomer(parcel.TargetId).LocationOfCustomer).Item2 * Free;
