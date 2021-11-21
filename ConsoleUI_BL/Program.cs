@@ -509,7 +509,6 @@ please choose again");
             }
         }
         #endregion Handling display options
-
         #region Handling the list display options
         /// <summary>
         /// The function prints the data array.
