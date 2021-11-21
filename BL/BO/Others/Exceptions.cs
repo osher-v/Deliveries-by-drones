@@ -148,6 +148,24 @@ namespace IBL
                 return "Error No suitable package was found to belong to the drone";
             }
         }
+
+        /// <summary>
+        /// Drone Cant Be Assigend
+        /// </summary>
+        [Serializable]
+        public class DroneCantBeAssigend : Exception
+        {
+            public DroneCantBeAssigend() : base() { }
+            public DroneCantBeAssigend(string message) : base(message) { }
+            public DroneCantBeAssigend(string message, Exception inner) : base(message, inner) { }
+            protected DroneCantBeAssigend(SerializationInfo info, StreamingContext context)
+            : base(info, context) { }
+
+            public override string ToString()
+            {
+                return "Error the drone is not free";
+            }
+        }
         /// <summary>
         ///  Unable To Collect Parcel
         /// </summary>

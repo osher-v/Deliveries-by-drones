@@ -369,6 +369,10 @@ Your choice:");
                     {
                         Console.WriteLine(ex);
                     }
+                    catch(DroneCantBeAssigend ex)
+                    {
+                        Console.WriteLine(ex);
+                    }
                     break;
 
                 case UpdatesOption.PickUp:

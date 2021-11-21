@@ -42,7 +42,7 @@ namespace IBL
                 throw new NonExistentObjectException();
 
             if (myDrone.Statuses != DroneStatuses.free)
-                throw new Exception();
+                throw new DroneCantBeAssigend();
         
             List<IDAL.DO.Parcel> highestPriority = highestPriorityList(myDrone);
 
