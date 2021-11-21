@@ -9,7 +9,6 @@ using IBL.BO;
 
 namespace ConsoleUI_BL
 {
-
     #region enums
     /// <summary>enum for the first dialog </summary>
     enum Options { Insert = 1, Update, DisplaySingle, DisplayList, EXIT }
