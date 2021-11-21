@@ -122,13 +122,13 @@ namespace IBL
                     (x => x.Delivered!=DateTime.MinValue && x.SenderId==item.Id).ToList().Count,
 
                      NumberOfPackagesSentAndNotYetDelivered= AccessIdal.GetParcelList
-                    (x => x.Delivered == DateTime.MinValue && x.SenderId == item.Id).ToList().Count,
+                    (x => x.PickedUp != DateTime.MinValue && x.Delivered == DateTime.MinValue && x.SenderId == item.Id).ToList().Count,
                         
                       NumberOfPackagesWhoReceived = AccessIdal.GetParcelList
                     (x => x.Delivered != DateTime.MinValue && x.TargetId == item.Id).ToList().Count,
 
                        NumberPackagesOnTheWayToTheCustomer = AccessIdal.GetParcelList
-                    (x => x.Delivered == DateTime.MinValue && x.TargetId == item.Id).ToList().Count,
+                    (x => x.PickedUp != DateTime.MinValue && x.Delivered == DateTime.MinValue && x.TargetId == item.Id).ToList().Count,
                 });
             }
 
