@@ -219,6 +219,8 @@ Next Please enter the sender ID number:");
                     break;
 
                 default:
+                    Console.WriteLine(@"you entered a wrong number.
+please choose again");
                     break;
             }
         }
@@ -406,7 +408,8 @@ Your choice:");
                         Console.WriteLine(ex);
                     }
                     break;
-
+                    Console.WriteLine(@"you entered a wrong number.
+please choose again");
                 default:
                     break;
             }
@@ -496,7 +499,8 @@ Your choice:");
                     }
 
                     break;
-
+                    Console.WriteLine(@"you entered a wrong number.
+please choose again");
                 default:
                     break;
             }
@@ -564,6 +568,8 @@ Your choice:");
                     break;
 
                 default:
+                    Console.WriteLine(@"you entered a wrong number.
+please choose again");
                     break;
             }
 
@@ -613,6 +619,8 @@ Your choice:");
                         break;
 
                     default:
+                        Console.WriteLine(@"you entered a wrong number.
+please choose again");
                         break;
                 }
             } while (!(choice == 5));

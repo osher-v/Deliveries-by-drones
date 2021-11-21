@@ -35,7 +35,7 @@ namespace IBL
             {
                 throw new TheDroneCanNotBeSentForCharging("Error, to the drone does not have enough battery to go to recharge at the nearest available station");
             }
-
+            // if all is good and we update the date 
             drone.BatteryStatus -= distence * Free;
             drone.CurrentLocation = minDistanceBetweenBaseStationsAndLocation(BLbaseStations, drone.CurrentLocation).Item1;
             drone.Statuses = DroneStatuses.inMaintenance;

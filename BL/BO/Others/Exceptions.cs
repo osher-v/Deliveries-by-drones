@@ -10,6 +10,9 @@ namespace IBL
 {
     namespace BO
     {
+        /// <summary>
+        /// Add An Existing Object Exception
+        /// </summary>
         [Serializable]
         public class AddAnExistingObjectException : Exception
         {
@@ -25,6 +28,9 @@ namespace IBL
             }
         }
 
+        /// <summary>
+        /// Non Existent Object Exception
+        /// </summary>
         [Serializable]
         public class NonExistentObjectException : Exception
         {
@@ -40,6 +46,9 @@ namespace IBL
             }
         }
 
+        /// <summary>
+        /// Non Existent Enum Exception
+        /// </summary>
         [Serializable]
         public class NonExistentEnumException : Exception
         {
@@ -54,7 +63,9 @@ namespace IBL
                 return string.Format("Error Exceeding the range of options {0}", Message);
             }
         }
-
+        /// <summary>
+        /// No Free Charging Stations
+        /// </summary>
         [Serializable]
         public class NoFreeChargingStations : Exception
         {
@@ -69,7 +80,9 @@ namespace IBL
                 return "Error There are no free charging stations in this basestation";
             }
         }
-
+        /// <summary>
+        /// More Drone In Charging Than The Proposed ChargingStations
+        /// </summary>
         [Serializable]
         public class MoreDroneInChargingThanTheProposedChargingStations : Exception
         {
@@ -84,7 +97,9 @@ namespace IBL
                 return "Error More drone in charging than the proposed charging stations";
             }
         }
-
+        /// <summary>
+        /// The Drone Can Not Be Sent For Charging
+        /// </summary>
         [Serializable]
         public class TheDroneCanNotBeSentForCharging : Exception
         {
@@ -99,7 +114,9 @@ namespace IBL
                 return Message;
             }
         }
-
+        /// <summary>
+        /// Only Maintenance Drone Will Be Able To Be Released From Charging
+        /// </summary>
         [Serializable]
         public class OnlyMaintenanceDroneWillBeAbleToBeReleasedFromCharging : Exception
         {
@@ -114,7 +131,9 @@ namespace IBL
                 return "Error Only a maintenance drone will be able to be released from charging";
             }
         }
-
+        /// <summary>
+        /// No Suitable Psrcel Was Found To Belong To The Drone
+        /// </summary>
         [Serializable]
         public class NoSuitablePsrcelWasFoundToBelongToTheDrone : Exception
         {
@@ -129,7 +148,9 @@ namespace IBL
                 return "Error No suitable package was found to belong to the drone";
             }
         }
-
+        /// <summary>
+        ///  Unable To Collect Parcel
+        /// </summary>
         [Serializable]
         public class UnableToCollectParcel : Exception
         {
@@ -144,7 +165,9 @@ namespace IBL
                 return Message;
             }
         }
-
+        /// <summary>
+        /// Delivery Cannot Be Made
+        /// </summary>
         [Serializable]
         public class DeliveryCannotBeMade : Exception
         {

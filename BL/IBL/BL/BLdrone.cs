@@ -15,7 +15,7 @@ namespace IBL
             if ((int)newDrone.MaxWeight < 0 || (int)newDrone.MaxWeight > 2)
                 throw new NonExistentEnumException("(0 - 2)");
 
-            try //
+            try //if the id is Non Existent throw Exception
             {
                 AccessIdal.GetBaseStation(firstChargingStation);
             }
@@ -30,7 +30,7 @@ namespace IBL
             IDAL.DO.Drone Drone = new IDAL.DO.Drone() { Id = newDrone.Id, MaxWeight = (IDAL.DO.WeightCategories)newDrone.MaxWeight,
                 Model = newDrone.Model};
 
-            try
+            try  // if Add An Existing Object throw Exception
             {
                 AccessIdal.AddDrone(Drone);
             }
@@ -41,7 +41,7 @@ namespace IBL
 
             newDrone.BatteryStatus = random.Next(20, 41);
             newDrone.Statuses = DroneStatuses.inMaintenance;
-
+            //set a location bo
             Location location = new Location()
             {
                  longitude = AccessIdal.GetBaseStation(firstChargingStation).Longitude,
@@ -58,6 +58,7 @@ namespace IBL
 
         public void UpdateDroneName(int droneId, string droneName)
         {
+            //if the its Non Existent throw Exception
             try 
             {
                 IDAL.DO.Drone newDrone = AccessIdal.GetDrone(droneId);
@@ -93,15 +94,11 @@ namespace IBL
                 Location locationOfSender = new Location() { longitude= holdDalSender.Longitude, latitude=holdDalSender.Latitude };
                 Location locationOfReciver = new Location() { longitude = holdDalReciver.Longitude, latitude = holdDalReciver.Latitude };
 
-                // sender
-                //printDrone.Delivery.Sender.Id = holdDalParcel.SenderId;
-                //printDrone.Delivery.Sender.Name = holdDalSender.Name;
+                // sender      
                 printDrone.Delivery.Sender = new CustomerInDelivery() { Id = holdDalParcel.SenderId, Name = holdDalSender.Name };
                 printDrone.Delivery.SourceLocation = locationOfSender;
 
-                // reciver
-                //printDrone.Delivery.Receiver.Id = holdDalReciver.Id;
-                //printDrone.Delivery.Receiver.Name = holdDalReciver.Name;
+                // reciver     
                 printDrone.Delivery.Receiver = new CustomerInDelivery() { Id = holdDalReciver.Id, Name = holdDalReciver.Name };
                 printDrone.Delivery.DestinationLocation = locationOfReciver;
 
@@ -111,7 +108,7 @@ namespace IBL
                 printDrone.Delivery.Prior = (Priorities)holdDalParcel.Priority;
                 printDrone.Delivery.Weight = (WeightCategories)holdDalParcel.Weight;
 
-                if (holdDalParcel.PickedUp != DateTime.MinValue) // && holdDalParcel.Delivered==DateTime.MinValue
+                if (holdDalParcel.PickedUp != DateTime.MinValue) 
                 {
                     printDrone.Delivery.OnTheWayToTheDestination = true;
                 }  

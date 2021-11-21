@@ -12,6 +12,7 @@ namespace IBL
     {
         public void AddStation(BaseStation newbaseStation)
         {
+
             IDAL.DO.BaseStation newStation = new IDAL.DO.BaseStation()
             {
                 Id = newbaseStation.Id,
@@ -20,8 +21,7 @@ namespace IBL
                 Longitude = newbaseStation.BaseStationLocation.longitude,
                 Latitude = newbaseStation.BaseStationLocation.latitude
             };
-
-            try
+            try    // throw if the id is exsist
             {
                 AccessIdal.AddStation(newStation);
             }
@@ -52,6 +52,7 @@ namespace IBL
                 int totalQuantityChargeSlots;
                 while (!int.TryParse(chargeslots, out  totalQuantityChargeSlots));
                 int numOfBuzeChargeslots = AccessIdal.GetBaseChargeList(x => x.StationId == baseStationId).ToList().Count;
+                //chaeck if More Drone In Charging Than The Proposed Charging Stations
                 if (totalQuantityChargeSlots - numOfBuzeChargeslots < 0)
                    throw new MoreDroneInChargingThanTheProposedChargingStations();
 
@@ -63,6 +64,7 @@ namespace IBL
         public BaseStation GetBaseStation(int idForDisplayObject)
         {
             IDAL.DO.BaseStation printBase = new IDAL.DO.BaseStation();
+            // check if Non Existent BaseStation 
             try
             {
                 printBase = AccessIdal.GetBaseStation(idForDisplayObject);
@@ -79,7 +81,8 @@ namespace IBL
             List<IDAL.DO.DroneCharge> droneInCharge = AccessIdal.GetBaseChargeList(i => i.StationId == idForDisplayObject).ToList();
             foreach (var item in droneInCharge)
             {
-                blBase.DroneInChargsList.Add(new DroneInCharg { Id = item.DroneId, BatteryStatus = DronesBL.Find(x => x.Id == item.DroneId).BatteryStatus });
+                blBase.DroneInChargsList.Add(new DroneInCharg { Id = item.DroneId,
+                    BatteryStatus = DronesBL.Find(x => x.Id == item.DroneId).BatteryStatus });// put only the ones with the data we want 
             }
             return blBase;
         }

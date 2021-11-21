@@ -20,6 +20,7 @@ namespace IBL
                 Longitude = customer.LocationOfCustomer.longitude,
                 Latitude = customer.LocationOfCustomer.latitude
             };
+            // if Add An Existing Object throw Exception
             try
             {
                 AccessIdal.AddCustomer(newCustomer);
@@ -32,6 +33,7 @@ namespace IBL
 
         public void UpdateCustomer(int customerId, string customerName, string phoneNumber)
         {
+            // try if Non Existent Object Exception
             try
             {
                 IDAL.DO.Customer customer = AccessIdal.GetCustomer(customerId);
@@ -64,7 +66,7 @@ namespace IBL
                 LocationOfCustomer = dalCustomerLocation, ParcelFromTheCustomer=new List<ParcelAtCustomer>(),  ParcelToTheCustomer =new List<ParcelAtCustomer>() };
 
             List<IDAL.DO.Parcel> holdDalParcels = AccessIdal.GetParcelList(i => i.SenderId == idForDisplayObject).ToList();
-
+            // the for run on all the parcel list and put the coract info into it  
             foreach (var item in holdDalParcels)
             {
                 CustomerInDelivery customerInDelivery = new CustomerInDelivery { Id = item.TargetId, Name = AccessIdal.GetCustomer(item.TargetId).Name };
@@ -72,7 +74,7 @@ namespace IBL
                 ParcelAtCustomer parcelAtCustomer = new ParcelAtCustomer() { Id = item.Id, Prior = (Priorities)item.Priority,
                     Weight = (WeightCategories)item.Weight, OtherCustomer= customerInDelivery};
                 
-                if (item.Delivered != DateTime.MinValue)
+                if (item.Delivered != DateTime.MinValue) 
                     parcelAtCustomer.Status = DeliveryStatus.Delivered;
                 else if (item.PickedUp != DateTime.MinValue)
                     parcelAtCustomer.Status = DeliveryStatus.PickedUp;
@@ -85,7 +87,7 @@ namespace IBL
             }
 
             List<IDAL.DO.Parcel> holdDalSentParcels = AccessIdal.GetParcelList(i => i.TargetId == idForDisplayObject).ToList();
-
+            // the for run on all the parcel list and put the coract info into it  
             foreach (var item in holdDalSentParcels)
             {
                 CustomerInDelivery customerInDelivery = new CustomerInDelivery { Id = item.SenderId, Name = AccessIdal.GetCustomer(item.SenderId).Name };
@@ -114,12 +116,14 @@ namespace IBL
         {
             List<CustomerToList> CustomerBL = new List<CustomerToList>();
             List<IDAL.DO.Customer> holdDalCustomer = AccessIdal.GetCustomerList().ToList();
+            // the for run on all the customer list and put the coract info into it  
+
             foreach (var item in holdDalCustomer)
             {
                 CustomerBL.Add(new CustomerToList
                 {  Id=item.Id, Name=item.Name ,PhoneNumber=item.PhoneNumber, 
                     NumberOfPackagesSentAndDelivered= AccessIdal.GetParcelList
-                    (x => x.Delivered!=DateTime.MinValue && x.SenderId==item.Id).ToList().Count,
+                    (x => x.Delivered!=DateTime.MinValue && x.SenderId==item.Id).ToList().Count, 
 
                      NumberOfPackagesSentAndNotYetDelivered= AccessIdal.GetParcelList
                     (x => x.PickedUp != DateTime.MinValue && x.Delivered == DateTime.MinValue && x.SenderId == item.Id).ToList().Count,
