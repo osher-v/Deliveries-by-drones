@@ -132,14 +132,6 @@ namespace IBL
                         break;
                 }
             }
-
-            //if (parcelsWithHighestPriority.Any())
-            //    return parcelsWithHighestPriority;
-            //else if (parcelsWithMediumPriority.Any())
-            //    return parcelsWithMediumPriority;
-            //else
-            //    return parcelsWithRegulerPriority;
-
             return (parcelsHeavy.Any() ? parcelsHeavy : parcelsMedium.Any() ?
                 parcelsMedium : parcelsLight);
         }

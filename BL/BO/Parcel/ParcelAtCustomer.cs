@@ -21,7 +21,7 @@ namespace IBL
 
             public override string ToString()
             {
-                return base.ToString() + string.Format("status is: {0,-5} \t the other customer is: {1,-6}\n", Status, OtherCustomer);
+                return base.ToString() + string.Format("status is: {0,-5} \nthe other customer is:\n {1,-6}\n", Status, OtherCustomer);
             }
         }
     } 
