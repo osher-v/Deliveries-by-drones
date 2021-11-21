@@ -19,7 +19,7 @@ namespace IBL
 
             public override string ToString()
             {
-                return string.Format("Id is:{0,-8}\t name is:{1,-8}\t number of free charge slots:{2,-4}\n", Id, Name, FreeChargeSlots);
+                return string.Format("Id is: {0,-8}\t name is: {1,-8}\t number of free charge slots: {2,-4}\n", Id, Name, FreeChargeSlots);
             }
 
         }

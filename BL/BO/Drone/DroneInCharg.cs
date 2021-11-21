@@ -18,7 +18,7 @@ namespace IBL
 
             public override string ToString()
             {
-                return string.Format("id is:{0,-8}\t Battery Status is:{1}% \n", Id, BatteryStatus);
+                return string.Format("id is:{0,-8}\t Battery Status is: {1}% \n", Id, BatteryStatus);
             }
         }
     }

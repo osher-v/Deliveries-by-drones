@@ -20,7 +20,7 @@ namespace IBL
             {
                 string convertLongitude = DalObject.DalObject.ConvertDecimalDegreesToSexagesimal(longitude, (IDAL.DO.LongitudeAndLatitude)0);
                 string convertLatitude = DalObject.DalObject.ConvertDecimalDegreesToSexagesimal(latitude, (IDAL.DO.LongitudeAndLatitude)1);
-                return string.Format(" longitude is {0,-8} \t  latitude is {1,-8} ", convertLongitude, convertLatitude);
+                return string.Format(" longitude is: {0,-8} \t  latitude is {1,-8} ", convertLongitude, convertLatitude);
             }
         }
     }

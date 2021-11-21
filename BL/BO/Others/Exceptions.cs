@@ -81,7 +81,7 @@ namespace IBL
 
             public override string ToString()
             {
-                return "More drone in charging than the proposed charging stations";
+                return "Error More drone in charging than the proposed charging stations";
             }
         }
 
@@ -111,7 +111,7 @@ namespace IBL
 
             public override string ToString()
             {
-                return "Only a maintenance drone will be able to be released from charging";
+                return "Error Only a maintenance drone will be able to be released from charging";
             }
         }
 
@@ -126,7 +126,7 @@ namespace IBL
 
             public override string ToString()
             {
-                return "No suitable package was found to belong to the drone";
+                return "Error No suitable package was found to belong to the drone";
             }
         }
 

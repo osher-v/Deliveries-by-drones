@@ -20,7 +20,7 @@ namespace IBL
 
             public override string ToString()
             {
-                return string.Format( "Id of the customer is {0, -3} \t  Name of the customer is {1, -3}\n", Id ,Name);
+                return string.Format( "Id of the customer is: {0, -3} \t  Name of the customer is: {1, -3}\n", Id ,Name);
             }
         }
     }

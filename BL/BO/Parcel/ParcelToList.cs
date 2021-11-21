@@ -21,8 +21,8 @@ namespace IBL
 
             public override string ToString()
             {
-                return base.ToString() + string.Format("customer sender name is: {0,-6} \t" +
-                    "customer receiver name is: {1,-6} \t the status: {2,-6}\n ~~~~~~~~~~~~", CustomerSenderName, CustomerReceiverName, Status);
+                return base.ToString() + string.Format("customer sender name is: {0} \n" +
+                    "customer receiver name is:{1,-6}\nthe status: {2,-6}\n~~~~~~~", CustomerSenderName, CustomerReceiverName, Status);
             }
         }
     } 

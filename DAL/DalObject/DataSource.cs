@@ -34,10 +34,10 @@ namespace DalObject
         /// <summary> Continuous number For the package </summary>
             public static int CountIdPackage = 1000;
 
-            public static double Free = 0.1;
-            public static double LightWeightCarrier = 0.4;
-            public static double MediumWeightBearing = 0.7;
-            public static double CarriesHeavyWeight = 1.2;
+            public static double Free = 0.5;
+            public static double LightWeightCarrier = 0.6;
+            public static double MediumWeightBearing = 0.75;
+            public static double CarriesHeavyWeight = 0.9;
             public static double DroneLoadingRate = 100;
         }
 
@@ -88,8 +88,8 @@ namespace DalObject
                     Id = MyRandom.Next(100000000, 999999999),
                     Name = CustomersNameArr[i],
                     PhoneNumber = "0" + MyRandom.Next(50, 58) + "-" + MyRandom.Next(0000000, 9999999),
-                    Longitude = (float)((float)(MyRandom.NextDouble() * (33.3 - 31)) + 31),// get israel range 
-                    Latitude = (float)((float)(MyRandom.NextDouble() * (35.5 - 34.3)) + 34.3)//get israel range 
+                    Longitude = (float)((float)(MyRandom.NextDouble() * (32.2 - 31.8)) + 31.8),// get israel range (just gos dan)
+                    Latitude = (float)((float)(MyRandom.NextDouble() * (35.1 - 34.6)) + 34.6)//get israel range 
                 });
             }
             #endregion init Customer
