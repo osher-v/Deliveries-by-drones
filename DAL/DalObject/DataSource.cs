@@ -34,10 +34,10 @@ namespace DalObject
         /// <summary> Continuous number For the package </summary>
             public static int CountIdPackage = 1000;
 
-            public static double Free = 0.01;
-            public static double LightWeightCarrier = 0.04;
-            public static double MediumWeightBearing = 0.07;
-            public static double CarriesHeavyWeight = 0.1;
+            public static double Free = 0.1;
+            public static double LightWeightCarrier = 0.4;
+            public static double MediumWeightBearing = 0.7;
+            public static double CarriesHeavyWeight = 1.2;
             public static double DroneLoadingRate = 100;
         }
 
