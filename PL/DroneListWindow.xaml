@@ -6,10 +6,32 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="DroneListWindow" Height="640" Width="800">
-    <Grid Name="MainGrid">
+    <Grid x:Name="MainGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="50*"/>
             <RowDefinition Height="400*"/>
         </Grid.RowDefinitions>
+        <Grid Name="UpGrid" 
+              HorizontalAlignment="Stretch" 
+              Height="auto" Grid.Row="0"
+               VerticalAlignment="Stretch" Width="auto">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions >
+            <ComboBox Name="StatusSelector" HorizontalAlignment= "Left" Grid.Column="1" SelectionChanged="StatusSelector_SelectionChanged" Width="160" RenderTransformOrigin="0.5,0.5" FontWeight="Bold" FontSize="18"/>
+            <TextBox Grid.Column="0" TextChanged="TextBox_TextChanged_2" Text="אפשרויות סינון" Cursor="Pen" FontWeight="Bold" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" Background="{x:Null}" SelectionTextBrush="{x:Null}" BorderBrush="{x:Null}" />
+            <ComboBox x:Name="WeightSelctor" Grid.Column="2" HorizontalAlignment="Left" Margin="0,20,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="whigetSelctor_SelectionChanged"/>
+        </Grid>
+        <ListView x:Name="DroneListView" Grid.Row="1">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn/>
+                </GridView>
+            </ListView.View>
+        </ListView>
     </Grid>
 </Window>
