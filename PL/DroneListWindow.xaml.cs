@@ -27,8 +27,7 @@ namespace PL
             AccessIbl = bl;
             DroneListView.ItemsSource = bl.GetDroneList();
             StatusSelector.ItemsSource = Enum.GetValues(typeof(DroneStatuses));
-            WeightSelctor.ItemsSource = Enum.GetValues(typeof(WeightCategories));
-
+            WeightSelctor.ItemsSource = Enum.GetValues(typeof(WeightCategories)); 
         }
 
 
@@ -50,12 +49,13 @@ namespace PL
 
         private void StatusSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            DroneListView.ItemsSource = AccessIbl.GetDroneList(x => x.Statuses == (DroneStatuses)StatusSelector.SelectedItem);
+            DroneListView.ItemsSource= AccessIbl.GetDroneList(x => x.Statuses == (DroneStatuses)StatusSelector.SelectedItem);
         }
 
         private void whigetSelctor_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             DroneListView.ItemsSource = AccessIbl.GetDroneList(x => x.MaxWeight == (WeightCategories)WeightSelctor.SelectedItem);
         }
+
     }
 }

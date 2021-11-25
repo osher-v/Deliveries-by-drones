@@ -54,7 +54,7 @@ namespace IBL
                 throw new OnlyMaintenanceDroneWillBeAbleToBeReleasedFromCharging();
             }
 
-            double horsnInCahrge = time.Hour + (time.Minute % 60) + (time.Second % 3600);
+            double horsnInCahrge = time.Hour + (((double)(time.Minute)) / 60) + (((double)(time.Second)) / 3600);
 
             double batrryCharge = horsnInCahrge * DroneLoadingRate + drone.BatteryStatus;
             if (batrryCharge > 100)
