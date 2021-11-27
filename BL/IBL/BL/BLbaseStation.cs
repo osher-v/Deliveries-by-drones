@@ -50,7 +50,7 @@ namespace IBL
             if (chargeslots != "") ////if it is not empty.
             {
                 int totalQuantityChargeSlots;
-                while (!int.TryParse(chargeslots, out  totalQuantityChargeSlots));
+                int.TryParse(chargeslots, out  totalQuantityChargeSlots);
                 int numOfBuzeChargeslots = AccessIdal.GetBaseChargeList(x => x.StationId == baseStationId).ToList().Count;
                 //chaeck if More Drone In Charging Than The Proposed Charging Stations
                 if (totalQuantityChargeSlots - numOfBuzeChargeslots < 0)

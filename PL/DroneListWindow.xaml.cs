@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-//using IBL.BO;
+using IBL.BO;
 
 namespace PL
 {
@@ -26,70 +26,41 @@ namespace PL
         {
             InitializeComponent();
             AccessIbl = bl;
-            DroneListView.ItemsSource = bl.GetDroneList();
-            StatusSelector.SelectedIndex = 3;
-            WeightSelctor.SelectedIndex = 3;
-            StatusSelector.ItemsSource = Enum.GetValues(typeof(PO.DroneStatuses));
-            WeightSelctor.ItemsSource = Enum.GetValues(typeof(PO.WeightCategories)); 
+            DroneListView.ItemsSource = bl.GetDroneList();   
+            StatusSelector.ItemsSource = Enum.GetValues(typeof(DroneStatuses));
+            WeightSelctor.ItemsSource = Enum.GetValues(typeof(WeightCategories));
         }
 
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
-
-        private void TextBox_TextChanged_1(object sender, TextChangedEventArgs e)
-        {
-
-        }
-
-        private void TextBox_TextChanged_2(object sender, TextChangedEventArgs e)
-        {
-
-        }
 
         private void StatusSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            /*
-            PO.DroneStatuses enumm = (PO.DroneStatuses)StatusSelector.SelectedItem;
-            PO.WeightCategories enumm2 = (PO.WeightCategories)WeightSelctor.SelectedItem;
-            List<IBL.BO.DroneToList> droneToList = AccessIbl.GetDroneList().ToList();
-            if (enumm2 == PO.WeightCategories.All && enumm == PO.DroneStatuses.All)
-                DroneListView.ItemsSource = droneToList;
-            else if(enumm != PO.DroneStatuses.All && enumm2 == PO.WeightCategories.All)
-                DroneListView.ItemsSource = droneToList.FindAll(x => x.Statuses == (IBL.BO.DroneStatuses)enumm);
-            else if(enumm == PO.DroneStatuses.All && enumm2 != PO.WeightCategories.All)
-                DroneListView.ItemsSource = droneToList.FindAll(x => x.MaxWeight == (IBL.BO.WeightCategories)WeightSelctor.SelectedItem);
+            if (WeightSelctor.SelectedItem == null)
+            {
+                DroneListView.ItemsSource = AccessIbl.GetDroneList(x => x.Statuses == (DroneStatuses)StatusSelector.SelectedIndex);
+            }
             else
-                DroneListView.ItemsSource = droneToList.FindAll(x => x.MaxWeight == (IBL.BO.WeightCategories)WeightSelctor.SelectedItem &&
-                x.Statuses == (IBL.BO.DroneStatuses)enumm);
-
-            //PO.DroneStatuses.All? AccessIbl.GetDroneList().ToList()
-            //: AccessIbl.GetDroneList(x => x.Statuses == (IBL.BO.DroneStatuses)enumm).ToList()
-            //enumm == PO.DroneStatuses.All ? AccessIbl.GetDroneList().ToList()
-            //: AccessIbl.GetDroneList(x => x.Statuses == (IBL.BO.DroneStatuses)enumm).ToList();
-            //DroneListView.ItemsSource = enumm == PO.DroneStatuses.All ? AccessIbl.GetDroneList() : AccessIbl.GetDroneList(x=> x.Statuses == (IBL.BO.DroneStatuses)enumm);
-            */
+            {
+                DroneListView.ItemsSource = AccessIbl.GetDroneList(x => x.Statuses == (DroneStatuses)StatusSelector.SelectedIndex && x.MaxWeight == (WeightCategories)WeightSelctor.SelectedIndex);
+            }
         }
 
         private void whigetSelctor_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            /*
-            PO.WeightCategories enumm = (PO.WeightCategories)WeightSelctor.SelectedItem;
-            List<IBL.BO.DroneToList> droneToList = AccessIbl.GetDroneList().ToList();
-
-            if (enumm == PO.WeightCategories.All && (PO.DroneStatuses)StatusSelector.SelectedItem == PO.DroneStatuses.All)
-                DroneListView.ItemsSource = droneToList;
-            else if ((PO.DroneStatuses)StatusSelector.SelectedItem != PO.DroneStatuses.All && enumm == PO.WeightCategories.All)
-                DroneListView.ItemsSource = droneToList.FindAll(x => x.Statuses == (IBL.BO.DroneStatuses)enumm);
-            else if ((PO.DroneStatuses)StatusSelector.SelectedItem == PO.DroneStatuses.All && enumm != PO.WeightCategories.All)
-                DroneListView.ItemsSource = droneToList.FindAll(x => x.MaxWeight == (IBL.BO.WeightCategories)WeightSelctor.SelectedItem);
+            if (StatusSelector.SelectedItem == null)
+            {
+                DroneListView.ItemsSource = AccessIbl.GetDroneList(x => x.MaxWeight == (WeightCategories)WeightSelctor.SelectedIndex);
+            }
             else
-                DroneListView.ItemsSource = droneToList.FindAll(x => x.MaxWeight == (IBL.BO.WeightCategories)WeightSelctor.SelectedItem &&
-                x.Statuses == (IBL.BO.DroneStatuses)enumm);
-            */
-            //PO.WeightCategories enumm = (PO.WeightCategories)WeightSelctor.SelectedItem;
-            //DroneListView.ItemsSource = enumm == PO.WeightCategories.All ? AccessIbl.GetDroneList() : AccessIbl.GetDroneList(x => x.MaxWeight == (IBL.BO.WeightCategories)enumm);
+            {
+                DroneListView.ItemsSource = AccessIbl.GetDroneList(x => x.MaxWeight == (WeightCategories)WeightSelctor.SelectedIndex && x.Statuses == (DroneStatuses)StatusSelector.SelectedIndex);
+            }
         }
+        private void res_Click(object sender, RoutedEventArgs e)
+        {
+            StatusSelector.SelectedItem = null;
+            WeightSelctor.SelectedItem = null;
+            DroneListView.ItemsSource = AccessIbl.GetDroneList();
+        }
+
     }
 }
