@@ -60,6 +60,7 @@ namespace PL
             StatusSelector.SelectedItem = null;
             WeightSelctor.SelectedItem = null;
             DroneListView.ItemsSource = AccessIbl.GetDroneList();
+
         }
 
     }
