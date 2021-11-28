@@ -6,7 +6,25 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="DroneWindow" Height="450" Width="800">
-    <Grid>
-        
+    <Grid x:Name="MainGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Label Content="מספר מזהה" HorizontalAlignment="Left" Margin="310,0,0,0" Grid.Row="1" VerticalAlignment="Center"/>
+        <Label Content="מודל" HorizontalAlignment="Left" Margin="310,0,0,0" Grid.Row="2" VerticalAlignment="Center"/>
+        <Label Content="משקל" HorizontalAlignment="Left" Margin="310,0,0,0" Grid.Row="3" VerticalAlignment="Center"/>
+        <Label Content="מס' תחנה לטעינה ראשונית" HorizontalAlignment="Left" Margin="310,0,0,0" Grid.Row="4" VerticalAlignment="Center" RenderTransformOrigin="-0.191,0.713"/>
+
+        <TextBox x:Name="TBID" HorizontalAlignment="Left" Margin="139,0,0,0" Grid.Row="1" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
+        <TextBox x:Name="TBModel" HorizontalAlignment="Left" Margin="139,0,0,0" Grid.Row="2" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
+        <ComboBox x:Name="TBWeight"  HorizontalAlignment="Left" Margin="139,0,0,0" Grid.Row="3" VerticalAlignment="Center" Width="120"/>
+        <TextBox x:Name="TBBaseStationForInitialCharging" HorizontalAlignment="Left" Margin="139,0,0,0" Grid.Row="4" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
     </Grid>
+
 </Window>

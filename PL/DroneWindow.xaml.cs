@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
+using IBL.BO;
+
 namespace PL
 {
     /// <summary>
@@ -19,9 +22,13 @@ namespace PL
     /// </summary>
     public partial class DroneWindow : Window
     {
-        public DroneWindow()
+        public IBL.IBL AccessIbl;
+        public DroneWindow(IBL.IBL bl)
         {
             InitializeComponent();
+            AccessIbl = bl;
+            TBWeight.ItemsSource = Enum.GetValues(typeof(WeightCategories));
         }
+
     }
 }
