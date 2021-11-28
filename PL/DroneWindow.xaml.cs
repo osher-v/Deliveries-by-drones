@@ -26,11 +26,13 @@ namespace PL
         public IBL.IBL AccessIbl;
 
         private DroneListWindow DroneListWindow;
-        public DroneWindow(IBL.IBL bl, DroneListWindow _DroneListWindow, DroneListWindow _StatusSelector, DroneListWindow _WeightSelctor)
+        //private DroneStatuses droneStatuses;
+        public DroneWindow(IBL.IBL bl, DroneListWindow _DroneListWindow, object _StatusSelector, object _WeightSelctor)
         {
             InitializeComponent();
             AccessIbl = bl;
             DroneListWindow = _DroneListWindow;
+          //  droneStatuses = (DroneStatuses)_StatusSelector;
             TBWeight.ItemsSource = Enum.GetValues(typeof(WeightCategories));
             // SendToBl.IsEnabled = false;
             BaseSTATION.ItemsSource = AccessIbl.GetBaseStationList();
@@ -65,26 +67,6 @@ namespace PL
               
         }
 
-        private void TBBaseStationForInitialCharging_KeyDown(object sender, KeyEventArgs e)
-        {
-            // take only the kyes we alowed 
-
-            if (e.Key < Key.D0 || e.Key > Key.D9)
-            {
-                if (e.Key < Key.NumPad0 || e.Key > Key.NumPad9) // we want keys from the num pud too
-                {
-                    e.Handled = true;
-                }
-                else
-                {
-                    e.Handled = false;
-                }
-            }
-            if (TBBaseStationForInitialCharging.Text.Length > 8)
-                e.Handled = true;
-
-        }
-
         private void TBModel_KeyDown(object sender, KeyEventArgs e)
         {
             if (TBModel.Text.Length > 5)
@@ -93,7 +75,7 @@ namespace PL
 
         private void SendToBl_Click(object sender, RoutedEventArgs e)
         {
-            if(TBModel.Text.Length != 0 && TBID.Text.Length != 0 && TBBaseStationForInitialCharging.Text.Length != 0 && TBWeight.SelectedItem!=null)
+            if(TBModel.Text.Length != 0 && TBID.Text.Length != 0 && BaseStationID.SelectedItem != null && TBWeight.SelectedItem!=null)
             {
                 DroneToList newdrone = new DroneToList
                 {
@@ -104,16 +86,15 @@ namespace PL
 
                 try
                 {
-                    AccessIbl.AddDrone(newdrone, int.Parse(TBBaseStationForInitialCharging.Text));// כבר בדקנו שזה מספר על ידי זה שחסמנו את המקלדת 
+                    int a = int.Parse(BaseStationID.DisplayMemberPath;
+                    MessageBox.Show(a.ToString());
+                    AccessIbl.AddDrone(newdrone, a);// כבר בדקנו שזה מספר על ידי זה שחסמנו את המקלדת 
                     
                    MessageBoxResult result= MessageBox.Show("The operation was successful", "info", MessageBoxButton.OK, MessageBoxImage.Information);
                     switch (result)
                     {
                         case MessageBoxResult.OK:                          
-                            newdrone = AccessIbl.GetDroneList().ToList().Find(i => i.Id == newdrone.Id);
-                            DroneListWindow.droneToLists.Add(newdrone);
-                            DroneListWindow.DroneListView.Items.Refresh();
-                            
+                            DroneListWindow.droneToLists.Add(AccessIbl.GetDroneList().ToList().Find(i => i.Id == newdrone.Id));
 
                             Close();
                             break;         
