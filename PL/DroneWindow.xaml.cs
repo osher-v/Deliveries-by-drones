@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -26,18 +25,21 @@ namespace PL
         public IBL.IBL AccessIbl;
 
         private DroneListWindow DroneListWindow;
-        public DroneWindow(IBL.IBL bl, DroneListWindow _DroneListWindow, DroneListWindow _StatusSelector, DroneListWindow _WeightSelctor)
+
+        public DroneWindow(IBL.IBL bl, DroneListWindow _DroneListWindow) //, DroneListWindow _StatusSelector, DroneListWindow _WeightSelctor
         {
             InitializeComponent();
+
             AccessIbl = bl;
+
             DroneListWindow = _DroneListWindow;
+
             TBWeight.ItemsSource = Enum.GetValues(typeof(WeightCategories));
-            // SendToBl.IsEnabled = false;
+
             BaseSTATION.ItemsSource = AccessIbl.GetBaseStationList();
-            //BaseStationID.ItemsSource==AccessIbl.GetBaseStationList().ToList();
+
             BaseStationID.ItemsSource = AccessIbl.GetBaseStationList();
             BaseStationID.DisplayMemberPath = "Id";
-
         }
 
         private void Bclose_Click(object sender, RoutedEventArgs e)
@@ -65,26 +67,6 @@ namespace PL
               
         }
 
-        private void TBBaseStationForInitialCharging_KeyDown(object sender, KeyEventArgs e)
-        {
-            // take only the kyes we alowed 
-
-            if (e.Key < Key.D0 || e.Key > Key.D9)
-            {
-                if (e.Key < Key.NumPad0 || e.Key > Key.NumPad9) // we want keys from the num pud too
-                {
-                    e.Handled = true;
-                }
-                else
-                {
-                    e.Handled = false;
-                }
-            }
-            if (TBBaseStationForInitialCharging.Text.Length > 8)
-                e.Handled = true;
-
-        }
-
         private void TBModel_KeyDown(object sender, KeyEventArgs e)
         {
             if (TBModel.Text.Length > 5)
@@ -93,7 +75,7 @@ namespace PL
 
         private void SendToBl_Click(object sender, RoutedEventArgs e)
         {
-            if(TBModel.Text.Length != 0 && TBID.Text.Length != 0 && TBBaseStationForInitialCharging.Text.Length != 0 && TBWeight.SelectedItem!=null)
+            if(TBModel.Text.Length != 0 && TBID.Text.Length != 0 && BaseStationID.SelectedItem != null && TBWeight.SelectedItem!=null)
             {
                 DroneToList newdrone = new DroneToList
                 {
@@ -104,9 +86,11 @@ namespace PL
 
                 try
                 {
-                    AccessIbl.AddDrone(newdrone, int.Parse(TBBaseStationForInitialCharging.Text));// כבר בדקנו שזה מספר על ידי זה שחסמנו את המקלדת 
-                    
-                   MessageBoxResult result= MessageBox.Show("The operation was successful", "info", MessageBoxButton.OK, MessageBoxImage.Information);
+                    //AccessIbl.AddDrone(newdrone, (int)BaseStationID.SelectedItem);// כבר בדקנו שזה מספר על ידי זה שחסמנו את המקלדת 
+                    //AccessIbl.AddDrone(newdrone, int.Parse(BaseStationID.SelectedItem.ToString()));
+                    AccessIbl.AddDrone(newdrone, Convert.ToInt32(BaseStationID.SelectedValue));
+                    //int.Parse(BaseStationID.SelectedItem.ToString());
+                    MessageBoxResult result= MessageBox.Show("The operation was successful", "info", MessageBoxButton.OK, MessageBoxImage.Information);
                     switch (result)
                     {
                         case MessageBoxResult.OK:                          

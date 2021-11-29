@@ -75,7 +75,7 @@ namespace PL
 
         private void BAddDrone_Click(object sender, RoutedEventArgs e)
         {
-            new DroneWindow(AccessIbl, this, StatusSelector.SelectedItem, WeightSelctor.SelectedItem).Show();
+            new DroneWindow(AccessIbl, this).Show(); //, StatusSelector.SelectedItem, WeightSelctor.SelectedItem).Show();
         }
 
         private void Bclose_Click(object sender, RoutedEventArgs e)
