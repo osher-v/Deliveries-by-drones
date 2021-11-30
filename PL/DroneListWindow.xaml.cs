@@ -26,31 +26,45 @@ namespace PL
         public IBL.IBL AccessIbl;
         //public CancelEventArgs temp = new CancelEventArgs();
         public ObservableCollection<IBL.BO.DroneToList> droneToLists;
+        public bool ClosingWindow { get; private set; } = true;
         public DroneListWindow(IBL.IBL bl)
         {
             InitializeComponent();
             AccessIbl = bl;
             droneToLists = new ObservableCollection<DroneToList>();
-            foreach (var item in bl.GetDroneList())
+            List<IBL.BO.DroneToList> drones = bl.GetDroneList().ToList();
+            //droneToLists.ToList().AddRange(drones);
+            foreach (var item in drones)
             {
                 droneToLists.Add(item);
             }
-
+            droneToLists.CollectionChanged += DroneToLists_CollectionChanged;
             DroneListView.ItemsSource = droneToLists;
             StatusSelector.ItemsSource = Enum.GetValues(typeof(DroneStatuses));
             WeightSelctor.ItemsSource = Enum.GetValues(typeof(WeightCategories));
         }
 
-        /*
+       
+
+        private void DroneToLists_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            StatusSelectorChanged();
+        }
+
+
         protected override void OnClosing(CancelEventArgs e)
         {
-            temp = e;
             //base.OnClosing(e);
-            //e.Cancel = true;
+            e.Cancel = ClosingWindow;
         }
-        */
+
 
         private void StatusSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            StatusSelectorChanged();
+        }
+
+        private void StatusSelectorChanged()
         {
             if (WeightSelctor.SelectedItem == null)
                 DroneListView.ItemsSource = droneToLists.ToList().FindAll(x => x.Statuses == (DroneStatuses)StatusSelector.SelectedIndex);
@@ -75,13 +89,14 @@ namespace PL
 
         private void BAddDrone_Click(object sender, RoutedEventArgs e)
         {
-            new DroneWindow(AccessIbl, this).Show(); //, StatusSelector.SelectedItem, WeightSelctor.SelectedItem).Show();
+            new DroneWindow(AccessIbl, this).Show();
         }
 
         private void Bclose_Click(object sender, RoutedEventArgs e)
         {
             //temp.Cancel = false;
-            list.Close();
+            ClosingWindow = false;
+            Close();
         }
     }
 }

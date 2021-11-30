@@ -88,7 +88,7 @@ namespace PL
                 {
                     //AccessIbl.AddDrone(newdrone, (int)BaseStationID.SelectedItem);// כבר בדקנו שזה מספר על ידי זה שחסמנו את המקלדת 
                     //AccessIbl.AddDrone(newdrone, int.Parse(BaseStationID.SelectedItem.ToString()));
-                    AccessIbl.AddDrone(newdrone, Convert.ToInt32(BaseStationID.SelectedValue));
+                    AccessIbl.AddDrone(newdrone,((BaseStationsToList)(BaseStationID.SelectedItem)).Id);
                     //int.Parse(BaseStationID.SelectedItem.ToString());
                     MessageBoxResult result= MessageBox.Show("The operation was successful", "info", MessageBoxButton.OK, MessageBoxImage.Information);
                     switch (result)
