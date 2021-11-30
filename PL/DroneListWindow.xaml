@@ -31,7 +31,7 @@
             <Button x:Name="BAddDrone" HorizontalAlignment="Stretch"  Content="הוספה"  VerticalAlignment="Stretch" FontSize="18" FontWeight="Bold" Click="BAddDrone_Click"   />
             <Button x:Name="Bclose" Content="סגירה" Grid.Column="4" HorizontalAlignment="Center" Margin="0,46,0,2" Width="36"  Background="#FFDDDDDD" RenderTransformOrigin="-1.155,-0.443" Click="Bclose_Click"/>
         </Grid>
-        <ListView x:Name="DroneListView" Grid.Row="1">
+        <ListView x:Name="DroneListView" Grid.Row="1" MouseDoubleClick="DroneListView_MouseDoubleClick">
             <ListView.View>
                 <GridView>
                     <GridViewColumn/>

@@ -136,5 +136,14 @@ namespace PL
             Close();
             //Application.Current.Windows; לשאול איך לסגור את החלון המשני אם אני סוגר חלון אחר 
         }
+
+        private void DroneListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            DroneToList drone = (DroneToList)DroneListView.SelectedItem;
+            new DroneWindow(AccessIbl, this,drone.Id).Show();
+
+        }
+
+
     }
 }
