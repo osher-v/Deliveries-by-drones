@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
         Title="DroneWindow" Height="450" Width="800">
     <Grid x:Name="MainGrid">
         <Grid x:Name="addDrone" Visibility="Hidden">
@@ -40,7 +41,7 @@
             <ComboBox x:Name="BaseStationID" Grid.Column="2" HorizontalAlignment="Left" Margin="46,0,0,0" Grid.Row="4" VerticalAlignment="Center" Width="120" Height="26"/>
         </Grid>
 
-        <Grid x:Name="updateDrone" Visibility="Visible">
+        <Grid x:Name="updateDrone" Visibility="Hidden">
             <Grid.RowDefinitions>
                 <RowDefinition Height="2*"/>
                 <RowDefinition Height="*"/>
@@ -56,7 +57,7 @@
             </Grid.RowDefinitions>
             <TextBox x:Name="TBID2" HorizontalAlignment="Left" Margin="34,0,0,0" Grid.Row="1" Text="" TextWrapping="Wrap" VerticalAlignment="Center" Width="120" IsReadOnly="True"/>
             <TextBox x:Name="TBmodel" HorizontalAlignment="Left" Margin="34,0,0,0" Grid.Row="2" Text="" TextWrapping="Wrap" VerticalAlignment="Center" Width="120" KeyDown="TBmodel_KeyDown_1"/>
-            <TextBox x:Name="TBLocation" HorizontalAlignment="Left" Margin="34,0,0,0" Grid.Row="6" Text="" TextWrapping="Wrap" VerticalAlignment="Center" Width="120" IsReadOnly="True"/>
+            <TextBox x:Name="TBLocation" HorizontalAlignment="Left" Margin="25,0,0,0" Grid.Row="6" Text="" TextWrapping="Wrap" VerticalAlignment="Center" Width="171" IsReadOnly="True" Height="73" Grid.RowSpan="4"/>
             <TextBox x:Name="TBDroneStatuses" HorizontalAlignment="Left" Margin="34,0,0,0" Grid.Row="5" Text="" TextWrapping="Wrap" VerticalAlignment="Center" Width="120" IsReadOnly="True"/>
             <TextBox x:Name="TBBatrryStatuses" HorizontalAlignment="Left" Margin="34,0,0,0" Grid.Row="4" Text="" TextWrapping="Wrap" VerticalAlignment="Center" Width="120" IsReadOnly="True"/>
             <Label Content="מספר מזהה" HorizontalAlignment="Left" Margin="180,0,0,0" Grid.Row="1" VerticalAlignment="Center" Height="26" Width="88"/>
@@ -64,10 +65,10 @@
             <Label Content="קטגוריית משקל" HorizontalAlignment="Left" Margin="180,0,0,0" Grid.Row="3" VerticalAlignment="Center" Height="26" Width="94"/>
             <Label Content="מצב סוללה" HorizontalAlignment="Left" Margin="180,0,0,0" Grid.Row="4" VerticalAlignment="Center" Height="26" Width="88"/>
             <Label Content="מצב רחפן" HorizontalAlignment="Left" Margin="180,0,0,0" Grid.Row="5" VerticalAlignment="Center" Height="26" Width="88"/>
-            <Label Content="מיקום" HorizontalAlignment="Left" Margin="180,0,0,0" Grid.Row="6" VerticalAlignment="Center" Height="26" Width="88"/>
+            <Label Content="מיקום" HorizontalAlignment="Left" Margin="94,0,0,0" Grid.Row="6" VerticalAlignment="Center" Height="26" Width="88"/>
             <TextBox x:Name="TBWeightCategories" HorizontalAlignment="Left" Margin="34,0,0,0" Grid.Row="3" Text="" TextWrapping="Wrap" VerticalAlignment="Center" Width="120" IsReadOnly="True"/>
-            <Label Content="חבילה בהעברה" HorizontalAlignment="Left" Margin="180,0,0,0" Grid.Row="7" VerticalAlignment="Center" Height="26" Width="94"/>
-            <TextBox x:Name="TBparcelInDelivery" HorizontalAlignment="Left" Margin="34,0,0,0" Grid.Row="7" Text="" TextWrapping="Wrap" VerticalAlignment="Center" Width="120" IsReadOnly="True"/>
+            <Label Content="חבילה בהעברה" HorizontalAlignment="Left" Margin="298,0,0,0" Grid.Row="6" VerticalAlignment="Center" Height="26" Width="94"/>
+            <TextBox x:Name="TBparcelInDelivery" HorizontalAlignment="Left" Margin="254,0,0,0" Grid.Row="6" Text="" TextWrapping="Wrap" VerticalAlignment="Center" Width="183" IsReadOnly="True" Height="73" Grid.RowSpan="4"/>
             <Button x:Name="BClose1" Content="ביטול" HorizontalAlignment="Left" Margin="632,3,0,0" Grid.Row="1" VerticalAlignment="Top" FontSize="18" FontWeight="Bold" Width="157" Click="BClose1_Click"/>
             <Button x:Name="BModalUpdate" Content="עדכון" Visibility="Hidden" HorizontalAlignment="Left" Margin="632,0,0,0" Grid.Row="2" VerticalAlignment="Center" RenderTransformOrigin="0.488,1.204" FontSize="18" FontWeight="Bold" Width="157" Click="BModalUpdate_Click"/>
             <Button x:Name="BSendToCharge" Content="שליחה לטעינה" Visibility="Hidden"  HorizontalAlignment="Left" Margin="632,0,0,0" Grid.Row="3" VerticalAlignment="Center" FontSize="18" FontWeight="Bold" Width="157"/>
