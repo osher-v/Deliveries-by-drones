@@ -141,7 +141,6 @@ namespace PL
         {
             DroneToList drone = (DroneToList)DroneListView.SelectedItem;
             new DroneWindow(AccessIbl, this,drone.Id).Show();
-
         }
 
 

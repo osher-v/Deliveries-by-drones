@@ -172,32 +172,92 @@ namespace PL
 
         ///~~~~~~~~~~~~~~~~~~~~~~~~~~~~רחפן בפעולות~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~///
 
+        public Drone MyDrone;
+
         public DroneWindow(IBL.IBL bl, DroneListWindow _DroneListWindow, int id)
         {
             InitializeComponent();
-            updateDrone.Visibility = Visibility.Visible;
-            AccessIbl = bl;
-            Drone drone = bl.GetDrone(id);
-            TBID2.Text = drone.Id.ToString();
-            TBmodel.Text = drone.Model.ToString();
-            TBWeightCategories.Text = drone.MaxWeight.ToString();
-            TBBatrryStatuses.Text = drone.BatteryStatus.ToString();
-            TBDroneStatuses.Text = drone.Statuses.ToString();
-            TBLocation.Text = drone.CurrentLocation.ToString(); 
-            TBparcelInDelivery.Text = drone.Delivery.ToString();
 
-            //DroneListWindow = _DroneListWindow;
-            //// the combobox use it to show the Weight Categories
-            //TBWeight.ItemsSource = Enum.GetValues(typeof(WeightCategories));
-            //// the combobox use it to show the BaseStation ID
-            //BaseStationID.ItemsSource = AccessIbl.GetBaseStationList(x => x.FreeChargeSlots > 0);
-            //BaseStationID.DisplayMemberPath = "Id";
-            ////if (!AccessIbl.GetBaseStationList(x => x.FreeChargeSlots == 0).Any())
-            ////{
-            ////    MessageBox.Show("אין תחנות עם עמדות הטענה פנויות ","מידע", MessageBoxButton.OK, MessageBoxImage.None);              
-            ////}
+            updateDrone.Visibility = Visibility.Visible;
+
+            AccessIbl = bl;
+
+            DroneListWindow = _DroneListWindow;
+
+            MyDrone = bl.GetDrone(id);
+            TBID2.Text = MyDrone.Id.ToString();
+            TBmodel.Text = MyDrone.Model.ToString();
+            TBWeightCategories.Text = MyDrone.MaxWeight.ToString();
+            TBBatrryStatuses.Text = MyDrone.BatteryStatus.ToString();
+            TBDroneStatuses.Text = MyDrone.Statuses.ToString();
+            TBLocation.Text = MyDrone.CurrentLocation.ToString();
+            TBparcelInDelivery.Text = MyDrone.Delivery.ToString();
+
+            //הסוויץ בודק מה ערך הסטטוס של הרחפן ופותח כפתורים
+            switch ((DroneStatuses)MyDrone.Statuses)
+            {
+                case DroneStatuses.free:
+                    BSendToCharge.Visibility = Visibility.Visible;
+                    BAssignPackage.Visibility = Visibility.Visible;
+                    break;
+
+                case DroneStatuses.inMaintenance:
+                    BReleaseDrone.Visibility = Visibility.Visible;
+                    break;
+
+                case DroneStatuses.busy:
+                    if (MyDrone.Delivery.OnTheWayToTheDestination)
+                    {
+                        BDeliveryPackage.Visibility = Visibility.Visible;
+                    }
+                    else // 
+                    {
+                        BPickedUp.Visibility = Visibility.Visible;
+                    }
+                    break;
+
+                default:
+                    break;
+            }         
         }
 
+        private void BClose1_Click(object sender, RoutedEventArgs e)
+        {
+            ClosingWindow = false;
+            Close();
+        }
 
+        private void TBmodel_KeyDown_1(object sender, KeyEventArgs e)
+        {          
+            if (TBmodel.Text.Length > 5)
+            {
+                e.Handled = true;
+            }
+
+            BModalUpdate.Visibility = Visibility.Visible;
+        }
+
+        private void BModalUpdate_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                AccessIbl.UpdateDroneName(MyDrone.Id, TBmodel.Text);
+                MessageBoxResult result = MessageBox.Show("The operation was successful", "info", MessageBoxButton.OK, MessageBoxImage.Information);//לטלפל בX
+                switch (result)
+                {
+                    case MessageBoxResult.OK:
+                        BModalUpdate.Visibility = Visibility.Hidden;
+                        //DroneListWindow.droneToLists;
+                        //איך לעדכן את המשקיף בעדכון שקרה
+                        break;
+                    default:
+                        break;
+                }
+            }
+            catch (NonExistentObjectException ex)
+            {
+                //Console.WriteLine(ex);
+            }
+        }
     }
 }
