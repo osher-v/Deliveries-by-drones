@@ -12,14 +12,14 @@ namespace DalObject
     {
         public void AddDrone(Drone newDrone)
         {
-            if ((DataSource.BaseStationsList.FindIndex(x => x.Id == newDrone.Id)) != -1)
+            if (DataSource.DronesList.Exists(x => x.Id == newDrone.Id))
                 throw new AddAnExistingObjectException("Error adding an object with an existing ID number");
             DataSource.DronesList.Add(newDrone);
         }
 
         public void UpdateDrone(Drone newDrone)
         {
-            if (!(DataSource.DronesList.Exists(x => x.Id == newDrone.Id)))
+            if (!DataSource.DronesList.Exists(x => x.Id == newDrone.Id))
                 throw new NonExistentObjectException();
             DataSource.DronesList[DataSource.DronesList.FindIndex(x => x.Id == newDrone.Id)] = newDrone;
         }

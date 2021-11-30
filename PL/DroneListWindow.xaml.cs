@@ -24,79 +24,117 @@ namespace PL
     public partial class DroneListWindow : Window
     {
         public IBL.IBL AccessIbl;
-        //public CancelEventArgs temp = new CancelEventArgs();
+        /// <summary> crate a observab list of type IBL.BO.DroneToList (to see changes in live) </summary>
         public ObservableCollection<IBL.BO.DroneToList> droneToLists;
+        /// <summary> a bool to help us disable the x bootum  </summary>
         public bool ClosingWindow { get; private set; } = true;
+        /// <summary>
+        /// constractor for the DroneListWindow that will start the InitializeComponent ans fill the Observable Collection
+        /// </summary>
+        /// <param name="bl">get AccessIbl from main win</param>
         public DroneListWindow(IBL.IBL bl)
         {
             InitializeComponent();
             AccessIbl = bl;
+            //craet observer and set the list accordale to ibl drone list 
             droneToLists = new ObservableCollection<DroneToList>();
             List<IBL.BO.DroneToList> drones = bl.GetDroneList().ToList();
-            //droneToLists.ToList().AddRange(drones);
             foreach (var item in drones)
             {
                 droneToLists.Add(item);
             }
+            //new event that will call evre time that the ObservableCollection didact a change 
             droneToLists.CollectionChanged += DroneToLists_CollectionChanged;
+            //display the defult list 
             DroneListView.ItemsSource = droneToLists;
             StatusSelector.ItemsSource = Enum.GetValues(typeof(DroneStatuses));
             WeightSelctor.ItemsSource = Enum.GetValues(typeof(WeightCategories));
         }
 
-       
 
+        /// <summary>
+        /// a new event that we crate in the intaklizer :DroneToLists_CollectionChanged:
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void DroneToLists_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             StatusSelectorChanged();
         }
-
-
-        protected override void OnClosing(CancelEventArgs e)
+        /// <summary>
+        /// help fanction to choose what to show on the user side accordingly to user cohises ( bonous)
+        /// </summary>
+        private void StatusSelectorChanged()
         {
-            //base.OnClosing(e);
-            e.Cancel = ClosingWindow;
+            if (WeightSelctor.SelectedItem == null && StatusSelector.SelectedItem == null)
+                DroneListView.ItemsSource = droneToLists;
+            else if (WeightSelctor.SelectedItem == null)
+                DroneListView.ItemsSource = droneToLists.ToList().FindAll(x => x.Statuses == (DroneStatuses)StatusSelector.SelectedIndex);
+            else if (StatusSelector.SelectedItem == null)
+                DroneListView.ItemsSource = droneToLists.ToList().FindAll(x => x.MaxWeight == (WeightCategories)WeightSelctor.SelectedIndex);
+            else
+                DroneListView.ItemsSource = droneToLists.ToList().FindAll(x => x.Statuses == (DroneStatuses)StatusSelector.SelectedIndex && x.MaxWeight == (WeightCategories)WeightSelctor.SelectedIndex);
         }
-
-
+        /// <summary>
+        /// show on the user side accordingly to user cohises
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void StatusSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             StatusSelectorChanged();
         }
-
-        private void StatusSelectorChanged()
-        {
-            if (WeightSelctor.SelectedItem == null)
-                DroneListView.ItemsSource = droneToLists.ToList().FindAll(x => x.Statuses == (DroneStatuses)StatusSelector.SelectedIndex);
-            else
-                DroneListView.ItemsSource = droneToLists.ToList().FindAll(x => x.Statuses == (DroneStatuses)StatusSelector.SelectedIndex && x.MaxWeight == (WeightCategories)WeightSelctor.SelectedIndex);
-        }
-
+        /// <summary>
+        /// show on the user side accordingly to user cohises
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void whigetSelctor_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (StatusSelector.SelectedItem == null)
-                DroneListView.ItemsSource = droneToLists.ToList().FindAll(x => x.MaxWeight == (WeightCategories)WeightSelctor.SelectedIndex);
-            else
-                DroneListView.ItemsSource = droneToLists.ToList().FindAll(x => x.MaxWeight == (WeightCategories)WeightSelctor.SelectedIndex && x.Statuses == (DroneStatuses)StatusSelector.SelectedIndex);
+            StatusSelectorChanged();     
         }
-
+        /// <summary>
+        /// restart modem to set all options to default
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void res_Click(object sender, RoutedEventArgs e)
         {
             StatusSelector.SelectedItem = null;
             WeightSelctor.SelectedItem = null;
-            DroneListView.ItemsSource = droneToLists;
+            //DroneListView.ItemsSource = droneToLists;
+            StatusSelectorChanged();
         }
-
+        /// <summary>
+        /// Add drone button which activates the builder in the Add drone window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BAddDrone_Click(object sender, RoutedEventArgs e)
         {
+            // we send ""this"" window becuse we want to use it in the new window
             new DroneWindow(AccessIbl, this).Show();
         }
 
+        /// <summary>
+        /// cancel the option to clik x to close the window 
+        /// </summary>
+        /// <param name="e">close window</param>
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            e.Cancel = ClosingWindow;
+        }
+
+        /// <summary>
+        /// to aloow closing again but just in the spcific close boutoon 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Bclose_Click(object sender, RoutedEventArgs e)
         {
-            //temp.Cancel = false;
             ClosingWindow = false;
             Close();
+            //Application.Current.Windows; לשאול איך לסגור את החלון המשני אם אני סוגר חלון אחר 
         }
     }
 }
