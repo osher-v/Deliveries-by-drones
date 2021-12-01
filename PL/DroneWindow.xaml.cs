@@ -191,7 +191,7 @@ namespace PL
             TBDroneStatuses.Text = MyDrone.Statuses.ToString();
             TBLocation.Text = MyDrone.CurrentLocation.ToString();
             TBparcelInDelivery.Text = MyDrone.Delivery.ToString();
-
+            BModalUpdate.IsEnabled = false;
             //הסוויץ בודק מה ערך הסטטוס של הרחפן ופותח כפתורים
             switch ((DroneStatuses)MyDrone.Statuses)
             {
@@ -209,7 +209,7 @@ namespace PL
                     {
                         BDeliveryPackage.Visibility = Visibility.Visible;
                     }
-                    else // 
+                    else 
                     {
                         BPickedUp.Visibility = Visibility.Visible;
                     }
@@ -232,8 +232,12 @@ namespace PL
             {
                 e.Handled = true;
             }
-
-            BModalUpdate.Visibility = Visibility.Visible;
+            if(TBmodel.Text != MyDrone.Model)
+            {
+                BModalUpdate.IsEnabled = true;
+            }
+            
+            //BModalUpdate.Visibility = Visibility.Visible;
         }
 
         private void BModalUpdate_Click(object sender, RoutedEventArgs e)
