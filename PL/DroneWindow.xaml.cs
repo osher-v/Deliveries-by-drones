@@ -13,6 +13,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Collections.ObjectModel;
 
 using IBL.BO;
 
@@ -171,7 +172,7 @@ namespace PL
         }
 
         ///~~~~~~~~~~~~~~~~~~~~~~~~~~~~רחפן בפעולות~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~///
-
+        
         public Drone MyDrone;
 
         public DroneWindow(IBL.IBL bl, DroneListWindow _DroneListWindow, int id)
@@ -202,6 +203,9 @@ namespace PL
 
                 case DroneStatuses.inMaintenance:
                     BReleaseDrone.Visibility = Visibility.Visible;
+                    BReleaseDrone.IsEnabled = false;
+                    Ltime.Visibility = Visibility.Visible;
+                    TBtime.Visibility = Visibility.Visible;                
                     break;
 
                 case DroneStatuses.busy:
@@ -239,26 +243,86 @@ namespace PL
 
         private void BModalUpdate_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
+            //try
+            //{
                 AccessIbl.UpdateDroneName(MyDrone.Id, TBmodel.Text);
                 MessageBoxResult result = MessageBox.Show("The operation was successful", "info", MessageBoxButton.OK, MessageBoxImage.Information);//לטלפל בX
                 switch (result)
                 {
                     case MessageBoxResult.OK:
-                        BModalUpdate.Visibility = Visibility.Hidden;
+                        BModalUpdate.IsEnabled = false;
                         DroneListWindow.StatusSelectorChanged();
-                        //DroneListWindow.droneToLists;
-                        //איך לעדכן את המשקיף בעדכון שקרה
                         break;
                     default:
                         break;
                 }
-            }
+            //}
+            /*
             catch (NonExistentObjectException ex)
             {
                 //Console.WriteLine(ex);
             }
+            */
+        }
+
+        private void BSendToCharge_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                AccessIbl.SendingDroneforCharging(MyDrone.Id);
+
+                MessageBoxResult result = MessageBox.Show("The operation was successful", "info", MessageBoxButton.OK, MessageBoxImage.Information);//לטלפל בX
+                switch (result)
+                {
+                    case MessageBoxResult.OK:
+                        DroneListWindow.StatusSelectorChanged();
+                        TBDroneStatuses.Text = "inMaintenance"; //לתקן כמה שיותר מהר לקרוא ליהודהההההההההההההההההההה
+                        //בהמשך יהיו גם שינויים של מיקום ואולי של עוד דברים לכן חייבים משקיף
+                        BSendToCharge.Visibility = Visibility.Hidden;
+                        BReleaseDrone.Visibility = Visibility.Visible;
+
+                        BReleaseDrone.IsEnabled = false;
+                        Ltime.Visibility = Visibility.Visible;
+                        TBtime.Visibility = Visibility.Visible;
+                        break;
+                    default:
+                        break;
+                }
+
+                //Console.WriteLine("The operation was successful");
+            }
+            //catch (NonExistentObjectException ex)
+            //{
+
+            //}
+            catch (TheDroneCanNotBeSentForCharging ex)
+            {
+                MessageBox.Show(ex.Message, "info");
+            }
+        }
+
+        private void BReleaseDrone_Click(object sender, RoutedEventArgs e)
+        {
+
+            //try
+            //{
+            //    AccessIbl.ReleaseDroneFromCharging(MyDrone.Id, time);
+            //    //Console.WriteLine("The operation was successful");
+            //}
+            //catch (NonExistentObjectException ex)
+            //{
+            //    Console.WriteLine(ex);
+            //}
+            //catch (OnlyMaintenanceDroneWillBeAbleToBeReleasedFromCharging ex)
+            //{
+            //    //Console.WriteLine(ex);
+            //}
+        }
+
+        private void TBtime_KeyDown(object sender, KeyEventArgs e)
+        {
+            BReleaseDrone.IsEnabled = true;
+            //איך אני גורם שזה יהיה בפורמט של זמן
         }
     }
 }

@@ -71,11 +71,14 @@
             <TextBox x:Name="TBparcelInDelivery" HorizontalAlignment="Left" Margin="254,0,0,0" Grid.Row="6" Text="" TextWrapping="Wrap" VerticalAlignment="Center" Width="183" IsReadOnly="True" Height="73" Grid.RowSpan="4"/>
             <Button x:Name="BClose1" Content="סגירה" HorizontalAlignment="Left" Margin="632,3,0,0" Grid.Row="1" VerticalAlignment="Top" FontSize="18" FontWeight="Bold" Width="157" Click="BClose1_Click"/>
             <Button x:Name="BModalUpdate" Content="עדכון" Visibility="Visible" HorizontalAlignment="Left" Margin="632,0,0,0" Grid.Row="2" VerticalAlignment="Center" RenderTransformOrigin="0.488,1.204" FontSize="18" FontWeight="Bold" Width="157" Click="BModalUpdate_Click"/>
-            <Button x:Name="BSendToCharge" Content="שליחה לטעינה" Visibility="Hidden"  HorizontalAlignment="Left" Margin="632,0,0,0" Grid.Row="3" VerticalAlignment="Center" FontSize="18" FontWeight="Bold" Width="157"/>
-            <Button x:Name="BReleaseDrone" Content="שחרור מטעינה" Visibility="Hidden" HorizontalAlignment="Left" Margin="632,0,0,0" Grid.Row="4" VerticalAlignment="Center" FontSize="18" FontWeight="Bold" Width="157"/>
+            <Button x:Name="BSendToCharge" Content="שליחה לטעינה" Visibility="Hidden"  HorizontalAlignment="Left" Margin="632,0,0,0" Grid.Row="3" VerticalAlignment="Center" FontSize="18" FontWeight="Bold" Width="157" Click="BSendToCharge_Click"/>
+            <Button x:Name="BReleaseDrone" Content="שחרור מטעינה" Visibility="Hidden" HorizontalAlignment="Left" Margin="632,0,0,0" Grid.Row="4" VerticalAlignment="Center" FontSize="18" FontWeight="Bold" Width="157" Click="BReleaseDrone_Click"/>
             <Button x:Name="BAssignPackage" Content="שליחת רחפן למשלוח" Visibility="Hidden" HorizontalAlignment="Left" Margin="632,0,0,0" Grid.Row="5" VerticalAlignment="Center" FontSize="16" FontWeight="Bold"/>
             <Button x:Name="BPickedUp" Content="איסוף חבילה" Visibility="Hidden" HorizontalAlignment="Left" Margin="632,0,0,0" Grid.Row="6" VerticalAlignment="Center" FontSize="16" FontWeight="Bold" Width="157"/>
             <Button x:Name="BDeliveryPackage" Content="אספקת חבילה" Visibility="Hidden" HorizontalAlignment="Left" Margin="632,0,0,0" Grid.Row="7" VerticalAlignment="Center" FontSize="16" FontWeight="Bold" Width="157"/>
+
+            <Label x:Name="Ltime" Content="משך זמן בטעינה" Visibility="Hidden" HorizontalAlignment="Left" Margin="503,27,0,0" Grid.Row="3" VerticalAlignment="Top" RenderTransformOrigin="0.402,-0.857" Grid.RowSpan="2" Width="111"/>
+            <TextBox x:Name="TBtime"  Visibility="Hidden" HorizontalAlignment="Left" Margin="494,18,0,0" Grid.Row="4" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" KeyDown="TBtime_KeyDown"/>
 
 
         </Grid>
