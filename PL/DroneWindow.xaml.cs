@@ -205,7 +205,8 @@ namespace PL
                     BReleaseDrone.Visibility = Visibility.Visible;
                     BReleaseDrone.IsEnabled = false;
                     Ltime.Visibility = Visibility.Visible;
-                    TBtime.Visibility = Visibility.Visible;                
+                    TBtime.Visibility = Visibility.Visible;
+                    Stime.Visibility = Visibility.Visible;
                     break;
 
                 case DroneStatuses.busy:
@@ -284,6 +285,7 @@ namespace PL
                         BReleaseDrone.IsEnabled = false;
                         Ltime.Visibility = Visibility.Visible;
                         TBtime.Visibility = Visibility.Visible;
+                        Stime.Visibility= Visibility.Visible;
                         break;
                     default:
                         break;
@@ -324,5 +326,6 @@ namespace PL
             BReleaseDrone.IsEnabled = true;
             //איך אני גורם שזה יהיה בפורמט של זמן
         }
+
     }
 }

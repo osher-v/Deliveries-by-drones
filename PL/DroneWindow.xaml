@@ -41,7 +41,7 @@
             <ComboBox x:Name="BaseStationID" Grid.Column="2" HorizontalAlignment="Left" Margin="46,0,0,0" Grid.Row="4" VerticalAlignment="Center" Width="120" Height="26"/>
         </Grid>
 
-        <Grid x:Name="updateDrone" Visibility="Hidden">
+        <Grid x:Name="updateDrone" Visibility="Visible">
             <Grid.RowDefinitions>
                 <RowDefinition Height="2*"/>
                 <RowDefinition Height="*"/>
@@ -78,7 +78,8 @@
             <Button x:Name="BDeliveryPackage" Content="אספקת חבילה" Visibility="Hidden" HorizontalAlignment="Left" Margin="632,0,0,0" Grid.Row="7" VerticalAlignment="Center" FontSize="16" FontWeight="Bold" Width="157"/>
 
             <Label x:Name="Ltime" Content="משך זמן בטעינה" Visibility="Hidden" HorizontalAlignment="Left" Margin="503,27,0,0" Grid.Row="3" VerticalAlignment="Top" RenderTransformOrigin="0.402,-0.857" Grid.RowSpan="2" Width="111"/>
-            <TextBox x:Name="TBtime"  Visibility="Hidden" HorizontalAlignment="Left" Margin="494,18,0,0" Grid.Row="4" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" KeyDown="TBtime_KeyDown"/>
+            <TextBox x:Name="TBtime"  Visibility="Hidden" HorizontalAlignment="Left"  Margin="494,18,0,0" Grid.Row="4" Text="{Binding ElementName=Stime, Path=Value}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" KeyDown="TBtime_KeyDown"/>
+            <Slider x:Name="Stime" Maximum="60" Minimum="0" SmallChange="1" Cursor="Hand" TickPlacement="Both" TickFrequency="10" HorizontalAlignment="Left" Margin="494,5,0,0" VerticalAlignment="Top" Width="120" Grid.Row="5" Visibility="Hidden"/>
 
 
         </Grid>
