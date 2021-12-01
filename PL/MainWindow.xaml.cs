@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-
+using System.Media;
 namespace PL
 {
     /// <summary>
@@ -29,7 +29,11 @@ namespace PL
 
         private void ShowDroneList_Click(object sender, RoutedEventArgs e)
         {
-            new DroneListWindow(AccessIbl).Show(); 
+            new DroneListWindow(AccessIbl).Show();
+            SoundPlayer sound = new SoundPlayer(@"C:\Users\osher\source\repos\bcalal.wav");
+            sound.Load();
+            sound.Play();
+            
         }
     }
 }

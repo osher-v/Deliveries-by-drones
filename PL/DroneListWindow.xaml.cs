@@ -64,16 +64,24 @@ namespace PL
         /// <summary>
         /// help fanction to choose what to show on the user side accordingly to user cohises ( bonous)
         /// </summary>
-        private void StatusSelectorChanged()
+        public void StatusSelectorChanged()
         {
             if (WeightSelctor.SelectedItem == null && StatusSelector.SelectedItem == null)
-                DroneListView.ItemsSource = droneToLists;
+            {
+                DroneListView.ItemsSource = droneToLists.ToList();
+            }
             else if (WeightSelctor.SelectedItem == null)
+            {
                 DroneListView.ItemsSource = droneToLists.ToList().FindAll(x => x.Statuses == (DroneStatuses)StatusSelector.SelectedIndex);
+            }
             else if (StatusSelector.SelectedItem == null)
+            {
                 DroneListView.ItemsSource = droneToLists.ToList().FindAll(x => x.MaxWeight == (WeightCategories)WeightSelctor.SelectedIndex);
+            }
             else
+            {
                 DroneListView.ItemsSource = droneToLists.ToList().FindAll(x => x.Statuses == (DroneStatuses)StatusSelector.SelectedIndex && x.MaxWeight == (WeightCategories)WeightSelctor.SelectedIndex);
+            }
         }
         /// <summary>
         /// show on the user side accordingly to user cohises

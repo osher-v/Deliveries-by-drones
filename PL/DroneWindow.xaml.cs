@@ -177,7 +177,6 @@ namespace PL
         public DroneWindow(IBL.IBL bl, DroneListWindow _DroneListWindow, int id)
         {
             InitializeComponent();
-
             updateDrone.Visibility = Visibility.Visible;
 
             AccessIbl = bl;
@@ -247,6 +246,7 @@ namespace PL
                 {
                     case MessageBoxResult.OK:
                         BModalUpdate.Visibility = Visibility.Hidden;
+                        DroneListWindow.StatusSelectorChanged();
                         //DroneListWindow.droneToLists;
                         //איך לעדכן את המשקיף בעדכון שקרה
                         break;
