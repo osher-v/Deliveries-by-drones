@@ -73,14 +73,18 @@
             <Button x:Name="BModalUpdate" Content="עדכון" Visibility="Visible" HorizontalAlignment="Left" Margin="632,0,0,0" Grid.Row="2" VerticalAlignment="Center" RenderTransformOrigin="0.488,1.204" FontSize="18" FontWeight="Bold" Width="157" Click="BModalUpdate_Click"/>
             <Button x:Name="BSendToCharge" Content="שליחה לטעינה" Visibility="Hidden"  HorizontalAlignment="Left" Margin="632,0,0,0" Grid.Row="3" VerticalAlignment="Center" FontSize="18" FontWeight="Bold" Width="157" Click="BSendToCharge_Click"/>
             <Button x:Name="BReleaseDrone" Content="שחרור מטעינה" Visibility="Hidden" HorizontalAlignment="Left" Margin="632,0,0,0" Grid.Row="4" VerticalAlignment="Center" FontSize="18" FontWeight="Bold" Width="157" Click="BReleaseDrone_Click"/>
-            <Button x:Name="BAssignPackage" Content="שליחת רחפן למשלוח" Visibility="Visible" HorizontalAlignment="Left" Margin="632,0,0,0" Grid.Row="5" VerticalAlignment="Center" FontSize="16" FontWeight="Bold" Click="BAssignPackage_Click"/>
+            <Button x:Name="BAssignPackage" Content="שליחת רחפן למשלוח" Visibility="Hidden" HorizontalAlignment="Left" Margin="632,0,0,0" Grid.Row="5" VerticalAlignment="Center" FontSize="16" FontWeight="Bold" Click="BAssignPackage_Click"/>
             <Button x:Name="BPickedUp" Content="איסוף חבילה" Visibility="Hidden" HorizontalAlignment="Left" Margin="632,0,0,0" Grid.Row="6" VerticalAlignment="Center" FontSize="16" FontWeight="Bold" Width="157"/>
             <Button x:Name="BDeliveryPackage" Content="אספקת חבילה" Visibility="Hidden" HorizontalAlignment="Left" Margin="632,0,0,0" Grid.Row="7" VerticalAlignment="Center" FontSize="16" FontWeight="Bold" Width="157"/>
-
-            <Label x:Name="Ltime" Content="משך זמן בטעינה" Visibility="Hidden" HorizontalAlignment="Left" Margin="503,27,0,0" Grid.Row="3" VerticalAlignment="Top" RenderTransformOrigin="0.402,-0.857" Grid.RowSpan="2" Width="111"/>
-            <TextBox x:Name="TBtime"  Visibility="Hidden" HorizontalAlignment="Left"  Margin="494,18,0,0" Grid.Row="4" Text="{Binding ElementName=Stime, Path=Value}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" KeyDown="TBtime_KeyDown"/>
-            <Slider x:Name="Stime" Maximum="60" Minimum="0" SmallChange="1" Cursor="Hand" TickPlacement="Both" TickFrequency="10" HorizontalAlignment="Left" Margin="494,5,0,0" VerticalAlignment="Top" Width="120" Grid.Row="5" Visibility="Hidden" ValueChanged="Stime_ValueChanged"/>
-
+            <Grid x:Name="TimeChoose" Visibility="Hidden" Margin="451,19,168,29" Grid.RowSpan="3" Grid.Row="3">
+                <Label x:Name="Ltime" Content="משך זמן בטעינה" Grid.Column="0" Visibility="Visible" HorizontalAlignment="Left" Margin="31,4,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.402,-0.857" Width="96"/>
+                <TextBox x:Name="TBhours"  Visibility="Visible" Grid.Column="0" HorizontalAlignment="Left"  Margin="16,30,0,0" Text="00" TextWrapping="Wrap" VerticalAlignment="Top" Width="22" KeyDown="TBhours_KeyDown" RenderTransformOrigin="-4.283,0.911"/>
+                <TextBox x:Name="TBmin"  HorizontalAlignment="Left" Grid.Column="0" Margin="64,30,0,0" Text="00" TextWrapping="Wrap" VerticalAlignment="Top" Width="22" Visibility="Visible" KeyDown="TBmin_KeyDown"/>
+                <TextBox x:Name="TBsec" HorizontalAlignment="Left" Grid.Column="0" Margin="116,30,0,0" Text="00" TextWrapping="Wrap" VerticalAlignment="Top" Width="22" Visibility="Visible" KeyDown="TBsec_KeyDown"/>
+                <Label x:Name="Ldots"  Content=":" HorizontalAlignment="Left" Grid.Column="0" Margin="43,20,0,0" VerticalAlignment="Top" Width="16" Height="30" FontSize="18" Visibility="Visible"/>
+                <Label x:Name="Ldots1" Content=":" HorizontalAlignment="Left" Grid.Column="0" Margin="95,20,0,0" VerticalAlignment="Top" Width="16" Height="31" FontSize="18" Visibility="Visible"/>
+                <CheckBox x:Name="CBtimeOk"  Content="" HorizontalAlignment="Left" Margin="143,17,0,29" Checked="CBtimeOk_Checked" Visibility="Visible" BorderBrush="#FF24BD24" Width="17" Background="White" Foreground="#FF1743D8"/>
+            </Grid>
 
         </Grid>
 

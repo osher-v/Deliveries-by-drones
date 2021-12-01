@@ -173,7 +173,7 @@ namespace PL
         }
 
         ///~~~~~~~~~~~~~~~~~~~~~~~~~~~~רחפן בפעולות~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~///
-        
+
         public Drone MyDrone;
 
         public DroneWindow(IBL.IBL bl, DroneListWindow _DroneListWindow, int id)
@@ -205,9 +205,7 @@ namespace PL
                 case DroneStatuses.inMaintenance:
                     BReleaseDrone.Visibility = Visibility.Visible;
                     BReleaseDrone.IsEnabled = false;
-                    Ltime.Visibility = Visibility.Visible;
-                    TBtime.Visibility = Visibility.Visible;
-                    Stime.Visibility = Visibility.Visible;
+                    TimeChoose.Visibility = Visibility.Visible;
                     break;
 
                 case DroneStatuses.busy:
@@ -215,7 +213,7 @@ namespace PL
                     {
                         BDeliveryPackage.Visibility = Visibility.Visible;
                     }
-                    else 
+                    else
                     {
                         BPickedUp.Visibility = Visibility.Visible;
                     }
@@ -223,7 +221,7 @@ namespace PL
 
                 default:
                     break;
-            }         
+            }
         }
 
         private void BClose1_Click(object sender, RoutedEventArgs e)
@@ -233,7 +231,7 @@ namespace PL
         }
 
         private void TBmodel_KeyDown_1(object sender, KeyEventArgs e)
-        {          
+        {
             if (TBmodel.Text.Length > 5)
             {
                 e.Handled = true;
@@ -247,17 +245,17 @@ namespace PL
         {
             //try
             //{
-                AccessIbl.UpdateDroneName(MyDrone.Id, TBmodel.Text);
-                MessageBoxResult result = MessageBox.Show("The operation was successful", "info", MessageBoxButton.OK, MessageBoxImage.Information);//לטלפל בX
-                switch (result)
-                {
-                    case MessageBoxResult.OK:
-                        BModalUpdate.IsEnabled = false;
-                        DroneListWindow.StatusSelectorChanged();
-                        break;
-                    default:
-                        break;
-                }
+            AccessIbl.UpdateDroneName(MyDrone.Id, TBmodel.Text);
+            MessageBoxResult result = MessageBox.Show("The operation was successful", "info", MessageBoxButton.OK, MessageBoxImage.Information);//לטלפל בX
+            switch (result)
+            {
+                case MessageBoxResult.OK:
+                    BModalUpdate.IsEnabled = false;
+                    DroneListWindow.StatusSelectorChanged();
+                    break;
+                default:
+                    break;
+            }
             //}
             /*
             catch (NonExistentObjectException ex)
@@ -284,9 +282,7 @@ namespace PL
                         BReleaseDrone.Visibility = Visibility.Visible;
 
                         BReleaseDrone.IsEnabled = false;
-                        Ltime.Visibility = Visibility.Visible;
-                        TBtime.Visibility = Visibility.Visible;
-                        Stime.Visibility= Visibility.Visible;
+                        TimeChoose.Visibility = Visibility.Visible;
                         break;
                     default:
                         break;
@@ -308,8 +304,8 @@ namespace PL
         {
             //DateTime time = DateTime.Parse(TBtime.Text,time);
             DateTime time;
-            DateTime.TryParse(TBtime.Text, out time);//לבדוק מה עם paras
-
+            string stringTime = $"{TBhours.Text}:{TBmin.Text}:{TBsec.Text}";
+            DateTime.TryParse(stringTime, out time);//לבדוק מה עם paras
             AccessIbl.ReleaseDroneFromCharging(MyDrone.Id, time);
 
             MessageBoxResult result = MessageBox.Show("The operation was successful", "info", MessageBoxButton.OK, MessageBoxImage.Information);//לטלפל בX
@@ -318,15 +314,16 @@ namespace PL
                 case MessageBoxResult.OK:
                     DroneListWindow.StatusSelectorChanged(); //הבטריה לא מתעדכנת ברשימה
                     TBDroneStatuses.Text = "free"; //לתקן כמה שיותר מהר לקרוא ליהודהההההההההההההההההההה
-                                                            //בהמשך יהיו גם שינויים של מיקום ואולי של עוד דברים לכן חייבים משקיף
+                                                   //בהמשך יהיו גם שינויים של מיקום ואולי של עוד דברים לכן חייבים משקיף
                     BSendToCharge.Visibility = Visibility.Visible;
                     BReleaseDrone.Visibility = Visibility.Hidden;
 
                     BReleaseDrone.IsEnabled = false;
+                    TBhours.Text = "00";
+                    TBmin.Text = "00";
+                    TBsec.Text = "00";
+                    TimeChoose.Visibility = Visibility.Hidden;
 
-                    Ltime.Visibility = Visibility.Hidden;
-                    TBtime.Visibility = Visibility.Hidden;
-                    Stime.Visibility = Visibility.Hidden;
                     break;
                 default:
                     break;
@@ -345,12 +342,6 @@ namespace PL
             //    //Console.WriteLine(ex);
             //}
 
-        }
-
-        private void TBtime_KeyDown(object sender, KeyEventArgs e)
-        {
-            BReleaseDrone.IsEnabled = true;
-            //איך אני גורם שזה יהיה בפורמט של זמן
         }
 
         private void Stime_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -376,9 +367,7 @@ namespace PL
 
                         BReleaseDrone.IsEnabled = false;
 
-                        Ltime.Visibility = Visibility.Hidden;
-                        TBtime.Visibility = Visibility.Hidden;
-                        Stime.Visibility = Visibility.Hidden;
+                        TimeChoose.Visibility = Visibility.Hidden;
                         break;
                     default:
                         break;
@@ -396,6 +385,82 @@ namespace PL
             {
                 MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+        }
+        private void TBhours_KeyDown(object sender, KeyEventArgs e)
+        {
+            //איך אני גורם שזה יהיה בפורמט של זמן
+            if (e.Key < Key.D0 || e.Key > Key.D9)
+            {
+                e.Handled = e.Key is < Key.NumPad0 or > Key.NumPad9;
+            }
+            if (TBhours.Text.Length > 1)
+            {
+                e.Handled = true;
+            }
+            TBhours.BorderBrush = Brushes.Gray; //בונוס 
+
+
+        }
+        private void TBmin_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key < Key.D0 || e.Key > Key.D9)
+            {
+                e.Handled = e.Key is < Key.NumPad0 or > Key.NumPad9;
+            }
+            if (TBmin.Text.Length > 1)
+            {
+                e.Handled = true;
+            }
+            TBmin.BorderBrush = Brushes.Gray; //בונוס 
+
+        }
+
+        private void TBsec_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key < Key.D0 || e.Key > Key.D9)
+            {
+                e.Handled = e.Key is < Key.NumPad0 or > Key.NumPad9;
+            }
+            if (TBsec.Text.Length > 1)
+            {
+                e.Handled = true;
+            }
+            TBsec.BorderBrush = Brushes.Gray; //בונוס 
+
+        }
+
+        private void CBtimeOk_Checked(object sender, RoutedEventArgs e)
+        {
+            int hours, min, sec;
+            int.TryParse(TBhours.Text, out hours);
+            int.TryParse(TBmin.Text, out min);
+            int.TryParse(TBsec.Text, out sec);
+
+
+            if (hours > 24)
+            {
+                MessageBox.Show("נא הכנס שעות בין 0-24", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                TBhours.BorderBrush = Brushes.Red; //בונוס 
+                CBtimeOk.IsChecked = false;
+
+            }
+            else if (min > 60)
+            {
+                MessageBox.Show("נא הכנס דקות בין 0-60", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                TBmin.BorderBrush = Brushes.Red; //בונוס 
+                CBtimeOk.IsChecked = false;
+            }
+            else if (sec > 60)
+            {
+                MessageBox.Show("נא הכנס שניות בין 0-60", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                TBsec.BorderBrush = Brushes.Red; //בונוס 
+                CBtimeOk.IsChecked = false;
+            }
+            else
+            {
+                BReleaseDrone.IsEnabled = true;
+            }
+            
         }
     }
 }
