@@ -232,11 +232,8 @@ namespace PL
             {
                 e.Handled = true;
             }
-            if(TBmodel.Text != MyDrone.Model)
-            {
-                BModalUpdate.IsEnabled = true;
-            }
-            
+
+            BModalUpdate.IsEnabled = true;
             //BModalUpdate.Visibility = Visibility.Visible;
         }
 
