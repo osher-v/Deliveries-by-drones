@@ -390,11 +390,11 @@ namespace PL
             //}
             catch (NoSuitablePsrcelWasFoundToBelongToTheDrone ex)
             {
-                Console.WriteLine(ex);
+                MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             catch (DroneCantBeAssigend ex)
             {
-                Console.WriteLine(ex);
+                MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }
