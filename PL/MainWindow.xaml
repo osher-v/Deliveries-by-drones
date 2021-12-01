@@ -66,9 +66,12 @@
     </Window.Resources>
 
     <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="/1454707944-camera-drones.gif"/>
+        </Grid.Background>
         <Button Style="{DynamicResource ButtonStyle1}" x:Name="ShowDroneList" Content="Login" BorderThickness="0"
-                HorizontalAlignment="Center"
-                Margin="0,184,0,0" 
+                HorizontalAlignment="Left"
+                Margin="335,304,0,0" 
                 VerticalAlignment="Top"
                 Height="49" Width="88"
                 Click="ShowDroneList_Click" 
