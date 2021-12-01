@@ -54,12 +54,14 @@ namespace IBL
                 throw new OnlyMaintenanceDroneWillBeAbleToBeReleasedFromCharging();
             }
 
-            double horsnInCahrge = time.Hour + (((double)(time.Minute)) / 60) + (((double)(time.Second)) / 3600);
+            double horsnInCahrge = time.Hour + (((double)time.Minute) / 60) + (((double)time.Second) / 3600);
+            Console.WriteLine(horsnInCahrge);
 
             double batrryCharge = horsnInCahrge * DroneLoadingRate + drone.BatteryStatus;
             if (batrryCharge > 100)
                 batrryCharge = 100;
             drone.BatteryStatus = batrryCharge;
+            Console.WriteLine(drone.BatteryStatus);
             drone.Statuses = DroneStatuses.free;
 
             AccessIdal.UpdatePluseChargeSlots(AccessIdal.GetBaseCharge(drone.Id).StationId);

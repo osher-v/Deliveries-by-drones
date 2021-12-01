@@ -16,6 +16,7 @@ using System.Windows.Shapes;
 using System.Collections.ObjectModel;
 
 using IBL.BO;
+using System.ComponentModel.DataAnnotations;
 
 namespace PL
 {
@@ -305,11 +306,35 @@ namespace PL
 
         private void BReleaseDrone_Click(object sender, RoutedEventArgs e)
         {
+            //DateTime time = DateTime.Parse(TBtime.Text,time);
+            DateTime time;
+            DateTime.TryParse(TBtime.Text, out time);//לבדוק מה עם paras
+
+            AccessIbl.ReleaseDroneFromCharging(MyDrone.Id, time);
+
+            MessageBoxResult result = MessageBox.Show("The operation was successful", "info", MessageBoxButton.OK, MessageBoxImage.Information);//לטלפל בX
+            switch (result)
+            {
+                case MessageBoxResult.OK:
+                    DroneListWindow.StatusSelectorChanged(); //הבטריה לא מתעדכנת ברשימה
+                    TBDroneStatuses.Text = "free"; //לתקן כמה שיותר מהר לקרוא ליהודהההההההההההההההההההה
+                                                            //בהמשך יהיו גם שינויים של מיקום ואולי של עוד דברים לכן חייבים משקיף
+                    BSendToCharge.Visibility = Visibility.Visible;
+                    BReleaseDrone.Visibility = Visibility.Hidden;
+
+                    BReleaseDrone.IsEnabled = false;
+
+                    Ltime.Visibility = Visibility.Hidden;
+                    TBtime.Visibility = Visibility.Hidden;
+                    Stime.Visibility = Visibility.Hidden;
+                    break;
+                default:
+                    break;
+            }
 
             //try
-            //{
-            //    AccessIbl.ReleaseDroneFromCharging(MyDrone.Id, time);
-            //    //Console.WriteLine("The operation was successful");
+            //{    
+            //Console.WriteLine("The operation was successful");
             //}
             //catch (NonExistentObjectException ex)
             //{
@@ -319,6 +344,7 @@ namespace PL
             //{
             //    //Console.WriteLine(ex);
             //}
+
         }
 
         private void TBtime_KeyDown(object sender, KeyEventArgs e)
@@ -327,5 +353,49 @@ namespace PL
             //איך אני גורם שזה יהיה בפורמט של זמן
         }
 
+        private void Stime_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            BReleaseDrone.IsEnabled = true;
+        }
+
+        private void BAssignPackage_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                AccessIbl.AssignPackageToDdrone(MyDrone.Id);
+
+                MessageBoxResult result = MessageBox.Show("The operation was successful", "info", MessageBoxButton.OK, MessageBoxImage.Information);//לטלפל בX
+                switch (result)
+                {
+                    case MessageBoxResult.OK:
+                        DroneListWindow.StatusSelectorChanged();
+                        TBDroneStatuses.Text = "free"; //לתקן כמה שיותר מהר לקרוא ליהודהההההההההההההההההההה
+                                                       //בהמשך יהיו גם שינויים של מיקום ואולי של עוד דברים לכן חייבים משקיף
+                        BSendToCharge.Visibility = Visibility.Visible;
+                        BReleaseDrone.Visibility = Visibility.Hidden;
+
+                        BReleaseDrone.IsEnabled = false;
+
+                        Ltime.Visibility = Visibility.Hidden;
+                        TBtime.Visibility = Visibility.Hidden;
+                        Stime.Visibility = Visibility.Hidden;
+                        break;
+                    default:
+                        break;
+                }
+            }
+            //catch (NonExistentObjectException ex)
+            //{
+            //    Console.WriteLine(ex);
+            //}
+            catch (NoSuitablePsrcelWasFoundToBelongToTheDrone ex)
+            {
+                Console.WriteLine(ex);
+            }
+            catch (DroneCantBeAssigend ex)
+            {
+                Console.WriteLine(ex);
+            }
+        }
     }
 }
