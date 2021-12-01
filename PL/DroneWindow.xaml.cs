@@ -277,7 +277,7 @@ namespace PL
                 switch (result)
                 {
                     case MessageBoxResult.OK:
-                        DroneListWindow.StatusSelectorChanged();
+                        DroneListWindow.StatusSelectorChanged(); //זה לא אמור להיותתתתתת כה ולא ככה עובדים עם אובסרבר
                         TBDroneStatuses.Text = "inMaintenance"; //לתקן כמה שיותר מהר לקרוא ליהודהההההההההההההההההההה
                         //בהמשך יהיו גם שינויים של מיקום ואולי של עוד דברים לכן חייבים משקיף
                         BSendToCharge.Visibility = Visibility.Hidden;
