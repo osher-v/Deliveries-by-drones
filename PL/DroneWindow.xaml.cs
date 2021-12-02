@@ -31,6 +31,7 @@ namespace PL
         /// <summary> the calling window, becuse we want to use it here </summary>
         /// 
         private DroneListWindow DroneListWindow;
+        #region בנאי להוספה 
         /// <summary>
         /// consractor for add drone option 
         /// </summary>
@@ -171,9 +172,9 @@ namespace PL
         {
             e.Cancel = ClosingWindow;
         }
+        #endregion
 
-        ///~~~~~~~~~~~~~~~~~~~~~~~~~~~~רחפן בפעולות~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~///
-
+        #region רחפן בפעולות 
         public Drone MyDrone;
 
         public DroneWindow(IBL.IBL bl, DroneListWindow _DroneListWindow, int id)
@@ -323,6 +324,7 @@ namespace PL
                     TBmin.Text = "00";
                     TBsec.Text = "00";
                     TimeChoose.Visibility = Visibility.Hidden;
+                    CBtimeOk.IsChecked = false;
 
                     break;
                 default:
@@ -360,7 +362,7 @@ namespace PL
                 {
                     case MessageBoxResult.OK:
                         DroneListWindow.StatusSelectorChanged();
-                        TBDroneStatuses.Text = "free"; //לתקן כמה שיותר מהר לקרוא ליהודהההההההההההההההההההה
+                        TBDroneStatuses.Text = "busy"; //לתקן כמה שיותר מהר לקרוא ליהודהההההההההההההההההההה
                                                        //בהמשך יהיו גם שינויים של מיקום ואולי של עוד דברים לכן חייבים משקיף
                         BSendToCharge.Visibility = Visibility.Visible;
                         BReleaseDrone.Visibility = Visibility.Hidden;
@@ -386,6 +388,7 @@ namespace PL
                 MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+        #region מטפל בכפתורי זמן בטעינה
         private void TBhours_KeyDown(object sender, KeyEventArgs e)
         {
             //איך אני גורם שזה יהיה בפורמט של זמן
@@ -437,30 +440,41 @@ namespace PL
             int.TryParse(TBsec.Text, out sec);
 
 
-            if (hours > 24)
+            if (hours > 23 || TBhours.Text == "")
             {
-                MessageBox.Show("נא הכנס שעות בין 0-24", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("נא הכנס שעות בין 0-23", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
                 TBhours.BorderBrush = Brushes.Red; //בונוס 
                 CBtimeOk.IsChecked = false;
 
             }
-            else if (min > 60)
+            else if (min > 59 || TBmin.Text == "")
             {
-                MessageBox.Show("נא הכנס דקות בין 0-60", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("נא הכנס דקות בין 0-59", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
                 TBmin.BorderBrush = Brushes.Red; //בונוס 
                 CBtimeOk.IsChecked = false;
             }
-            else if (sec > 60)
+            else if (sec > 59 || TBsec.Text == "")
             {
-                MessageBox.Show("נא הכנס שניות בין 0-60", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("נא הכנס שניות בין 0-59", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
                 TBsec.BorderBrush = Brushes.Red; //בונוס 
                 CBtimeOk.IsChecked = false;
             }
             else
             {
                 BReleaseDrone.IsEnabled = true;
+                TBhours.IsReadOnly = true;
+                TBmin.IsReadOnly = true;
+                TBsec.IsReadOnly = true;
             }
-            
         }
+        private void CBtimeOk_Unchecked(object sender, RoutedEventArgs e)
+        {
+            BReleaseDrone.IsEnabled = false;
+            TBhours.IsReadOnly = false;
+            TBmin.IsReadOnly = false;
+            TBsec.IsReadOnly = false;
+        }
+        #endregion
+        #endregion רחפן בפעולות
     }
 }
