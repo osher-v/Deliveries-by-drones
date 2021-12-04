@@ -177,16 +177,19 @@ namespace PL
         #region רחפן בפעולות 
         public Drone MyDrone;
 
-        public DroneWindow(IBL.IBL bl, DroneListWindow _DroneListWindow, int id)
+        public int indexDrone;
+        public DroneWindow(IBL.IBL bl, DroneListWindow _DroneListWindow, int id, int _indexDrone)
         {
             InitializeComponent();
             updateDrone.Visibility = Visibility.Visible;
-
+            indexDrone = _indexDrone;
             AccessIbl = bl;
 
             DroneListWindow = _DroneListWindow;
 
             MyDrone = bl.GetDrone(id);
+            DataContext = MyDrone;
+
             TBID2.Text = MyDrone.Id.ToString();
             TBmodel.Text = MyDrone.Model.ToString();
             TBWeightCategories.Text = MyDrone.MaxWeight.ToString();
@@ -230,16 +233,26 @@ namespace PL
             ClosingWindow = false;
             Close();
         }
-
+        
         private void TBmodel_KeyDown_1(object sender, KeyEventArgs e)
         {
-            if (TBmodel.Text.Length > 5)
+            
+           if (TBmodel.Text.Length > 5)//הוא נותן 6 ספרות בגלל שהנעילה מתבצעת רק אחרי המעשה
             {
                 e.Handled = true;
             }
 
-            BModalUpdate.IsEnabled = true;
+            if (TBmodel.Text.Length != 0)
+            {
+                BModalUpdate.IsEnabled = true;
+            }
+            else
+            {
+                BModalUpdate.IsEnabled = false;
+            }
+            
             //BModalUpdate.Visibility = Visibility.Visible;
+            
         }
 
         private void BModalUpdate_Click(object sender, RoutedEventArgs e)
@@ -251,7 +264,9 @@ namespace PL
             switch (result)
             {
                 case MessageBoxResult.OK:
-                    BModalUpdate.IsEnabled = false;
+                    BModalUpdate.IsEnabled = false; 
+                    DroneListWindow.droneToLists[indexDrone].Model = TBmodel.Text;
+                    DroneListWindow.droneToLists.Insert(indexDrone, DroneListWindow.droneToLists[indexDrone]);
                     DroneListWindow.StatusSelectorChanged();
                     break;
                 default:
@@ -475,6 +490,26 @@ namespace PL
             TBsec.IsReadOnly = false;
         }
         #endregion
+
         #endregion רחפן בפעולות
+
+        private void TBmodel_KeyUp(object sender, KeyEventArgs e)
+        {
+            /*
+            if (TBmodel.Text.Length > 5)//הוא נותן 6 ספרות בגלל שהנעילה מתבצעת רק אחרי המעשה
+            {
+                e.Handled = true;
+            }
+
+            if (TBmodel.Text.Length != 0)
+            {
+                BModalUpdate.IsEnabled = true;
+            }
+            else
+            {
+                BModalUpdate.IsEnabled = false;
+            }
+            */
+        }
     }
 }

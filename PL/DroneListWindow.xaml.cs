@@ -148,7 +148,8 @@ namespace PL
         private void DroneListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             DroneToList drone = (DroneToList)DroneListView.SelectedItem;
-            new DroneWindow(AccessIbl, this,drone.Id).Show();
+            int indexDrone = DroneListView.SelectedIndex;
+            new DroneWindow(AccessIbl, this,drone.Id, indexDrone).Show();
         }
 
 
