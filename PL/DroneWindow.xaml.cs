@@ -194,9 +194,9 @@ namespace PL
             TBmodel.Text = MyDrone.Model.ToString();
             TBWeightCategories.Text = MyDrone.MaxWeight.ToString();
             TBBatrryStatuses.Text = MyDrone.BatteryStatus.ToString();
-            TBDroneStatuses.Text = MyDrone.Statuses.ToString();
-            
+            TBDroneStatuses.Text = MyDrone.Statuses.ToString();      
             */
+
             TBLocation.Text = MyDrone.CurrentLocation.ToString(); //איך לעדכן ביידינג
             TBparcelInDelivery.Text = MyDrone.Delivery.ToString();
 

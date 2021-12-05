@@ -15,7 +15,7 @@ namespace IBL
         {
             public double longitude { get; set; }
             public double latitude { get; set; }
-
+            public string LocationStringh { get; set; }
             public override string ToString()
             {
                 string convertLongitude = DalObject.DalObject.ConvertDecimalDegreesToSexagesimal(longitude, (IDAL.DO.LongitudeAndLatitude)1);
