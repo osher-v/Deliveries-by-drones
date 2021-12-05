@@ -41,7 +41,7 @@
             <ComboBox x:Name="BaseStationID" Grid.Column="2" HorizontalAlignment="Left" Margin="46,0,0,0" Grid.Row="4" VerticalAlignment="Center" Width="120" Height="26"/>
         </Grid>
 
-        <Grid x:Name="updateDrone" Visibility="Visible">
+        <Grid x:Name="updateDrone" Visibility="Hidden">
             <Grid.RowDefinitions>
                 <RowDefinition Height="2*"/>
                 <RowDefinition Height="*"/>
