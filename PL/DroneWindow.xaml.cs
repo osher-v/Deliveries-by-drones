@@ -189,15 +189,19 @@ namespace PL
 
             MyDrone = bl.GetDrone(id);
             DataContext = MyDrone;
-
+            /*
             TBID2.Text = MyDrone.Id.ToString();
             TBmodel.Text = MyDrone.Model.ToString();
             TBWeightCategories.Text = MyDrone.MaxWeight.ToString();
             TBBatrryStatuses.Text = MyDrone.BatteryStatus.ToString();
             TBDroneStatuses.Text = MyDrone.Statuses.ToString();
-            TBLocation.Text = MyDrone.CurrentLocation.ToString();
+            
+            */
+            TBLocation.Text = MyDrone.CurrentLocation.ToString(); //איך לעדכן ביידינג
             TBparcelInDelivery.Text = MyDrone.Delivery.ToString();
+
             BModalUpdate.IsEnabled = false;
+
             //הסוויץ בודק מה ערך הסטטוס של הרחפן ופותח כפתורים
             switch ((DroneStatuses)MyDrone.Statuses)
             {
@@ -257,28 +261,24 @@ namespace PL
 
         private void BModalUpdate_Click(object sender, RoutedEventArgs e)
         {
-            //try
-            //{
             AccessIbl.UpdateDroneName(MyDrone.Id, TBmodel.Text);
             MessageBoxResult result = MessageBox.Show("The operation was successful", "info", MessageBoxButton.OK, MessageBoxImage.Information);//לטלפל בX
             switch (result)
             {
                 case MessageBoxResult.OK:
-                    BModalUpdate.IsEnabled = false; 
-                    DroneListWindow.droneToLists[indexDrone].Model = TBmodel.Text;
-                    DroneListWindow.droneToLists.Insert(indexDrone, DroneListWindow.droneToLists[indexDrone]);
+                    BModalUpdate.IsEnabled = false;
+
                     DroneListWindow.StatusSelectorChanged();
+                    //DroneListWindow.droneToLists[indexDrone].Model = TBmodel.Text;
+                    //DroneListWindow.droneToLists[indexDrone] = DroneListWindow.droneToLists[indexDrone];
+
+                    //DroneListWindow.droneToLists.Insert(indexDrone, DroneListWindow.droneToLists[indexDrone]);
+                    //DroneListWindow.StatusSelectorChanged();
+
                     break;
                 default:
                     break;
             }
-            //}
-            /*
-            catch (NonExistentObjectException ex)
-            {
-                //Console.WriteLine(ex);
-            }
-            */
         }
 
         private void BSendToCharge_Click(object sender, RoutedEventArgs e)
@@ -287,12 +287,20 @@ namespace PL
             {
                 AccessIbl.SendingDroneforCharging(MyDrone.Id);
 
-                MessageBoxResult result = MessageBox.Show("The operation was successful", "info", MessageBoxButton.OK, MessageBoxImage.Information);//לטלפל בX
+                MessageBoxResult result = MessageBox.Show("The operation was successful", "info", MessageBoxButton.OK, MessageBoxImage.Information);
                 switch (result)
                 {
                     case MessageBoxResult.OK:
-                        DroneListWindow.StatusSelectorChanged(); //זה לא אמור להיותתתתתת כה ולא ככה עובדים עם אובסרבר
-                        TBDroneStatuses.Text = "inMaintenance"; //לתקן כמה שיותר מהר לקרוא ליהודהההההההההההההההההההה
+
+                        //DroneListWindow.droneToLists[indexDrone].Statuses = DroneStatuses.inMaintenance;
+                        //DroneListWindow.droneToLists[indexDrone].CurrentLocation = AccessIbl.GetDrone(MyDrone.Id).CurrentLocation;
+                        //DroneListWindow.droneToLists[indexDrone].BatteryStatus = AccessIbl.GetDrone(MyDrone.Id).BatteryStatus;
+                        //DroneListWindow.droneToLists[indexDrone] = DroneListWindow.droneToLists[indexDrone];
+                        DroneListWindow.StatusSelectorChanged();
+
+                        MyDrone = AccessIbl.GetDrone(MyDrone.Id);
+                        DataContext = MyDrone;
+
                         //בהמשך יהיו גם שינויים של מיקום ואולי של עוד דברים לכן חייבים משקיף
                         BSendToCharge.Visibility = Visibility.Hidden;
                         BReleaseDrone.Visibility = Visibility.Visible;
@@ -303,13 +311,7 @@ namespace PL
                     default:
                         break;
                 }
-
-                //Console.WriteLine("The operation was successful");
-            }
-            //catch (NonExistentObjectException ex)
-            //{
-
-            //}
+            }           
             catch (TheDroneCanNotBeSentForCharging ex)
             {
                 MessageBox.Show(ex.Message, "info");
@@ -328,9 +330,11 @@ namespace PL
             switch (result)
             {
                 case MessageBoxResult.OK:
-                    DroneListWindow.StatusSelectorChanged(); //הבטריה לא מתעדכנת ברשימה
-                    TBDroneStatuses.Text = "free"; //לתקן כמה שיותר מהר לקרוא ליהודהההההההההההההההההההה
-                                                   //בהמשך יהיו גם שינויים של מיקום ואולי של עוד דברים לכן חייבים משקיף
+                    DroneListWindow.StatusSelectorChanged();
+                    //הבטריה לא מתעדכנת ברשימה
+                    MyDrone = AccessIbl.GetDrone(MyDrone.Id);
+                    DataContext = MyDrone;
+
                     BSendToCharge.Visibility = Visibility.Visible;
                     BReleaseDrone.Visibility = Visibility.Hidden;
 
@@ -511,5 +515,7 @@ namespace PL
             }
             */
         }
+
+        
     }
 }

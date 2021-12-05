@@ -56,17 +56,17 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <TextBox x:Name="TBID2" HorizontalAlignment="Left" Margin="34,0,0,0" Grid.Row="1" Text="{Binding Path=Id}" TextWrapping="Wrap" VerticalAlignment="Center" Width="120" IsReadOnly="True"/>
-            <TextBox x:Name="TBmodel" HorizontalAlignment="Left" Margin="34,0,0,0" Grid.Row="2" Text="" TextWrapping="Wrap" VerticalAlignment="Center" Width="120" KeyDown="TBmodel_KeyDown_1" KeyUp="TBmodel_KeyUp"/>
+            <TextBox x:Name="TBmodel" HorizontalAlignment="Left" Margin="34,0,0,0" Grid.Row="2" Text="{Binding Path=Model}" TextWrapping="Wrap" VerticalAlignment="Center" Width="120" KeyDown="TBmodel_KeyDown_1" KeyUp="TBmodel_KeyUp"/>
             <TextBox x:Name="TBLocation" HorizontalAlignment="Left" Margin="25,0,0,0" Grid.Row="6" Text="" TextWrapping="Wrap" VerticalAlignment="Center" Width="171" IsReadOnly="True" Height="73" Grid.RowSpan="4"/>
-            <TextBox x:Name="TBDroneStatuses" HorizontalAlignment="Left" Margin="34,0,0,0" Grid.Row="5" Text="" TextWrapping="Wrap" VerticalAlignment="Center" Width="120" IsReadOnly="True"/>
-            <TextBox x:Name="TBBatrryStatuses" HorizontalAlignment="Left" Margin="34,0,0,0" Grid.Row="4" Text="" TextWrapping="Wrap" VerticalAlignment="Center" Width="120" IsReadOnly="True"/>
+            <TextBox x:Name="TBDroneStatuses" HorizontalAlignment="Left" Margin="34,0,0,0" Grid.Row="5" Text="{Binding Path=Statuses}" TextWrapping="Wrap" VerticalAlignment="Center" Width="120" IsReadOnly="True"/>
+            <TextBox x:Name="TBBatrryStatuses" HorizontalAlignment="Left" Margin="34,0,0,0" Grid.Row="4" Text="{Binding Path=BatteryStatus}" TextWrapping="Wrap" VerticalAlignment="Center" Width="120" IsReadOnly="True"/>
             <Label Content="מספר מזהה" HorizontalAlignment="Left" Margin="180,0,0,0" Grid.Row="1" VerticalAlignment="Center" Height="26" Width="88"/>
             <Label Content="מודל " HorizontalAlignment="Left" Margin="180,0,0,0" Grid.Row="2" VerticalAlignment="Center" Height="26" Width="88"/>
             <Label Content="קטגוריית משקל" HorizontalAlignment="Left" Margin="180,0,0,0" Grid.Row="3" VerticalAlignment="Center" Height="26" Width="94"/>
             <Label Content="מצב סוללה" HorizontalAlignment="Left" Margin="180,0,0,0" Grid.Row="4" VerticalAlignment="Center" Height="26" Width="88"/>
             <Label Content="מצב רחפן" HorizontalAlignment="Left" Margin="180,0,0,0" Grid.Row="5" VerticalAlignment="Center" Height="26" Width="88"/>
             <Label Content="מיקום" HorizontalAlignment="Left" Margin="94,0,0,0" Grid.Row="6" VerticalAlignment="Center" Height="26" Width="88"/>
-            <TextBox x:Name="TBWeightCategories" HorizontalAlignment="Left" Margin="34,0,0,0" Grid.Row="3" Text="" TextWrapping="Wrap" VerticalAlignment="Center" Width="120" IsReadOnly="True"/>
+            <TextBox x:Name="TBWeightCategories" HorizontalAlignment="Left" Margin="34,0,0,0" Grid.Row="3" Text="{Binding Path=MaxWeight}" TextWrapping="Wrap" VerticalAlignment="Center" Width="120" IsReadOnly="True"/>
             <Label Content="חבילה בהעברה" HorizontalAlignment="Left" Margin="298,0,0,0" Grid.Row="6" VerticalAlignment="Center" Height="26" Width="94"/>
             <TextBox x:Name="TBparcelInDelivery" HorizontalAlignment="Left" Margin="254,0,0,0" Grid.Row="6" Text="" TextWrapping="Wrap" VerticalAlignment="Center" Width="183" IsReadOnly="True" Height="73" Grid.RowSpan="4"/>
             <Button x:Name="BClose1" Content="סגירה" HorizontalAlignment="Left" Margin="632,3,0,0" Grid.Row="1" VerticalAlignment="Top" FontSize="18" FontWeight="Bold" Width="157" Click="BClose1_Click"/>
