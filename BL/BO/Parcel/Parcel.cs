@@ -16,10 +16,10 @@ namespace IBL
             public CustomerInDelivery Sender { get; set; }
             public CustomerInDelivery Receiver { get; set; }
             public DroneInThePackage MyDrone { get; set; }
-            public DateTime Requested { get; set; }
-            public DateTime Assigned { get; set; }
-            public DateTime PickedUp { get; set; }
-            public DateTime Delivered { get; set; }
+            public DateTime? Requested { get; set; }
+            public DateTime? Assigned { get; set; }
+            public DateTime? PickedUp { get; set; }
+            public DateTime? Delivered { get; set; }
 
              public override string ToString()
             {

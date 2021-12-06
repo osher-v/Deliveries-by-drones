@@ -97,7 +97,6 @@ Please enter an ID number for the new drone:");
                     
                     Drone newdrone = new Drone {
                         Id = newDroneID, Model = newmodel, MaxWeight = (WeightCategories)newMaxWeight
-                        //Battery = newBatteryLevel, Status = (DroneStatuses)newStatus
                     };
                     dal.AddDrone(newdrone);
                     break;
@@ -204,9 +203,7 @@ Your choice:");
                 case UpdatesOption.Incharging:
                     Console.WriteLine("please enter Drone ID:");
                     int.TryParse(Console.ReadLine(), out droneId);
-                    Console.WriteLine("please choose baseStationId ID from the List below:");
-                    //List<BaseStation> displayBaseStationWithFreeChargSlots = new List<BaseStation>();
-                    //displayBaseStationWithFreeChargSlots = dal.GetBaseStationsWithFreeChargSlots();
+                    Console.WriteLine("please choose baseStationId ID from the List below:");                
                     List<BaseStation> displayBaseStationWithFreeChargSlots = dal.GetBaseStationList(x => x.FreeChargeSlots > 0).ToList();
                     for (int i = 0; i < displayBaseStationWithFreeChargSlots.Count; i++)
                     {
@@ -293,13 +290,14 @@ Your choice:");
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="listToPrint"></param>
-        public static void printTheList<T>(List<T> listToPrint) where T : struct
+        public static void printTheList<T>(List<T> listToPrint)// where T : struct
         {
             foreach (T item in listToPrint)
             {
                 Console.WriteLine(item);
             }
         }
+
         /// <summary>
         /// The function handles list view options.
         /// </summary>
@@ -336,21 +334,11 @@ Your choice:");
                 case DisplayListOption.ListOfPackageView:
                     printTheList(dal.GetParcelList().ToList());
                     break;
-                /*
-                case DisplayListOption.ListOfFreePackageView:
-                    printTheList(dal.GetParcelWithoutDrone().ToList());
-                    break;
-                */
+           
                 case DisplayListOption.ListOfFreePackageView:
                     printTheList(dal.GetParcelList(x => x.DroneId == 0).ToList());
                     break;
-
-                    
-                    /*
-                case DisplayListOption.ListOfBaseStationsWithFreeChargSlots:                    
-                    printTheList(dal.GetBaseStationsWithFreeChargSlots().ToList());
-                    break;
-                    */
+    
                case DisplayListOption.ListOfBaseStationsWithFreeChargSlots:
                     printTheList(dal.GetBaseStationList(x => x.FreeChargeSlots > 0).ToList());
                     break;

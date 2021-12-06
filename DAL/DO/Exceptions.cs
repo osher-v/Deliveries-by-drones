@@ -28,7 +28,6 @@ namespace IDAL
 
 
         [Serializable]
-        //class UpdateOfANonExistentObjectException : Exception
         public class NonExistentObjectException : Exception
         {
             public NonExistentObjectException() : base() { }

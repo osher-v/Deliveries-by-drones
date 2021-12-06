@@ -8,24 +8,25 @@ using System.Threading.Tasks;
 namespace IDal
 {
     public interface IDal
-    {    
+    {
         #region Functions for insert options
+
         /// <summary>
         /// The function adds a station to the list of Basestations.
         /// </summary>
-        /// <param name = "newbaseStation" ></ param >
+        /// <param name="newbaseStation">new baseStation</param>
         public void AddStation(BaseStation newbaseStation);
 
         /// <summary>
         /// The function adds a drone to the list of drones.
         /// </summary>
-        /// <param name = "newDrone" ></ param >
+        /// <param name="newDrone">new Drone</param>
         public void AddDrone(Drone newDrone);
 
         /// <summary>
         /// The function adds a customer to the list of customers.
         /// </summary>
-        /// <param name = "newCustomer" ></ param >
+        /// <param name="newCustomer">new Customer</param>
         public void AddCustomer(Customer newCustomer);
 
         /// <summary>

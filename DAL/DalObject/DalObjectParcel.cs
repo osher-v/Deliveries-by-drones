@@ -30,10 +30,7 @@ namespace DalObject
             temp.Assigned = DateTime.Now;
             DataSource.ParcelsList[indexaforParcel] = temp; 
         }
-        /// <summary>
-        /// picked up package by the drone.
-        /// </summary>
-        /// <param name="ParcelId">Id of Parcel</param>
+        
         public void PickedUpPackageByTheDrone(int ParcelId)
         {
             //Update the package.
@@ -46,10 +43,7 @@ namespace DalObject
             temp.PickedUp = DateTime.Now;
             DataSource.ParcelsList[indexaforParcel] = temp;
         }
-        /// <summary>
-        /// delivery package to the customer.
-        /// </summary>
-        /// <param name="ParcelId">Id of Parcel</param>
+        
         public void DeliveryPackageToTheCustomer(int ParcelId)
         {
             int indexaforParcel = DataSource.ParcelsList.FindIndex(x => x.Id == ParcelId);
@@ -61,11 +55,7 @@ namespace DalObject
             temp.Delivered = DateTime.Now;
             DataSource.ParcelsList[indexaforParcel] = temp;
         }
-        /// <summary>
-        /// The function returns the selected Parcel.
-        /// </summary>
-        /// <param name="ID">Id of a selected Parcel</param>
-        /// <returns>return empty ubjact if its not there</returns>
+        
         public Parcel GetParcel(int ID)
         {
             if (!(DataSource.ParcelsList.Exists(x => x.Id == ID)))
@@ -77,24 +67,5 @@ namespace DalObject
         {
             return DataSource.ParcelsList.FindAll(x => prdicat == null ? true : prdicat(x));
         }
-
-        /*
-        /// <summary>
-        /// The function returns an array of all Parcel.
-        /// </summary>
-        /// <returns>returns a new List that hold all the data from the reqsted List</returns>
-        public IEnumerable<Parcel> GetParcelList()
-        {
-            return DataSource.ParcelsList.Take(DataSource.ParcelsList.Count).ToList();
-        }
-        /// <summary>
-        /// The function returns an array of all packages not associated with the Drone.
-        /// </summary>
-        /// <returns>returns a new List that hold all the data from the reqsted List</returns>
-        public IEnumerable<Parcel> GetParcelWithoutDrone(Predicate<Parcel> prdicat = null)
-        {
-            return DataSource.ParcelsList.FindAll(x => prdicat == null ? true : prdicat(x));
-        }
-        */
     }
 }

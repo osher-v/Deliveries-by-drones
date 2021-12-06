@@ -17,7 +17,7 @@ namespace IBL
                 AccessIdal.GetCustomer(newParcel.Sender.Id);
                 AccessIdal.GetCustomer(newParcel.Receiver.Id);
             }
-            catch (NonExistentObjectException)
+            catch (IDAL.DO.NonExistentObjectException)
             {
                 throw new NonExistentObjectException("Erorr is no Customer id");
             }
@@ -29,7 +29,10 @@ namespace IBL
                 Weight = (IDAL.DO.WeightCategories)newParcel.Weight,
                 Priority = (IDAL.DO.Priorities)newParcel.Prior,
                 Requested = DateTime.Now,
-                DroneId = 0    
+                Assigned = null,
+                PickedUp = null,
+                Delivered = null,
+                DroneId = 0
             };
 
             AccessIdal.AddParcel(parcel);
@@ -202,7 +205,7 @@ namespace IBL
 
             IDAL.DO.Parcel parcelIDal = AccessIdal.GetParcel(drone.NumberOfLinkedParcel);
 
-            if (parcelIDal.PickedUp != DateTime.MinValue)
+            if (parcelIDal.PickedUp != null)
                 throw new UnableToCollectParcel("The parcel has already been collected");
 
             Location locationOfSender = GetCustomer(parcelIDal.SenderId).LocationOfCustomer;
@@ -223,7 +226,7 @@ namespace IBL
 
             IDAL.DO.Parcel parcelIDal = AccessIdal.GetParcel(drone.NumberOfLinkedParcel);
 
-            if (parcelIDal.PickedUp != DateTime.MinValue && parcelIDal.Delivered == DateTime.MinValue)
+            if (parcelIDal.PickedUp != null && parcelIDal.Delivered == null)
             {
                 Location locationOfTarget = GetCustomer(parcelIDal.TargetId).LocationOfCustomer;
                 switch ((WeightCategories)parcelIDal.Weight)
@@ -245,9 +248,9 @@ namespace IBL
                 drone.NumberOfLinkedParcel = 0; //importent.
                 AccessIdal.DeliveryPackageToTheCustomer(parcelIDal.Id);    
             }
-            else if(parcelIDal.PickedUp == DateTime.MinValue)
+            else if(parcelIDal.PickedUp == null)
                 throw new DeliveryCannotBeMade("Error: parcel not yet collected");
-            else if(parcelIDal.Delivered != DateTime.MinValue)
+            else if(parcelIDal.Delivered != null)
                 throw new DeliveryCannotBeMade("Error: The parcel has already been delivered");
         }
 
@@ -278,7 +281,7 @@ namespace IBL
                 PickedUp = printParcel.PickedUp,
                 Delivered = printParcel.Delivered
             };
-            if (parcel.Assigned != DateTime.MinValue)
+            if (parcel.Assigned != null)
             {
                 DroneInThePackage droneInThePackage = new DroneInThePackage()
                 {
@@ -300,11 +303,11 @@ namespace IBL
             foreach (var item in holdDalParcels)
             {
                 DeliveryStatus currentStatus;
-                if (item.Delivered != DateTime.MinValue)
+                if (item.Delivered != null)
                     currentStatus = DeliveryStatus.Delivered;
-                else if (item.PickedUp != DateTime.MinValue)
+                else if (item.PickedUp != null)
                     currentStatus = DeliveryStatus.PickedUp;
-                else if (item.Assigned != DateTime.MinValue)
+                else if (item.Assigned != null)
                     currentStatus = DeliveryStatus.Assigned;
                 else
                     currentStatus = DeliveryStatus.created;

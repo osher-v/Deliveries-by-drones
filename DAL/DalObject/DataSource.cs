@@ -105,7 +105,10 @@ namespace DalObject
                     Weight = (WeightCategories)MyRandom.Next(0, 3),//0=light,1=medium,2=heavy
                     Priority = (Priorities)MyRandom.Next(0, 3),//0=regular, 1=fast, 2=urgent
                     DroneId = 0,
-                    Requested = DateTime.Now
+                    Requested = DateTime.Now,
+                    Assigned = null, 
+                    PickedUp = null,
+                    Delivered = null    
                 });
             }
             #endregion init Parcel

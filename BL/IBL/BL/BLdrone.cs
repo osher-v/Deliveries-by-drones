@@ -71,7 +71,6 @@ namespace IBL
             }
 
             DronesBL.Find(x => x.Id == droneId).Model = droneName;
-
         }
 
         public Drone GetDrone(int idForDisplayObject)
@@ -108,7 +107,7 @@ namespace IBL
                 printDrone.Delivery.Prior = (Priorities)holdDalParcel.Priority;
                 printDrone.Delivery.Weight = (WeightCategories)holdDalParcel.Weight;
 
-                if (holdDalParcel.PickedUp != DateTime.MinValue) 
+                if (holdDalParcel.PickedUp != null) 
                 {
                     printDrone.Delivery.OnTheWayToTheDestination = true;
                 }  

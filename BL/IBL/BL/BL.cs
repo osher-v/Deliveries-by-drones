@@ -79,7 +79,7 @@ namespace IBL
             //or if it does not makes a delivery. and will update its status, location and battery status.
             foreach (var item in DronesBL)
             {            
-                int index = holdDalParcels.FindIndex(x => x.DroneId == item.Id && x.Delivered == DateTime.MinValue); //Finding the package linked to the drone.
+                int index = holdDalParcels.FindIndex(x => x.DroneId == item.Id && x.Delivered == null); //Finding the package linked to the drone.
 
                 if (index != -1) //If the drone is indeed associated with one of the Parcels in the list.
                 {
@@ -113,7 +113,7 @@ namespace IBL
                             break;
                     }
 
-                    if (holdDalParcels[index].PickedUp == DateTime.MinValue)//Check if the Parcel has already been PickedUped.
+                    if (holdDalParcels[index].PickedUp == null)//Check if the Parcel has already been PickedUped.
                     {    
                         item.CurrentLocation = minDistanceBetweenBaseStationsAndLocation(baseStationBL, locationOfsender).Item1;
 
@@ -145,7 +145,7 @@ namespace IBL
                     }
                     else //item.Statuses == DroneStatuses.free
                     {
-                        List<IDAL.DO.Parcel> DeliveredAndSameDroneID = holdDalParcels.FindAll(x => x.DroneId == item.Id && x.Delivered != DateTime.MinValue);
+                        List<IDAL.DO.Parcel> DeliveredAndSameDroneID = holdDalParcels.FindAll(x => x.DroneId == item.Id && x.Delivered != null);
                         
                         if (DeliveredAndSameDroneID.Any())//if the List is not empty.
                         {
