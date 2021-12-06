@@ -25,7 +25,7 @@
             </Grid.ColumnDefinitions >
             <ComboBox Name="StatusSelector"  HorizontalAlignment= "Stretch" VerticalAlignment="Stretch" Grid.Column="1" SelectionChanged="StatusSelector_SelectionChanged"  FontWeight="Bold" FontSize="18" />
             <TextBox Grid.Column="3" Text="אפשרויות סינון" Cursor="Pen" FontWeight="Bold" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" Background="{x:Null}" SelectionTextBrush="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False" />
-            <ComboBox x:Name="WeightSelctor" Grid.Column="2" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch"  SelectionChanged="whigetSelctor_SelectionChanged" FontWeight="Bold" FontSize="18"/>
+            <ComboBox x:Name="WeightSelctor" Grid.Column="2" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch"  SelectionChanged="weightSelector_SelectionChanged" FontWeight="Bold" FontSize="18"/>
             <Button x:Name="res" Content="איפוס" Grid.Column="4" HorizontalAlignment="Left" Margin="115,47,0,1" Width="35" Click="res_Click" Background="#FFDDDDDD"/>
             <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="57,43,0,5" TextWrapping="Wrap" Width="68" FontWeight="Bold" FontSize="14"><Run FlowDirection="RightToLeft" Language="he-il" Text="סטטוס       "/></TextBlock>
             <TextBlock Grid.Column="2" HorizontalAlignment="Center" Margin="0,43,0,3" TextWrapping="Wrap" Width="68" FontWeight="Bold" FontSize="14"><Run FlowDirection="RightToLeft" Language="he-il" Text="משקל"/></TextBlock>

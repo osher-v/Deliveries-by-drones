@@ -97,7 +97,7 @@ namespace PL
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void whigetSelctor_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void weightSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             StatusSelectorChanged();     
         }
