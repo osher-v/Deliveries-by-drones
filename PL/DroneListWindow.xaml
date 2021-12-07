@@ -7,7 +7,10 @@
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         Title="DroneListWindow" Height="640" Width="800">
+
     <Grid x:Name="MainGrid">
+
+
         <Grid.RowDefinitions>
             <RowDefinition Height="50*"/>
             <RowDefinition Height="400*"/>
@@ -25,17 +28,37 @@
             </Grid.ColumnDefinitions >
             <ComboBox Name="StatusSelector"  HorizontalAlignment= "Stretch" VerticalAlignment="Stretch" Grid.Column="1" SelectionChanged="StatusSelector_SelectionChanged"  FontWeight="Bold" FontSize="18" />
             <TextBox Grid.Column="3" Text="אפשרויות סינון" Cursor="Pen" FontWeight="Bold" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" Background="{x:Null}" SelectionTextBrush="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False" />
-            <ComboBox x:Name="WeightSelctor" Grid.Column="2" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch"  SelectionChanged="weightSelector_SelectionChanged" FontWeight="Bold" FontSize="18"/>
-            <Button x:Name="res" Content="איפוס" Grid.Column="4" HorizontalAlignment="Left" Margin="115,47,0,1" Width="35" Click="res_Click" Background="#FFDDDDDD"/>
+            <ComboBox x:Name="WeightSelctor" Grid.Column="2" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch"  SelectionChanged="weightSelector_SelectionChanged" FontWeight="Bold" FontSize="18" BorderBrush="{x:Null}">
+                <ComboBox.Background>
+                    <LinearGradientBrush EndPoint="0,1">
+                        <GradientStop Color="#FFF0F0F0"/>
+                        <GradientStop Color="#FF64CCF1" Offset="1"/>
+                    </LinearGradientBrush>
+                </ComboBox.Background>
+            </ComboBox>
+            <Button x:Name="res" Content="איפוס" Grid.Column="4" HorizontalAlignment="Left" Margin="80,37,0,7" Width="59" Click="res_Click" Background="#FF64CCF1" BorderBrush="{x:Null}" Foreground="#FFF9F9F9" FontWeight="Bold" FontSize="14">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="15"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
             <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="57,43,0,5" TextWrapping="Wrap" Width="68" FontWeight="Bold" FontSize="14"><Run FlowDirection="RightToLeft" Language="he-il" Text="סטטוס       "/></TextBlock>
             <TextBlock Grid.Column="2" HorizontalAlignment="Center" Margin="0,43,0,3" TextWrapping="Wrap" Width="68" FontWeight="Bold" FontSize="14"><Run FlowDirection="RightToLeft" Language="he-il" Text="משקל"/></TextBlock>
             <Button x:Name="BAddDrone" HorizontalAlignment="Stretch"  Content="הוספה"  VerticalAlignment="Stretch" FontSize="18" FontWeight="Bold" Click="BAddDrone_Click"   />
-            <Button x:Name="Bclose" Content="סגירה" Grid.Column="4" HorizontalAlignment="Center" Margin="0,46,0,2" Width="36"  Background="#FFDDDDDD" RenderTransformOrigin="-1.155,-0.443" Click="Bclose_Click"/>
+            <Button x:Name="Bclose"  Content="סגירה" Grid.Column="4" HorizontalAlignment="Left" Margin="80,4,0,40" Width="59"  Background="#FF64CCF1" RenderTransformOrigin="-1.155,-0.443" Click="Bclose_Click" BorderBrush="{x:Null}" Foreground="#FFEEEEEE" FontWeight="Bold" FontSize="14">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="15"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
         </Grid>
-        <ListView x:Name="DroneListView" Grid.Row="1" MouseDoubleClick="DroneListView_MouseDoubleClick">
+        <ListView x:Name="DroneListView" Grid.Row="1"  MouseDoubleClick="DroneListView_MouseDoubleClick" Foreground="#FF2249AE" BorderBrush="Black" Background="#FF89004B">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn/>
+                    <GridViewColumn Width="770"  Header="רשימת רחפנים ">
+                    </GridViewColumn>
                 </GridView>
             </ListView.View>
         </ListView>
