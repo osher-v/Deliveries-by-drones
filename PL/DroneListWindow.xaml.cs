@@ -24,10 +24,13 @@ namespace PL
     public partial class DroneListWindow : Window
     {
         public IBL.IBL AccessIbl;
+
         /// <summary> crate a observab list of type IBL.BO.DroneToList (to see changes in live) </summary>
         public ObservableCollection<IBL.BO.DroneToList> droneToLists;
+
         /// <summary> a bool to help us disable the x bootum  </summary>
         public bool ClosingWindow { get; private set; } = true;
+
         /// <summary>
         /// constractor for the DroneListWindow that will start the InitializeComponent ans fill the Observable Collection
         /// </summary>
@@ -51,7 +54,6 @@ namespace PL
             WeightSelctor.ItemsSource = Enum.GetValues(typeof(WeightCategories));
         }
 
-
         /// <summary>
         /// a new event that we crate in the intaklizer :DroneToLists_CollectionChanged:
         /// </summary>
@@ -61,6 +63,7 @@ namespace PL
         {
             StatusSelectorChanged();
         }
+
         /// <summary>
         /// help fanction to choose what to show on the user side accordingly to user cohises ( bonous)
         /// </summary>
@@ -83,6 +86,7 @@ namespace PL
                 DroneListView.ItemsSource = droneToLists.ToList().FindAll(x => x.Statuses == (DroneStatuses)StatusSelector.SelectedIndex && x.MaxWeight == (WeightCategories)WeightSelctor.SelectedIndex);
             }
         }
+
         /// <summary>
         /// show on the user side accordingly to user cohises
         /// </summary>
@@ -92,6 +96,7 @@ namespace PL
         {
             StatusSelectorChanged();
         }
+
         /// <summary>
         /// show on the user side accordingly to user cohises
         /// </summary>
@@ -101,6 +106,7 @@ namespace PL
         {
             StatusSelectorChanged();     
         }
+
         /// <summary>
         /// restart modem to set all options to default
         /// </summary>
@@ -113,6 +119,7 @@ namespace PL
             //DroneListView.ItemsSource = droneToLists;
             StatusSelectorChanged();
         }
+
         /// <summary>
         /// Add drone button which activates the builder in the Add drone window
         /// </summary>
@@ -151,7 +158,5 @@ namespace PL
             int indexDrone = DroneListView.SelectedIndex;
             new DroneWindow(AccessIbl, this,drone.Id, indexDrone).Show();
         }
-
-
     }
 }
