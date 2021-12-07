@@ -238,27 +238,6 @@ namespace PL
             Close();
         }
         
-        private void TBmodel_KeyDown_1(object sender, KeyEventArgs e)
-        {
-            
-           if (TBmodel.Text.Length > 5)//הוא נותן 6 ספרות בגלל שהנעילה מתבצעת רק אחרי המעשה
-            {
-                e.Handled = true;
-            }
-
-            if (TBmodel.Text.Length != 0)
-            {
-                BModalUpdate.IsEnabled = true;
-            }
-            else
-            {
-                BModalUpdate.IsEnabled = false;
-            }
-            
-            //BModalUpdate.Visibility = Visibility.Visible;
-            
-        }
-
         private void BModalUpdate_Click(object sender, RoutedEventArgs e)
         {
             AccessIbl.UpdateDroneName(MyDrone.Id, TBmodel.Text);
@@ -304,6 +283,7 @@ namespace PL
                         //בהמשך יהיו גם שינויים של מיקום ואולי של עוד דברים לכן חייבים משקיף
                         BSendToCharge.Visibility = Visibility.Hidden;
                         BReleaseDrone.Visibility = Visibility.Visible;
+                        BAssignPackage.Visibility = Visibility.Hidden;
 
                         BReleaseDrone.IsEnabled = false;
                         TimeChoose.Visibility = Visibility.Visible;
@@ -337,8 +317,10 @@ namespace PL
 
                     BSendToCharge.Visibility = Visibility.Visible;
                     BReleaseDrone.Visibility = Visibility.Hidden;
+                    BAssignPackage.Visibility = Visibility.Visible;
 
-                    BReleaseDrone.IsEnabled = false;
+                    BReleaseDrone.IsEnabled = false;//for the next time.
+
                     TBhours.Text = "00";
                     TBmin.Text = "00";
                     TBsec.Text = "00";
@@ -348,21 +330,7 @@ namespace PL
                     break;
                 default:
                     break;
-            }
-
-            //try
-            //{    
-            //Console.WriteLine("The operation was successful");
-            //}
-            //catch (NonExistentObjectException ex)
-            //{
-            //    Console.WriteLine(ex);
-            //}
-            //catch (OnlyMaintenanceDroneWillBeAbleToBeReleasedFromCharging ex)
-            //{
-            //    //Console.WriteLine(ex);
-            //}
-
+            }     
         }
 
         private void Stime_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -381,23 +349,19 @@ namespace PL
                 {
                     case MessageBoxResult.OK:
                         DroneListWindow.StatusSelectorChanged();
-                        TBDroneStatuses.Text = "busy"; //לתקן כמה שיותר מהר לקרוא ליהודהההההההההההההההההההה
-                                                       //בהמשך יהיו גם שינויים של מיקום ואולי של עוד דברים לכן חייבים משקיף
-                        BSendToCharge.Visibility = Visibility.Visible;
-                        BReleaseDrone.Visibility = Visibility.Hidden;
 
-                        BReleaseDrone.IsEnabled = false;
+                        MyDrone = AccessIbl.GetDrone(MyDrone.Id);
+                        DataContext = MyDrone;
 
-                        TimeChoose.Visibility = Visibility.Hidden;
+                        BSendToCharge.Visibility = Visibility.Hidden;
+
+                        BAssignPackage.Visibility = Visibility.Hidden;
+                        BPickedUp.Visibility = Visibility.Visible;
                         break;
                     default:
                         break;
                 }
-            }
-            //catch (NonExistentObjectException ex)
-            //{
-            //    Console.WriteLine(ex);
-            //}
+            }   
             catch (NoSuitablePsrcelWasFoundToBelongToTheDrone ex)
             {
                 MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -407,6 +371,85 @@ namespace PL
                 MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
+        private void BPickedUp_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                AccessIbl.PickedUpPackageByTheDrone(MyDrone.Id);
+
+                MessageBoxResult result = MessageBox.Show("The operation was successful", "info", MessageBoxButton.OK, MessageBoxImage.Information);
+                switch (result)
+                {
+                    case MessageBoxResult.OK:
+                        DroneListWindow.StatusSelectorChanged();
+
+                        MyDrone = AccessIbl.GetDrone(MyDrone.Id);
+                        DataContext = MyDrone;
+                      
+                        BPickedUp.Visibility = Visibility.Hidden;
+                        BDeliveryPackage.Visibility = Visibility.Visible;
+                        break;
+                    default:
+                        break;
+                }
+            }
+            catch (NonExistentObjectException ex)
+            {
+                MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            catch (UnableToCollectParcel ex)
+            {
+                MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void BDeliveryPackage_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                AccessIbl.DeliveryPackageToTheCustomer(MyDrone.Id);
+
+                MessageBoxResult result = MessageBox.Show("The operation was successful", "info", MessageBoxButton.OK, MessageBoxImage.Information);
+                switch (result)
+                {
+                    case MessageBoxResult.OK:
+                        DroneListWindow.StatusSelectorChanged();
+
+                        MyDrone = AccessIbl.GetDrone(MyDrone.Id);
+                        DataContext = MyDrone;
+
+                        BDeliveryPackage.Visibility = Visibility.Hidden;
+                        BAssignPackage.Visibility = Visibility.Visible;
+                        BSendToCharge.Visibility = Visibility.Visible;
+                        break;
+                    default:
+                        break;
+                }
+            }
+            catch (DeliveryCannotBeMade ex)
+            {
+                MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void TBmodel_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (TBmodel.Text.Length > 5)//הוא נותן 6 ספרות בגלל שהנעילה מתבצעת רק אחרי המעשה
+            {
+                e.Handled = true;
+            }
+
+            if (TBmodel.Text.Length != 0)
+            {
+                BModalUpdate.IsEnabled = true;
+            }
+            else
+            {
+                BModalUpdate.IsEnabled = false;
+            }
+        }
+
         #region מטפל בכפתורי זמן בטעינה
         private void TBhours_KeyDown(object sender, KeyEventArgs e)
         {
@@ -495,27 +538,6 @@ namespace PL
         }
         #endregion
 
-        #endregion רחפן בפעולות
-
-        private void TBmodel_KeyUp(object sender, KeyEventArgs e)
-        {
-            /*
-            if (TBmodel.Text.Length > 5)//הוא נותן 6 ספרות בגלל שהנעילה מתבצעת רק אחרי המעשה
-            {
-                e.Handled = true;
-            }
-
-            if (TBmodel.Text.Length != 0)
-            {
-                BModalUpdate.IsEnabled = true;
-            }
-            else
-            {
-                BModalUpdate.IsEnabled = false;
-            }
-            */
-        }
-
-        
+        #endregion רחפן בפעולות  
     }
 }
