@@ -197,8 +197,7 @@ namespace PL
             TBDroneStatuses.Text = MyDrone.Statuses.ToString();      
             */
 
-            TBLocation.Text = MyDrone.CurrentLocation.ToString(); //איך לעדכן ביידינג
-            TBparcelInDelivery.Text = MyDrone.Delivery.ToString();
+            //TBLocation.Text = MyDrone.CurrentLocation.ToString(); //איך לעדכן ביידינג
 
             BModalUpdate.IsEnabled = false;
 
@@ -217,6 +216,8 @@ namespace PL
                     break;
 
                 case DroneStatuses.busy:
+                    GRIDparcelInDelivery.Visibility = Visibility.Visible;
+                    TBnotAssigned.Visibility = Visibility.Hidden;
                     if (MyDrone.Delivery.OnTheWayToTheDestination)
                     {
                         BDeliveryPackage.Visibility = Visibility.Visible;
@@ -357,6 +358,8 @@ namespace PL
 
                         BAssignPackage.Visibility = Visibility.Hidden;
                         BPickedUp.Visibility = Visibility.Visible;
+                        GRIDparcelInDelivery.Visibility = Visibility.Visible;
+                        TBnotAssigned.Visibility = Visibility.Hidden;
                         break;
                     default:
                         break;
@@ -422,6 +425,9 @@ namespace PL
                         BDeliveryPackage.Visibility = Visibility.Hidden;
                         BAssignPackage.Visibility = Visibility.Visible;
                         BSendToCharge.Visibility = Visibility.Visible;
+                        GRIDparcelInDelivery.Visibility = Visibility.Hidden;
+                        TBnotAssigned.Visibility = Visibility.Visible;
+
                         break;
                     default:
                         break;

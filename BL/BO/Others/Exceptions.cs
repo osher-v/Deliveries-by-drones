@@ -145,7 +145,7 @@ namespace IBL
 
             public override string ToString()
             {
-                return "Error No suitable package was found to belong to the drone";
+                return "Error No suitable package was found to belong to the drone (Check the battery, if it is ok then the weight is not suitable).";
             }
         }
 
