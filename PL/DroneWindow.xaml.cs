@@ -40,18 +40,19 @@ namespace PL
         public DroneWindow(IBL.IBL bl, DroneListWindow _DroneListWindow)
         {
             InitializeComponent();
+
             addDrone.Visibility = Visibility.Visible;
+
             AccessIbl = bl;
+
             DroneListWindow = _DroneListWindow;
+
             // the combobox use it to show the Weight Categories
             TBWeight.ItemsSource = Enum.GetValues(typeof(WeightCategories));
+
             // the combobox use it to show the BaseStation ID
             BaseStationID.ItemsSource = AccessIbl.GetBaseStationList(x => x.FreeChargeSlots > 0);
-            BaseStationID.DisplayMemberPath = "Id";
-            //if (!AccessIbl.GetBaseStationList(x => x.FreeChargeSlots == 0).Any())
-            //{
-            //    MessageBox.Show("אין תחנות עם עמדות הטענה פנויות ","מידע", MessageBoxButton.OK, MessageBoxImage.None);              
-            //}
+            BaseStationID.DisplayMemberPath = "Id";          
         }
 
 
