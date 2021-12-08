@@ -55,10 +55,9 @@ namespace IBL
                 //chaeck if More Drone In Charging Than The Proposed Charging Stations
                 if (totalQuantityChargeSlots - numOfBuzeChargeslots < 0)
                    throw new MoreDroneInChargingThanTheProposedChargingStations();
-
                 newbase.FreeChargeSlots = totalQuantityChargeSlots - numOfBuzeChargeslots;
-                AccessIdal.UpdateBaseStation(newbase);
             }
+            AccessIdal.UpdateBaseStation(newbase);
         }
 
         public BaseStation GetBaseStation(int idForDisplayObject)
