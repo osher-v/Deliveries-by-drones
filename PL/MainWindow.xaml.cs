@@ -20,22 +20,20 @@ namespace PL
     /// </summary>
     public partial class MainWindow : Window
     {
+        /// <summary> the constractor start the intlize consractor of the data </summary>
         public MainWindow()
         {
             InitializeComponent();
         }
 
+        // we crate an obejt that give us accses to the ibl intrface  
         public IBL.IBL AccessIbl = new IBL.BL();
 
+        /// <summary> open the drone list window  </summary>
         private void ShowDroneList_Click(object sender, RoutedEventArgs e)
         {
             new DroneListWindow(AccessIbl).Show();
-            this.Close();
-            SystemSounds.Beep.Play();
-            //SoundPlayer sound = new SoundPlayer(@"C:\Users\osher\source\repos\bcalal.wav");
-            //sound.Load();
-            //sound.Play();
-
+            this.Close(); // we close the login window 
         }
     }
 }

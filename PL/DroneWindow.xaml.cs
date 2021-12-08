@@ -14,7 +14,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Collections.ObjectModel;
-
 using IBL.BO;
 using System.ComponentModel.DataAnnotations;
 
@@ -180,31 +179,29 @@ namespace PL
         #region רחפן בפעולות 
         public Drone MyDrone;
 
-        public int indexDrone;
+        public int indexDrone;//indexe of the drone how chosse by doubly click 
+        /// <summary>
+        /// constractor for acction staet  And updates the views accordingly
+        /// </summary>
+        /// <param name="bl">accses to ibl</param>
+        /// <param name="_DroneListWindow">the call window</param>
+        /// <param name="id">the drone id that chosen</param>
+        /// <param name="_indexDrone">/indexe of the drone in the list</param>
         public DroneWindow(IBL.IBL bl, DroneListWindow _DroneListWindow, int id, int _indexDrone)
         {
             InitializeComponent();
-            updateDrone.Visibility = Visibility.Visible;
+            updateDrone.Visibility = Visibility.Visible; // open the grid for the user
             indexDrone = _indexDrone;
             AccessIbl = bl;
 
             DroneListWindow = _DroneListWindow;
-
+            //to conecct the binding to set the value of my drone to the proprtis
             MyDrone = bl.GetDrone(id);
             DataContext = MyDrone;
-            /*
-            TBID2.Text = MyDrone.Id.ToString();
-            TBmodel.Text = MyDrone.Model.ToString();
-            TBWeightCategories.Text = MyDrone.MaxWeight.ToString();
-            TBBatrryStatuses.Text = MyDrone.BatteryStatus.ToString();
-            TBDroneStatuses.Text = MyDrone.Statuses.ToString();      
-            */
-
-            //TBLocation.Text = MyDrone.CurrentLocation.ToString(); //איך לעדכן ביידינג
 
             BModalUpdate.IsEnabled = false;
 
-            //הסוויץ בודק מה ערך הסטטוס של הרחפן ופותח כפתורים
+            //The switch checks the drone's status value and opens buttons 
             switch ((DroneStatuses)MyDrone.Statuses)
             {
                 case DroneStatuses.free:
@@ -221,6 +218,7 @@ namespace PL
                 case DroneStatuses.busy:
                     GRIDparcelInDelivery.Visibility = Visibility.Visible;
                     TBnotAssigned.Visibility = Visibility.Hidden;
+                    //check the status to open the right button
                     if (MyDrone.Delivery.OnTheWayToTheDestination)
                     {
                         BDeliveryPackage.Visibility = Visibility.Visible;
@@ -236,13 +234,22 @@ namespace PL
             }
         }
 
+        /// <summary>
+        /// close drone window And updates the views accordingly
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BClose1_Click(object sender, RoutedEventArgs e)
         {
-            DroneListWindow.IsEnabled = true;
+            DroneListWindow.IsEnabled = true;//allowd to use drone window list again
             ClosingWindow = false;
             Close();
         }
-        
+        /// <summary>
+        /// the fanction update the modal of the drone And updates the views accordingly 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BModalUpdate_Click(object sender, RoutedEventArgs e)
         {
             AccessIbl.UpdateDroneName(MyDrone.Id, TBmodel.Text);
@@ -251,20 +258,19 @@ namespace PL
             {
                 case MessageBoxResult.OK:
                     BModalUpdate.IsEnabled = false;
-
                     DroneListWindow.StatusSelectorChanged();
                     //DroneListWindow.droneToLists[indexDrone].Model = TBmodel.Text;
                     //DroneListWindow.droneToLists[indexDrone] = DroneListWindow.droneToLists[indexDrone];
-
-                    //DroneListWindow.droneToLists.Insert(indexDrone, DroneListWindow.droneToLists[indexDrone]);
-                    //DroneListWindow.StatusSelectorChanged();
-
                     break;
                 default:
                     break;
             }
         }
-
+        /// <summary>
+        /// the fanction send the drone to charge And updates the views accordingly
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BSendToCharge_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -282,10 +288,10 @@ namespace PL
                         //DroneListWindow.droneToLists[indexDrone] = DroneListWindow.droneToLists[indexDrone];
                         DroneListWindow.StatusSelectorChanged();
 
+                        //to conecct the binding to set the value of my drone to the proprtis
                         MyDrone = AccessIbl.GetDrone(MyDrone.Id);
                         DataContext = MyDrone;
 
-                        //בהמשך יהיו גם שינויים של מיקום ואולי של עוד דברים לכן חייבים משקיף
                         BSendToCharge.Visibility = Visibility.Hidden;
                         BReleaseDrone.Visibility = Visibility.Visible;
                         BAssignPackage.Visibility = Visibility.Hidden;
@@ -296,19 +302,22 @@ namespace PL
                     default:
                         break;
                 }
-            }           
+            }
             catch (TheDroneCanNotBeSentForCharging ex)
             {
                 MessageBox.Show(ex.Message, "info");
             }
         }
-
+        /// <summary>
+        ///  release the drone from charge And updates the views accordingly
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BReleaseDrone_Click(object sender, RoutedEventArgs e)
         {
-            //DateTime time = DateTime.Parse(TBtime.Text,time);
             DateTime time;
-            string stringTime = $"{TBhours.Text}:{TBmin.Text}:{TBsec.Text}";
-            DateTime.TryParse(stringTime, out time);//לבדוק מה עם paras
+            string stringTime = $"{TBhours.Text}:{TBmin.Text}:{TBsec.Text}";//to convert the strings to a string that the datetime can hold
+            DateTime.TryParse(stringTime, out time);
             AccessIbl.ReleaseDroneFromCharging(MyDrone.Id, time);
 
             MessageBoxResult result = MessageBox.Show("The operation was successful", "info", MessageBoxButton.OK, MessageBoxImage.Information);//לטלפל בX
@@ -316,7 +325,8 @@ namespace PL
             {
                 case MessageBoxResult.OK:
                     DroneListWindow.StatusSelectorChanged();
-                    //הבטריה לא מתעדכנת ברשימה
+
+                    //to conecct the binding to set the value of my drone to the proprtis
                     MyDrone = AccessIbl.GetDrone(MyDrone.Id);
                     DataContext = MyDrone;
 
@@ -324,8 +334,8 @@ namespace PL
                     BReleaseDrone.Visibility = Visibility.Hidden;
                     BAssignPackage.Visibility = Visibility.Visible;
 
-                    BReleaseDrone.IsEnabled = false;//for the next time.
-
+                    //we set that back to the start posison for the next time.
+                    BReleaseDrone.IsEnabled = false;
                     TBhours.Text = "00";
                     TBmin.Text = "00";
                     TBsec.Text = "00";
@@ -335,14 +345,13 @@ namespace PL
                     break;
                 default:
                     break;
-            }     
+            }
         }
-
-        private void Stime_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            BReleaseDrone.IsEnabled = true;
-        }
-
+        /// <summary>
+        ///  Assign Package to the drone And updates the views accordingly
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BAssignPackage_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -355,6 +364,7 @@ namespace PL
                     case MessageBoxResult.OK:
                         DroneListWindow.StatusSelectorChanged();
 
+                        //to conecct the binding to set the value of my drone to the proprtis
                         MyDrone = AccessIbl.GetDrone(MyDrone.Id);
                         DataContext = MyDrone;
 
@@ -378,7 +388,11 @@ namespace PL
                 MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-
+        /// <summary>
+        /// Picked Up the parcel And updates the views accordingly
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BPickedUp_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -391,9 +405,10 @@ namespace PL
                     case MessageBoxResult.OK:
                         DroneListWindow.StatusSelectorChanged();
 
+                        //to conecct the binding to set the value of my drone to the proprtis
                         MyDrone = AccessIbl.GetDrone(MyDrone.Id);
                         DataContext = MyDrone;
-                      
+
                         BPickedUp.Visibility = Visibility.Hidden;
                         BDeliveryPackage.Visibility = Visibility.Visible;
                         break;
@@ -423,6 +438,7 @@ namespace PL
                     case MessageBoxResult.OK:
                         DroneListWindow.StatusSelectorChanged();
 
+                        //to conecct the binding to set the value of my drone to the proprtis
                         MyDrone = AccessIbl.GetDrone(MyDrone.Id);
                         DataContext = MyDrone;
 
@@ -442,10 +458,14 @@ namespace PL
                 MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-
+        /// <summary>
+        ///  prevent the user from type an non number key 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void TBmodel_KeyUp(object sender, KeyEventArgs e)
         {
-            if (TBmodel.Text.Length > 5)//הוא נותן 6 ספרות בגלל שהנעילה מתבצעת רק אחרי המעשה
+            if (TBmodel.Text.Length > 5)
             {
                 e.Handled = true;
             }

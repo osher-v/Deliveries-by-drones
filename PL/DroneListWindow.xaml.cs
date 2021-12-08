@@ -116,7 +116,6 @@ namespace PL
         {
             StatusSelector.SelectedItem = null;
             WeightSelctor.SelectedItem = null;
-            //DroneListView.ItemsSource = droneToLists;
             StatusSelectorChanged();
         }
 
@@ -148,17 +147,20 @@ namespace PL
         /// <param name="e"></param>
         private void Bclose_Click(object sender, RoutedEventArgs e)
         {
-            ClosingWindow = false;
+            ClosingWindow = false; // we alowd the close option
             Close();
-            //Application.Current.Windows; לשאול איך לסגור את החלון המשני אם אני סוגר חלון אחר 
         }
-
+        /// <summary>
+        /// open drone window in acction when didect double clik
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void DroneListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             DroneToList drone = (DroneToList)DroneListView.SelectedItem;
             int indexDrone = DroneListView.SelectedIndex;
-            this.IsEnabled = false;
-            new DroneWindow(AccessIbl, this,drone.Id, indexDrone).Show();
+            this.IsEnabled = false; // to privent anotur click on the list window chosse we donr want alot of windows togter.
+            new DroneWindow(AccessIbl, this,drone.Id, indexDrone).Show();//open the drone windowon acction
         }
     }
 }
