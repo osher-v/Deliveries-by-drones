@@ -60,11 +60,17 @@
                 </Button.Resources>
             </Button>
         </Grid>
-        <ListView x:Name="DroneListView" Grid.Row="1"  MouseDoubleClick="DroneListView_MouseDoubleClick" Foreground="#FF2249AE" BorderBrush="Black" Background="#FFE2CAD7" FontWeight="Bold" FontSize="14">
+        <ListView x:Name="DroneListView" Grid.Row="1" MouseDoubleClick="DroneListView_MouseDoubleClick" Foreground="#FF2249AE" BorderBrush="Black" Background="#FFE2CAD7" FontWeight="Bold" FontSize="14">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Width="770"  Header="רשימת רחפנים ">
-                    </GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Id}" Header="מספר מזהה" Width="100"> </GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Model}" Header="מודל" Width="70"></GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding MaxWeight}" Header="משקל" Width="105"></GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding BatteryStatus}" Header="סוללה" Width="50"></GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Statuses}" Header="סטטוס" Width="115"></GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding CurrentLocation}" Header="  מיקום קו רוחב      מיקום קו אורך" Width="220"></GridViewColumn>
+                    <!--<GridViewColumn DisplayMemberBinding="{Binding CurrentLocation.}" Header="מיקום קו רוחב" Width="100"></GridViewColumn>-->
+                    <GridViewColumn DisplayMemberBinding="{Binding NumberOfLinkedParcel}" Header="חבילה משויכת" Width="100"></GridViewColumn>
                 </GridView>
             </ListView.View>
         </ListView>
