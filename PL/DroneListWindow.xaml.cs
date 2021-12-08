@@ -158,9 +158,12 @@ namespace PL
         private void DroneListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             DroneToList drone = (DroneToList)DroneListView.SelectedItem;
-            int indexDrone = DroneListView.SelectedIndex;
-            this.IsEnabled = false; // to privent anotur click on the list window chosse we donr want alot of windows togter.
-            new DroneWindow(AccessIbl, this,drone.Id, indexDrone).Show();//open the drone windowon acction
+            if (drone != null)// if the user click on empty space in the view list we donr open anything
+            {
+                int indexDrone = DroneListView.SelectedIndex;
+                this.IsEnabled = false; // to privent anotur click on the list window chosse we donr want alot of windows togter.
+                new DroneWindow(AccessIbl, this,drone.Id, indexDrone).Show();//open the drone windowon acction
+            }
         }
     }
 }
