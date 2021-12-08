@@ -6,7 +6,10 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
+        ResizeMode="CanMinimize"
+        
         Title="DroneWindow" Height="450" Width="800">
+    
     <Grid x:Name="MainGrid">
         <Grid x:Name="addDrone" Visibility="Hidden">
             <Grid.ColumnDefinitions>

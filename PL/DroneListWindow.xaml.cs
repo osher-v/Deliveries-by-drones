@@ -129,6 +129,7 @@ namespace PL
         {
             // we send ""this"" window becuse we want to use it in the new window
             new DroneWindow(AccessIbl, this).Show();
+            this.IsEnabled = false;
         }
 
         /// <summary>
@@ -156,6 +157,7 @@ namespace PL
         {
             DroneToList drone = (DroneToList)DroneListView.SelectedItem;
             int indexDrone = DroneListView.SelectedIndex;
+            this.IsEnabled = false;
             new DroneWindow(AccessIbl, this,drone.Id, indexDrone).Show();
         }
     }

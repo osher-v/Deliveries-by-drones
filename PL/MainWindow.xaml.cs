@@ -30,6 +30,7 @@ namespace PL
         private void ShowDroneList_Click(object sender, RoutedEventArgs e)
         {
             new DroneListWindow(AccessIbl).Show();
+            this.Close();
             SystemSounds.Beep.Play();
             //SoundPlayer sound = new SoundPlayer(@"C:\Users\osher\source\repos\bcalal.wav");
             //sound.Load();

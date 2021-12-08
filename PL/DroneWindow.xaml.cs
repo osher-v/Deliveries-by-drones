@@ -120,6 +120,7 @@ namespace PL
                         case MessageBoxResult.OK:
                             newdrone = AccessIbl.GetDroneList().ToList().Find(i => i.Id == newdrone.Id);
                             DroneListWindow.droneToLists.Add(newdrone);
+                            DroneListWindow.IsEnabled = true;
                             ClosingWindow = false;
                             Close();
                             break;
@@ -162,6 +163,7 @@ namespace PL
         /// <param name="e"></param>
         private void Bclose_Click(object sender, RoutedEventArgs e)
         {
+            DroneListWindow.IsEnabled = true;
             ClosingWindow = false;
             Close();
         }
@@ -236,6 +238,7 @@ namespace PL
 
         private void BClose1_Click(object sender, RoutedEventArgs e)
         {
+            DroneListWindow.IsEnabled = true;
             ClosingWindow = false;
             Close();
         }

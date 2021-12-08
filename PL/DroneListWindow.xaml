@@ -6,9 +6,10 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        Title="DroneListWindow" Height="640" Width="800">
+        ResizeMode="CanMinimize"
+        Title="DroneListWindow" Height="640" Width="860">
 
-    <Grid x:Name="MainGrid">
+    <Grid x:Name="MainGrid" >
 
 
         <Grid.RowDefinitions>
@@ -36,23 +37,23 @@
                     </LinearGradientBrush>
                 </ComboBox.Background>
             </ComboBox>
-            <Button x:Name="res" Content="איפוס" Grid.Column="3" HorizontalAlignment="Left" Margin="139,22,0,21" Width="59" Click="res_Click" Background="#FF64CCF1" BorderBrush="{x:Null}" Foreground="#FFF9F9F9" FontWeight="Bold" FontSize="14" Grid.ColumnSpan="2">
+            <Button x:Name="res" Content="איפוס"  HorizontalAlignment="Left" Margin="80,22,0,21" Width="59" Click="res_Click" Background="#FF64CCF1" BorderBrush="{x:Null}" Foreground="#FFF9F9F9" FontWeight="Bold" FontSize="14" Grid.Column="4">
                 <Button.Resources>
                     <Style TargetType="Border">
                         <Setter Property="CornerRadius" Value="15"/>
                     </Style>
                 </Button.Resources>
             </Button>
-            <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="57,43,0,5" TextWrapping="Wrap" Width="68" FontWeight="Bold" FontSize="14"><Run FlowDirection="RightToLeft" Language="he-il" Text="סטטוס       "/></TextBlock>
+            <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="57,43,0,5" TextWrapping="Wrap" Width="59" FontWeight="Bold" FontSize="14"><Run FlowDirection="RightToLeft" Language="he-il" Text="סטטוס       "/></TextBlock>
             <TextBlock HorizontalAlignment="Center" Margin="0,40,0,5" TextWrapping="Wrap" Width="68" FontWeight="Bold" FontSize="14"><Run FlowDirection="RightToLeft" Language="he-il" Text="משקל"/></TextBlock>
-            <Button x:Name="BAddDrone" Content="הוספה"  FontSize="14" FontWeight="Bold" Click="BAddDrone_Click" Grid.Column="3" Margin="37,22,64,22" RenderTransformOrigin="1.015,0.983" Background="#FF64CCF1" BorderBrush="{x:Null}" Foreground="#FFEEEEEE" Width="59" Height="25.3377777777778">
+            <Button x:Name="BAddDrone" Content="הוספה"  FontSize="14" FontWeight="Bold" Click="BAddDrone_Click"  Margin="34,20,80,21"  Background="#FFF19164" BorderBrush="{x:Null}" Foreground="#FFEEEEEE" Grid.Column="3">
                 <Button.Resources>
                     <Style TargetType="Border">
                         <Setter Property="CornerRadius" Value="15"/>
                     </Style>
                 </Button.Resources>
             </Button>
-            <Button x:Name="Bclose"  Content="סגירה" Grid.Column="4" HorizontalAlignment="Left" Margin="80,21,0,22" Width="59"  Background="#FF64CCF1" RenderTransformOrigin="-1.155,-0.443" Click="Bclose_Click" BorderBrush="{x:Null}" Foreground="#FFEEEEEE" FontWeight="Bold" FontSize="14">
+            <Button x:Name="Bclose"  Content="סגירה" Grid.Column="3" HorizontalAlignment="Left" Margin="142,22,0,21" Width="58"  Background="#FF64CCF1"  Click="Bclose_Click" BorderBrush="{x:Null}" Foreground="#FFEEEEEE" FontWeight="Bold" FontSize="14" Grid.ColumnSpan="2">
                 <Button.Resources>
                     <Style TargetType="Border">
                         <Setter Property="CornerRadius" Value="15"/>
@@ -63,7 +64,7 @@
         <ListView x:Name="DroneListView" Grid.Row="1" MouseDoubleClick="DroneListView_MouseDoubleClick" Foreground="#FF2249AE" BorderBrush="Black" Background="#FFE2CAD7" FontWeight="Bold" FontSize="14">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn DisplayMemberBinding="{Binding Id}" Header="מספר מזהה" Width="100"> </GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Id}" Header="מספר מזהה" Width="100"></GridViewColumn>
                     <GridViewColumn DisplayMemberBinding="{Binding Model}" Header="מודל" Width="70"></GridViewColumn>
                     <GridViewColumn DisplayMemberBinding="{Binding MaxWeight}" Header="משקל" Width="105"></GridViewColumn>
                     <GridViewColumn DisplayMemberBinding="{Binding BatteryStatus}" Header="סוללה" Width="50"></GridViewColumn>
