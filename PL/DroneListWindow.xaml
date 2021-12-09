@@ -6,8 +6,15 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        ResizeMode="CanMinimize"
+        ResizeMode="CanMinimize" 
         Title="DroneListWindow" Height="640" Width="860">
+
+    <!--<Window.Resources>
+        <Style x:Key="jjj" TargetType="Button">
+            <Setter Property="Foreground" Value="Red"></Setter>
+        </Style> 
+       
+    </Window.Resources>-->
 
     <Grid x:Name="MainGrid" >
 
@@ -46,7 +53,7 @@
             </Button>
             <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="57,43,0,5" TextWrapping="Wrap" Width="59" FontWeight="Bold" FontSize="14"><Run FlowDirection="RightToLeft" Language="he-il" Text="סטטוס       "/></TextBlock>
             <TextBlock HorizontalAlignment="Center" Margin="0,40,0,5" TextWrapping="Wrap" Width="68" FontWeight="Bold" FontSize="14"><Run FlowDirection="RightToLeft" Language="he-il" Text="משקל"/></TextBlock>
-            <Button x:Name="BAddDrone" Content="הוספה"  FontSize="14" FontWeight="Bold" Click="BAddDrone_Click"  Margin="34,20,80,21"  Background="#FFF19164" BorderBrush="{x:Null}" Foreground="#FFEEEEEE" Grid.Column="3">
+            <Button x:Name="BAddDrone"  Content="הוספה"  FontSize="14" FontWeight="Bold" Click="BAddDrone_Click"  Margin="34,20,80,21"  Background="#FFF19164" BorderBrush="{x:Null}" Foreground="#FFEEEEEE" Grid.Column="3">
                 <Button.Resources>
                     <Style TargetType="Border">
                         <Setter Property="CornerRadius" Value="15"/>
@@ -61,7 +68,15 @@
                 </Button.Resources>
             </Button>
         </Grid>
+        
         <ListView x:Name="DroneListView" Grid.Row="1" MouseDoubleClick="DroneListView_MouseDoubleClick" Foreground="#FF2249AE" BorderBrush="Black" Background="#FFE2CAD7" FontWeight="Bold" FontSize="14">
+
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
+                </Style>
+            </ListView.ItemContainerStyle>
+
             <ListView.View>
                 <GridView>
                     <GridViewColumn DisplayMemberBinding="{Binding Id}" Header="מספר מזהה" Width="100"></GridViewColumn>
