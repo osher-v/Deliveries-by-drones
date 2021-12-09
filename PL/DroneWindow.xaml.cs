@@ -40,6 +40,7 @@ namespace PL
         {
             InitializeComponent();
 
+            this.Width = 440;
             addDrone.Visibility = Visibility.Visible;
 
             AccessIbl = bl;

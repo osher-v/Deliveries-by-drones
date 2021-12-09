@@ -7,22 +7,31 @@
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         ResizeMode="CanMinimize"
-        
         Title="DroneWindow" Height="450" Width="800">
-    
+    <!--control the style for the buotons-->
+    <Window.Resources>
+        <Style TargetType="Button" x:Key="RoundedButtonStyle">
+            <Style.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="5" />
+                </Style>
+            </Style.Resources>
+        </Style>
+    </Window.Resources>
+    <Window.Background>
+        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="Black" Offset="0.009"/>
+            <GradientStop Color="#FFAD6390" Offset="0.105"/>
+        </LinearGradientBrush>
+    </Window.Background>
+    <!--this grid is for addition option-->
     <Grid x:Name="MainGrid">
         <Grid x:Name="addDrone" Visibility="Hidden">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="78*"/>
-                <ColumnDefinition Width="15*"/>
-                <ColumnDefinition Width="185*"/>
-                <ColumnDefinition Width="0*"/>
-                <ColumnDefinition Width="111*"/>
-                <ColumnDefinition Width="17*"/>
-                <ColumnDefinition Width="394*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="2*"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
@@ -30,21 +39,21 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <Label Content="מספר מזהה" HorizontalAlignment="Left" Margin="32,0,0,0" Grid.Row="1" VerticalAlignment="Center" Grid.Column="4"/>
-            <Label Content="מודל" HorizontalAlignment="Left" Margin="32,0,0,0" Grid.Row="2" VerticalAlignment="Center" Grid.Column="4"/>
-            <Label Content="משקל" HorizontalAlignment="Left" Margin="32,0,0,0" Grid.Row="3" VerticalAlignment="Center" Grid.Column="4"/>
-            <Label Content="מס' תחנה לטעינה ראשונית" HorizontalAlignment="Left" Margin="32,0,0,0" Grid.Row="4" VerticalAlignment="Center" RenderTransformOrigin="-0.191,0.713" Grid.Column="4" Grid.ColumnSpan="3"/>
+            <Label Content="מספר מזהה" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Column="1" FontSize="14" FontWeight="Bold" Margin="0,34,0,0"/>
+            <Label Content="מודל" HorizontalAlignment="Center" Grid.Row="1" VerticalAlignment="Center" Grid.Column="1" FontSize="14" FontWeight="Bold"/>
+            <Label Content="משקל" HorizontalAlignment="Center" Margin="0,30,0,0" Grid.Row="2" VerticalAlignment="Top" Grid.Column="1" FontSize="14" FontWeight="Bold"/>
+            <Label Content="מס' תחנה לטעינה ראשונית" HorizontalAlignment="Center" Margin="0,27,0,0" Grid.Row="3" VerticalAlignment="Top" RenderTransformOrigin="-0.191,0.713" Grid.Column="1" FontSize="14" FontWeight="Bold"/>
 
-            <TextBox x:Name="TBID" HorizontalAlignment="Left" Margin="46,0,0,0" Grid.Row="1" Text="" TextWrapping="Wrap" VerticalAlignment="Center" Width="120" Grid.Column="2" KeyDown="TBID_KeyDown"/>
-            <TextBox x:Name="TBModel" HorizontalAlignment="Left" Margin="46,0,0,0" Grid.Row="2" Text="" TextWrapping="Wrap" VerticalAlignment="Center" Width="120" Grid.Column="2" KeyDown="TBModel_KeyDown"/>
-            <ComboBox x:Name="TBWeight"  HorizontalAlignment="Left" Margin="46,0,0,0" Grid.Row="3" VerticalAlignment="Center" Width="120" Grid.Column="2" Height="26"/>
+            <TextBox x:Name="TBID" HorizontalAlignment="Left" Margin="46,39,0,0" Grid.Row="0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.Column="0" KeyDown="TBID_KeyDown"/>
+            <TextBox x:Name="TBModel" HorizontalAlignment="Left" Margin="46,0,0,0" Grid.Row="1" Text="" TextWrapping="Wrap" VerticalAlignment="Center" Width="120" Grid.Column="0" KeyDown="TBModel_KeyDown"/>
+            <ComboBox x:Name="TBWeight"  HorizontalAlignment="Left" Margin="46,0,0,0" Grid.Row="2" VerticalAlignment="Center" Width="120" Grid.Column="0" Height="26"/>
             <!--<TextBox x:Name="TBBaseStationForInitialCharging" HorizontalAlignment="Left" Margin="46,10,0,0" Grid.Row="4" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.Column="2" KeyDown="TBBaseStationForInitialCharging_KeyDown"/>-->
-            <Button x:Name="Bclose" Content="ביטול" HorizontalAlignment="Left" Margin="254,24,0,0" Grid.Row="5" VerticalAlignment="Top" FontSize="18" FontWeight="Bold" Width="71" Click="Bclose_Click" Grid.Column="6" Height="27"/>
-            <Button x:Name="SendToBl" Content="הוספה " Grid.Column="6" HorizontalAlignment="Left" Margin="122,24,0,0" Grid.Row="5" VerticalAlignment="Top" Height="27" Width="70" Click="SendToBl_Click" FontWeight="Bold" FontSize="18"/>
-            <ComboBox x:Name="BaseStationID" Grid.Column="2" HorizontalAlignment="Left" Margin="46,0,0,0" Grid.Row="4" VerticalAlignment="Center" Width="120" Height="26"/>
+            <Button x:Name="Bclose" Content="ביטול" Style="{StaticResource RoundedButtonStyle}" HorizontalAlignment="Center" Grid.Row="4" VerticalAlignment="Center" FontSize="14" FontWeight="Bold" Width="70" Click="Bclose_Click" Height="27" Foreground="#FFEDEDED" Grid.Column="1"/>
+            <Button x:Name="SendToBl" Content="הוספה " Style="{StaticResource RoundedButtonStyle}" HorizontalAlignment="Center" Grid.Row="4" VerticalAlignment="Center" Height="27" Width="70" Click="SendToBl_Click" FontWeight="Bold" FontSize="14" Foreground="#FFEAE5E5" BorderBrush="#FFD61E1E" Background="{x:Null}"/>
+            <ComboBox x:Name="BaseStationID" Grid.Column="0" HorizontalAlignment="Left" Margin="46,0,0,0" Grid.Row="3" VerticalAlignment="Center" Width="120" Height="26"/>
         </Grid>
 
-        <Grid x:Name="updateDrone" Visibility="Hidden" FlowDirection="LeftToRight" UseLayoutRounding="False">
+        <Grid x:Name="updateDrone" Visibility="Visible" FlowDirection="LeftToRight" UseLayoutRounding="False">
             <Grid.RowDefinitions>
                 <RowDefinition Height="2*"/>
                 <RowDefinition Height="*"/>
@@ -71,14 +80,14 @@
             <Label Content="קטגוריית משקל" HorizontalAlignment="Left" Margin="174,0,0,0" Grid.Row="3" VerticalAlignment="Center" Height="26" Width="100" FontWeight="Bold"/>
             <Label Content="מצב סוללה" HorizontalAlignment="Left" Margin="180,0,0,0" Grid.Row="4" VerticalAlignment="Center" Height="26" Width="88" FontWeight="Bold"/>
             <Label Content="מצב רחפן" HorizontalAlignment="Left" Margin="180,0,0,0" Grid.Row="5" VerticalAlignment="Center" Height="26" Width="88" FontWeight="Bold"/>
-            <Label Content="חבילה בהעברה" HorizontalAlignment="Left" Margin="487,9,0,0" VerticalAlignment="Top" Height="26" Width="94" FontWeight="Bold" Grid.Row="1"/>
-            <Button x:Name="BClose1" Content="סגירה" HorizontalAlignment="Left" Margin="632,3,0,0" Grid.Row="1" VerticalAlignment="Top" FontSize="18" FontWeight="Bold" Width="157" Click="BClose1_Click"/>
-            <Button x:Name="BModalUpdate" Content="עדכון" Visibility="Visible" HorizontalAlignment="Left" Margin="632,0,0,0" Grid.Row="2" VerticalAlignment="Center" RenderTransformOrigin="0.488,1.204" FontSize="18" FontWeight="Bold" Width="157" Click="BModalUpdate_Click" Height="26"/>
-            <Button x:Name="BSendToCharge" Content="שליחה לטעינה" Visibility="Hidden"  HorizontalAlignment="Left" Margin="632,0,0,0" Grid.Row="3" VerticalAlignment="Center" FontSize="18" FontWeight="Bold" Width="157" Click="BSendToCharge_Click"/>
-            <Button x:Name="BReleaseDrone" Content="שחרור מטעינה" Visibility="Hidden" HorizontalAlignment="Left" Margin="632,0,0,0" Grid.Row="3" VerticalAlignment="Center" FontSize="18" FontWeight="Bold" Width="157" Click="BReleaseDrone_Click"/>
-            <Button x:Name="BAssignPackage" Content="שליחת רחפן למשלוח" Visibility="Hidden" HorizontalAlignment="Left" Margin="632,0,0,0" Grid.Row="4" VerticalAlignment="Center" FontSize="16" FontWeight="Bold" Click="BAssignPackage_Click"/>
-            <Button x:Name="BPickedUp" Content="איסוף חבילה" Visibility="Hidden" HorizontalAlignment="Left" Margin="633,0,0,0" Grid.Row="4" VerticalAlignment="Center" FontSize="16" FontWeight="Bold" Width="157" Click="BPickedUp_Click"/>
-            <Button x:Name="BDeliveryPackage" Content="אספקת חבילה" Visibility="Hidden" HorizontalAlignment="Left" Margin="632,0,0,0" Grid.Row="4" VerticalAlignment="Center" FontSize="16" FontWeight="Bold" Width="157" Click="BDeliveryPackage_Click"/>
+            <Label Content="חבילה בהעברה" HorizontalAlignment="Left" Margin="378,0,0,0" VerticalAlignment="Center" Height="53" Width="150" FontWeight="Bold" FontSize="20" Grid.Row="1"/>
+            <Button x:Name="BClose1" Content="סגירה"  Style="{StaticResource RoundedButtonStyle}" HorizontalAlignment="Left" Margin="632,3,0,0" Grid.Row="1" VerticalAlignment="Top" FontSize="18" FontWeight="Bold" Width="157" Click="BClose1_Click" Background="#FF64CCF1"/>
+            <Button x:Name="BModalUpdate" Content="עדכון"  Style="{StaticResource RoundedButtonStyle}" Visibility="Visible" HorizontalAlignment="Left" Margin="632,0,0,0" Grid.Row="2" VerticalAlignment="Center" RenderTransformOrigin="0.488,1.204" FontSize="18" FontWeight="Bold" Width="157" Click="BModalUpdate_Click" Height="26" Background="#FF64CCF1"/>
+            <Button x:Name="BSendToCharge" Content="שליחה לטעינה"  Style="{StaticResource RoundedButtonStyle}" Visibility="Hidden"  HorizontalAlignment="Left" Margin="632,0,0,0" Grid.Row="3" VerticalAlignment="Center" FontSize="18" FontWeight="Bold" Width="157" Click="BSendToCharge_Click" Background="#FF64CCF1"/>
+            <Button x:Name="BReleaseDrone" Content="שחרור מטעינה"  Style="{StaticResource RoundedButtonStyle}" Visibility="Hidden" HorizontalAlignment="Left" Margin="632,0,0,0" Grid.Row="3" VerticalAlignment="Center" FontSize="18" FontWeight="Bold" Width="157" Click="BReleaseDrone_Click" Background="#FF64CCF1"/>
+            <Button x:Name="BAssignPackage" Content="שליחת רחפן למשלוח"  Style="{StaticResource RoundedButtonStyle}" Visibility="Hidden" HorizontalAlignment="Left" Margin="632,0,0,0" Grid.Row="4" VerticalAlignment="Center" FontSize="16" FontWeight="Bold" Click="BAssignPackage_Click" Background="#FF64CCF1"/>
+            <Button x:Name="BPickedUp" Content="איסוף חבילה" Visibility="Hidden"  Style="{StaticResource RoundedButtonStyle}" HorizontalAlignment="Left" Margin="633,0,0,0" Grid.Row="4" VerticalAlignment="Center" FontSize="16" FontWeight="Bold" Width="157" Click="BPickedUp_Click" Background="#FF64CCF1"/>
+            <Button x:Name="BDeliveryPackage" Content="אספקת חבילה"  Style="{StaticResource RoundedButtonStyle}" Visibility="Hidden" HorizontalAlignment="Left" Margin="632,0,0,0" Grid.Row="4" VerticalAlignment="Center" FontSize="16" FontWeight="Bold" Width="157" Click="BDeliveryPackage_Click" Background="#FF64CCF1"/>
             <Grid x:Name="TimeChoose" Visibility="Hidden" Margin="593,1,0,3" Grid.RowSpan="3" Grid.Row="4">
                 <Label x:Name="Ltime" Content=" משך זמן בטעינה לאישור סמן" Grid.Column="0" Visibility="Visible" HorizontalAlignment="Left" Margin="27,4,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.402,-0.857" Width="170" FontWeight="Bold"/>
                 <TextBox x:Name="TBhours"  Visibility="Visible" Grid.Column="0" HorizontalAlignment="Left"  Margin="77,30,0,0" Text="00" TextWrapping="Wrap" VerticalAlignment="Top" Width="22" KeyDown="TBhours_KeyDown" RenderTransformOrigin="-4.283,0.911"/>
@@ -128,7 +137,7 @@
             </Grid>
             <GridSplitter HorizontalAlignment="Left" Height="361" Margin="273,1,0,0" Grid.RowSpan="10" Grid.Row="1" VerticalAlignment="Top" Width="5"/>
             <GridSplitter HorizontalAlignment="Left" Height="362" Margin="622,72,0,0" Grid.RowSpan="11" VerticalAlignment="Top" Width="5"/>
-            <TextBlock x:Name="TBnotAssigned" HorizontalAlignment="Right" Margin="0,1,188,0" Grid.Row="3" TextWrapping="Wrap" VerticalAlignment="Top" Height="168" Width="286" Grid.RowSpan="5" FontSize="32" FontWeight="Bold" Text="הרחפן לא שוייך עדיין " Cursor="ArrowCD" TextAlignment="Center"/>
+            <TextBlock x:Name="TBnotAssigned" HorizontalAlignment="Right" Margin="0,1,188,0" Grid.Row="3" TextWrapping="Wrap" VerticalAlignment="Top" Height="168" Width="286" Grid.RowSpan="5" FontSize="32" FontWeight="Bold" Text="הרחפן לא שוייך עדיין "  TextAlignment="Center"/>
 
         </Grid>
 

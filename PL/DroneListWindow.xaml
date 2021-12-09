@@ -8,13 +8,17 @@
         WindowStartupLocation="CenterScreen"
         ResizeMode="CanMinimize" 
         Title="DroneListWindow" Height="640" Width="860">
+    <!--control the style for the buotons-->
+    <Window.Resources>
+        <Style TargetType="Button" x:Key="RoundedButtonStyle">
+            <Style.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="15"/>
+                </Style>
+            </Style.Resources>
+        </Style>
+    </Window.Resources>
 
-    <!--<Window.Resources>
-        <Style x:Key="jjj" TargetType="Button">
-            <Setter Property="Foreground" Value="Red"></Setter>
-        </Style> 
-       
-    </Window.Resources>-->
 
     <Grid x:Name="MainGrid" >
 
@@ -24,9 +28,7 @@
             <RowDefinition Height="400*"/>
         </Grid.RowDefinitions>
         <Grid Name="UpGrid" 
-              HorizontalAlignment="Stretch" 
-              Height="auto" Grid.Row="0"
-               VerticalAlignment="Stretch" Width="auto">
+              Height="auto" Grid.Row="0" Width="auto">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
@@ -34,9 +36,9 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions >
-            <ComboBox Name="StatusSelector"  HorizontalAlignment= "Stretch" VerticalAlignment="Stretch" Grid.Column="1" SelectionChanged="StatusSelector_SelectionChanged"  FontWeight="Bold" FontSize="18" />
-            <TextBox Grid.Column="2" Text="אפשרויות סינון" Cursor="Pen" FontWeight="Bold" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" Background="{x:Null}" SelectionTextBrush="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False" />
-            <ComboBox x:Name="WeightSelctor" Grid.Column="0" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch"  SelectionChanged="weightSelector_SelectionChanged" FontWeight="Bold" FontSize="18" BorderBrush="{x:Null}">
+            <ComboBox Name="StatusSelector" VerticalAlignment="Center" Grid.Column="1" SelectionChanged="StatusSelector_SelectionChanged"  FontWeight="Bold" FontSize="18" Height="69" />
+            <TextBox Grid.Column="2" Text="אפשרויות סינון" Cursor="Pen" FontWeight="Bold" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Top" Background="{x:Null}" SelectionTextBrush="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False" />
+            <ComboBox x:Name="WeightSelctor"    Grid.Column="0"  SelectionChanged="weightSelector_SelectionChanged" FontWeight="Bold" FontSize="18" BorderBrush="{x:Null}">
                 <ComboBox.Background>
                     <LinearGradientBrush EndPoint="0,1">
                         <GradientStop Color="#FFF0F0F0"/>
@@ -44,31 +46,13 @@
                     </LinearGradientBrush>
                 </ComboBox.Background>
             </ComboBox>
-            <Button x:Name="res" Content="איפוס"  HorizontalAlignment="Left" Margin="80,22,0,21" Width="59" Click="res_Click" Background="#FF64CCF1" BorderBrush="{x:Null}" Foreground="#FFF9F9F9" FontWeight="Bold" FontSize="14" Grid.Column="4">
-                <Button.Resources>
-                    <Style TargetType="Border">
-                        <Setter Property="CornerRadius" Value="15"/>
-                    </Style>
-                </Button.Resources>
-            </Button>
+            <Button x:Name="res" Content="איפוס" Style="{StaticResource RoundedButtonStyle}" HorizontalAlignment="Center" Margin="0,34,0,8" Width="60" Click="res_Click"  FontWeight="Bold" FontSize="14" Grid.Column="2" Background="#FF64CCF1" BorderBrush="{x:Null}" Foreground="White"></Button>
             <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="57,43,0,5" TextWrapping="Wrap" Width="59" FontWeight="Bold" FontSize="14"><Run FlowDirection="RightToLeft" Language="he-il" Text="סטטוס       "/></TextBlock>
             <TextBlock HorizontalAlignment="Center" Margin="0,40,0,5" TextWrapping="Wrap" Width="68" FontWeight="Bold" FontSize="14"><Run FlowDirection="RightToLeft" Language="he-il" Text="משקל"/></TextBlock>
-            <Button x:Name="BAddDrone"  Content="הוספה"  FontSize="14" FontWeight="Bold" Click="BAddDrone_Click"  Margin="34,20,80,21"  Background="#FFF19164" BorderBrush="{x:Null}" Foreground="#FFEEEEEE" Grid.Column="3">
-                <Button.Resources>
-                    <Style TargetType="Border">
-                        <Setter Property="CornerRadius" Value="15"/>
-                    </Style>
-                </Button.Resources>
-            </Button>
-            <Button x:Name="Bclose"  Content="סגירה" Grid.Column="3" HorizontalAlignment="Left" Margin="142,22,0,21" Width="58"  Background="#FF64CCF1"  Click="Bclose_Click" BorderBrush="{x:Null}" Foreground="#FFEEEEEE" FontWeight="Bold" FontSize="14" Grid.ColumnSpan="2">
-                <Button.Resources>
-                    <Style TargetType="Border">
-                        <Setter Property="CornerRadius" Value="15"/>
-                    </Style>
-                </Button.Resources>
-            </Button>
+            <Button x:Name="BAddDrone"  Content="הוספה"  FontSize="14" Style="{StaticResource RoundedButtonStyle}" FontWeight="Bold" Click="BAddDrone_Click"  Margin="57,34,57,7"   BorderBrush="{x:Null}" Foreground="#FFEEEEEE" Grid.Column="3" Background="#FF64CCF1"></Button>
+            <Button x:Name="Bclose"  Content="סגירה" Grid.Column="4" HorizontalAlignment="Center" Style="{StaticResource RoundedButtonStyle}" Margin="0,35,0,8" Width="58"    Click="Bclose_Click" BorderBrush="{x:Null}" Foreground="#FFEEEEEE" FontWeight="Bold" FontSize="14" RenderTransformOrigin="0.448,1.702" Background="#FF64CCF1"></Button>
         </Grid>
-        
+
         <ListView x:Name="DroneListView" Grid.Row="1" MouseDoubleClick="DroneListView_MouseDoubleClick" Foreground="#FF2249AE" BorderBrush="Black" Background="#FFE2CAD7" FontWeight="Bold" FontSize="14">
 
             <ListView.ItemContainerStyle>
