@@ -13,7 +13,7 @@
         <Style TargetType="Button" x:Key="RoundedButtonStyle">
             <Style.Resources>
                 <Style TargetType="Border">
-                    <Setter Property="CornerRadius" Value="5" />
+                    <Setter Property="CornerRadius" Value="15" />
                 </Style>
             </Style.Resources>
         </Style>
@@ -70,26 +70,26 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <TextBox x:Name="TBID2" HorizontalAlignment="Left" Margin="34,0,0,0" Grid.Row="1" Text="{Binding Path=Id}" TextWrapping="Wrap" VerticalAlignment="Center" Width="120" IsReadOnly="True" BorderBrush="{x:Null}"/>
-            <TextBox x:Name="TBmodel" HorizontalAlignment="Left" Margin="34,0,0,0" Grid.Row="2" Text="{Binding Path=Model}" TextWrapping="Wrap" VerticalAlignment="Center" Width="120" KeyUp="TBmodel_KeyUp" BorderBrush="#FF1850F7"/>
-            <TextBox x:Name="TBDroneStatuses" HorizontalAlignment="Left" Margin="34,0,0,0" Grid.Row="5" Text="{Binding Path=Statuses}" TextWrapping="Wrap" VerticalAlignment="Center" Width="120" IsReadOnly="True" BorderBrush="{x:Null}"/>
-            <TextBox x:Name="TBWeightCategories" HorizontalAlignment="Left" Margin="34,0,0,0" Grid.Row="3" Text="{Binding Path=MaxWeight}" TextWrapping="Wrap" VerticalAlignment="Center" Width="120" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}"/>
-            <TextBox x:Name="TBBatrryStatuses" HorizontalAlignment="Left" Margin="34,0,0,0" Grid.Row="4" Text="{Binding Path=BatteryStatus}" TextWrapping="Wrap" VerticalAlignment="Center" Width="120" IsReadOnly="True" BorderBrush="{x:Null}"/>
-            <Label Content="מספר מזהה" HorizontalAlignment="Left" Margin="159,0,0,0" Grid.Row="1" VerticalAlignment="Center" Height="26" Width="88" FontWeight="Bold"/>
-            <Label Content="מודל " HorizontalAlignment="Left" Margin="199,0,0,0" Grid.Row="2" VerticalAlignment="Center" Height="26" Width="88" FontWeight="Bold"/>
-            <Label Content="קטגוריית משקל" HorizontalAlignment="Left" Margin="174,0,0,0" Grid.Row="3" VerticalAlignment="Center" Height="26" Width="100" FontWeight="Bold"/>
-            <Label Content="מצב סוללה" HorizontalAlignment="Left" Margin="180,0,0,0" Grid.Row="4" VerticalAlignment="Center" Height="26" Width="88" FontWeight="Bold"/>
-            <Label Content="מצב רחפן" HorizontalAlignment="Left" Margin="180,0,0,0" Grid.Row="5" VerticalAlignment="Center" Height="26" Width="88" FontWeight="Bold"/>
-            <Label Content="חבילה בהעברה" HorizontalAlignment="Left" Margin="378,0,0,0" VerticalAlignment="Center" Height="53" Width="150" FontWeight="Bold" FontSize="20" Grid.Row="1"/>
-            <Button x:Name="BClose1" Content="סגירה"  Style="{StaticResource RoundedButtonStyle}" HorizontalAlignment="Left" Margin="632,3,0,0" Grid.Row="1" VerticalAlignment="Top" FontSize="18" FontWeight="Bold" Width="157" Click="BClose1_Click" Background="#FF64CCF1"/>
-            <Button x:Name="BModalUpdate" Content="עדכון"  Style="{StaticResource RoundedButtonStyle}" Visibility="Visible" HorizontalAlignment="Left" Margin="632,0,0,0" Grid.Row="2" VerticalAlignment="Center" RenderTransformOrigin="0.488,1.204" FontSize="18" FontWeight="Bold" Width="157" Click="BModalUpdate_Click" Height="26" Background="#FF64CCF1"/>
-            <Button x:Name="BSendToCharge" Content="שליחה לטעינה"  Style="{StaticResource RoundedButtonStyle}" Visibility="Hidden"  HorizontalAlignment="Left" Margin="632,0,0,0" Grid.Row="3" VerticalAlignment="Center" FontSize="18" FontWeight="Bold" Width="157" Click="BSendToCharge_Click" Background="#FF64CCF1"/>
-            <Button x:Name="BReleaseDrone" Content="שחרור מטעינה"  Style="{StaticResource RoundedButtonStyle}" Visibility="Hidden" HorizontalAlignment="Left" Margin="632,0,0,0" Grid.Row="3" VerticalAlignment="Center" FontSize="18" FontWeight="Bold" Width="157" Click="BReleaseDrone_Click" Background="#FF64CCF1"/>
-            <Button x:Name="BAssignPackage" Content="שליחת רחפן למשלוח"  Style="{StaticResource RoundedButtonStyle}" Visibility="Hidden" HorizontalAlignment="Left" Margin="632,0,0,0" Grid.Row="4" VerticalAlignment="Center" FontSize="16" FontWeight="Bold" Click="BAssignPackage_Click" Background="#FF64CCF1"/>
-            <Button x:Name="BPickedUp" Content="איסוף חבילה" Visibility="Hidden"  Style="{StaticResource RoundedButtonStyle}" HorizontalAlignment="Left" Margin="633,0,0,0" Grid.Row="4" VerticalAlignment="Center" FontSize="16" FontWeight="Bold" Width="157" Click="BPickedUp_Click" Background="#FF64CCF1"/>
-            <Button x:Name="BDeliveryPackage" Content="אספקת חבילה"  Style="{StaticResource RoundedButtonStyle}" Visibility="Hidden" HorizontalAlignment="Left" Margin="632,0,0,0" Grid.Row="4" VerticalAlignment="Center" FontSize="16" FontWeight="Bold" Width="157" Click="BDeliveryPackage_Click" Background="#FF64CCF1"/>
+            <TextBox x:Name="TBID2" HorizontalAlignment="Left" Margin="34,0,0,0" Grid.Row="1" Text="{Binding Path=Id}" TextWrapping="Wrap" VerticalAlignment="Center" Width="120" IsReadOnly="True" BorderBrush="{x:Null}" Background="{x:Null}" FontSize="14" FontWeight="Bold" TextAlignment="Center" Foreground="#FF35C915"/>
+            <TextBox x:Name="TBmodel" HorizontalAlignment="Left" Margin="34,0,0,0" Grid.Row="2" Text="{Binding Path=Model}" TextWrapping="Wrap" VerticalAlignment="Center" Width="120" KeyUp="TBmodel_KeyUp" BorderBrush="#FF1850F7" Background="White" FontSize="14" FontWeight="Bold" FontStyle="Normal"/>
+            <TextBox x:Name="TBDroneStatuses" HorizontalAlignment="Left" Margin="34,0,0,0" Grid.Row="5" Text="{Binding Path=Statuses}" TextWrapping="Wrap" VerticalAlignment="Center" Width="120" IsReadOnly="True" BorderBrush="{x:Null}" FontSize="14" FontWeight="Bold" Background="{x:Null}" TextAlignment="Center" Foreground="#FF31BD12"/>
+            <TextBox x:Name="TBWeightCategories" HorizontalAlignment="Left" Margin="34,0,0,0" Grid.Row="3" Text="{Binding Path=MaxWeight}" TextWrapping="Wrap" VerticalAlignment="Center" Width="120" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" FontSize="14" FontWeight="Bold" TextAlignment="Center" Foreground="#FF3DC31F"/>
+            <TextBox x:Name="TBBatrryStatuses" HorizontalAlignment="Left" Margin="34,0,0,0" Grid.Row="4" Text="{Binding Path=BatteryStatus}" TextWrapping="Wrap" VerticalAlignment="Center" Width="120" IsReadOnly="True" BorderBrush="{x:Null}" TextAlignment="Center" FontSize="14" FontWeight="Bold" Background="{x:Null}" Foreground="#FF36D413"/>
+            <Label Content="מספר מזהה" HorizontalAlignment="Left" Margin="185,7,0,0" Grid.Row="1" VerticalAlignment="Top" Height="26" Width="88" FontWeight="Bold"/>
+            <Label Content="מודל " HorizontalAlignment="Left" Margin="217,0,0,0" Grid.Row="2" VerticalAlignment="Center" Height="26" Width="88" FontWeight="Bold"/>
+            <Label Content="קטגוריית משקל" HorizontalAlignment="Left" Margin="159,0,0,0" Grid.Row="3" VerticalAlignment="Center" Height="26" Width="100" FontWeight="Bold"/>
+            <Label Content="מצב סוללה" HorizontalAlignment="Left" Margin="185,0,0,0" Grid.Row="4" VerticalAlignment="Center" Height="26" Width="88" FontWeight="Bold"/>
+            <Label Content="מצב רחפן" HorizontalAlignment="Left" Margin="190,0,0,0" Grid.Row="5" VerticalAlignment="Center" Height="26" Width="88" FontWeight="Bold"/>
+            <Label Content="חבילה בהעברה" HorizontalAlignment="Left" Margin="388,0,0,0" VerticalAlignment="Center" Height="53" Width="150" FontWeight="Bold" FontSize="20" Grid.Row="1"/>
+            <Button x:Name="BClose1" Content="סגירה"  Style="{StaticResource RoundedButtonStyle}" HorizontalAlignment="Left" Margin="632,3,0,0" Grid.Row="1" VerticalAlignment="Top" FontSize="18" FontWeight="Bold" Width="157" Click="BClose1_Click" Background="#FF64CCF1" Foreground="White"/>
+            <Button x:Name="BModalUpdate" Content="עדכון"  Style="{StaticResource RoundedButtonStyle}" Visibility="Visible" HorizontalAlignment="Left" Margin="632,0,0,0" Grid.Row="2" VerticalAlignment="Center" RenderTransformOrigin="0.488,1.204" FontSize="18" FontWeight="Bold" Width="157" Click="BModalUpdate_Click" Height="26" Background="#FF64CCF1" Foreground="#FFF9E7E7"/>
+            <Button x:Name="BSendToCharge" Content="שליחה לטעינה"  Style="{StaticResource RoundedButtonStyle}" Visibility="Hidden"  HorizontalAlignment="Left" Margin="632,0,0,0" Grid.Row="3" VerticalAlignment="Center" FontSize="18" FontWeight="Bold" Width="157" Click="BSendToCharge_Click" Background="#FF64CCF1"  Foreground="#FFF9E7E7"/>
+            <Button x:Name="BReleaseDrone" Content="שחרור מטעינה"  Style="{StaticResource RoundedButtonStyle}" Visibility="Hidden" HorizontalAlignment="Left" Margin="632,0,0,0" Grid.Row="3" VerticalAlignment="Center" FontSize="18" FontWeight="Bold" Width="157" Click="BReleaseDrone_Click" Background="#FF64CCF1"  Foreground="#FFF9E7E7"/>
+            <Button x:Name="BAssignPackage" Content="שליחת רחפן למשלוח"  Style="{StaticResource RoundedButtonStyle}" Visibility="Hidden" HorizontalAlignment="Left" Margin="632,0,0,0" Grid.Row="4" VerticalAlignment="Center" FontSize="16" FontWeight="Bold" Click="BAssignPackage_Click" Background="#FF64CCF1" Height="26" Width="158"  Foreground="#FFF9E7E7"/>
+            <Button x:Name="BPickedUp" Content="איסוף חבילה" Visibility="Hidden"  Style="{StaticResource RoundedButtonStyle}" HorizontalAlignment="Left" Margin="633,0,0,0" Grid.Row="4" VerticalAlignment="Center" FontSize="16" FontWeight="Bold" Width="157" Click="BPickedUp_Click" Background="#FF64CCF1"  Foreground="#FFF9E7E7"/>
+            <Button x:Name="BDeliveryPackage" Content="אספקת חבילה"  Style="{StaticResource RoundedButtonStyle}" Visibility="Hidden" HorizontalAlignment="Left" Margin="632,0,0,0" Grid.Row="4" VerticalAlignment="Center" FontSize="16" FontWeight="Bold" Width="157" Click="BDeliveryPackage_Click" Background="#FF64CCF1"  Foreground="#FFF9E7E7"/>
             <Grid x:Name="TimeChoose" Visibility="Hidden" Margin="593,1,0,3" Grid.RowSpan="3" Grid.Row="4">
-                <Label x:Name="Ltime" Content=" משך זמן בטעינה לאישור סמן" Grid.Column="0" Visibility="Visible" HorizontalAlignment="Left" Margin="27,4,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.402,-0.857" Width="170" FontWeight="Bold"/>
+                <Label x:Name="Ltime" Content=" משך זמן בטעינה, לאישור סמן" Grid.Column="0" Visibility="Visible" HorizontalAlignment="Left" Margin="27,4,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.402,-0.857" Width="170" FontWeight="Bold"/>
                 <TextBox x:Name="TBhours"  Visibility="Visible" Grid.Column="0" HorizontalAlignment="Left"  Margin="77,30,0,0" Text="00" TextWrapping="Wrap" VerticalAlignment="Top" Width="22" KeyDown="TBhours_KeyDown" RenderTransformOrigin="-4.283,0.911"/>
                 <TextBox x:Name="TBmin"  HorizontalAlignment="Left" Grid.Column="0" Margin="115,30,0,0" Text="00" TextWrapping="Wrap" VerticalAlignment="Top" Width="22" Visibility="Visible" KeyDown="TBmin_KeyDown"/>
                 <TextBox x:Name="TBsec" HorizontalAlignment="Left" Grid.Column="0" Margin="153,30,0,0" Text="00" TextWrapping="Wrap" VerticalAlignment="Top" Width="22" Visibility="Visible" KeyDown="TBsec_KeyDown"/>
@@ -98,46 +98,68 @@
                 <CheckBox x:Name="CBtimeOk"  Content="" HorizontalAlignment="Left" Margin="39,31,0,16" Checked="CBtimeOk_Checked" Visibility="Visible" BorderBrush="#FF24BD24" Width="18" Background="White" Foreground="#FF1743D8" Unchecked="CBtimeOk_Unchecked"/>
             </Grid>
             <Grid x:Name="GridLocation" Grid.Row="6" Margin="10,36,504,36" Grid.RowSpan="4">
-                <TextBlock  x:Name="TBLocationLongitude" HorizontalAlignment="Left" Margin="10,10,0,0" Text="{Binding Path=CurrentLocation.longitude}" TextWrapping="Wrap" VerticalAlignment="Top" Width="134"/>
-                <TextBlock  x:Name="TBLocationLatitude" HorizontalAlignment="Left" Margin="10,31,0,0" Text="{Binding Path=CurrentLocation.latitude}" TextWrapping="Wrap" VerticalAlignment="Top" Width="134"/>
-                <Label Content="קו אורך" HorizontalAlignment="Left" Margin="159,0,0,0" VerticalAlignment="Top" Height="26" Width="56" FontWeight="Bold"/>
-                <Label Content="קו רוחב" HorizontalAlignment="Left" Margin="159,21,0,0" VerticalAlignment="Top" Height="26" Width="56" FontWeight="Bold"/>
-                <Label Content="מיקום" HorizontalAlignment="Left" Margin="218,-8,0,0" VerticalAlignment="Top" Height="26" Width="88" FontWeight="Bold"/>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="151*"/>
+                    <ColumnDefinition Width="135*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock  x:Name="TBLocationLongitude" HorizontalAlignment="Left" Margin="10,31,0,0" Text="{Binding Path=CurrentLocation}" TextWrapping="Wrap" VerticalAlignment="Top" Width="229" Height="25" FontSize="14" FontWeight="Bold" Grid.ColumnSpan="2" Foreground="#FF43D323"/>
+
+                <Label Content="קו אורך" Margin="34,5,48,0" VerticalAlignment="Top" Height="26" FontWeight="Bold"/>
+                <!--<TextBlock  x:Name="TBLocationLatitude" HorizontalAlignment="Left" Margin="17,47,0,0" Text="{Binding Path=CurrentLocation.latitude}" TextWrapping="Wrap" VerticalAlignment="Top" Width="134"/>-->
+                <Label Content="קו רוחב" HorizontalAlignment="Left" Margin="143,5,0,0" VerticalAlignment="Top" Height="26" Width="63" FontWeight="Bold" Grid.ColumnSpan="2"/>
+                <Label Content="מיקום" HorizontalAlignment="Left" Margin="68,0,0,0" VerticalAlignment="Top" Height="26" Width="88" FontWeight="Bold" Grid.Column="1"/>
             </Grid>
+            <!--this grid is for the parcel in trensfer-->
             <Grid x:Name="GRIDparcelInDelivery" Grid.Row="1" Margin="283,36,178,0" Grid.RowSpan="10" Visibility="Hidden">
-                <Label Content="מספר מזהה" HorizontalAlignment="Left" Margin="249,0,0,0" VerticalAlignment="Top" FontWeight="Bold" Width="80"/>
-                <Label Content="חבילה נאספה" HorizontalAlignment="Left" Margin="239,31,0,0" VerticalAlignment="Top" FontWeight="Bold" Width="90"/>
-                <Label Content="עדיפות" HorizontalAlignment="Left" Margin="270,62,0,0" VerticalAlignment="Top" FontWeight="Bold" Width="48"/>
-                <Label Content="משקל" HorizontalAlignment="Left" Margin="117,62,0,0" VerticalAlignment="Top" FontWeight="Bold" Width="48" RenderTransformOrigin="-0.319,0.309"/>
-                <GridSplitter HorizontalAlignment="Center" Height="158" Margin="0,169,0,0" VerticalAlignment="Top" Width="6"/>
-                <Label Content="מרחק" HorizontalAlignment="Left" Margin="270,99,0,0" VerticalAlignment="Top" FontWeight="Bold" Width="48"/>
-                <Label Content="פרטי השולח" HorizontalAlignment="Left" Margin="249,138,0,0" VerticalAlignment="Top" FontWeight="Bold" Width="83"/>
-                <Label Content="פרטי המקבל " HorizontalAlignment="Left" Margin="86,138,0,0" VerticalAlignment="Top" FontWeight="Bold" Width="84"/>
-                <Label Content="קו אורך" HorizontalAlignment="Left" Margin="108,233,0,0" VerticalAlignment="Top" Height="26" Width="54" FontWeight="Bold"/>
-                <Label Content="קו אורך" HorizontalAlignment="Left" Margin="276,233,0,0" VerticalAlignment="Top" Height="26" Width="53" FontWeight="Bold"/>
-                <Label Content="קו רוחב" HorizontalAlignment="Left" Margin="108,264,0,0" VerticalAlignment="Top" Height="26" Width="52" FontWeight="Bold"/>
-                <Label Content="קו רוחב" HorizontalAlignment="Left" Margin="275,264,0,0" VerticalAlignment="Top" Height="26" Width="54" FontWeight="Bold"/>
-                <Label Content="מספר מזהה" HorizontalAlignment="Left" Margin="254,189,0,0" VerticalAlignment="Top" Height="26" Width="75" FontWeight="Bold"/>
-                <Label Content="מספר מזהה" HorizontalAlignment="Left" Margin="86,189,0,0" VerticalAlignment="Top" Height="26" Width="76" FontWeight="Bold"/>
-                <Label Content="שם" HorizontalAlignment="Left" Margin="297,164,0,0" VerticalAlignment="Top" Height="26" Width="32" FontWeight="Bold"/>
-                <Label Content="שם" HorizontalAlignment="Left" Margin="134,164,0,0" VerticalAlignment="Top" Height="26" Width="32" FontWeight="Bold"/>
-                <TextBlock HorizontalAlignment="Left" Margin="109,5,0,0" Text="{Binding Path=Delivery.Id}" TextWrapping="Wrap" VerticalAlignment="Top" Width="127"/>
-                <CheckBox Content="" HorizontalAlignment="Left" Margin="214,36,0,0" VerticalAlignment="Top" IsChecked="{Binding Path=Delivery.OnTheWayToTheDestination}" IsEnabled="False"/>
-                <TextBlock HorizontalAlignment="Left" Margin="199,67,0,0" Text="{Binding Path=Delivery.Prior}" TextWrapping="Wrap" VerticalAlignment="Top" Width="66"/>
-                <TextBlock HorizontalAlignment="Left" Margin="34,67,0,0" Text="{Binding Path=Delivery.Weight}" TextWrapping="Wrap" VerticalAlignment="Top" Width="66"/>
-                <TextBlock HorizontalAlignment="Left" Margin="141,104,0,0" Text="{Binding Path=Delivery.TransportDistance}" TextWrapping="Wrap" VerticalAlignment="Top" Width="109"/>
-                <TextBlock HorizontalAlignment="Left" Margin="23,169,0,0" Text="{Binding Path=Delivery.Receiver.Name}" TextWrapping="Wrap" VerticalAlignment="Top" Width="105"/>
-                <TextBlock HorizontalAlignment="Left" Margin="192,169,0,0" Text="{Binding Path=Delivery.Sender.Name}" TextWrapping="Wrap" VerticalAlignment="Top" Width="105"/>
-                <TextBlock HorizontalAlignment="Left" Margin="199,215,0,0" Text="{Binding Path=Delivery.Sender.Id}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-                <TextBlock HorizontalAlignment="Left" Margin="34,215,0,0" Text="{Binding Path=Delivery.Receiver.Id}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-                <TextBlock HorizontalAlignment="Left" Margin="10,258,0,0" Text="{Binding Path=Delivery.DestinationLocation.longitude}" TextWrapping="Wrap" VerticalAlignment="Top" Width="144"/>
-                <TextBlock HorizontalAlignment="Left" Margin="10,287,0,0" Text="{Binding Path=Delivery.DestinationLocation.latitude}" TextWrapping="Wrap" VerticalAlignment="Top" Width="144"/>
-                <TextBlock HorizontalAlignment="Left" Margin="185,287,0,0" Text="{Binding Path=Delivery.SourceLocation.latitude}" TextWrapping="Wrap" VerticalAlignment="Top" Width="144"/>
-                <TextBlock HorizontalAlignment="Left" Margin="185,258,0,0" Text="{Binding Path=Delivery.SourceLocation.longitude}" TextWrapping="Wrap" VerticalAlignment="Top" Width="144"/>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="91*"/>
+                    <RowDefinition Height="235*"/>
+                    <RowDefinition Height="0*"/>
+                    <RowDefinition Height="0*"/>
+                </Grid.RowDefinitions>
+                <Label Content="מספר מזהה" HorizontalAlignment="Left" Margin="249,0,0,0" VerticalAlignment="Top" FontWeight="Bold" Width="80" Height="26"/>
+                <Label Content="חבילה נאספה" HorizontalAlignment="Left" Margin="67,0,0,0" VerticalAlignment="Top" FontWeight="Bold" Width="90" Height="26"/>
+                <Label Content="עדיפות" HorizontalAlignment="Left" Margin="271,0,0,0" VerticalAlignment="Center" FontWeight="Bold" Width="48" Height="26"/>
+                <Label Content="משקל" HorizontalAlignment="Left" Margin="102,31,0,0" VerticalAlignment="Top" FontWeight="Bold" Width="48" RenderTransformOrigin="-0.319,0.309" Height="26"/>
+                <Label Content="מרחק משלוח" HorizontalAlignment="Left" Margin="243,65,0,0" VerticalAlignment="Top" FontWeight="Bold" Width="86" Height="26" Grid.RowSpan="2"/>
+                <Label Content="פרטי השולח" HorizontalAlignment="Left" Margin="218,21,0,0" VerticalAlignment="Top" FontWeight="Bold" Width="82" Grid.Row="1" Height="26"/>
+                <Label Content="פרטי המקבל " HorizontalAlignment="Left" Margin="52,21,0,0" VerticalAlignment="Top" FontWeight="Bold" Width="84" Grid.Row="1" FontStyle="Normal" Height="26"/>
+                <Label Content="קו אורך" HorizontalAlignment="Left" Margin="112,141,0,0" VerticalAlignment="Top" Height="26" Width="54" FontWeight="Bold" Grid.Row="1"/>
+                <Label Content="קו אורך" HorizontalAlignment="Left" Margin="276,141,0,0" VerticalAlignment="Top" Height="26" Width="53" FontWeight="Bold" Grid.Row="1"/>
+                <Label Content="קו רוחב" HorizontalAlignment="Left" Margin="112,176,0,0" VerticalAlignment="Top" Height="26" Width="52" FontWeight="Bold" Grid.Row="1"/>
+                <Label Content="קו רוחב" HorizontalAlignment="Left" Margin="275,176,0,0" VerticalAlignment="Top" Height="26" Width="54" FontWeight="Bold" Grid.Row="1"/>
+                <Label Content="מספר מזהה" HorizontalAlignment="Left" Margin="254,91,0,0" VerticalAlignment="Top" Height="26" Width="75" FontWeight="Bold" Grid.Row="1"/>
+                <Label Content="מספר מזהה" HorizontalAlignment="Left" Margin="90,91,0,0" VerticalAlignment="Top" Height="26" Width="76" FontWeight="Bold" Grid.Row="1"/>
+                <Label Content="שם" HorizontalAlignment="Left" Margin="297,52,0,0" VerticalAlignment="Top" Height="26" Width="32" FontWeight="Bold" Grid.Row="1"/>
+                <Label Content="שם" HorizontalAlignment="Left" Margin="134,52,0,0" VerticalAlignment="Top" Height="26" Width="32" FontWeight="Bold" Grid.Row="1"/>
+                <TextBlock HorizontalAlignment="Left" Margin="199,4,0,0" Text="{Binding Path=Delivery.Id}" TextWrapping="Wrap" VerticalAlignment="Top" Width="44" FontSize="14" FontWeight="Bold" Foreground="#FF28D317" TextAlignment="Center" Height="18"/>
+                <CheckBox Content="" HorizontalAlignment="Left" Margin="47,5,0,0" VerticalAlignment="Top" IsChecked="{Binding Path=Delivery.OnTheWayToTheDestination}" IsEnabled="False" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FF09EC33" FontSize="14" Height="18" Width="20"/>
+                <TextBlock HorizontalAlignment="Left" Margin="199,38,0,0" Text="{Binding Path=Delivery.Prior}" TextWrapping="Wrap" VerticalAlignment="Top" Width="66" FontSize="14" FontWeight="Bold" Foreground="#FF36CB15" TextAlignment="Center" Height="19"/>
+                <TextBlock HorizontalAlignment="Left" Margin="31,0,0,0" Text="{Binding Path=Delivery.Weight}" TextWrapping="Wrap" VerticalAlignment="Center" Width="66" Foreground="#FF41B61E" FontSize="14" FontWeight="Bold" TextAlignment="Center" Height="19"/>
+                <TextBlock HorizontalAlignment="Left" Margin="67,66,0,0" Text="{Binding Path=Delivery.TransportDistance}" TextWrapping="Wrap" VerticalAlignment="Top" Width="162" Height="24" FontSize="14" FontWeight="Bold" TextAlignment="Center" Foreground="#FF42D321"/>
+                <TextBlock HorizontalAlignment="Left" Margin="19,56,0,0" Text="{Binding Path=Delivery.Receiver.Name}" TextWrapping="Wrap" VerticalAlignment="Top" Width="105" Grid.Row="1" Height="16" FontSize="14" FontWeight="Bold" TextAlignment="Center" Foreground="#FF34D60F"/>
+                <TextBlock HorizontalAlignment="Left" Margin="190,57,0,0" Text="{Binding Path=Delivery.Sender.Name}" TextWrapping="Wrap" VerticalAlignment="Top" Width="105" Grid.Row="1" Height="16" Foreground="#FF59C71B" TextAlignment="Center" FontSize="14" FontWeight="Bold"/>
+                <TextBlock HorizontalAlignment="Left" Margin="199,122,0,0" Text="{Binding Path=Delivery.Sender.Id}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.Row="1" FontSize="14" FontWeight="Bold" Foreground="#FF2ECF1E" TextAlignment="Center" Height="19"/>
+                <TextBlock HorizontalAlignment="Left" Margin="22,122,0,0" Text="{Binding Path=Delivery.Receiver.Id}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.Row="1" TextAlignment="Center" Foreground="#FF31CF21" FontSize="14" FontWeight="Bold" Height="19"/>
+                <TextBlock HorizontalAlignment="Left" Margin="10,162,0,0" Text="{Binding Path=Delivery.DestinationLocation.longitude}" TextWrapping="Wrap" VerticalAlignment="Top" Width="144" Grid.Row="1" FontSize="14" FontWeight="Bold" TextAlignment="Center" Foreground="#FF31CD18" Height="19"/>
+                <TextBlock HorizontalAlignment="Left" Margin="10,198,0,0" Text="{Binding Path=Delivery.DestinationLocation.latitude}" TextWrapping="Wrap" VerticalAlignment="Top" Width="144" Grid.Row="1" FontSize="14" FontWeight="Bold" Foreground="#FF30CD29" TextAlignment="Center" Height="19"/>
+                <TextBlock HorizontalAlignment="Left" Margin="185,198,0,0" Text="{Binding Path=Delivery.SourceLocation.latitude}" TextWrapping="Wrap" VerticalAlignment="Top" Width="144" Grid.Row="1" FontSize="14" FontWeight="Bold" TextAlignment="Center" Foreground="#FF26CB1F" Height="19"/>
+                <TextBlock HorizontalAlignment="Left" Margin="185,162,0,0" Text="{Binding Path=Delivery.SourceLocation.longitude}" TextWrapping="Wrap" VerticalAlignment="Top" Width="144" Grid.Row="1" FontSize="14" FontWeight="Bold" Height="19" Foreground="#FF20D60E" TextAlignment="Center"/>
             </Grid>
-            <GridSplitter HorizontalAlignment="Left" Height="361" Margin="273,1,0,0" Grid.RowSpan="10" Grid.Row="1" VerticalAlignment="Top" Width="5"/>
-            <GridSplitter HorizontalAlignment="Left" Height="362" Margin="622,72,0,0" Grid.RowSpan="11" VerticalAlignment="Top" Width="5"/>
-            <TextBlock x:Name="TBnotAssigned" HorizontalAlignment="Right" Margin="0,1,188,0" Grid.Row="3" TextWrapping="Wrap" VerticalAlignment="Top" Height="168" Width="286" Grid.RowSpan="5" FontSize="32" FontWeight="Bold" Text="הרחפן לא שוייך עדיין "  TextAlignment="Center"/>
+            <GridSplitter HorizontalAlignment="Left" Height="361" Margin="273,1,0,0" Grid.RowSpan="10" Grid.Row="1" VerticalAlignment="Top" Width="5" Background="#FF27E21E"/>
+            <GridSplitter HorizontalAlignment="Left" Height="362" Margin="622,72,0,0" Grid.RowSpan="11" VerticalAlignment="Top" Width="5" Background="#FF31CD18"/>
+            <TextBlock x:Name="TBnotAssigned" HorizontalAlignment="Right" Margin="0,36,194,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Height="168" Width="286" Grid.RowSpan="6" FontSize="32" FontWeight="Bold" Text="הרחפן לא שוייך עדיין "  TextAlignment="Center"/>
+            <GridSplitter HorizontalAlignment="Left" Height="175" Margin="453,24,0,0" VerticalAlignment="Top" Width="2" Grid.RowSpan="6" Grid.Row="5" Background="#FF44B832"/>
+            <GridSplitter HorizontalAlignment="Left" Height="307" Margin="456,62,0,0" VerticalAlignment="Top" Width="2" Grid.RowSpan="10" Background="#FF44B832" RenderTransformOrigin="0.5,0.5">
+                <GridSplitter.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="-90.114"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </GridSplitter.RenderTransform>
+            </GridSplitter>
 
         </Grid>
 

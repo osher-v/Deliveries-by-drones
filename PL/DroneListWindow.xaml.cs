@@ -162,7 +162,7 @@ namespace PL
             {
                 int indexDrone = DroneListView.SelectedIndex;
                 this.IsEnabled = false; // to privent anotur click on the list window chosse we donr want alot of windows togter.
-                new DroneWindow(AccessIbl, this,drone.Id, indexDrone).Show();//open the drone windowon acction
+                new DroneWindow(AccessIbl, this,drone, indexDrone).Show();//open the drone windowon acction
             }
         }
     }

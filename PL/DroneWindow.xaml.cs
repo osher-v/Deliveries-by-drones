@@ -188,7 +188,7 @@ namespace PL
         /// <param name="_DroneListWindow">the call window</param>
         /// <param name="id">the drone id that chosen</param>
         /// <param name="_indexDrone">/indexe of the drone in the list</param>
-        public DroneWindow(IBL.IBL bl, DroneListWindow _DroneListWindow, int id, int _indexDrone)
+        public DroneWindow(IBL.IBL bl, DroneListWindow _DroneListWindow, DroneToList droneTo, int _indexDrone)
         {
             InitializeComponent();
             updateDrone.Visibility = Visibility.Visible; // open the grid for the user
@@ -197,7 +197,7 @@ namespace PL
 
             DroneListWindow = _DroneListWindow;
             //to conecct the binding to set the value of my drone to the proprtis
-            MyDrone = bl.GetDrone(id);
+            MyDrone = bl.GetDrone(droneTo.Id);
             DataContext = MyDrone;
 
             BModalUpdate.IsEnabled = false;
@@ -369,7 +369,7 @@ namespace PL
                         MyDrone = AccessIbl.GetDrone(MyDrone.Id);
                         DataContext = MyDrone;
 
-                        BSendToCharge.Visibility = Visibility.Hidden;
+                        BSendToCharge.IsEnabled = false;
 
                         BAssignPackage.Visibility = Visibility.Hidden;
                         BPickedUp.Visibility = Visibility.Visible;
@@ -445,7 +445,7 @@ namespace PL
 
                         BDeliveryPackage.Visibility = Visibility.Hidden;
                         BAssignPackage.Visibility = Visibility.Visible;
-                        BSendToCharge.Visibility = Visibility.Visible;
+                        BSendToCharge.IsEnabled = true;
                         GRIDparcelInDelivery.Visibility = Visibility.Hidden;
                         TBnotAssigned.Visibility = Visibility.Visible;
 
