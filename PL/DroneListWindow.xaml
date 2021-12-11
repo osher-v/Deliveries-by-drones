@@ -36,9 +36,9 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions >
-            <ComboBox Name="StatusSelector" VerticalAlignment="Center" Grid.Column="1" SelectionChanged="StatusSelector_SelectionChanged"  FontWeight="Bold" FontSize="18" Height="69" />
+            <ComboBox Name="StatusSelector" VerticalAlignment="Center" Grid.Column="1" SelectionChanged="StatusSelector_SelectionChanged"  FontWeight="Bold" FontSize="18" Height="69" Foreground="#FF091DEA" BorderBrush="#FF7F94D8" />
             <TextBox Grid.Column="2" Text="אפשרויות סינון" Cursor="Pen" FontWeight="Bold" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Top" Background="{x:Null}" SelectionTextBrush="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False" />
-            <ComboBox x:Name="WeightSelctor"    Grid.Column="0"  SelectionChanged="weightSelector_SelectionChanged" FontWeight="Bold" FontSize="18" BorderBrush="{x:Null}">
+            <ComboBox x:Name="WeightSelctor"    Grid.Column="0"  SelectionChanged="weightSelector_SelectionChanged" FontWeight="Bold" FontSize="18" BorderBrush="{x:Null}" Foreground="#FF1106FB">
                 <ComboBox.Background>
                     <LinearGradientBrush EndPoint="0,1">
                         <GradientStop Color="#FFF0F0F0"/>
@@ -47,8 +47,8 @@
                 </ComboBox.Background>
             </ComboBox>
             <Button x:Name="res" Content="איפוס" Style="{StaticResource RoundedButtonStyle}" HorizontalAlignment="Center" Margin="0,34,0,8" Width="60" Click="res_Click"  FontWeight="Bold" FontSize="14" Grid.Column="2" Background="#FF64CCF1" BorderBrush="{x:Null}" Foreground="White"></Button>
-            <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="57,43,0,5" TextWrapping="Wrap" Width="59" FontWeight="Bold" FontSize="14"><Run FlowDirection="RightToLeft" Language="he-il" Text="סטטוס       "/></TextBlock>
-            <TextBlock HorizontalAlignment="Center" Margin="0,40,0,5" TextWrapping="Wrap" Width="68" FontWeight="Bold" FontSize="14"><Run FlowDirection="RightToLeft" Language="he-il" Text="משקל"/></TextBlock>
+            <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="57,43,0,5" TextWrapping="Wrap" Width="59" FontWeight="Bold" FontSize="14" Foreground="#FF0707EC"><Run FlowDirection="RightToLeft" Language="he-il" Text="סטטוס       "/></TextBlock>
+            <TextBlock HorizontalAlignment="Center" Margin="0,40,0,5" TextWrapping="Wrap" Width="68" FontWeight="Bold" FontSize="14" Foreground="#FF0909EC"><Run FlowDirection="RightToLeft" Language="he-il" Text="משקל"/></TextBlock>
             <Button x:Name="BAddDrone"  Content="הוספה"  FontSize="14" Style="{StaticResource RoundedButtonStyle}" FontWeight="Bold" Click="BAddDrone_Click"  Margin="57,34,57,7"   BorderBrush="{x:Null}" Foreground="#FFEEEEEE" Grid.Column="3" Background="#FF64CCF1"></Button>
             <Button x:Name="Bclose"  Content="סגירה" Grid.Column="4" HorizontalAlignment="Center" Style="{StaticResource RoundedButtonStyle}" Margin="0,35,0,8" Width="58"    Click="Bclose_Click" BorderBrush="{x:Null}" Foreground="#FFEEEEEE" FontWeight="Bold" FontSize="14" RenderTransformOrigin="0.448,1.702" Background="#FF64CCF1"></Button>
         </Grid>
@@ -63,7 +63,7 @@
 
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
-                    <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
+                    <Setter Property="HorizontalContentAlignment" Value="left"></Setter>
                 </Style>
             </ListView.ItemContainerStyle>
 
@@ -72,8 +72,8 @@
                     <GridViewColumn DisplayMemberBinding="{Binding Id}" Header="מספר מזהה" Width="100"></GridViewColumn>
                     <GridViewColumn DisplayMemberBinding="{Binding Model}" Header="מודל" Width="70"></GridViewColumn>
                     <GridViewColumn DisplayMemberBinding="{Binding MaxWeight}" Header="משקל" Width="105"></GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding BatteryStatus}" Header="סוללה" Width="50"></GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding Statuses}" Header="סטטוס" Width="115"></GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding BatteryStatus}" Header="סוללה" Width="48"></GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Statuses}" Header="סטטוס" Width="115" ></GridViewColumn>
                     <GridViewColumn DisplayMemberBinding="{Binding CurrentLocation}" Header="  מיקום קו רוחב      מיקום קו אורך" Width="220"></GridViewColumn>
                     <!--<GridViewColumn DisplayMemberBinding="{Binding CurrentLocation.}" Header="מיקום קו רוחב" Width="100"></GridViewColumn>-->
                     <GridViewColumn DisplayMemberBinding="{Binding NumberOfLinkedParcel}" Header="חבילה משויכת" Width="100"></GridViewColumn>

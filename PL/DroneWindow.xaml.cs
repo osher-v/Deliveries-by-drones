@@ -30,6 +30,7 @@ namespace PL
         /// <summary> the calling window, becuse we want to use it here </summary>
         /// 
         private DroneListWindow DroneListWindow;
+
         #region בנאי להוספה 
         /// <summary>
         /// consractor for add drone option 
@@ -466,10 +467,6 @@ namespace PL
         /// <param name="e"></param>
         private void TBmodel_KeyUp(object sender, KeyEventArgs e)
         {
-            if (TBmodel.Text.Length > 5)
-            {
-                e.Handled = true;
-            }
 
             if (TBmodel.Text.Length != 0)
             {
@@ -480,11 +477,27 @@ namespace PL
                 BModalUpdate.IsEnabled = false;
             }
         }
+        /// <summary>
+        /// this event is checking tje limit for the contexet
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void TBmodel_KeyDown_1(object sender, KeyEventArgs e)
+        {
+            if (TBmodel.Text.Length > 5)
+            {
+                e.Handled = true;
+            }
+        }
 
         #region מטפל בכפתורי זמן בטעינה
+        /// <summary>
+        /// to see if the hours time is correcet 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void TBhours_KeyDown(object sender, KeyEventArgs e)
         {
-            //איך אני גורם שזה יהיה בפורמט של זמן
             if (e.Key < Key.D0 || e.Key > Key.D9)
             {
                 e.Handled = e.Key is < Key.NumPad0 or > Key.NumPad9;
@@ -497,6 +510,11 @@ namespace PL
 
 
         }
+        /// <summary>
+        /// to see if the min time is correcet 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void TBmin_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key < Key.D0 || e.Key > Key.D9)
@@ -507,10 +525,14 @@ namespace PL
             {
                 e.Handled = true;
             }
-            TBmin.BorderBrush = Brushes.Gray; //בונוס 
+            TBmin.BorderBrush = Brushes.Gray; //bounus
 
         }
-
+        /// <summary>
+        /// to see if the sec time is correcet 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void TBsec_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key < Key.D0 || e.Key > Key.D9)
@@ -521,10 +543,14 @@ namespace PL
             {
                 e.Handled = true;
             }
-            TBsec.BorderBrush = Brushes.Gray; //בונוס 
+            TBsec.BorderBrush = Brushes.Gray; //bounus 
 
         }
-
+        /// <summary>
+        /// if you press on it you can relise the drone amd cahck the formet 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CBtimeOk_Checked(object sender, RoutedEventArgs e)
         {
             int hours, min, sec;
@@ -536,20 +562,20 @@ namespace PL
             if (hours > 23 || TBhours.Text == "")
             {
                 MessageBox.Show("נא הכנס שעות בין 0-23", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
-                TBhours.BorderBrush = Brushes.Red; //בונוס 
+                TBhours.BorderBrush = Brushes.Red; //bounus 
                 CBtimeOk.IsChecked = false;
 
             }
             else if (min > 59 || TBmin.Text == "")
             {
                 MessageBox.Show("נא הכנס דקות בין 0-59", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
-                TBmin.BorderBrush = Brushes.Red; //בונוס 
+                TBmin.BorderBrush = Brushes.Red; //bounus 
                 CBtimeOk.IsChecked = false;
             }
             else if (sec > 59 || TBsec.Text == "")
             {
                 MessageBox.Show("נא הכנס שניות בין 0-59", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
-                TBsec.BorderBrush = Brushes.Red; //בונוס 
+                TBsec.BorderBrush = Brushes.Red; //bounus 
                 CBtimeOk.IsChecked = false;
             }
             else
@@ -560,6 +586,11 @@ namespace PL
                 TBsec.IsReadOnly = true;
             }
         }
+        /// <summary>
+        /// if you un check you cant frre the drone 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CBtimeOk_Unchecked(object sender, RoutedEventArgs e)
         {
             BReleaseDrone.IsEnabled = false;
@@ -569,6 +600,6 @@ namespace PL
         }
         #endregion
 
-        #endregion רחפן בפעולות  
+        #endregion רחפן בפעולות     
     }
 }
