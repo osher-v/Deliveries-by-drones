@@ -53,7 +53,13 @@
             <Button x:Name="Bclose"  Content="סגירה" Grid.Column="4" HorizontalAlignment="Center" Style="{StaticResource RoundedButtonStyle}" Margin="0,35,0,8" Width="58"    Click="Bclose_Click" BorderBrush="{x:Null}" Foreground="#FFEEEEEE" FontWeight="Bold" FontSize="14" RenderTransformOrigin="0.448,1.702" Background="#FF64CCF1"></Button>
         </Grid>
 
-        <ListView x:Name="DroneListView" Grid.Row="1" MouseDoubleClick="DroneListView_MouseDoubleClick" Foreground="#FF2249AE" BorderBrush="Black" Background="#FFE2CAD7" FontWeight="Bold" FontSize="14">
+        <ListView x:Name="DroneListView" Grid.Row="1" MouseDoubleClick="DroneListView_MouseDoubleClick" Foreground="#FF2249AE" BorderBrush="Black" FontWeight="Bold" FontSize="14">
+            <ListView.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FFF0F1F1" Offset="0.021"/>
+                    <GradientStop Color="#FF82FFFF" Offset="0.224"/>
+                </LinearGradientBrush>
+            </ListView.Background>
 
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
