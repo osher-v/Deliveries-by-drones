@@ -63,6 +63,13 @@
             </Style.Triggers>
         </Style>
     </Window.Resources>
+    <Window.Background>
+        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="#FFD6D6D6"/>
+            <GradientStop Color="#FF0B8BD4" Offset="1"/>
+            <GradientStop Color="White" Offset="0"/>
+        </LinearGradientBrush>
+    </Window.Background>
 
 
     <Grid x:Name="MainGrid" >
