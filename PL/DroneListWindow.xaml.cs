@@ -23,6 +23,7 @@ namespace PL
     /// </summary>
     public partial class DroneListWindow : Window
     {
+        #region drone list view
         public IBL.IBL AccessIbl;
 
         /// <summary> crate a observab list of type IBL.BO.DroneToList (to see changes in live) </summary>
@@ -165,5 +166,6 @@ namespace PL
                 new DroneWindow(AccessIbl, this,drone, indexDrone).Show();//open the drone windowon acction
             }
         }
+        #endregion
     }
 }

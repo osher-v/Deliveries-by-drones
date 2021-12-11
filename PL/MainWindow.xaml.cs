@@ -20,6 +20,7 @@ namespace PL
     /// </summary>
     public partial class MainWindow : Window
     {
+        #region main window
         /// <summary> the constractor start the intlize consractor of the data </summary>
         public MainWindow()
         {
@@ -35,5 +36,6 @@ namespace PL
             new DroneListWindow(AccessIbl).Show();
             this.Close(); // we close the login window 
         }
+        #endregion
     }
 }

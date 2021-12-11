@@ -27,8 +27,7 @@ namespace PL
         public IBL.IBL AccessIbl;
         /// <summary> a bool to help us disable the x bootum  </summary>
         public bool ClosingWindow { get; private set; } = true;
-        /// <summary> the calling window, becuse we want to use it here </summary>
-        /// 
+        /// <summary> the calling window, becuse we want to use it here </summary> 
         private DroneListWindow DroneListWindow;
 
         #region drone to add

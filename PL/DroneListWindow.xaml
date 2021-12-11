@@ -36,8 +36,8 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions >
-            <ComboBox Name="StatusSelector" VerticalAlignment="Center" Grid.Column="1" SelectionChanged="StatusSelector_SelectionChanged"  FontWeight="Bold" FontSize="18" Height="69" Foreground="#FF091DEA" BorderBrush="#FF7F94D8" />
-            <TextBox Grid.Column="2" Text="אפשרויות סינון" Cursor="Pen" FontWeight="Bold" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Top" Background="{x:Null}" SelectionTextBrush="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False" />
+            <ComboBox Name="StatusSelector" VerticalAlignment="Center" Grid.Column="1" SelectionChanged="StatusSelector_SelectionChanged"  FontWeight="Bold" FontSize="18" Height="69" Foreground="#FF091DEA" BorderBrush="{x:Null}" />
+            <TextBox Grid.Column="2" Text="אפשרויות סינון" FontWeight="Bold" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Top" Background="{x:Null}" SelectionTextBrush="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False" />
             <ComboBox x:Name="WeightSelctor"    Grid.Column="0"  SelectionChanged="weightSelector_SelectionChanged" FontWeight="Bold" FontSize="18" BorderBrush="{x:Null}" Foreground="#FF1106FB">
                 <ComboBox.Background>
                     <LinearGradientBrush EndPoint="0,1">
