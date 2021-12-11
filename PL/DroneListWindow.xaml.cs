@@ -19,7 +19,7 @@ using IBL.BO;
 namespace PL
 {
     /// <summary>
-    /// Interaction logic for DroneListWindow.xaml
+    /// Interaction  logic for DroneListWindow.xaml
     /// </summary>
     public partial class DroneListWindow : Window
     {
