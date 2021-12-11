@@ -21,7 +21,7 @@
     <Window.Background>
         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
             <GradientStop Color="#FFF9F9F9" Offset="0.009"/>
-            <GradientStop Color="#FF82FFFF" Offset="0.303"/>
+            <GradientStop Color="#FFC7E3F3" Offset="0.303"/>
         </LinearGradientBrush>
     </Window.Background>
     <!--this grid is for addition option-->
@@ -146,7 +146,7 @@
                 <TextBlock HorizontalAlignment="Left" Margin="105,196,0,0" Text="{Binding Path=Delivery.DestinationLocation}" TextWrapping="Wrap" VerticalAlignment="Top" Width="214" Grid.Row="1" FontSize="14" FontWeight="Bold" TextAlignment="Center" Foreground="#FF0D0DF0" Height="19"/>
                 <TextBlock HorizontalAlignment="Left" Margin="105,94,0,0" Text="{Binding Path=Delivery.SourceLocation}" TextWrapping="Wrap" VerticalAlignment="Top" Width="214" Grid.Row="1" FontSize="14" FontWeight="Bold" Height="19" Foreground="#FF0D0DF0" TextAlignment="Center"/>
             </Grid>
-            <GridSplitter HorizontalAlignment="Left" Height="362" Margin="119,72,0,0" Grid.RowSpan="11" VerticalAlignment="Top" Width="5" Grid.Column="1">
+            <GridSplitter HorizontalAlignment="Left" Height="362" Margin="119,72,0,0" Grid.RowSpan="11" VerticalAlignment="Top" Width="5" Grid.Column="1" IsEnabled="False">
                 <GridSplitter.Background>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                         <GradientStop Color="#FFEAEAEA" Offset="0.058"/>
@@ -154,7 +154,7 @@
                     </LinearGradientBrush>
                 </GridSplitter.Background>
             </GridSplitter>
-            <GridSplitter HorizontalAlignment="Left" Height="362" Margin="98,72,0,0" Grid.RowSpan="11" VerticalAlignment="Top" Width="5" Grid.Column="2">
+            <GridSplitter HorizontalAlignment="Left" Height="362" Margin="98,72,0,0" Grid.RowSpan="11" VerticalAlignment="Top" Width="5" Grid.Column="2" IsEnabled="False">
                 <GridSplitter.Background>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                         <GradientStop Color="#FFECEDF3" Offset="0.05"/>
@@ -163,7 +163,7 @@
                 </GridSplitter.Background>
             </GridSplitter>
             <TextBlock x:Name="TBnotAssigned" HorizontalAlignment="Right" Margin="0,30,188,0" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Top" Height="168" Width="286" Grid.RowSpan="6" FontSize="32" FontWeight="Bold" Text="הרחפן לא שוייך עדיין "  TextAlignment="Center" Grid.ColumnSpan="2" Grid.Column="1"/>
-            <ProgressBar Value="{Binding Path=BatteryStatus}" Maximum="100" HorizontalAlignment="Left" Height="16" Margin="26,12,0,0" Grid.Row="4" VerticalAlignment="Top" Width="84" BorderBrush="#FF010200" FontWeight="Normal">
+            <ProgressBar Value="{Binding Path=BatteryStatus}" Maximum="100" HorizontalAlignment="Left" Height="16" Margin="26,12,0,0" Grid.Row="4" VerticalAlignment="Top" Width="84" BorderBrush="{x:Null}" FontWeight="Normal">
                 <ProgressBar.Background>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                         <GradientStop Color="#FFEBF7E6"/>

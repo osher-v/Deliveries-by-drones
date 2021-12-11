@@ -17,6 +17,51 @@
                 </Style>
             </Style.Resources>
         </Style>
+        <Style x:Key="ComboBoxTest2" TargetType="{x:Type ComboBox}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ComboBox">
+                        <Grid>
+                            <ToggleButton Grid.Column="2" Focusable="false" IsChecked="{Binding Path=IsDropDownOpen,Mode=TwoWay,RelativeSource={RelativeSource TemplatedParent}}" >
+                                <ToggleButton.Template>
+                                    <ControlTemplate>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="5*" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <Border x:Name="Border"  Grid.ColumnSpan="2" CornerRadius="5" Background="#FFFFFFE1" BorderBrush="#FF64CCF1" BorderThickness="1" />
+                                            <Border Grid.Column="0" CornerRadius="5,0,0,5"  Margin="1"  Background="#FFFFFFE1"  BorderBrush="Black" BorderThickness="0,0,1,0" />
+                                            <Path x:Name="Arrow" Grid.Column="1"  Fill="#FFFFB518" HorizontalAlignment="Center" VerticalAlignment="Center" Data="M 0 0 L 4 4 L 8 0 Z"/>
+                                        </Grid>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="ToggleButton.IsMouseOver" Value="true">
+                                                <Setter TargetName="Border" Property="Background" Value="#FF64CCF1" />
+                                            </Trigger>
+                                            <Trigger Property="ToggleButton.IsChecked" Value="true">
+                                                <Setter TargetName="Border" Property="Background" Value="#FF64CCF1" />
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </ToggleButton.Template>
+                            </ToggleButton>
+                            <ContentPresenter Name="ContentSite" IsHitTestVisible="False"  Content="{TemplateBinding SelectionBoxItem}" ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}" ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}" Margin="3"  />
+                            <TextBox x:Name="PART_EditableTextBox" Visibility="Hidden" IsReadOnly="{TemplateBinding IsReadOnly}"/>
+                            <Popup Name="Popup" Placement="Bottom" IsOpen="{TemplateBinding IsDropDownOpen}" AllowsTransparency="True"  Focusable="False" PopupAnimation="Slide">
+                                <Grid  Name="DropDown" SnapsToDevicePixels="True" MinWidth="{TemplateBinding ActualWidth}" MaxHeight="{TemplateBinding MaxDropDownHeight}">
+                                    <Border x:Name="DropDownBorder" Background="#FFFFFFE1" />
+                                    <ScrollViewer SnapsToDevicePixels="True">
+                                        <StackPanel IsItemsHost="True" />
+                                    </ScrollViewer>
+                                </Grid>
+                            </Popup>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+            </Style.Triggers>
+        </Style>
     </Window.Resources>
 
 
@@ -36,19 +81,12 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions >
-            <ComboBox Name="StatusSelector" VerticalAlignment="Center" Grid.Column="1" SelectionChanged="StatusSelector_SelectionChanged"  FontWeight="Bold" FontSize="18" Height="69" Foreground="#FF091DEA" BorderBrush="{x:Null}" />
-            <TextBox Grid.Column="2" Text="אפשרויות סינון" FontWeight="Bold" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Top" Background="{x:Null}" SelectionTextBrush="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False" />
-            <ComboBox x:Name="WeightSelctor"    Grid.Column="0"  SelectionChanged="weightSelector_SelectionChanged" FontWeight="Bold" FontSize="18" BorderBrush="{x:Null}" Foreground="#FF1106FB">
-                <ComboBox.Background>
-                    <LinearGradientBrush EndPoint="0,1">
-                        <GradientStop Color="#FFF0F0F0"/>
-                        <GradientStop Color="#FF64CCF1" Offset="1"/>
-                    </LinearGradientBrush>
-                </ComboBox.Background>
-            </ComboBox>
-            <Button x:Name="res" Content="איפוס" Style="{StaticResource RoundedButtonStyle}" HorizontalAlignment="Center" Margin="0,34,0,8" Width="60" Click="res_Click"  FontWeight="Bold" FontSize="14" Grid.Column="2" Background="#FF64CCF1" BorderBrush="{x:Null}" Foreground="White"></Button>
-            <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="57,43,0,5" TextWrapping="Wrap" Width="59" FontWeight="Bold" FontSize="14" Foreground="#FF0707EC"><Run FlowDirection="RightToLeft" Language="he-il" Text="סטטוס       "/></TextBlock>
-            <TextBlock HorizontalAlignment="Center" Margin="0,40,0,5" TextWrapping="Wrap" Width="68" FontWeight="Bold" FontSize="14" Foreground="#FF0909EC"><Run FlowDirection="RightToLeft" Language="he-il" Text="משקל"/></TextBlock>
+            <ComboBox Name="StatusSelector" Style="{StaticResource ComboBoxTest2}" Grid.Column="1" SelectionChanged="StatusSelector_SelectionChanged"  FontWeight="Bold" FontSize="16" Foreground="#FF091DEA" BorderBrush="{x:Null}" Margin="0,28,0,0" />
+            <TextBox Text="אפשרויות סינון" FontWeight="Bold" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Top" Background="{x:Null}" SelectionTextBrush="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False" Grid.ColumnSpan="2" Margin="100,-1,0,0" />
+            <ComboBox x:Name="WeightSelctor"  Style="{StaticResource ComboBoxTest2}"   Grid.Column="0"  SelectionChanged="weightSelector_SelectionChanged" FontWeight="Bold" FontSize="16" BorderBrush="{x:Null}" Foreground="#FF1106FB" Margin="0,28,0,0"></ComboBox>
+            <Button x:Name="res" Content="איפוס" Style="{StaticResource RoundedButtonStyle}" HorizontalAlignment="Left" Margin="5,44,0,3" Width="47" Click="res_Click"  FontWeight="Bold" Grid.Column="2" Background="#FFFFB518" BorderBrush="{x:Null}" Foreground="White"/>
+            <TextBlock Grid.Column="1" HorizontalAlignment="Center" Margin="0,49,0,-1" TextWrapping="Wrap" Width="58" FontWeight="Bold" Foreground="#FF0404F0" RenderTransformOrigin="0.371,0.541"><Run FlowDirection="RightToLeft" Language="he-il" Text="סטטוס       "/></TextBlock>
+            <TextBlock HorizontalAlignment="Center" Margin="0,49,0,-1" TextWrapping="Wrap" Width="52" FontWeight="Bold" Foreground="#FF0909EC"><Run FlowDirection="RightToLeft" Language="he-il" Text="משקל"/></TextBlock>
             <Button x:Name="BAddDrone"  Content="הוספה"  FontSize="14" Style="{StaticResource RoundedButtonStyle}" FontWeight="Bold" Click="BAddDrone_Click"  Margin="57,34,57,7"   BorderBrush="{x:Null}" Foreground="#FFEEEEEE" Grid.Column="3" Background="#FF64CCF1"></Button>
             <Button x:Name="Bclose"  Content="סגירה" Grid.Column="4" HorizontalAlignment="Center" Style="{StaticResource RoundedButtonStyle}" Margin="0,35,0,8" Width="58"    Click="Bclose_Click" BorderBrush="{x:Null}" Foreground="#FFEEEEEE" FontWeight="Bold" FontSize="14" RenderTransformOrigin="0.448,1.702" Background="#FF64CCF1"></Button>
         </Grid>
@@ -57,7 +95,7 @@
             <ListView.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="#FFF0F1F1" Offset="0.021"/>
-                    <GradientStop Color="#FF82FFFF" Offset="0.224"/>
+                    <GradientStop Color="#FFC7E3F3" Offset="0.224"/>
                 </LinearGradientBrush>
             </ListView.Background>
 
