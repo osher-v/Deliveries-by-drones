@@ -31,7 +31,7 @@ namespace PL
         /// 
         private DroneListWindow DroneListWindow;
 
-        #region בנאי להוספה 
+        #region drone to add
         /// <summary>
         /// consractor for add drone option 
         /// </summary>
@@ -178,7 +178,7 @@ namespace PL
         }
         #endregion
 
-        #region רחפן בפעולות 
+        #region drone in operations
         public Drone MyDrone;
 
         public int indexDrone;//indexe of the drone how chosse by doubly click 
@@ -490,7 +490,7 @@ namespace PL
             }
         }
 
-        #region מטפל בכפתורי זמן בטעינה
+        #region Handles charging time buttons
         /// <summary>
         /// to see if the hours time is correcet 
         /// </summary>
@@ -598,8 +598,8 @@ namespace PL
             TBmin.IsReadOnly = false;
             TBsec.IsReadOnly = false;
         }
-        #endregion
+        #endregion Handles charging time buttons
 
-        #endregion רחפן בפעולות     
+        #endregion drone in operations  
     }
 }
