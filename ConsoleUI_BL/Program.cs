@@ -4,8 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using IBL;
-using IBL.BO;
+using BlApi;
+using BO;
 
 namespace ConsoleUI_BL
 {
@@ -36,7 +36,7 @@ namespace ConsoleUI_BL
         /// The function handles various addition options.
         /// </summary>
         /// <param name="bl">BL object that is passed as a parameter to enable the functions in the bl class</param>
-        static public void InsertOptions(IBL.IBL bl)
+        static public void InsertOptions(BlApi.IBL bl)
         {
             Console.WriteLine(@"
 Insert options:
@@ -230,7 +230,7 @@ please choose again");
         /// The function handles various update options.
         /// </summary>
         /// <param name="bl">bl object that is passed as a parameter to enable the functions in the BL class</param>
-        static public void UpdateOptions(IBL.IBL bl)
+        static public void UpdateOptions(BlApi.IBL bl)
         {
             Console.WriteLine(@"
 Update options:
@@ -424,7 +424,7 @@ please choose again");
         /// The function handles display options.
         /// </summary>
         /// <param name="bl">BL object that is passed as a parameter to enable the functions in the bl class</param>
-        static public void DisplaySingleOptions(IBL.IBL bl)
+        static public void DisplaySingleOptions(BlApi.IBL bl)
         {
             Console.WriteLine(@"
 Display options(single):
@@ -528,7 +528,7 @@ please choose again");
         /// The function handles list view options.
         /// </summary>
         /// <param name="bl">BL object that is passed as a parameter to enable the functions in the bl class</param>
-        static public void DisplayListOptions(IBL.IBL bl)
+        static public void DisplayListOptions(BlApi.IBL bl)
         {
             Console.WriteLine(@"
 Display options (for the whole list):
@@ -583,7 +583,7 @@ please choose again");
 
         static void Main(string[] args)
         {
-            IBL.IBL BLObject = new IBL.BL();
+            BlApi.IBL BLObject = BL.others.BlFactory.GetBL();
 
             int choice;
             do

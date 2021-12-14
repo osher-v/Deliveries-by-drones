@@ -2,10 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using BO;
 
-using IBL.BO;
-
-namespace IBL
+namespace BlApi
 {
     /// <summary>
     /// These partial classes will implement the IBL interface and
@@ -17,7 +16,7 @@ namespace IBL
  
         internal static BL Instance { get; } = new BL();// The public Instance property to use
 
-        public DalFacade.IDal AccessIdal; //Create an object that we will use to access the data layer. 
+        public DalApi.IDal AccessIdal; //Create an object that we will use to access the data layer. 
 
         public List<DroneToList> DronesBL; //Creating a list of dronse.
 
@@ -37,7 +36,7 @@ namespace IBL
         private BL()
         {
             //initialization an object that will serve as an access point to methods in DAL.
-            AccessIdal = DLAPI.DLFactory.GetDL();
+            AccessIdal = DalApi.DalFactory.GetDL();
 
             //Placement in the fields of power consumption and charging rate.
             double[] arr = AccessIdal.RequestPowerConsumptionByDrone();

@@ -4,21 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IBL
+namespace BO
 {
-    namespace BO
+    /// <summary>
+    /// class of baseStations to List.
+    /// </summary>
+    public class BaseStationsToList : BaseStationParnt
     {
-        /// <summary>
-        /// class of baseStations to List.
-        /// </summary>
-        public class BaseStationsToList : BaseStationParnt
-        {
-            public int BusyChargeSlots { get; set; }
+        public int BusyChargeSlots { get; set; }
 
-            public override string ToString()
-            {
-                return base.ToString() + string.Format("number of busy charge slots: {0,-5}\n ~~~~~~~", BusyChargeSlots);
-            }
+        public override string ToString()
+        {
+            return base.ToString() + string.Format("number of busy charge slots: {0,-5}\n ~~~~~~~", BusyChargeSlots);
         }
     }
 }
+

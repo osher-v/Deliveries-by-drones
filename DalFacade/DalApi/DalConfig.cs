@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 using System.Xml.Linq;
 
-namespace DLAPI
+namespace DalApi
 {
     internal static class DalConfig
     {

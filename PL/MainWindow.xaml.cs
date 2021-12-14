@@ -29,7 +29,7 @@ namespace PL
         }
 
         // we crate an obejt that give us accses to the ibl intrface  
-        public IBL.IBL AccessIbl = BL.others.BlFactory.GetBL();
+        public BlApi.IBL AccessIbl = BL.others.BlFactory.GetBL();
 
         /// <summary> open the drone list window  </summary>
         private void ShowDroneList_Click(object sender, RoutedEventArgs e)

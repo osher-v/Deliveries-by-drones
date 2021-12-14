@@ -5,11 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 
 using DO;
-using DalFacade;
+using DalApi;
 
 namespace DalObject
 {
-    public partial class DalObject : IDal
+     partial class DalObject : IDal
     {
         public void AddStation(BaseStation newbaseStation)
         {

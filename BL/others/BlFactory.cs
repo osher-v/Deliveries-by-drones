@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace BL.others
 {
-    public class BlFactory
+    public static class BlFactory
     {
-        public static IBL.IBL GetBL() => IBL.BL.Instance;
+        public static BlApi.IBL GetBL() => BlApi.BL.Instance;
     }
 }

@@ -14,7 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Collections.ObjectModel;
-using IBL.BO;
+using BO;
 using System.ComponentModel.DataAnnotations;
 
 namespace PL
@@ -24,7 +24,7 @@ namespace PL
     /// </summary>
     public partial class DroneWindow : Window
     {
-        public IBL.IBL AccessIbl;
+        public BlApi.IBL AccessIbl;
         /// <summary> a bool to help us disable the x bootum  </summary>
         public bool ClosingWindow { get; private set; } = true;
         /// <summary> the calling window, becuse we want to use it here </summary> 
@@ -36,7 +36,7 @@ namespace PL
         /// </summary>
         /// <param name="bl"></param>
         /// <param name="_DroneListWindow"></param>
-        public DroneWindow(IBL.IBL bl, DroneListWindow _DroneListWindow)
+        public DroneWindow(BlApi.IBL bl, DroneListWindow _DroneListWindow)
         {
             InitializeComponent();
 
@@ -188,7 +188,7 @@ namespace PL
         /// <param name="_DroneListWindow">the call window</param>
         /// <param name="id">the drone id that chosen</param>
         /// <param name="_indexDrone">/indexe of the drone in the list</param>
-        public DroneWindow(IBL.IBL bl, DroneListWindow _DroneListWindow, DroneToList droneTo, int _indexDrone)
+        public DroneWindow(BlApi.IBL bl, DroneListWindow _DroneListWindow, DroneToList droneTo, int _indexDrone)
         {
             InitializeComponent();
             updateDrone.Visibility = Visibility.Visible; // open the grid for the user

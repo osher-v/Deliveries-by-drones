@@ -1,7 +1,7 @@
 ﻿using System;
 using DO;
 
-namespace DalFacade
+namespace DalApi
 {
     public class fanctions
     {

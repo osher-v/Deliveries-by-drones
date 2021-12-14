@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DalFacade
+namespace DalApi
 {
     public interface IDal
     {

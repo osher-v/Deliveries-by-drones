@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-
 using System.Reflection;
-using DalFacade;
 
-namespace DLAPI
+namespace DalApi
 {
     /// <summary>
     /// Static Factory class for creating Dal tier implementation object according to
     /// configuration in file config.xml
     /// </summary>
-    public static class DLFactory
+    public static class DalFactory
     {
         /// <summary>
         /// The function creates Dal tier implementation object according to Dal type
@@ -83,7 +81,7 @@ namespace DLAPI
             try
             {
                 // If the instance property is not initialized (i.e. it does not hold a real instance reference)...
-                DalFacade.IDal dal = (DalFacade.IDal)type.GetProperty("Instance", BindingFlags.Static | BindingFlags.NonPublic).GetValue(null);
+                DalApi.IDal dal = (DalApi.IDal)type.GetProperty("Instance", BindingFlags.Static | BindingFlags.NonPublic).GetValue(null);
                 // If the instance property is not initialized (i.e. it does not hold a real instance reference)...
                 if (dal == null)
                 {

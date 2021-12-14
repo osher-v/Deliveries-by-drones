@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 using DO;
 
-using DalFacade;
+using DalApi;
 
 namespace DalObject
 {
-    public partial class DalObject 
+     partial class DalObject 
     {
         public void SendingDroneforChargingAtBaseStation(int baseStationId, int droneId)
         {

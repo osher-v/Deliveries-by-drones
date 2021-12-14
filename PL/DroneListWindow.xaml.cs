@@ -13,8 +13,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-
-using IBL.BO;
+using BO;
 
 namespace PL
 {
@@ -24,10 +23,10 @@ namespace PL
     public partial class DroneListWindow : Window
     {
         #region drone list view
-        public IBL.IBL AccessIbl;
+        public BlApi.IBL AccessIbl;
 
         /// <summary> crate a observab list of type IBL.BO.DroneToList (to see changes in live) </summary>
-        public ObservableCollection<IBL.BO.DroneToList> droneToLists;
+        public ObservableCollection<BO.DroneToList> droneToLists;
 
         /// <summary> a bool to help us disable the x bootum  </summary>
         public bool ClosingWindow { get; private set; } = true;
@@ -36,13 +35,13 @@ namespace PL
         /// constractor for the DroneListWindow that will start the InitializeComponent ans fill the Observable Collection
         /// </summary>
         /// <param name="bl">get AccessIbl from main win</param>
-        public DroneListWindow(IBL.IBL bl)
+        public DroneListWindow(BlApi.IBL bl)
         {
             InitializeComponent();
             AccessIbl = bl;
             //craet observer and set the list accordale to ibl drone list 
             droneToLists = new ObservableCollection<DroneToList>();
-            List<IBL.BO.DroneToList> drones = bl.GetDroneList().ToList();
+            List<BO.DroneToList> drones = bl.GetDroneList().ToList();
             foreach (var item in drones)
             {
                 droneToLists.Add(item);
