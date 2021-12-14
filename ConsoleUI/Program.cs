@@ -4,8 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using IDAL.DO;
-using IDal;
+using DO;
 
 namespace ConsoleUI
 {
@@ -38,7 +37,7 @@ namespace ConsoleUI
         /// The function handles various addition options.
         /// </summary>
         /// <param name="dal">DalObject object that is passed as a parameter to enable the functions in the DalObject class</param>
-        static public void InsertOptions(IDal.IDal dal)
+        static public void InsertOptions(DalFacade.IDal dal)
         {
             Console.WriteLine(@"
 Insert options:
@@ -159,7 +158,7 @@ Next Please enter the sender ID number:");
         /// The function handles various update options.
         /// </summary>
         /// <param name="dal">DalObject object that is passed as a parameter to enable the functions in the DalObject class</param>
-        static public void UpdateOptions(IDal.IDal dal)
+        static public void UpdateOptions(DalFacade.IDal dal)
         {
             Console.WriteLine(@"
 Update options:
@@ -233,7 +232,7 @@ Your choice:");
         /// The function handles display options.
         /// </summary>
         /// <param name="dal">DalObject object that is passed as a parameter to enable the functions in the DalObject class</param>
-        static public void DisplaySingleOptions(IDal.IDal dal)
+        static public void DisplaySingleOptions(DalFacade.IDal dal)
         {
             Console.WriteLine(@"
 Display options(single):
@@ -302,7 +301,7 @@ Your choice:");
         /// The function handles list view options.
         /// </summary>
         /// <param name="dal">DalObject object that is passed as a parameter to enable the functions in the DalObject class</param>
-        static public void DisplayListOptions(IDal.IDal dal)
+        static public void DisplayListOptions(DalFacade.IDal dal)
         {
             Console.WriteLine(@"
 Display options (for the whole list):
@@ -355,7 +354,7 @@ Your choice:");
         /// The function checks the distance between points.
         /// </summary>
         /// <param name="dal">DalObject object that is passed as a parameter to enable the functions in the DalObject class</param>
-        static public void DistanceBetweenPoints(IDal.IDal dal)
+        static public void DistanceBetweenPoints(DalFacade.IDal dal)
         {
             Console.WriteLine(@"
 You have chosen the option of calculating distance from a point to a customer or station.
@@ -396,8 +395,8 @@ Choose 1 for a station or 2 for a customer");
         #endregion fanction of main
         
         static void Main(string[] args)
-        {          
-            IDal.IDal dalObject = new DalObject.DalObject();
+        {
+            DalFacade.IDal dalObject = DLAPI.DLFactory.GetDL();
             
             int choice;
             do

@@ -19,7 +19,7 @@ namespace IBL
             {
                 AccessIdal.GetBaseStation(firstChargingStation);
             }
-            catch (IDAL.DO.NonExistentObjectException)
+            catch (DO.NonExistentObjectException)
             {
                 throw new NonExistentObjectException("BaseStation");
             }
@@ -27,14 +27,14 @@ namespace IBL
             if(AccessIdal.GetBaseStation(firstChargingStation).FreeChargeSlots <= 0)
                 throw new NoFreeChargingStations();
 
-            IDAL.DO.Drone Drone = new IDAL.DO.Drone() { Id = newDrone.Id, MaxWeight = (IDAL.DO.WeightCategories)newDrone.MaxWeight,
+            DO.Drone Drone = new DO.Drone() { Id = newDrone.Id, MaxWeight = (DO.WeightCategories)newDrone.MaxWeight,
                 Model = newDrone.Model};
 
             try  // if Add An Existing Object throw Exception
             {
                 AccessIdal.AddDrone(Drone);
             }
-            catch (IDAL.DO.AddAnExistingObjectException)
+            catch (DO.AddAnExistingObjectException)
             {
                 throw new AddAnExistingObjectException();
             }
@@ -61,11 +61,11 @@ namespace IBL
             //if the its Non Existent throw Exception
             try 
             {
-                IDAL.DO.Drone newDrone = AccessIdal.GetDrone(droneId);
+                DO.Drone newDrone = AccessIdal.GetDrone(droneId);
                 newDrone.Model = droneName;
                 AccessIdal.UpdateDrone(newDrone);
             }
-            catch (IDAL.DO.NonExistentObjectException)
+            catch (DO.NonExistentObjectException)
             {
                 throw new NonExistentObjectException("drone");
             }
@@ -85,10 +85,10 @@ namespace IBL
 
            if(droneToLIist.Statuses == DroneStatuses.busy)
            {    
-                IDAL.DO.Parcel holdDalParcel = AccessIdal.GetParcel(droneToLIist.NumberOfLinkedParcel);
+                DO.Parcel holdDalParcel = AccessIdal.GetParcel(droneToLIist.NumberOfLinkedParcel);
 
-                IDAL.DO.Customer holdDalSender = AccessIdal.GetCustomer(holdDalParcel.SenderId);
-                IDAL.DO.Customer holdDalReciver= AccessIdal.GetCustomer(holdDalParcel.TargetId);
+                DO.Customer holdDalSender = AccessIdal.GetCustomer(holdDalParcel.SenderId);
+                DO.Customer holdDalReciver= AccessIdal.GetCustomer(holdDalParcel.TargetId);
 
                 Location locationOfSender = new Location() { longitude= holdDalSender.Longitude, latitude=holdDalSender.Latitude };
                 Location locationOfReciver = new Location() { longitude = holdDalReciver.Longitude, latitude = holdDalReciver.Latitude };

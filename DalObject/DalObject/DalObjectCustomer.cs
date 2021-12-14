@@ -4,12 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using IDAL.DO;
-using IDal;
+using DO;
+
+using DalFacade;
 
 namespace DalObject
 {
-    public partial class DalObject : IDal.IDal
+    public partial class DalObject : IDal
     {     
         public void AddCustomer(Customer newCustomer)
         {

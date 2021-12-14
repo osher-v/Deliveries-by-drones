@@ -12,8 +12,12 @@ namespace IBL
     /// take care of updating the data layer and in addition a BL object will maintain a skimmer list.
     /// </summary>
     public partial class BL : IBL
-    {
-        public IDal.IDal AccessIdal; //Create an object that we will use to access the data layer. 
+    {   
+        static BL() { }// static ctor to ensure instance init is done just before first usage
+ 
+        internal static BL Instance { get; } = new BL();// The public Instance property to use
+
+        public DalFacade.IDal AccessIdal; //Create an object that we will use to access the data layer. 
 
         public List<DroneToList> DronesBL; //Creating a list of dronse.
 
@@ -30,10 +34,10 @@ namespace IBL
         /// <summary>
         /// The constructor will build the list of dronse and especially will calculate the location and battery status of the drone.
         /// </summary>
-        public BL()
+        private BL()
         {
             //initialization an object that will serve as an access point to methods in DAL.
-            AccessIdal = new DalObject.DalObject();
+            AccessIdal = DLAPI.DLFactory.GetDL();
 
             //Placement in the fields of power consumption and charging rate.
             double[] arr = AccessIdal.RequestPowerConsumptionByDrone();
@@ -45,7 +49,7 @@ namespace IBL
 
             //Conversion of a drone list from the data layer to a Drone list of the BL layer.
             DronesBL = new List<DroneToList>();
-            List<IDAL.DO.Drone> holdDalDrones = AccessIdal.GetDroneList().ToList();
+            List<DO.Drone> holdDalDrones = AccessIdal.GetDroneList().ToList();
             foreach (var item in holdDalDrones)
             {
                 DronesBL.Add(new DroneToList { Id = item.Id, Model = item.Model,
@@ -54,7 +58,7 @@ namespace IBL
 
             //Convert a customer list from the data layer to a customer list of the BL layer.
             List<Customer> CustomerBL = new List<Customer>();
-            List<IDAL.DO.Customer> holdDalCustomer = AccessIdal.GetCustomerList().ToList();
+            List<DO.Customer> holdDalCustomer = AccessIdal.GetCustomerList().ToList();
             foreach (var item in holdDalCustomer)
             {
                 CustomerBL.Add(new Customer { Id = item.Id, Name = item.Name, PhoneNumber = item.PhoneNumber,
@@ -63,7 +67,7 @@ namespace IBL
 
             //Converts a list of base stations from the data layer to a list of base stations of the BL layer.
             List<BaseStation> baseStationBL = new List<BaseStation>();
-            List <IDAL.DO.BaseStation> holdDalBaseStation = AccessIdal.GetBaseStationList().ToList();
+            List <DO.BaseStation> holdDalBaseStation = AccessIdal.GetBaseStationList().ToList();
             foreach (var item in holdDalBaseStation)
             {      
                 baseStationBL.Add(new BaseStation{Id = item.Id, Name = item.StationName,
@@ -73,7 +77,7 @@ namespace IBL
             }
 
             //bring of the list of package from the data layer.
-            List<IDAL.DO.Parcel> holdDalParcels = AccessIdal.GetParcelList(i => i.DroneId != 0).ToList();
+            List<DO.Parcel> holdDalParcels = AccessIdal.GetParcelList(i => i.DroneId != 0).ToList();
 
             //The loop will go through the dronesBL list and check if the drone is associated with the package
             //or if it does not makes a delivery. and will update its status, location and battery status.
@@ -145,7 +149,7 @@ namespace IBL
                     }
                     else //item.Statuses == DroneStatuses.free
                     {
-                        List<IDAL.DO.Parcel> DeliveredAndSameDroneID = holdDalParcels.FindAll(x => x.DroneId == item.Id && x.Delivered != null);
+                        List<DO.Parcel> DeliveredAndSameDroneID = holdDalParcels.FindAll(x => x.DroneId == item.Id && x.Delivered != null);
                         
                         if (DeliveredAndSameDroneID.Any())//if the List is not empty.
                         {

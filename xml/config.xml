@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<config>
+
+	<dl>xml</dl>
+	<dl-packages>
+		<xml namespace="DalObject" class="DalObject">DalObject</xml>
+	</dl-packages>
+	
+</config>
+
+

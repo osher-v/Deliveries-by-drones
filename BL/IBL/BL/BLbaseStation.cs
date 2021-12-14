@@ -13,7 +13,7 @@ namespace IBL
         public void AddStation(BaseStation newbaseStation)
         {
 
-            IDAL.DO.BaseStation newStation = new IDAL.DO.BaseStation()
+            DO.BaseStation newStation = new DO.BaseStation()
             {
                 Id = newbaseStation.Id,
                 StationName = newbaseStation.Name,
@@ -25,7 +25,7 @@ namespace IBL
             {
                 AccessIdal.AddStation(newStation);
             }
-            catch (IDAL.DO.AddAnExistingObjectException)
+            catch (DO.AddAnExistingObjectException)
             {
                 throw new AddAnExistingObjectException();
             }
@@ -33,7 +33,7 @@ namespace IBL
 
         public void UpdateBaseStaison(int baseStationId, string baseName, string chargeslots)
         {
-            IDAL.DO.BaseStation newbase = new IDAL.DO.BaseStation();
+            DO.BaseStation newbase = new DO.BaseStation();
             try
             {
                 newbase = AccessIdal.GetBaseStation(baseStationId);
@@ -42,7 +42,7 @@ namespace IBL
                     newbase.StationName = baseName;
                 }
             }
-            catch (IDAL.DO.NonExistentObjectException)
+            catch (DO.NonExistentObjectException)
             {
                 throw new NonExistentObjectException("BaseStation");
             }
@@ -62,13 +62,13 @@ namespace IBL
 
         public BaseStation GetBaseStation(int idForDisplayObject)
         {
-            IDAL.DO.BaseStation printBase = new IDAL.DO.BaseStation();
+            DO.BaseStation printBase = new DO.BaseStation();
             // check if Non Existent BaseStation 
             try
             {
                 printBase = AccessIdal.GetBaseStation(idForDisplayObject);
             }
-            catch (IDAL.DO.NonExistentObjectException)
+            catch (DO.NonExistentObjectException)
             {
                 throw new NonExistentObjectException("BaseStation");
             }
@@ -77,7 +77,7 @@ namespace IBL
             BaseStation blBase = new BaseStation() { Id = printBase.Id, Name=printBase.StationName, BaseStationLocation = dalBaseLocation,
                 FreeChargeSlots=printBase.FreeChargeSlots, DroneInChargsList=new List<DroneInCharg>()};
            
-            List<IDAL.DO.DroneCharge> droneInCharge = AccessIdal.GetBaseChargeList(i => i.StationId == idForDisplayObject).ToList();
+            List<DO.DroneCharge> droneInCharge = AccessIdal.GetBaseChargeList(i => i.StationId == idForDisplayObject).ToList();
             foreach (var item in droneInCharge)
             {
                 blBase.DroneInChargsList.Add(new DroneInCharg { Id = item.DroneId,
@@ -89,7 +89,7 @@ namespace IBL
         public IEnumerable<BaseStationsToList> GetBaseStationList(Predicate<BaseStationsToList> predicate = null)
         {
             List<BaseStationsToList> baseStationBL = new List<BaseStationsToList>();
-            List<IDAL.DO.BaseStation> holdDalBaseStation = AccessIdal.GetBaseStationList().ToList();
+            List<DO.BaseStation> holdDalBaseStation = AccessIdal.GetBaseStationList().ToList();
             foreach (var item in holdDalBaseStation)
             {
                 baseStationBL.Add(new BaseStationsToList { Id = item.Id, Name = item.StationName, FreeChargeSlots = item.FreeChargeSlots,

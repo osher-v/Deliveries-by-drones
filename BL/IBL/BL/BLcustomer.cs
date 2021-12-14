@@ -12,7 +12,7 @@ namespace IBL
     {
         public void AddCustomer(Customer customer)
         {
-            IDAL.DO.Customer newCustomer = new IDAL.DO.Customer()
+            DO.Customer newCustomer = new DO.Customer()
             {
                 Id = customer.Id,
                 Name = customer.Name,
@@ -25,7 +25,7 @@ namespace IBL
             {
                 AccessIdal.AddCustomer(newCustomer);
             }
-            catch (IDAL.DO.AddAnExistingObjectException)
+            catch (DO.AddAnExistingObjectException)
             {
                 throw new AddAnExistingObjectException();
             }
@@ -36,14 +36,14 @@ namespace IBL
             // try if Non Existent Object Exception
             try
             {
-                IDAL.DO.Customer customer = AccessIdal.GetCustomer(customerId);
+                DO.Customer customer = AccessIdal.GetCustomer(customerId);
                 if (customerName != "")
                     customer.Name = customerName;
                 if (phoneNumber != "")
                     customer.PhoneNumber = phoneNumber;
                 AccessIdal.UpdateCustomer(customer);
             }
-            catch (IDAL.DO.NonExistentObjectException)
+            catch (DO.NonExistentObjectException)
             {
                 throw new NonExistentObjectException("customer");
             }
@@ -51,12 +51,12 @@ namespace IBL
 
         public Customer GetCustomer(int idForDisplayObject)
         {
-            IDAL.DO.Customer printCustomer = new IDAL.DO.Customer();
+            DO.Customer printCustomer = new DO.Customer();
             try
             {
                 printCustomer = AccessIdal.GetCustomer(idForDisplayObject);
             }
-            catch (IDAL.DO.NonExistentObjectException)
+            catch (DO.NonExistentObjectException)
             {
                 throw new NonExistentObjectException("Customer");
             }
@@ -65,7 +65,7 @@ namespace IBL
             Customer blCustomer = new Customer(){Id = printCustomer.Id, Name = printCustomer.Name,PhoneNumber = printCustomer.PhoneNumber,
                 LocationOfCustomer = dalCustomerLocation, ParcelFromTheCustomer=new List<ParcelAtCustomer>(),  ParcelToTheCustomer =new List<ParcelAtCustomer>() };
 
-            List<IDAL.DO.Parcel> holdDalParcels = AccessIdal.GetParcelList(i => i.SenderId == idForDisplayObject).ToList();
+            List<DO.Parcel> holdDalParcels = AccessIdal.GetParcelList(i => i.SenderId == idForDisplayObject).ToList();
             // the for run on all the parcel list and put the coract info into it  
             foreach (var item in holdDalParcels)
             {
@@ -86,7 +86,7 @@ namespace IBL
                 blCustomer.ParcelFromTheCustomer.Add(parcelAtCustomer);
             }
 
-            List<IDAL.DO.Parcel> holdDalSentParcels = AccessIdal.GetParcelList(i => i.TargetId == idForDisplayObject).ToList();
+            List<DO.Parcel> holdDalSentParcels = AccessIdal.GetParcelList(i => i.TargetId == idForDisplayObject).ToList();
             // the for run on all the parcel list and put the coract info into it  
             foreach (var item in holdDalSentParcels)
             {
@@ -115,7 +115,7 @@ namespace IBL
         public IEnumerable<CustomerToList> GetCustomerList(Predicate<CustomerToList> predicate = null)
         {
             List<CustomerToList> CustomerBL = new List<CustomerToList>();
-            List<IDAL.DO.Customer> holdDalCustomer = AccessIdal.GetCustomerList().ToList();
+            List<DO.Customer> holdDalCustomer = AccessIdal.GetCustomerList().ToList();
             // the for run on all the customer list and put the coract info into it  
 
             foreach (var item in holdDalCustomer)

@@ -19,7 +19,7 @@ namespace IBL
             if (drone.Statuses != DroneStatuses.free)
                 throw new TheDroneCanNotBeSentForCharging("Error, Only a free drone can be sent for charging"); 
 
-            List<IDAL.DO.BaseStation> dalListStations = AccessIdal.GetBaseStationList(x => x.FreeChargeSlots > 0).ToList();
+            List<DO.BaseStation> dalListStations = AccessIdal.GetBaseStationList(x => x.FreeChargeSlots > 0).ToList();
             List<BaseStation> BLbaseStations = new List<BaseStation>();
             foreach (var item in dalListStations)
             {

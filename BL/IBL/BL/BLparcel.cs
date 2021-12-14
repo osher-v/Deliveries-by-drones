@@ -17,17 +17,17 @@ namespace IBL
                 AccessIdal.GetCustomer(newParcel.Sender.Id);
                 AccessIdal.GetCustomer(newParcel.Receiver.Id);
             }
-            catch (IDAL.DO.NonExistentObjectException)
+            catch (DO.NonExistentObjectException)
             {
                 throw new NonExistentObjectException("Erorr is no Customer id");
             }
             
-            IDAL.DO.Parcel parcel = new IDAL.DO.Parcel()
+            DO.Parcel parcel = new DO.Parcel()
             {
                 SenderId = newParcel.Sender.Id,
                 TargetId = newParcel.Receiver.Id,
-                Weight = (IDAL.DO.WeightCategories)newParcel.Weight,
-                Priority = (IDAL.DO.Priorities)newParcel.Prior,
+                Weight = (DO.WeightCategories)newParcel.Weight,
+                Priority = (DO.Priorities)newParcel.Prior,
                 Requested = DateTime.Now,
                 Assigned = null,
                 PickedUp = null,
@@ -47,14 +47,14 @@ namespace IBL
             if (myDrone.Statuses != DroneStatuses.free)
                 throw new DroneCantBeAssigend();
         
-            List<IDAL.DO.Parcel> highestPriority = highestPriorityList(myDrone);
+            List<DO.Parcel> highestPriority = highestPriorityList(myDrone);
 
-            List<IDAL.DO.Parcel> highestWeight = highestWeightList(highestPriority, myDrone);
+            List<DO.Parcel> highestWeight = highestWeightList(highestPriority, myDrone);
 
             if (!highestWeight.Any())
                 throw new NoSuitablePsrcelWasFoundToBelongToTheDrone();
 
-            IDAL.DO.Parcel theRightPackage = minDistance(highestWeight, myDrone.CurrentLocation);
+            DO.Parcel theRightPackage = minDistance(highestWeight, myDrone.CurrentLocation);
 
             myDrone.Statuses = DroneStatuses.busy;
             myDrone.NumberOfLinkedParcel = theRightPackage.Id;
@@ -69,13 +69,13 @@ namespace IBL
         /// </summary>
         /// <param name="myDrone">drone object</param>
         /// <returns>list of the most urgent packages</returns>
-        private List<IDAL.DO.Parcel> highestPriorityList(DroneToList myDrone)
+        private List<DO.Parcel> highestPriorityList(DroneToList myDrone)
         {
-            List<IDAL.DO.Parcel> parcels = AccessIdal.GetParcelList(x => x.DroneId == 0 ).ToList();
+            List<DO.Parcel> parcels = AccessIdal.GetParcelList(x => x.DroneId == 0 ).ToList();
 
-            List<IDAL.DO.Parcel> parcelsWithHighestPriority = new List<IDAL.DO.Parcel>();
-            List<IDAL.DO.Parcel> parcelsWithMediumPriority = new List<IDAL.DO.Parcel>();
-            List<IDAL.DO.Parcel> parcelsWithRegulerPriority = new List<IDAL.DO.Parcel>();
+            List<DO.Parcel> parcelsWithHighestPriority = new List<DO.Parcel>();
+            List<DO.Parcel> parcelsWithMediumPriority = new List<DO.Parcel>();
+            List<DO.Parcel> parcelsWithRegulerPriority = new List<DO.Parcel>();
 
             foreach (var item in parcels)
             {
@@ -111,11 +111,11 @@ namespace IBL
         /// <param name="parcels">list of the most urgent parcels</param>
         /// <param name="myDrone">drone object</param>
         /// <returns></returns>
-        private List<IDAL.DO.Parcel> highestWeightList(List<IDAL.DO.Parcel> parcels, DroneToList myDrone)
+        private List<DO.Parcel> highestWeightList(List<DO.Parcel> parcels, DroneToList myDrone)
         {
-            List<IDAL.DO.Parcel> parcelsHeavy = new List<IDAL.DO.Parcel>();
-            List<IDAL.DO.Parcel> parcelsMedium = new List<IDAL.DO.Parcel>();
-            List<IDAL.DO.Parcel> parcelsLight = new List<IDAL.DO.Parcel>();
+            List<DO.Parcel> parcelsHeavy = new List<DO.Parcel>();
+            List<DO.Parcel> parcelsMedium = new List<DO.Parcel>();
+            List<DO.Parcel> parcelsLight = new List<DO.Parcel>();
 
             foreach (var item in parcels)
             {
@@ -144,7 +144,7 @@ namespace IBL
         /// <param name="parcel">list of the most urgent parcels</param>
         /// <param name="myDrone">drone object</param>
         /// <returns></returns>
-        private bool possibleDistance(IDAL.DO.Parcel parcel, DroneToList myDrone)
+        private bool possibleDistance(DO.Parcel parcel, DroneToList myDrone)
         {
             double electricityUse = GetDistance(myDrone.CurrentLocation, GetCustomer(parcel.SenderId).LocationOfCustomer) * Free;
             double distanceSenderToDestination = GetDistance(GetCustomer(parcel.SenderId).LocationOfCustomer, GetCustomer(parcel.TargetId).LocationOfCustomer);
@@ -167,7 +167,7 @@ namespace IBL
                 return false;
 
             List<BaseStation> baseStationBL = new List<BaseStation>();
-            List<IDAL.DO.BaseStation> holdDalBaseStation = AccessIdal.GetBaseStationList().ToList();
+            List<DO.BaseStation> holdDalBaseStation = AccessIdal.GetBaseStationList().ToList();
             foreach (var item in holdDalBaseStation)
             {
                 baseStationBL.Add(new BaseStation {Id = item.Id, Name = item.StationName,FreeChargeSlots = item.FreeChargeSlots,
@@ -181,7 +181,7 @@ namespace IBL
             return true;
         }
 
-        private IDAL.DO.Parcel minDistance(List<IDAL.DO.Parcel> parcels, Location location)
+        private DO.Parcel minDistance(List<DO.Parcel> parcels, Location location)
         {
             List<double> listOfDistance = new List<double>();
             foreach (var obj in parcels)
@@ -203,7 +203,7 @@ namespace IBL
             if (drone.NumberOfLinkedParcel == 0)//Deafult if he do not Assign to parcel.
                 throw new UnableToCollectParcel("The drone is not associated with the package");
 
-            IDAL.DO.Parcel parcelIDal = AccessIdal.GetParcel(drone.NumberOfLinkedParcel);
+            DO.Parcel parcelIDal = AccessIdal.GetParcel(drone.NumberOfLinkedParcel);
 
             if (parcelIDal.PickedUp != null)
                 throw new UnableToCollectParcel("The parcel has already been collected");
@@ -224,7 +224,7 @@ namespace IBL
             if (drone.NumberOfLinkedParcel == 0)//Deafult if he do not Assign to parcel.
                 throw new DeliveryCannotBeMade("The drone is not associated with the package");
 
-            IDAL.DO.Parcel parcelIDal = AccessIdal.GetParcel(drone.NumberOfLinkedParcel);
+            DO.Parcel parcelIDal = AccessIdal.GetParcel(drone.NumberOfLinkedParcel);
 
             if (parcelIDal.PickedUp != null && parcelIDal.Delivered == null)
             {
@@ -256,12 +256,12 @@ namespace IBL
 
         public Parcel GetParcel(int idForDisplayObject)
         {
-            IDAL.DO.Parcel printParcel = new IDAL.DO.Parcel();
+            DO.Parcel printParcel = new DO.Parcel();
             try
             {
                 printParcel = AccessIdal.GetParcel(idForDisplayObject);
             }
-            catch (IDAL.DO.NonExistentObjectException)
+            catch (DO.NonExistentObjectException)
             {
                 throw new NonExistentObjectException("Parcel");
             }
@@ -298,7 +298,7 @@ namespace IBL
         public IEnumerable<ParcelToList> GetParcelList(Predicate<ParcelToList> predicate = null)
         {
             List<ParcelToList> parcels = new List<ParcelToList>();
-            List<IDAL.DO.Parcel> holdDalParcels = AccessIdal.GetParcelList().ToList();
+            List<DO.Parcel> holdDalParcels = AccessIdal.GetParcelList().ToList();
 
             foreach (var item in holdDalParcels)
             {

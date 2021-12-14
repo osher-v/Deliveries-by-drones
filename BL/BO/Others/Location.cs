@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using DalFacade;
+
 namespace IBL
 {
     namespace BO
@@ -18,8 +20,8 @@ namespace IBL
             //public string LocationStringh { get; set; }
             public override string ToString()
             {
-                string convertLongitude = DalObject.DalObject.ConvertDecimalDegreesToSexagesimal(longitude, (IDAL.DO.LongitudeAndLatitude)1);
-                string convertLatitude = DalObject.DalObject.ConvertDecimalDegreesToSexagesimal(latitude, (IDAL.DO.LongitudeAndLatitude)2);
+                string convertLongitude = fanctions.ConvertDecimalDegreesToSexagesimal(longitude, (DO.LongitudeAndLatitude)1);
+                string convertLatitude = fanctions.ConvertDecimalDegreesToSexagesimal(latitude, (DO.LongitudeAndLatitude)2);
                 //return string.Format(" longitude is: {0,-8} \t  latitude is {1,-8} ", convertLongitude, convertLatitude);
                 return string.Format("{0,-8} \t {1,-8} ", convertLongitude, convertLatitude);
             }
