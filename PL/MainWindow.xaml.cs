@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Media;
+using System.Windows.Media.Animation;
 
 namespace PL
 {
@@ -37,7 +38,24 @@ namespace PL
         {
             new DroneListWindow(AccessIbl).Show();
             this.Close(); // we close the login window 
+            //enter.Unloaded -= enter_Unloaded;
+            //enter.Source = null;
+            //enter.Close();
         }
         #endregion
+
+       
+
+        private void enter_Loaded(object sender, RoutedEventArgs e)
+        {
+            DoubleAnimation doubleAnimmation = new DoubleAnimation(0,1, TimeSpan.FromSeconds(10));
+            DoubleAnimation Animmation = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(10));
+
+            ShowDroneList.BeginAnimation(Button.OpacityProperty, doubleAnimmation);
+
+            loginlabal.BeginAnimation(Label.OpacityProperty, Animmation);
+        }
+
+      
     }
 }
