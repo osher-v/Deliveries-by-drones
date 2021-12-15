@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         ResizeMode="CanMinimize"
-        Title="Login Window" Height="400" Width="690">
+        Title="Login Window" Height="400" Width="690" Background="#FF080101">
     <!--control the style for the buotons-->
     <Window.Resources>
         <Style TargetType="Button" x:Key="RoundedButtonStyle">
