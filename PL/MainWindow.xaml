@@ -32,7 +32,7 @@
     </Window.Resources>
 
     <Grid>
-        <MediaElement x:Name="enter" Source="C:\Users\osher\source\repos\osher-v\dotNet5782_1070_1239\PL\New Project.avi" HorizontalAlignment="left" VerticalAlignment="Center" Height="400" Width="690" Volume="0" Stretch="Fill" UnloadedBehavior="Manual" Loaded="enter_Loaded"/>
+        <MediaElement x:Name="enter" Source="New Project.avi" HorizontalAlignment="left" VerticalAlignment="Center" Height="400" Width="690" Volume="0" Stretch="Fill" UnloadedBehavior="Manual" Loaded="enter_Loaded"/>
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
