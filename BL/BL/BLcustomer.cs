@@ -5,10 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using BO;
 
-namespace BlApi
+namespace BL
 {
     //public partial class BLcustomer
-    public partial class BL
+    partial class BL
     {
         public void AddCustomer(Customer customer)
         {

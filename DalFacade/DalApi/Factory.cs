@@ -21,7 +21,6 @@ namespace DalApi
         /// which must contain the single instance of the class.
         /// </summary>
         /// <returns>Dal tier implementation object</returns>
-
         public static IDal GetDL()
         {
             // get dal implementation name from config.xml according to <data> element
@@ -94,7 +93,6 @@ namespace DalApi
             {
                 throw new DLConfigException($"Class {dlNameSpace}.{dlClass} is not a singleton", ex);
             }
-
         }
     }
 }

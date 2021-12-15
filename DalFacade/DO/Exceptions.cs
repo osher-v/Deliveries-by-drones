@@ -6,8 +6,6 @@ using System.Threading.Tasks;
 
 using System.Runtime.Serialization;
 
-
-
 namespace DO
 {
     [Serializable]

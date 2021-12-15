@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace DalApi
 {
+    /// <summary>
+    /// interface IDal
+    /// </summary>
     public interface IDal
     {
         #region Functions for insert options

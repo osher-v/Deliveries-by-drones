@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using BO;
 
-namespace BlApi
+namespace BL
 {
-    public partial class BL
+    partial class BL
     {    
         public void SendingDroneforCharging(int droneId)
         {

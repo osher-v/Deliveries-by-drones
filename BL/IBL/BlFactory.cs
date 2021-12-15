@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BL.others
+namespace BlApi
 {
     public static class BlFactory
     {
-        public static BlApi.IBL GetBL() => BlApi.BL.Instance;
+        public static BlApi.IBL GetBL() => BL.BL.Instance;
     }
 }

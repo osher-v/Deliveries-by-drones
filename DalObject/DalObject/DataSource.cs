@@ -11,7 +11,7 @@ namespace DalObject
     /// <summary>
     /// Contains boot data and list structure
     /// </summary>
-    public class DataSource 
+    internal static class DataSource 
     {
         /// <summary> A static Random that sets the MyRandom to select a millisecond to repel collisions </summary>
         internal static Random MyRandom = new Random(DateTime.Now.Millisecond);

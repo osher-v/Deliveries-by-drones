@@ -1,11 +1,7 @@
-﻿
-using System;
-//using IDAL.DO;
-//using DalObject;
+﻿using System;
 
 namespace DO
 {
-
     /// <summary>
     ///  Enum to identify the order of priority
     /// </summary>

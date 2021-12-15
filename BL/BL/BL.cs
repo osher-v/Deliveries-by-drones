@@ -4,13 +4,13 @@ using System.Collections.Generic;
 using System.Linq;
 using BO;
 
-namespace BlApi
+namespace BL
 {
     /// <summary>
     /// These partial classes will implement the IBL interface and
     /// take care of updating the data layer and in addition a BL object will maintain a skimmer list.
     /// </summary>
-    public partial class BL : IBL
+    partial class BL : BlApi.IBL
     {   
         static BL() { }// static ctor to ensure instance init is done just before first usage
  

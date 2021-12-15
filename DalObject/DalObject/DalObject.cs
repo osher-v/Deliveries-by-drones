@@ -12,20 +12,22 @@ namespace DalObject
     /// <summary>
     /// matods that use from the main 
     /// </summary>
-     partial class DalObject : IDal 
+    partial class DalObject : IDal 
     {
         /// <summary>
         /// Default constructor.
         /// </summary>  
         #region Singelton
+
         static DalObject() { }// static ctor to ensure instance init is done just before first usage
 
-        private DalObject() // default => private  
+        private DalObject() //private  
         {
             DataSource.Initialize();
         }
 
         internal static DalObject Instance { get; } = new DalObject();// The public Instance property to use
+
         #endregion Singelton
 
         public double[] RequestPowerConsumptionByDrone()

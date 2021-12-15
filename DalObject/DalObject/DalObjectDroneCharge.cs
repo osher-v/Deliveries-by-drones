@@ -24,14 +24,17 @@ namespace DalObject
 
         public DroneCharge GetBaseCharge(int droneID)
         {
-            if (!(DataSource.DroneChargeList.Exists(x => x.DroneId == droneID)))
+            if (!DataSource.DroneChargeList.Exists(x => x.DroneId == droneID))
+            {
                 throw new NonExistentObjectException();
+            }
             return DataSource.DroneChargeList.Find(x => x.DroneId == droneID);
         }
    
         public IEnumerable<DroneCharge> GetBaseChargeList(Predicate<DroneCharge> predicate = null)
         {
-            return DataSource.DroneChargeList.FindAll(x => predicate == null ? true : predicate(x));
+            //return DataSource.DroneChargeList.FindAll(x => predicate == null ? true : predicate(x));
+            return DataSource.DroneChargeList.Where(x => predicate == null ? true : predicate(x));
         }
     }
 }

@@ -60,14 +60,17 @@ namespace DalObject
         
         public Parcel GetParcel(int ID)
         {
-            if (!(DataSource.ParcelsList.Exists(x => x.Id == ID)))
+            if (!DataSource.ParcelsList.Exists(x => x.Id == ID))
+            {
                 throw new NonExistentObjectException();
+            }
             return DataSource.ParcelsList.Find(x => x.Id == ID);
         }
 
         public IEnumerable<Parcel> GetParcelList(Predicate<Parcel> prdicat = null)
         {
-            return DataSource.ParcelsList.FindAll(x => prdicat == null ? true : prdicat(x));
+            //return DataSource.ParcelsList.FindAll(x => prdicat == null ? true : prdicat(x));
+            return DataSource.ParcelsList.Where(x => prdicat == null ? true : prdicat(x));
         }
     }
 }

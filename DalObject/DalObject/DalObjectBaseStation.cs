@@ -13,16 +13,20 @@ namespace DalObject
     {
         public void AddStation(BaseStation newbaseStation)
         {
-            if ((DataSource.BaseStationsList.FindIndex(x => x.Id == newbaseStation.Id)) != -1)
+            if (DataSource.BaseStationsList.Exists(x => x.Id == newbaseStation.Id))
+            {
                 throw new AddAnExistingObjectException();
-            DataSource.BaseStationsList.Add(newbaseStation);
+            }
+            DataSource.BaseStationsList.Add(newbaseStation); //else
         }
 
         public void UpdateBaseStation(BaseStation newBaseStation)
         {
-            if (!(DataSource.BaseStationsList.Exists(x => x.Id == newBaseStation.Id)))
+            if (!DataSource.BaseStationsList.Exists(x => x.Id == newBaseStation.Id))
+            {
                 throw new NonExistentObjectException();
-            DataSource.BaseStationsList[DataSource.BaseStationsList.FindIndex(x => x.Id == newBaseStation.Id)] = newBaseStation;
+            }
+            DataSource.BaseStationsList[DataSource.BaseStationsList.FindIndex(x => x.Id == newBaseStation.Id)] = newBaseStation; //else
         }
 
         public void UpdateMinusChargeSlots(int baseStationId)
@@ -45,14 +49,17 @@ namespace DalObject
 
         public BaseStation GetBaseStation(int ID)
         {
-            if (!(DataSource.BaseStationsList.Exists(x => x.Id == ID)))
+            if (!DataSource.BaseStationsList.Exists(x => x.Id == ID))
+            {
                 throw new NonExistentObjectException();
+            }
             return DataSource.BaseStationsList.Find(x => x.Id == ID);
         }
    
         public IEnumerable<BaseStation> GetBaseStationList(Predicate<BaseStation> predicate = null)
         {
-            return DataSource.BaseStationsList.FindAll(x => predicate == null ? true : predicate(x));  
+            //return DataSource.BaseStationsList.FindAll(x => predicate == null ? true : predicate(x));
+            return DataSource.BaseStationsList.Where(x => predicate == null ? true : predicate(x));
         }      
     }
 }

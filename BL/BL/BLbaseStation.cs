@@ -5,10 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using BO;
 
-namespace BlApi
+namespace BL
 {
     //public partial class BLbaseStation
-    public partial class BL
+    partial class BL
     {
         public void AddStation(BaseStation newbaseStation)
         {
@@ -36,26 +36,30 @@ namespace BlApi
             DO.BaseStation newbase = new DO.BaseStation();
             try
             {
-                newbase = AccessIdal.GetBaseStation(baseStationId);
-                if (baseName != "") //if it is not empty.
-                {
-                    newbase.StationName = baseName;
-                }
+                newbase = AccessIdal.GetBaseStation(baseStationId);                
             }
             catch (DO.NonExistentObjectException)
             {
                 throw new NonExistentObjectException("BaseStation");
             }
 
+            if (baseName != "") //if it is not empty.
+            {
+                newbase.StationName = baseName;
+            }
+
             if (chargeslots != "") ////if it is not empty.
             {
                 int totalQuantityChargeSlots;
                 int.TryParse(chargeslots, out  totalQuantityChargeSlots);
-                int numOfBuzeChargeslots = AccessIdal.GetBaseChargeList(x => x.StationId == baseStationId).ToList().Count;
+                int numOfBuzeChargeslots = AccessIdal.GetBaseChargeList(x => x.StationId == baseStationId).Count();
+
                 //chaeck if More Drone In Charging Than The Proposed Charging Stations
                 if (totalQuantityChargeSlots - numOfBuzeChargeslots < 0)
-                   throw new MoreDroneInChargingThanTheProposedChargingStations();
-                newbase.FreeChargeSlots = totalQuantityChargeSlots - numOfBuzeChargeslots;
+                {
+                    throw new MoreDroneInChargingThanTheProposedChargingStations();
+                }
+                newbase.FreeChargeSlots = totalQuantityChargeSlots - numOfBuzeChargeslots; //else
             }
             AccessIdal.UpdateBaseStation(newbase);
         }
@@ -76,8 +80,8 @@ namespace BlApi
             Location dalBaseLocation = new Location() { longitude = printBase.Longitude, latitude=printBase.Latitude };
             BaseStation blBase = new BaseStation() { Id = printBase.Id, Name=printBase.StationName, BaseStationLocation = dalBaseLocation,
                 FreeChargeSlots=printBase.FreeChargeSlots, DroneInChargsList=new List<DroneInCharg>()};
-           
-            List<DO.DroneCharge> droneInCharge = AccessIdal.GetBaseChargeList(i => i.StationId == idForDisplayObject).ToList();
+
+            IEnumerable<DO.DroneCharge> droneInCharge = AccessIdal.GetBaseChargeList(i => i.StationId == idForDisplayObject);
             foreach (var item in droneInCharge)
             {
                 blBase.DroneInChargsList.Add(new DroneInCharg { Id = item.DroneId,

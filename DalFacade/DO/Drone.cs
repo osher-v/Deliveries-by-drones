@@ -1,6 +1,4 @@
-﻿
-using System;
-//using IDAL.DO;
+﻿using System;
 
 namespace DO
 {

@@ -5,10 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using BO;
 
-namespace BlApi
+namespace BL
 {
     //public partial class BLdrone
-    public partial class BL
+    partial class BL
     {
         public void AddDrone(DroneToList newDrone, int firstChargingStation)
         {
