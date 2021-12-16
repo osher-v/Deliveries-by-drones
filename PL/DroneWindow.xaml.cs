@@ -319,7 +319,7 @@ namespace PL
             DateTime time;
             string stringTime = $"{TBhours.Text}:{TBmin.Text}:{TBsec.Text}";//to convert the strings to a string that the datetime can hold
             DateTime.TryParse(stringTime, out time);
-            AccessIbl.ReleaseDroneFromCharging(MyDrone.Id, time);
+            AccessIbl.ReleaseDroneFromCharging(MyDrone.Id); //, time);
 
             MessageBoxResult result = MessageBox.Show("The operation was successful", "info", MessageBoxButton.OK, MessageBoxImage.Information);//לטלפל בX
             switch (result)

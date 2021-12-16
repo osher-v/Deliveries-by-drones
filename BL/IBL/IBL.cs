@@ -80,7 +80,7 @@ namespace BlApi
         /// </summary>
         /// <param name="droneId">drone Id</param>
         /// <param name="time">Time the drone is charging</param>
-        void ReleaseDroneFromCharging(int droneId, DateTime time);
+        void ReleaseDroneFromCharging(int droneId); //, DateTime time);
 
         /// <summary>
         /// The function assigns a drone to the parcel.

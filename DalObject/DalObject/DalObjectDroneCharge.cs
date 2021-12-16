@@ -14,7 +14,8 @@ namespace DalObject
     {
         public void SendingDroneforChargingAtBaseStation(int baseStationId, int droneId)
         {
-            DataSource.DroneChargeList.Add(new DroneCharge() { StationId = baseStationId, DroneId = droneId });
+            DataSource.DroneChargeList.Add(new DroneCharge() { StationId = baseStationId,
+                DroneId = droneId, StartChargeTime =  DateTime.Now });
         }
   
         public void ReleaseDroneFromChargingAtBaseStation(int droneId)
