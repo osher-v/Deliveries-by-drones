@@ -38,7 +38,7 @@ namespace DalObject
             public static double LightWeightCarrier = 0.6;
             public static double MediumWeightBearing = 0.75;
             public static double CarriesHeavyWeight = 0.9;
-            public static double DroneLoadingRate = 100;
+            public static double DroneLoadingRate = 10000;
         }
 
         /// <summary> responsible for initializing all entities </summary>
