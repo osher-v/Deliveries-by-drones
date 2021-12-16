@@ -34,10 +34,25 @@ namespace PL
         public BlApi.IBL AccessIbl = BlApi.BlFactory.GetBL();
 
         /// <summary> open the drone list window  </summary>
-        private void login_Click(object sender, RoutedEventArgs e)
+        private void Blogin_Click(object sender, RoutedEventArgs e)
         {
-            new DroneListWindow(AccessIbl).Show();
-            this.Close(); // we close the login window 
+           
+            switch (Blogin.Content)
+            {
+                case "כניסה כמנהל":
+                    new DroneListWindow(AccessIbl).Show();
+                    this.Close(); // we close the login window
+                    break;
+                case "הרשמת לקוח למערכת":
+                    
+                    break;
+                case "כניסת לקוח":
+                  
+                    break;
+                default:
+                  
+                    break;
+            }
             //enter.Unloaded -= enter_Unloaded;
             //enter.Source = null;
             //enter.Close();
@@ -49,7 +64,7 @@ namespace PL
         private void enter_Loaded(object sender, RoutedEventArgs e)
         {
             AddOn.Opacity = 0;
-            DoubleAnimation Animmation = new DoubleAnimation(0, 100, TimeSpan.FromSeconds(10));
+            DoubleAnimation Animmation = new DoubleAnimation(0, 100, TimeSpan.FromSeconds(10.5));
             PBloding.BeginAnimation(ProgressBar.ValueProperty, Animmation);
         }
 
@@ -57,13 +72,30 @@ namespace PL
         {
             if(PBloding.Value == 100)
             {
-                login.IsEnabled = true;
+                Blogin.IsEnabled = true;
                 DoubleAnimation doubleAnimmation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(5));
                 AddOn.BeginAnimation(Grid.OpacityProperty, doubleAnimmation);
                 DoubleAnimation DSF = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(2));
                 Disiaper.BeginAnimation(Grid.OpacityProperty, DSF);
                 
             }
+        }
+
+        private void TCadmin_GotFocus(object sender, RoutedEventArgs e)
+        {
+            Blogin.Content = "כניסה כמנהל";
+        }
+
+        private void TIRegister_GotFocus(object sender, RoutedEventArgs e)
+        {
+            Blogin.Content = "הרשמת לקוח למערכת";
+
+        }
+
+        private void TabItem_GotFocus(object sender, RoutedEventArgs e)
+        {
+            Blogin.Content = "כניסת לקוח";
+
         }
     }
 }

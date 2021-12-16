@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         ResizeMode="CanMinimize"
-        Title="Login Window" Height="400" Width="690" Background="#FF080101">
+        Title="Login Window" Height="400" Width="690" Background="#FFFCFCFC">
     <!--control the style for the buotons-->
     <Window.Resources>
         <Style TargetType="Button" x:Key="RoundedButtonStyle">
@@ -15,6 +15,9 @@
             <Setter Property="FontFamily" Value="Consolas" />
             <Setter Property="Background" Value="{x:Null}" />
             <Setter Property="HorizontalAlignment" Value="Left" />
+            <!--<Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />-->
+
             <Setter Property="TextElement.Foreground" Value="#FFDFF8E6"/>
             <Setter Property="FontWeight" Value="Bold"/>
             <Style.Triggers>
@@ -43,7 +46,7 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Button  x:Name="login" Content="Login" Style="{StaticResource RoundedButtonStyle}" BorderThickness="0" Margin="311,39,0,69" Foreground="#FFF7F1F1" Width="130" Click="login_Click" Visibility="Visible" IsEnabled="False" RenderTransformOrigin="0.519,0.334" Grid.ColumnSpan="2" Grid.Row="1">
+                <Button  x:Name="Blogin"  Style="{StaticResource RoundedButtonStyle}" BorderThickness="0" Margin="194,74,0,75" Foreground="#FFB00B0B" Width="305" Click="Blogin_Click" Visibility="Visible" IsEnabled="False" RenderTransformOrigin="0.519,0.334" Grid.ColumnSpan="2" Grid.Row="1">
                     <Button.Template>
                         <ControlTemplate TargetType="Button">
                             <Grid>
@@ -53,14 +56,74 @@
                         </ControlTemplate>
                     </Button.Template>
                 </Button>
-                <!--<TabControl Grid.ColumnSpan="2" Margin="205,71,205,121" Grid.RowSpan="2" Background="{x:Null}">
-                    <TabItem Header="TabItem" Margin="78,-4,-82,1" Foreground="#FFF9F7F7" FontWeight="Bold" FontSize="14" FontFamily="Consolas" Background="{x:Null}" BorderBrush="{x:Null}">
-                        <Grid/>
+                <TabControl Grid.ColumnSpan="2" Margin="186,50,186,121" Grid.RowSpan="2" Background="{x:Null}" RenderTransformOrigin="0.5,0.5" BorderBrush="{x:Null}">
+                    <TabControl.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform Angle="-0.123"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </TabControl.RenderTransform>
+                    <TabItem x:Name="TCadmin" Header="כניסת מנהל" Margin="1,-1,-5,1" Foreground="#FFB00B0B" FontWeight="Bold" FontSize="14" FontFamily="Consolas" Background="{x:Null}" BorderBrush="{x:Null}" GotFocus="TCadmin_GotFocus">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Label Content="שם משתמש" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="153,20,0,0" FontSize="12" Grid.ColumnSpan="2" Foreground="#FFF7F2F2"/>
+                            <TextBox HorizontalAlignment="Left" Margin="108,44,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2"/>
+                            <TextBox HorizontalAlignment="Left" Margin="106,28,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2" Grid.Row="1"/>
+                            <Label Content="סיסמא" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1" Grid.Row="1 " FontSize="12" Margin="26,4,0,0" Foreground="#FFFFF9F9" />
+                        </Grid>
                     </TabItem>
-                    <TabItem Header="TabItem" Margin="82,-3,-86,1">
-                        <Grid/>
+                    <TabItem Header="כניסת לקוח" Margin="106,0,-112,2" FontSize="14" FontWeight="Bold" FontFamily="Consolas" Foreground="#FFB00B0B" Background="{x:Null}" BorderBrush="{x:Null}" GotFocus="TabItem_GotFocus">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Label Content="שם משתמש" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="153,20,0,0" FontSize="12" Grid.ColumnSpan="2" Foreground="#FFF9F9F9"/>
+                            <TextBox HorizontalAlignment="Left" Margin="108,44,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2"/>
+                            <TextBox HorizontalAlignment="Left" Margin="106,28,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2" Grid.Row="1"/>
+                            <Label Content="סיסמא" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1" Grid.Row="1 " FontSize="12" Margin="26,4,0,0" Foreground="#FFF9F3F3" />
+                        </Grid>
                     </TabItem>
-                </TabControl>-->
+
+                    <TabItem x:Name="TIRegister" Header="הרשמה" Margin="-80,-1,0,0" FontSize="14" FontWeight="Bold" FontFamily="Consolas" Foreground="#FFB00B0B" Background="{x:Null}" BorderBrush="{x:Null}" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Width="88" GotFocus="TIRegister_GotFocus">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Label Content="מספר מזהה&#xD;&#xA;" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="6,10,0,0" FontSize="12" Grid.Column="1" Foreground="White"/>
+                            <TextBox HorizontalAlignment="Left" Margin="32,11,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                            <TextBox HorizontalAlignment="Left" Margin="32,0,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Center" Width="120" Grid.Row="1"/>
+                            <Label Content="שם" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1" Grid.Row="1 " FontSize="12" Margin="56,5,0,0" Width="32" Foreground="White" />
+                            <Label Content="קו אורך" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1" Grid.Row="3" FontSize="12" Margin="29,3,0,0" Foreground="#FFF9F7F7" />
+                            <Label Content="מספר טלפון" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="1" Grid.Row="2" FontSize="12" Margin="6,0,0,0" Foreground="#FFF6F6F6" />
+                            <TextBox HorizontalAlignment="Left" Margin="32,0,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Center" Width="120" Grid.Row="2"/>
+                            <Label Content="קו רוחב" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1" Grid.Row="4" FontSize="12" Margin="28,3,0,0" Foreground="#FFF7F6F6" />
+                            <TextBox HorizontalAlignment="Left" Margin="31,0,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Center" Width="120" Grid.Row="3"/>
+                            <TextBox HorizontalAlignment="Left" Margin="31,0,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Center" Width="120" Grid.Row="4"/>
+                        </Grid>
+                    </TabItem>
+                </TabControl>
             </Grid>
             <Grid x:Name="Disiaper" Visibility="Visible">
                 <Grid.RowDefinitions>
@@ -75,7 +138,6 @@
                 <Label Content="בס&quot;ד&#xD;&#xA;" Grid.Column="1" HorizontalAlignment="Left" Margin="291,10,0,0" VerticalAlignment="Top" Foreground="#FFF5F4F4" FontWeight="Bold" FontFamily="Consolas"/>
                 <Label Content="Loding.." HorizontalAlignment="Left" Margin="314,116,0,0" VerticalAlignment="Top" Foreground="#FFF5F4F4" FontWeight="Bold" FontFamily="Consolas" Height="25" Grid.ColumnSpan="2" Grid.Row="1"/>
                 <Label Content="בס&quot;ד&#xD;&#xA;" Grid.Column="1" HorizontalAlignment="Left" Margin="291,10,0,0" VerticalAlignment="Top" Foreground="#FFF5F4F4" FontWeight="Bold" FontFamily="Consolas"/>
-                <Label Content="Label" HorizontalAlignment="Left" Margin="330,134,0,0" VerticalAlignment="Top"/>
                 <ProgressBar x:Name="PBloding" HorizontalAlignment="Left" Height="10" Margin="270,146,0,0" VerticalAlignment="Top" Width="150" ValueChanged="PBloding_ValueChanged" Grid.ColumnSpan="2" Grid.Row="1">
                     <ProgressBar.Foreground>
                         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
