@@ -108,7 +108,7 @@
 
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
-                    <Setter Property="HorizontalContentAlignment" Value="left"></Setter>
+                    <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
                 </Style>
             </ListView.ItemContainerStyle>
 
@@ -117,7 +117,7 @@
                     <GridViewColumn DisplayMemberBinding="{Binding Id}" Header="מספר מזהה" Width="100"></GridViewColumn>
                     <GridViewColumn DisplayMemberBinding="{Binding Model}" Header="מודל" Width="70"></GridViewColumn>
                     <GridViewColumn DisplayMemberBinding="{Binding MaxWeight}" Header="משקל" Width="105"></GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding BatteryStatus}" Header="סוללה" Width="48"></GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding BatteryStatus, StringFormat={}{0:#0.0}%}" Header="סוללה" Width="60"></GridViewColumn>
                     <GridViewColumn DisplayMemberBinding="{Binding Statuses}" Header="סטטוס" Width="115" ></GridViewColumn>
                     <GridViewColumn DisplayMemberBinding="{Binding CurrentLocation}" Header="  מיקום קו רוחב      מיקום קו אורך" Width="220"></GridViewColumn>
                     <!--<GridViewColumn DisplayMemberBinding="{Binding CurrentLocation.}" Header="מיקום קו רוחב" Width="100"></GridViewColumn>-->

@@ -48,7 +48,7 @@ namespace PL
 
         private void enter_Loaded(object sender, RoutedEventArgs e)
         {
-            login.Opacity = 0;
+            AddOn.Opacity = 0;
             DoubleAnimation Animmation = new DoubleAnimation(0, 100, TimeSpan.FromSeconds(10));
             PBloding.BeginAnimation(ProgressBar.ValueProperty, Animmation);
         }
@@ -57,8 +57,12 @@ namespace PL
         {
             if(PBloding.Value == 100)
             {
+                login.IsEnabled = true;
                 DoubleAnimation doubleAnimmation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(5));
-                login.BeginAnimation(Button.OpacityProperty, doubleAnimmation);
+                AddOn.BeginAnimation(Grid.OpacityProperty, doubleAnimmation);
+                DoubleAnimation DSF = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(2));
+                Disiaper.BeginAnimation(Grid.OpacityProperty, DSF);
+                
             }
         }
     }

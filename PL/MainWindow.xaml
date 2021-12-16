@@ -34,26 +34,63 @@
     <Grid>
         <MediaElement x:Name="enter" Source="New Project.avi" HorizontalAlignment="left" VerticalAlignment="Center" Height="400" Width="690" Volume="0" Stretch="Fill" UnloadedBehavior="Manual" Loaded="enter_Loaded"/>
         <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Button  x:Name="login" Content="Login" Style="{StaticResource RoundedButtonStyle}" BorderThickness="0" Grid.Row="1" Margin="306,111,0,36" Foreground="#FFF7F1F1" Width="80" Click="login_Click" Visibility="Visible" Grid.ColumnSpan="2">
-                <Button.Template>
-                    <ControlTemplate TargetType="Button">
-                        <Grid>
-                            <Ellipse Fill="{TemplateBinding Background}" Height="50" Width="50"/>
-                            <ContentPresenter/>
-                        </Grid>
-                    </ControlTemplate>
-                </Button.Template>
-            </Button>
+            <Grid x:Name="AddOn">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Button  x:Name="login" Content="Login" Style="{StaticResource RoundedButtonStyle}" BorderThickness="0" Margin="311,39,0,69" Foreground="#FFF7F1F1" Width="130" Click="login_Click" Visibility="Visible" IsEnabled="False" RenderTransformOrigin="0.519,0.334" Grid.ColumnSpan="2" Grid.Row="1">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Grid>
+                                <Ellipse Fill="{TemplateBinding Background}" Height="50" Width="50"/>
+                                <ContentPresenter/>
+                            </Grid>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+                <!--<TabControl Grid.ColumnSpan="2" Margin="205,71,205,121" Grid.RowSpan="2" Background="{x:Null}">
+                    <TabItem Header="TabItem" Margin="78,-4,-82,1" Foreground="#FFF9F7F7" FontWeight="Bold" FontSize="14" FontFamily="Consolas" Background="{x:Null}" BorderBrush="{x:Null}">
+                        <Grid/>
+                    </TabItem>
+                    <TabItem Header="TabItem" Margin="82,-3,-86,1">
+                        <Grid/>
+                    </TabItem>
+                </TabControl>-->
+            </Grid>
+            <Grid x:Name="Disiaper" Visibility="Visible">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock HorizontalAlignment="Left" Margin="92,143,0,0" Text="{Binding Value, ElementName=PBloding, StringFormat=\{0:#0.0\}%}"  TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FFEEDADA" FontSize="10" FontWeight="Bold" Width="36" Grid.Column="1" Grid.Row="1"/>
+                <Label Content="בס&quot;ד&#xD;&#xA;" Grid.Column="1" HorizontalAlignment="Left" Margin="291,10,0,0" VerticalAlignment="Top" Foreground="#FFF5F4F4" FontWeight="Bold" FontFamily="Consolas"/>
+                <Label Content="Loding.." HorizontalAlignment="Left" Margin="314,116,0,0" VerticalAlignment="Top" Foreground="#FFF5F4F4" FontWeight="Bold" FontFamily="Consolas" Height="25" Grid.ColumnSpan="2" Grid.Row="1"/>
+                <Label Content="בס&quot;ד&#xD;&#xA;" Grid.Column="1" HorizontalAlignment="Left" Margin="291,10,0,0" VerticalAlignment="Top" Foreground="#FFF5F4F4" FontWeight="Bold" FontFamily="Consolas"/>
+                <Label Content="Label" HorizontalAlignment="Left" Margin="330,134,0,0" VerticalAlignment="Top"/>
+                <ProgressBar x:Name="PBloding" HorizontalAlignment="Left" Height="10" Margin="270,146,0,0" VerticalAlignment="Top" Width="150" ValueChanged="PBloding_ValueChanged" Grid.ColumnSpan="2" Grid.Row="1">
+                    <ProgressBar.Foreground>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                            <GradientStop Color="#FFECEBE4"/>
+                            <GradientStop Color="#FFEECE09" Offset="0.526"/>
+                        </LinearGradientBrush>
+                    </ProgressBar.Foreground>
+                    <ProgressBar.Background>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                            <GradientStop Color="#FFF3F3F1" Offset="0.009"/>
+                            <GradientStop Color="#FFEA2218" Offset="0.48"/>
+                        </LinearGradientBrush>
+                    </ProgressBar.Background>
+                </ProgressBar>
+            </Grid>
         </Grid>
-        <ProgressBar x:Name="PBloding" HorizontalAlignment="Center" Height="10" Margin="0,340,0,0" VerticalAlignment="Top" Width="145" ValueChanged="PBloding_ValueChanged"/>
-        <TextBlock HorizontalAlignment="Left" Margin="432,337,0,0" Text="{Binding ElementName=PBloding, Path=Value}" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FFEEDADA" FontSize="10" FontWeight="Bold" Width="17"/>
     </Grid>
 </Window>
