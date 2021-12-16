@@ -42,7 +42,7 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Button  x:Name="ShowDroneList" Content="Login" Style="{StaticResource RoundedButtonStyle}" BorderThickness="0" Grid.Row="1" Margin="92,115,0,32" Foreground="#FFF7F1F1" Width="80" Click="ShowDroneList_Click" Visibility="Visible">
+            <Button  x:Name="login" Content="Login" Style="{StaticResource RoundedButtonStyle}" BorderThickness="0" Grid.Row="1" Margin="306,111,0,36" Foreground="#FFF7F1F1" Width="80" Click="login_Click" Visibility="Visible" Grid.ColumnSpan="2">
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
                         <Grid>
@@ -52,7 +52,8 @@
                     </ControlTemplate>
                 </Button.Template>
             </Button>
-            <Label x:Name="loginlabal" Content="שולי משלוחים בעמ" HorizontalAlignment="Left" Margin="240,46,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="210" Foreground="#FFF9F1F1" FontSize="22" FontFamily="Consolas" FontWeight="Bold"/>
         </Grid>
+        <ProgressBar x:Name="PBloding" HorizontalAlignment="Center" Height="10" Margin="0,340,0,0" VerticalAlignment="Top" Width="145" ValueChanged="PBloding_ValueChanged"/>
+        <TextBlock HorizontalAlignment="Left" Margin="432,337,0,0" Text="{Binding ElementName=PBloding, Path=Value}" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FFEEDADA" FontSize="10" FontWeight="Bold" Width="17"/>
     </Grid>
 </Window>

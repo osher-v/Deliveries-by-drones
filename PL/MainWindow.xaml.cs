@@ -34,7 +34,7 @@ namespace PL
         public BlApi.IBL AccessIbl = BlApi.BlFactory.GetBL();
 
         /// <summary> open the drone list window  </summary>
-        private void ShowDroneList_Click(object sender, RoutedEventArgs e)
+        private void login_Click(object sender, RoutedEventArgs e)
         {
             new DroneListWindow(AccessIbl).Show();
             this.Close(); // we close the login window 
@@ -48,14 +48,18 @@ namespace PL
 
         private void enter_Loaded(object sender, RoutedEventArgs e)
         {
-            DoubleAnimation doubleAnimmation = new DoubleAnimation(0,1, TimeSpan.FromSeconds(10));
-            DoubleAnimation Animmation = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(10));
-
-            ShowDroneList.BeginAnimation(Button.OpacityProperty, doubleAnimmation);
-
-            loginlabal.BeginAnimation(Label.OpacityProperty, Animmation);
+            login.Opacity = 0;
+            DoubleAnimation Animmation = new DoubleAnimation(0, 100, TimeSpan.FromSeconds(10));
+            PBloding.BeginAnimation(ProgressBar.ValueProperty, Animmation);
         }
 
-      
+        private void PBloding_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if(PBloding.Value == 100)
+            {
+                DoubleAnimation doubleAnimmation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(5));
+                login.BeginAnimation(Button.OpacityProperty, doubleAnimmation);
+            }
+        }
     }
 }
