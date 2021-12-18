@@ -84,6 +84,8 @@
                         </ListView>
                     </Grid>
                 </TabItem>
+                
+                <!--מתעסק ברשימת התחנות-->
                 <TabItem>
                     <TabItem.Header>
                         <StackPanel Height="auto"  Width="auto">
@@ -92,12 +94,39 @@
                         </StackPanel>
                     </TabItem.Header>
                     <Grid>
-                        
-                        
-                        
-                        
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="45*"/>
+                            <RowDefinition Height="245*"/>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                        </Grid>
+
+                        <ListView x:Name="listOfBaseStation" ItemsSource="{Binding Items1}" Margin="0,1,0,10" Grid.Row="1" MouseDoubleClick="lists_MouseDoubleClick">
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="{x:Type ListViewItem}">
+                                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                </Style>
+                            </ListView.ItemContainerStyle>
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn DisplayMemberBinding="{Binding Id}" Header="מספר מזהה" />
+                                    <GridViewColumn DisplayMemberBinding="{Binding Model}" Header="מודל" />
+                                    <GridViewColumn DisplayMemberBinding="{Binding MaxWeight}" Header="משקל"  />
+                                    <GridViewColumn DisplayMemberBinding="{Binding BatteryStatus, StringFormat=\{0:#0.0\}%}" Header="סוללה" />
+                                    <GridViewColumn DisplayMemberBinding="{Binding Statuses}" Header="סטטוס" />
+                                    <GridViewColumn DisplayMemberBinding="{Binding CurrentLocation}" Header="  מיקום קו רוחב       מיקום קו אורך"  />
+                                    <GridViewColumn DisplayMemberBinding="{Binding NumberOfLinkedParcel}" Header="חבילה משויכת"   />
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
                     </Grid>
                 </TabItem>
+                
                 <TabItem>
                     <TabItem.Header>
                         <StackPanel  Height="auto" Width="auto">
