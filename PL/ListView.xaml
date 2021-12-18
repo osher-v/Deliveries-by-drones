@@ -3,7 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:PL" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:local="clr-namespace:PL" 
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
           TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         TextElement.FontWeight="Regular"
@@ -13,6 +14,7 @@
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
         WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
         Title="ListView" Height="700" Width="1100">
     <Grid>
         <Grid.RowDefinitions>
@@ -46,9 +48,9 @@
                                         <ColumnDefinition />
                                     </Grid.ColumnDefinitions>
                                     <CheckBox x:Name="OutlinedComboBoxEnabledCheckBox1" IsChecked="True" Margin="45,0,19,8" Content="נעילה" />
-                                    <Button  Content="איפוס" Style="{StaticResource MaterialDesignFlatButton}" HorizontalAlignment="Left"  Grid.Column="1" Margin="61,0,0,0" />
+                                    <Button x:Name="BResetStatus"  Content="איפוס" Style="{StaticResource MaterialDesignFlatButton}" HorizontalAlignment="Left"  Grid.Column="1" Margin="61,0,0,0" Click="BResetStatus_Click" />
                                 </Grid>
-                                <ComboBox x:Name="StatusSelector" Style="{StaticResource MaterialDesignOutlinedComboBox}" IsEnabled="{Binding IsChecked, ElementName=OutlinedComboBoxEnabledCheckBox1}" materialDesign:HintAssist.Hint="סינון רשימת הרחפנים לפי סטטוס" Width="256" />
+                                <ComboBox x:Name="CBStatusSelector" Style="{StaticResource MaterialDesignOutlinedComboBox}" IsEnabled="{Binding IsChecked, ElementName=OutlinedComboBoxEnabledCheckBox1}" materialDesign:HintAssist.Hint="סינון רשימת הרחפנים לפי סטטוס" Width="256" SelectionChanged="CBStatusSelector_SelectionChanged" />
                             </StackPanel>
                             <StackPanel Grid.Column="1">
                                 <Grid>
@@ -57,12 +59,12 @@
                                         <ColumnDefinition />
                                     </Grid.ColumnDefinitions>
                                     <CheckBox x:Name="OutlinedComboBoxEnabledCheckBox2" IsChecked="True" Margin="47,0,0,8" Content="נעילה" />
-                                    <Button  Content="איפוס" Style="{StaticResource MaterialDesignFlatButton}" HorizontalAlignment="Left"  Grid.Column="1" Margin="59,0,0,0" />
+                                    <Button x:Name="BResetWeight" Content="איפוס" Style="{StaticResource MaterialDesignFlatButton}" HorizontalAlignment="Left"  Grid.Column="1" Margin="59,0,0,0" Click="BResetWeight_Click" />
                                 </Grid>
-                                <ComboBox x:Name="WeightSelctor" Style="{StaticResource MaterialDesignOutlinedComboBox}" IsEnabled="{Binding IsChecked, ElementName=OutlinedComboBoxEnabledCheckBox2}" materialDesign:HintAssist.Hint="סינון רשימת הרחפנים לפי סטטוס" Width="256" />
+                                <ComboBox x:Name="CBWeightSelctor" Style="{StaticResource MaterialDesignOutlinedComboBox}" IsEnabled="{Binding IsChecked, ElementName=OutlinedComboBoxEnabledCheckBox2}" materialDesign:HintAssist.Hint="סינון רשימת הרחפנים לפי סטטוס" Width="256" SelectionChanged="CBWeightSelctor_SelectionChanged" />
                             </StackPanel>
                         </Grid>
-                        <ListView x:Name="listss" ItemsSource="{Binding Items1}" Margin="0,1,0,10" Grid.Row="1">
+                        <ListView x:Name="listOfDrones" ItemsSource="{Binding Items1}" Margin="0,1,0,10" Grid.Row="1" MouseDoubleClick="lists_MouseDoubleClick">
                             <ListView.ItemContainerStyle>
                                 <Style TargetType="{x:Type ListViewItem}">
                                     <Setter Property="HorizontalContentAlignment" Value="Center"/>
@@ -70,7 +72,7 @@
                             </ListView.ItemContainerStyle>
                             <ListView.View>
                                 <GridView>
-                                    <GridViewColumn  DisplayMemberBinding="{Binding Id}" Header="מספר מזהה" />
+                                    <GridViewColumn DisplayMemberBinding="{Binding Id}" Header="מספר מזהה" />
                                     <GridViewColumn DisplayMemberBinding="{Binding Model}" Header="מודל" />
                                     <GridViewColumn DisplayMemberBinding="{Binding MaxWeight}" Header="משקל"  />
                                     <GridViewColumn DisplayMemberBinding="{Binding BatteryStatus, StringFormat=\{0:#0.0\}%}" Header="סוללה" />
@@ -85,10 +87,16 @@
                 <TabItem>
                     <TabItem.Header>
                         <StackPanel Height="auto"  Width="auto">
-                            <materialDesign:PackIcon Kind="ClockOutline" Width="24" Height="24" HorizontalAlignment="Center" />
-                            <TextBlock  Text="Recent" HorizontalAlignment="Center" />
+                            <materialDesign:PackIcon Kind="PoliceStation" Width="24" Height="24" HorizontalAlignment="Center" />
+                            <TextBlock  Text="תחנות" HorizontalAlignment="Center" />
                         </StackPanel>
                     </TabItem.Header>
+                    <Grid>
+                        
+                        
+                        
+                        
+                    </Grid>
                 </TabItem>
                 <TabItem>
                     <TabItem.Header>
@@ -114,7 +122,7 @@
                 <Button  x:Name="BAdd"
   Style="{StaticResource MaterialDesignFloatingActionMiniButton}"
   ToolTip="MaterialDesignFloatingActionButton"
-  IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" Margin="933,6,111,34">
+  IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" Margin="933,6,111,34" Click="BAdd_Click">
                     <materialDesign:PackIcon
     Kind="add"
     Height="25"
@@ -123,7 +131,7 @@
                 <Button  x:Name="Bclose"
   Style="{StaticResource MaterialDesignFloatingActionMiniButton}"
   ToolTip="MaterialDesignFloatingActionButton"
-  IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" Margin="1017,6,21,34">
+  IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" Margin="1017,6,21,34" Click="Bclose_Click_1">
                     <materialDesign:PackIcon
     Kind="Close"
     Height="25"

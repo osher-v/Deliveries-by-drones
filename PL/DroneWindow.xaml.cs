@@ -28,7 +28,7 @@ namespace PL
         /// <summary> a bool to help us disable the x bootum  </summary>
         public bool ClosingWindow { get; private set; } = true;
         /// <summary> the calling window, becuse we want to use it here </summary> 
-        private DroneListWindow DroneListWindow;
+        private ListView DroneListWindow;
 
         #region drone to add
         /// <summary>
@@ -36,7 +36,7 @@ namespace PL
         /// </summary>
         /// <param name="bl"></param>
         /// <param name="_DroneListWindow"></param>
-        public DroneWindow(BlApi.IBL bl, DroneListWindow _DroneListWindow)
+        public DroneWindow(BlApi.IBL bl, ListView _DroneListWindow)
         {
             InitializeComponent();
 
@@ -188,7 +188,7 @@ namespace PL
         /// <param name="_DroneListWindow">the call window</param>
         /// <param name="id">the drone id that chosen</param>
         /// <param name="_indexDrone">/indexe of the drone in the list</param>
-        public DroneWindow(BlApi.IBL bl, DroneListWindow _DroneListWindow, DroneToList droneTo, int _indexDrone)
+        public DroneWindow(BlApi.IBL bl, ListView _DroneListWindow, DroneToList droneTo, int _indexDrone)
         {
             InitializeComponent();
             updateDrone.Visibility = Visibility.Visible; // open the grid for the user
