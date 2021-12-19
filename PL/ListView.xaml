@@ -64,7 +64,7 @@
                                 <ComboBox x:Name="CBWeightSelctor" Style="{StaticResource MaterialDesignOutlinedComboBox}" IsEnabled="{Binding IsChecked, ElementName=OutlinedComboBoxEnabledCheckBox2}" materialDesign:HintAssist.Hint="סינון רשימת הרחפנים לפי סטטוס" Width="256" SelectionChanged="CBWeightSelctor_SelectionChanged" />
                             </StackPanel>
                         </Grid>
-                        <ListView x:Name="listOfDrones" ItemsSource="{Binding Items1}" Margin="0,1,0,10" Grid.Row="1" MouseDoubleClick="lists_MouseDoubleClick">
+                        <ListView x:Name="listOfDrones" ItemsSource="{Binding Items1}" Margin="0,1,0,10" Grid.Row="1" MouseDoubleClick="listOfDrones_MouseDoubleClick">
                             <ListView.ItemContainerStyle>
                                 <Style TargetType="{x:Type ListViewItem}">
                                     <Setter Property="HorizontalContentAlignment" Value="Center"/>
@@ -106,7 +106,7 @@
                             </Grid.ColumnDefinitions>
                         </Grid>
 
-                        <ListView x:Name="listOfBaseStation" ItemsSource="{Binding Items1}" Margin="0,1,0,10" Grid.Row="1" MouseDoubleClick="lists_MouseDoubleClick">
+                        <ListView x:Name="listOfBaseStations" ItemsSource="{Binding Items1}" Margin="0,1,0,10" Grid.Row="1" MouseDoubleClick="listOfBaseStations_MouseDoubleClick">
                             <ListView.ItemContainerStyle>
                                 <Style TargetType="{x:Type ListViewItem}">
                                     <Setter Property="HorizontalContentAlignment" Value="Center"/>
@@ -115,35 +115,99 @@
                             <ListView.View>
                                 <GridView>
                                     <GridViewColumn DisplayMemberBinding="{Binding Id}" Header="מספר מזהה" />
-                                    <GridViewColumn DisplayMemberBinding="{Binding Model}" Header="מודל" />
-                                    <GridViewColumn DisplayMemberBinding="{Binding MaxWeight}" Header="משקל"  />
-                                    <GridViewColumn DisplayMemberBinding="{Binding BatteryStatus, StringFormat=\{0:#0.0\}%}" Header="סוללה" />
-                                    <GridViewColumn DisplayMemberBinding="{Binding Statuses}" Header="סטטוס" />
-                                    <GridViewColumn DisplayMemberBinding="{Binding CurrentLocation}" Header="  מיקום קו רוחב       מיקום קו אורך"  />
-                                    <GridViewColumn DisplayMemberBinding="{Binding NumberOfLinkedParcel}" Header="חבילה משויכת"   />
+                                    <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="שם" />
+                                    <GridViewColumn DisplayMemberBinding="{Binding FreeChargeSlots}" Header="מס' עמדות טעינה פנויות"  />
+                                    <GridViewColumn DisplayMemberBinding="{Binding BusyChargeSlots}" Header="מס' עמדות טעינה תפוסות" />
                                 </GridView>
                             </ListView.View>
                         </ListView>
                     </Grid>
                 </TabItem>
                 
+                <!--מטפל ברשימת לקוחות-->
                 <TabItem>
                     <TabItem.Header>
                         <StackPanel  Height="auto" Width="auto">
-                            <materialDesign:PackIcon  Kind="Images"   Width="24"  Height="24" HorizontalAlignment="Center" />
-                            <TextBlock Text="Photos" HorizontalAlignment="Center" />
+                            <materialDesign:PackIcon  Kind="Man"   Width="24"  Height="24" HorizontalAlignment="Center" />
+                            <TextBlock Text="לקוחות" HorizontalAlignment="Center" />
                         </StackPanel>
                     </TabItem.Header>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="45*"/>
+                            <RowDefinition Height="245*"/>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                        </Grid>
+
+                        <ListView x:Name="listOfCustomers" ItemsSource="{Binding Items1}" Margin="0,1,0,10" Grid.Row="1" MouseDoubleClick="listOfCustomers_MouseDoubleClick">
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="{x:Type ListViewItem}">
+                                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                </Style>
+                            </ListView.ItemContainerStyle>
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn DisplayMemberBinding="{Binding Id}" Header="מספר מזהה" />
+                                    <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="שם" />
+                                    <GridViewColumn DisplayMemberBinding="{Binding PhoneNumber}" Header="מס' טלפון"  />
+                                    <GridViewColumn DisplayMemberBinding="{Binding NumberOfPackagesSentAndDelivered}" Header="מס' חבילות ששלח וסופקו" />
+                                    <GridViewColumn DisplayMemberBinding="{Binding NumberOfPackagesSentAndNotYetDelivered}" Header="מס' חבילות ששלח אך עוד לא סופקו" />
+                                    <GridViewColumn DisplayMemberBinding="{Binding NumberOfPackagesWhoReceived}" Header="מס' חבילות שקיבל" />
+                                    <GridViewColumn DisplayMemberBinding="{Binding NumberPackagesOnTheWayToTheCustomer}" Header="מס' חבילות שבדרך אל הלקוח" />
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </Grid>
                 </TabItem>
+
+                <!--מטפל ברשימת חבילות-->
                 <TabItem>
                     <TabItem.Header>
                         <StackPanel  Height="auto" Width="auto">
-                            <materialDesign:PackIcon Kind="MusicBoxMultiple"  Width="24" Height="24" HorizontalAlignment="Center" />
-                            <TextBlock Text="Sounds" HorizontalAlignment="Center" />
+                            <materialDesign:PackIcon Kind="Abacus"  Width="24" Height="24" HorizontalAlignment="Center" />
+                            <TextBlock Text="חבילות" HorizontalAlignment="Center" />
                         </StackPanel>
                     </TabItem.Header>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="45*"/>
+                            <RowDefinition Height="245*"/>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                        </Grid>
+
+                        <ListView x:Name="listOfParcels" ItemsSource="{Binding Items1}" Margin="0,1,0,10" Grid.Row="1" MouseDoubleClick="listOfParcels_MouseDoubleClick">
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="{x:Type ListViewItem}">
+                                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                </Style>
+                            </ListView.ItemContainerStyle>
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn DisplayMemberBinding="{Binding Id}" Header="מספר מזהה" />
+                                    <GridViewColumn DisplayMemberBinding="{Binding CustomerSenderName}" Header=" שם שולח" />
+                                    <GridViewColumn DisplayMemberBinding="{Binding CustomerReceiverName}" Header="שם מקבל"  />
+                                    <GridViewColumn DisplayMemberBinding="{Binding Weight}" Header="משקל" />
+                                    <GridViewColumn DisplayMemberBinding="{Binding Prior}" Header="עדיפות" />
+                                    <GridViewColumn DisplayMemberBinding="{Binding Status}" Header="מצב" />
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </Grid>
                 </TabItem>
             </TabControl>
+            
             <StackPanel/>
         </Grid>
         <StackPanel Background="#FFBFBDBD" Opacity="0.7" Margin="0,586,0,0" Grid.RowSpan="2">
@@ -166,10 +230,8 @@
     Height="25"
     Width="25" VerticalAlignment="Center" />
                 </Button>
-                
+
             </Grid>
-
-
         </StackPanel>
     </Grid>
 </Window>
