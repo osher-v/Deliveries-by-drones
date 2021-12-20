@@ -281,12 +281,21 @@ namespace PL
         private void BAdd_Click(object sender, RoutedEventArgs e)
         {
             // we send ""this"" window becuse we want to use it in the new window
-            new DroneWindow(AccessIbl, this).Show();
-            this.IsEnabled = false;
-            //switch (switch_on)
-            //{
-            //    default:
-            //}
+            switch (TCmenu.SelectedIndex)
+            {
+                case 0:
+                    new DroneWindow(AccessIbl, this).Show();
+                    IsEnabled = false;
+
+                    break;
+                case 1:
+                    new BaseStationWindow(AccessIbl, this).Show();
+                    IsEnabled = false;
+
+                    break;
+                default:
+                    break;
+            }
         }
 
         #region close

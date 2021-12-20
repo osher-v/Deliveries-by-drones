@@ -4,12 +4,56 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="BaseStationWindow" Height="450" Width="800">
+          TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"        Title="BaseStationWindow" Height="450" Width="440">
     <Grid x:Name="MainGrid">
         <Grid x:Name="addBaseStation" Visibility="Visible">
-            
-            
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="30"/>
+
+            </Grid.RowDefinitions>
+            <Grid Background="#FF673AB7" Opacity="0.7" >
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <TextBlock TextWrapping="Wrap" Width="221" FontFamily="Consolas" FontSize="16" FontWeight="Bold" Height="18" Foreground="White"><Run FlowDirection="RightToLeft" Language="he-il" Text="הוספת תחנה "/><LineBreak/><Run FlowDirection="RightToLeft" Language="he-il"/><LineBreak/><Run FlowDirection="RightToLeft" Language="he-il"/></TextBlock>
+                    <Button x:Name="close" Background="{x:Null}" BorderBrush="{x:Null}" >
+                        <materialDesign:PackIcon Kind="Close" Height="25" Width="25" VerticalAlignment="Center" />
+                    </Button>
+                </StackPanel>
+            </Grid>
+            <TextBox x:Name="TBstaitonId" Grid.Row="2" materialDesign:HintAssist.Hint="מספר מזהה" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" HorizontalAlignment="Left" Width="279" TextAlignment="Center" Margin="88,0,0,0" TextChanged="TBstaitonId_TextChanged" KeyDown="TBstaitonId_KeyDown" />
+            <TextBox x:Name="TBstaitonName" Grid.Row="3" materialDesign:HintAssist.Hint="שם התחנה" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" Margin="88,0,73,0" TextAlignment="Center" KeyDown="TBstaitonName_KeyDown"  />
+            <TextBox x:Name="TBstationChargeSlots" Grid.Row="4" materialDesign:HintAssist.Hint="מספר עמדות הטענה בתחנה" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" Margin="88,0,73,0" TextAlignment="Center" KeyDown="TBstationChargeSlots_KeyDown" />
+            <TextBox x:Name="TBstaitonLongtude" Grid.Row="5" materialDesign:HintAssist.Hint="קו אורך" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" Margin="242,0,23,0" TextAlignment="Center" KeyDown="TBstaitonLongtude_KeyDown" />
+            <TextBox x:Name="TBstaitonLattude" Grid.Row="5" materialDesign:HintAssist.Hint="קו רוחב" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" Margin="38,0,227,0" TextAlignment="Center" KeyDown="TBstaitonLattude_KeyDown" />
+
+            <Button Grid.Row="5"
+    Style="{StaticResource MaterialDesignRaisedButton}"
+    materialDesign:ButtonProgressAssist.Value="-1"
+    materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
+    materialDesign:ButtonProgressAssist.IsIndeterminate="True"
+    Content="הוספה למאגר הנתונים"
+    Margin="0,86,0,-2"
+    IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Grid.RowSpan="2" Click="Button_Click"/>
+            <!--<materialDesign:Card materialDesign:ShadowAssist.ShadowDepth="Depth5" Padding="32" Content="" Margin="10,10,10,10" />-->
+
         </Grid>
 
         <Grid x:Name="updateBaseStation" Visibility="Hidden">

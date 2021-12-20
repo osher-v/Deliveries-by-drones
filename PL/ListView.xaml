@@ -22,8 +22,8 @@
             <RowDefinition Height="49*"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
-            <TabControl Style="{StaticResource MaterialDesignNavigatilRailTabControl}" materialDesign:ColorZoneAssist.Mode="Standard" materialDesign:ShadowAssist.ShadowDepth="Depth3" Height="594" VerticalAlignment="Top">
-                <TabItem>
+            <TabControl x:Name="TCmenu" Style="{StaticResource MaterialDesignNavigatilRailTabControl}" materialDesign:ColorZoneAssist.Mode="Standard" materialDesign:ShadowAssist.ShadowDepth="Depth3" Height="594" VerticalAlignment="Top">
+                <TabItem Name="droens">
                     <TabItem.Header>
                         <StackPanel Height="auto" Width="auto">
                             <materialDesign:PackIcon  Kind="Drone" Width="24" Height="24" HorizontalAlignment="Center" />
@@ -86,7 +86,7 @@
                 </TabItem>
                 
                 <!--מתעסק ברשימת התחנות-->
-                <TabItem>
+                <TabItem Name="station">
                     <TabItem.Header>
                         <StackPanel Height="auto"  Width="auto">
                             <materialDesign:PackIcon Kind="PoliceStation" Width="24" Height="24" HorizontalAlignment="Center" />
@@ -125,7 +125,7 @@
                 </TabItem>
                 
                 <!--מטפל ברשימת לקוחות-->
-                <TabItem>
+                <TabItem Name="customer">
                     <TabItem.Header>
                         <StackPanel  Height="auto" Width="auto">
                             <materialDesign:PackIcon  Kind="Man"   Width="24"  Height="24" HorizontalAlignment="Center" />
@@ -167,7 +167,7 @@
                 </TabItem>
 
                 <!--מטפל ברשימת חבילות-->
-                <TabItem>
+                <TabItem Name="parcel">
                     <TabItem.Header>
                         <StackPanel  Height="auto" Width="auto">
                             <materialDesign:PackIcon Kind="Abacus"  Width="24" Height="24" HorizontalAlignment="Center" />
