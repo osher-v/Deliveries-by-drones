@@ -102,5 +102,17 @@ namespace BL
 
             return baseStationBL.FindAll(x => predicate == null ? true : predicate(x));
         }
+
+        public void RemoveStation(int baseStationId)
+        {           
+            try    // throw if the id is nonExsist
+            {
+                AccessIdal.RemoveStation(baseStationId);
+            }
+            catch (DO.NonExistentObjectException)
+            {
+                throw new NonExistentObjectException("BaseStation");
+            }
+        }
     }
 }

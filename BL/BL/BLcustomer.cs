@@ -139,6 +139,18 @@ namespace BL
 
             return CustomerBL.FindAll(x => predicate == null ? true : predicate(x));
         }
+
+        public void RemoveCustomer(int CustomerId)
+        {
+            try    // throw if the id is nonExsist
+            {
+                AccessIdal.RemoveCustomer(CustomerId);
+            }
+            catch (DO.NonExistentObjectException)
+            {
+                throw new NonExistentObjectException("BaseStation");
+            }
+        }
     }
 }
 
