@@ -24,21 +24,19 @@ namespace PL
 
         BlApi.IBL AccessIbl;
         private ListView ListWindow;
-        /// <summary>
-        /// update constractor
-        /// </summary>
-        /// <param name="bl"></param>
-        /// <param name="_DroneListWindow"></param>
-        /// <param name="BaseStationTo"></param>
-        /// <param name="_indexDrone"></param>
-        public BaseStationWindow(BlApi.IBL bl, ListView _ListWindow, BaseStationsToList BaseStationTo, int _indexBaseStation)
+
+
+
+        #region בנאי הוספה 
+        public BaseStationWindow(BlApi.IBL bl, ListView _ListWindow)
         {
             InitializeComponent();
+            addBaseStation.Visibility = Visibility.Visible;
+            Width = 440;
             AccessIbl = bl;
             ListWindow = _ListWindow;
             
         }
-
         private void TBstaitonId_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (true)
@@ -193,13 +191,28 @@ namespace PL
                 e.Handled = true;
             }
         }
-        public BaseStationWindow(BlApi.IBL bl, ListView _ListWindow)
+        #endregion
+
+        public BaseStation baseStation ;
+       
+
+        /// <summary>
+        /// update constractor
+        /// </summary>
+        /// <param name="bl"></param>
+        /// <param name="_DroneListWindow"></param>
+        /// <param name="BaseStationTo"></param>
+        /// <param name="_indexDrone"></param>
+        public BaseStationWindow(BlApi.IBL bl, ListView _ListWindow, BaseStationsToList BaseStationTo, int _indexBaseStation)
         {
             InitializeComponent();
-            Width = 440;
             AccessIbl = bl;
             ListWindow = _ListWindow;
-
+            baseStation = AccessIbl.GetBaseStation(BaseStationTo.Id);
+            TBstationFreeChargeSlotS.Text = (BaseStationTo.BusyChargeSlots+baseStation.FreeChargeSlots).ToString();
+            DataContext = baseStation;
+            listOfDronesInCahrge.ItemsSource = baseStation.DroneInChargsList;
         }
+
     }
 }

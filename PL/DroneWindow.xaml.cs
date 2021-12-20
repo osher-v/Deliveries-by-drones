@@ -52,7 +52,7 @@ namespace PL
 
             // the combobox use it to show the BaseStation ID
             BaseStationID.ItemsSource = AccessIbl.GetBaseStationList(x => x.FreeChargeSlots > 0);
-            BaseStationID.DisplayMemberPath = "Id";          
+            BaseStationID.DisplayMemberPath = "Id";
         }
 
 

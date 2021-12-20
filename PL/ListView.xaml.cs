@@ -53,7 +53,7 @@ namespace PL
             }
 
             //new event that will call evre time that the ObservableCollection didact a change 
-            droneToLists.CollectionChanged += DroneToLists_CollectionChanged;
+            //droneToLists.CollectionChanged += DroneToLists_CollectionChanged;
 
             //display the defult list 
             listOfDrones.ItemsSource = droneToLists;
@@ -139,7 +139,7 @@ namespace PL
             {
                 listOfDrones.ItemsSource = droneToLists.ToList().FindAll(x => x.MaxWeight == (WeightCategories)CBWeightSelctor.SelectedIndex);
             }
-            else //
+            else 
             {
                 listOfDrones.ItemsSource = droneToLists.ToList().FindAll(x => x.Statuses == (DroneStatuses)CBStatusSelector.SelectedIndex && x.MaxWeight == (WeightCategories)CBWeightSelctor.SelectedIndex);
             }
