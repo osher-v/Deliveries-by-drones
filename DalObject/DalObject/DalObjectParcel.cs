@@ -72,5 +72,22 @@ namespace DalObject
             //return DataSource.ParcelsList.FindAll(x => prdicat == null ? true : prdicat(x));
             return DataSource.ParcelsList.Where(x => prdicat == null ? true : prdicat(x));
         }
+
+        public void RemoveParcel(int ParcelId)
+        {
+            int index = DataSource.ParcelsList.FindIndex(x => x.Id == ParcelId);
+            if (index == -1)
+            {
+                throw new NonExistentObjectException();
+            }
+            DataSource.ParcelsList.RemoveAt(index); //else
+
+            ////this Remove fanction return true if item is successfully removed; otherwise, false. This method also returns false if item was not found in the List<T>.
+            //bool successOperation = DataSource.ParcelsList.Remove(Parcel);
+            //if (!successOperation)
+            //{
+            //    throw new NonExistentObjectException();
+            //}
+        }
     }
 }

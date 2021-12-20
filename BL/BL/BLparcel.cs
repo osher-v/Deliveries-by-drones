@@ -320,5 +320,17 @@ namespace BL
 
             return parcels.FindAll(x => predicate == null ? true : predicate(x));
         }
+
+        public void RemoveParcel(int ParcelId)
+        {
+            try    // throw if the id is nonExsist
+            {
+                AccessIdal.RemoveParcel(ParcelId);
+            }
+            catch (DO.NonExistentObjectException)
+            {
+                throw new NonExistentObjectException("BaseStation");
+            }
+        }
     }
 }

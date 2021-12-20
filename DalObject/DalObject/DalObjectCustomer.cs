@@ -44,5 +44,22 @@ namespace DalObject
             //return DataSource.CustomersList.Take(DataSource.CustomersList.Count).ToList();
             return DataSource.CustomersList.Select(item => item);
         }
+
+        public void RemoveCustomer(int CustomerId)
+        {
+            int index = DataSource.CustomersList.FindIndex(x => x.Id == CustomerId);
+            if (index == -1)
+            {
+                throw new NonExistentObjectException();
+            }
+            DataSource.CustomersList.RemoveAt(index); //else
+
+            ////this Remove fanction return true if item is successfully removed; otherwise, false. This method also returns false if item was not found in the List<T>.
+            //bool successOperation = DataSource.CustomersList.Remove(Customer);
+            //if (!successOperation)
+            //{
+            //    throw new NonExistentObjectException();
+            //}
+        }
     }
 }

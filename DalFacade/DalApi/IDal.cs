@@ -171,8 +171,36 @@ namespace DalApi
         /// </summary>
         /// <param name="prdicat"></param>
         /// <returns>returns a new List that hold all the data from the reqsted List</returns>
-        public IEnumerable<DroneCharge> GetBaseChargeList(Predicate<DroneCharge> prdicat = null);  
+        public IEnumerable<DroneCharge> GetBaseChargeList(Predicate<DroneCharge> prdicat = null);
         #endregion Functions for listing options
+
+        #region Functions for remove options
+
+        /// <summary>
+        /// The function removes the Station from the list.
+        /// </summary>
+        /// <param name="baseStationId"></param>
+        public void RemoveStation(int baseStationId);
+
+        /// <summary>
+        /// The function removes the Drone from the list.
+        /// </summary>
+        /// <param name="DroneId"></param>
+        public void RemoveDrone(int DroneId);
+
+        /// <summary>
+        /// The function removes the Customer from the list.
+        /// </summary>
+        /// <param name="CustomerId"></param>
+        public void RemoveCustomer(int CustomerId);
+
+        /// <summary>
+        /// The function removes the Parcel from the list.
+        /// </summary>
+        /// <param name="ParcelId"></param>
+        /// <returns></returns>
+        public void RemoveParcel(int ParcelId);
+        #endregion Functions for remove options
 
         public double[] RequestPowerConsumptionByDrone();
     }
