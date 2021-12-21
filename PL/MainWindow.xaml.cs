@@ -47,7 +47,8 @@ namespace PL
                     
                     break;
                 case "כניסת לקוח":
-                  
+                    new ClientWindow().Show();
+                    this.Close(); // we close the login window
                     break;
                 default:
                   

@@ -12,7 +12,6 @@
         TextElement.FontSize="13"
         TextOptions.TextFormattingMode="Ideal"
         TextOptions.TextRenderingMode="Auto"
-        Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
         Title="Login Window" Height="400" Width="690" >
     <!--control the style for the buotons-->
@@ -40,6 +39,9 @@
             </Style.Resources>
         </Style>
     </Window.Resources>
+    <Window.Background>
+        <ImageBrush/>
+    </Window.Background>
 
     <Grid>
         <MediaElement x:Name="enter" Source="New Project.avi" HorizontalAlignment="left" VerticalAlignment="Center" Height="400" Width="690" Volume="0" Stretch="Fill" UnloadedBehavior="Manual" Loaded="enter_Loaded"/>
