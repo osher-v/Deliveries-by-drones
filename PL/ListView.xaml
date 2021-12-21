@@ -170,7 +170,7 @@
                 <TabItem Name="parcel">
                     <TabItem.Header>
                         <StackPanel  Height="auto" Width="auto">
-                            <materialDesign:PackIcon Kind="Abacus"  Width="24" Height="24" HorizontalAlignment="Center" />
+                            <materialDesign:PackIcon Kind="Gift"  Width="24" Height="24" HorizontalAlignment="Center" />
                             <TextBlock Text="חבילות" HorizontalAlignment="Center" />
                         </StackPanel>
                     </TabItem.Header>

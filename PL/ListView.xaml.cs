@@ -22,6 +22,7 @@ namespace PL
     /// </summary>
     public partial class ListView : Window
     {
+        //Access object to the BL class
         public BlApi.IBL AccessIbl = BlApi.BlFactory.GetBL();
 
         /// <summary> crate a observabs list of type IBL.BO.object (to see changes in live) </summary>
@@ -53,7 +54,7 @@ namespace PL
             }
 
             //new event that will call evre time that the ObservableCollection didact a change 
-            //droneToLists.CollectionChanged += DroneToLists_CollectionChanged;
+            droneToLists.CollectionChanged += DroneToLists_CollectionChanged;
 
             //display the defult list 
             listOfDrones.ItemsSource = droneToLists;
@@ -69,7 +70,7 @@ namespace PL
             }
 
             //new event that will call evre time that the ObservableCollection didact a change 
-            //BaseStationToLists.CollectionChanged += BaseStationToLists_CollectionChanged;
+            BaseStationToLists.CollectionChanged += BaseStationToLists_CollectionChanged;
 
             //display the defult list 
             listOfBaseStations.ItemsSource = BaseStationToLists;
@@ -123,6 +124,17 @@ namespace PL
         }
 
         /// <summary>
+        /// /// a new event that we crate in the intaklizer :BaseStationToLists_CollectionChanged:
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>   
+        private void BaseStationToLists_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            //display the defult list 
+            listOfBaseStations.ItemsSource = BaseStationToLists;
+        }
+
+        /// <summary>
         /// help fanction to choose what to show on the user side accordingly to user cohises ( bonous)
         /// </summary>
         public void StatusSelectorChanged()
@@ -139,7 +151,7 @@ namespace PL
             {
                 listOfDrones.ItemsSource = droneToLists.ToList().FindAll(x => x.MaxWeight == (WeightCategories)CBWeightSelctor.SelectedIndex);
             }
-            else 
+            else //If 2 filters are enabled.
             {
                 listOfDrones.ItemsSource = droneToLists.ToList().FindAll(x => x.Statuses == (DroneStatuses)CBStatusSelector.SelectedIndex && x.MaxWeight == (WeightCategories)CBWeightSelctor.SelectedIndex);
             }
@@ -209,8 +221,6 @@ namespace PL
             }
         }
 
-
-
         /// <summary>
         /// open BaseStation window in acction when didect double clik
         /// </summary>
@@ -222,7 +232,7 @@ namespace PL
             if (baseStations != null)// if the user click on empty space in the view list we donr open anything
             {
                 int indexBaseStation = listOfBaseStations.SelectedIndex;
-                //this.IsEnabled = false; // to privent anotur click on the list window chosse we donr want alot of windows togter.
+                this.IsEnabled = false; // to privent anotur click on the list window chosse we donr want alot of windows togter.
                 new BaseStationWindow(AccessIbl, this, baseStations, indexBaseStation).Show();//open the drone windowon acction
             }
         }
@@ -258,19 +268,6 @@ namespace PL
                 new ParcelWindow(AccessIbl, this, parcel, indexParcel).Show();//open the drone windowon acction
             }
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
         /// <summary>
