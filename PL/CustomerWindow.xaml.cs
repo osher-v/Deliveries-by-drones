@@ -257,7 +257,17 @@ namespace PL
 
         private void TBUpdateCustomerPhoneNumber_KeyDown(object sender, KeyEventArgs e)
         {
-
+            if (e.Key < Key.D0 || e.Key > Key.D9)
+            {
+                if (e.Key < Key.NumPad0 || e.Key > Key.NumPad9) // we want keys from the num pud too
+                {
+                    e.Handled = true;
+                }
+                else
+                {
+                    e.Handled = false;
+                }
+            }
         }
 
         /// <summary>
@@ -267,7 +277,27 @@ namespace PL
         /// <param name="e"></param>
         private void BUpdate_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                AccessIbl.UpdateCustomer(customer.Id, TBUpdateCustomerName.Text, TBUpdateCustomerPhoneNumber.Text);
+                MessageBoxResult result = MessageBox.Show("The operation was successful", "info", MessageBoxButton.OK, MessageBoxImage.Information);
+                switch (result)
+                {
+                    case MessageBoxResult.OK:
+                        ListWindow.CustomerToLists[indexSelected] = AccessIbl.GetCustomerList().FirstOrDefault(x => x.Id == customer.Id);//עדכון המשקיף
 
+                        ListWindow.IsEnabled = true;
+                        ClosingWindow = false;
+                        Close();
+                        break;
+                    default:
+                        break;
+                }
+            }
+            catch 
+            {
+                MessageBox.Show("ERROR");    
+            }
         }
     }
 }

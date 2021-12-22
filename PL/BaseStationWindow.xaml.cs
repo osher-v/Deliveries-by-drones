@@ -205,6 +205,7 @@ namespace PL
         public BaseStation baseStation;
 
         public int indexSelected;
+
         #region בנאי לעדכון
         /// <summary>
         /// update constractor
@@ -233,8 +234,6 @@ namespace PL
             listOfDronesInCahrge.ItemsSource = baseStation.DroneInChargsList;
         }
 
-
-
         /// <summary>
         /// The function handles adding a station.
         /// </summary>
@@ -242,7 +241,6 @@ namespace PL
         /// <param name="e"></param>
         private void BUpdate_Click(object sender, RoutedEventArgs e)
         {
-
             try
             {
                 AccessIbl.UpdateBaseStaison(baseStation.Id, TBUpdateStaitonName.Text, TBstationFreeChargeSlotS.Text);
