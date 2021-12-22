@@ -86,7 +86,7 @@ namespace PL
             }
 
             //new event that will call evre time that the ObservableCollection didact a change 
-            //BaseStationToLists.CollectionChanged += BaseStationToLists_CollectionChanged;
+            CustomerToLists.CollectionChanged += CustomerToLists_CollectionChanged;
 
             //display the defult list 
             listOfCustomers.ItemsSource = CustomerToLists;
@@ -132,6 +132,17 @@ namespace PL
         {
             //display the defult list 
             listOfBaseStations.ItemsSource = BaseStationToLists;
+        }
+
+        /// <summary>
+        /// /// a new event that we crate in the intaklizer :CustomerToLists_CollectionChanged:
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>   
+        private void CustomerToLists_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            //display the defult list 
+            listOfCustomers.ItemsSource = CustomerToLists;
         }
 
         /// <summary>
@@ -287,6 +298,16 @@ namespace PL
                     break;
                 case 1:
                     new BaseStationWindow(AccessIbl, this).Show();
+                    IsEnabled = false;
+
+                    break;
+                case 2:
+                    new CustomerWindow(AccessIbl, this).Show();
+                    IsEnabled = false;
+
+                    break;
+                case 3:
+                    new ParcelWindow(AccessIbl, this).Show();
                     IsEnabled = false;
 
                     break;

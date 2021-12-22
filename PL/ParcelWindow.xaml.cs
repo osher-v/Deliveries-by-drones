@@ -20,7 +20,12 @@ namespace PL
     /// </summary>
     public partial class ParcelWindow : Window
     {
-        public ParcelWindow(BlApi.IBL bl, ListView _DroneListWindow, ParcelToList parcelTo, int _indexParcel)
+        public ParcelWindow(BlApi.IBL bl, ListView _ListWindow)
+        {
+            InitializeComponent();
+        }
+
+        public ParcelWindow(BlApi.IBL bl, ListView _ListWindow, ParcelToList parcelTo, int _indexParcel)
         {
             InitializeComponent();
         }
