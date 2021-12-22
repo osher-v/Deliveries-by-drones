@@ -259,7 +259,7 @@ namespace PL
             if (customer != null)// if the user click on empty space in the view list we donr open anything
             {
                 int indexCustomer = listOfCustomers.SelectedIndex;
-                //this.IsEnabled = false; // to privent anotur click on the list window chosse we donr want alot of windows togter.
+                this.IsEnabled = false; // to privent anotur click on the list window chosse we donr want alot of windows togter.
                 new CustomerWindow(AccessIbl, this, customer, indexCustomer).Show();//open the drone windowon acction
             }
         }

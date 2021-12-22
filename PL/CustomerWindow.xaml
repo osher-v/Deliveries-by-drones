@@ -14,7 +14,7 @@
         FontFamily="{DynamicResource MaterialDesignFont}"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"       
-        Title="BaseStationWindow" Height="720" Width="680">
+        Title="BaseStationWindow" Height="720" Width="780">
     <Grid>
         <Grid x:Name="addCustomer" Visibility="Hidden">
             <Grid.ColumnDefinitions>
@@ -67,29 +67,28 @@
             <Grid Background="#FF673AB7" Opacity="0.7" Margin="0,-6,0,0" Grid.ColumnSpan="2" >
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                     <TextBlock TextWrapping="Wrap" Width="340" FontFamily="Consolas" FontSize="16" FontWeight="Bold" Height="18" Foreground="White"><Run FlowDirection="RightToLeft" Language="he-il" Text="עדכון פרטי לקוח "/><LineBreak/><Run FlowDirection="RightToLeft" Language="he-il"/><LineBreak/><Run FlowDirection="RightToLeft"/><LineBreak/><Run FlowDirection="RightToLeft"/></TextBlock>
-                    <Button x:Name="closeUpdate" Background="{x:Null}" BorderBrush="{x:Null}" >
+                    <Button x:Name="closeUpdate" Background="{x:Null}" BorderBrush="{x:Null}" Click="closeUpdate_Click" >
                         <materialDesign:PackIcon Kind="Close" Height="25" Width="25" VerticalAlignment="Center" />
                     </Button>
                 </StackPanel>
             </Grid>
-            <!--<TextBox x:Name="TBUpdateStaitonI" Grid.Row="2" materialDesign:HintAssist.Hint="מספר מזהה" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" HorizontalAlignment="Left" Width="279" TextAlignment="Center" Margin="88,0,0,0" TextChanged="TBstaitonId_TextChanged" KeyDown="TBstaitonId_KeyDown" />-->
-            <TextBox x:Name="TBUpdateCustomerName" Text="{Binding Path=Name}" Grid.Row="2" Grid.Column="1" materialDesign:HintAssist.Hint="שם הלקוח" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" Margin="80,0,81,0" TextAlignment="Center" Height="37"  />
-            <TextBox x:Name="TBUpdateCustomerPhoneNumber" Text="{Binding Path=PhoneNumber}" Grid.Row="3"  Grid.Column="1" materialDesign:HintAssist.Hint="מספר טלפון לקוח" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" Margin="80,0,80,0" TextAlignment="Center" Height="34" />
-            <!--<TextBox x:Name="TBstaitonLongtud" Grid.Row="5" materialDesign:HintAssist.Hint="קו אורך" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" Margin="242,0,23,0" TextAlignment="Center" KeyDown="TBstaitonLongtude_KeyDown" />
-            <TextBox x:Name="TBstaitonLattud" Grid.Row="5" materialDesign:HintAssist.Hint="קו רוחב" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" Margin="38,0,227,0" TextAlignment="Center" KeyDown="TBstaitonLattude_KeyDown" />-->
+            
+            <TextBox x:Name="TBUpdateCustomerName" Text="{Binding Path=Name}" Grid.Row="2" Grid.Column="1" materialDesign:HintAssist.Hint="שם הלקוח" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" Margin="80,0,81,0" TextAlignment="Center" Height="37" MaxLength="10"  />
+            <TextBox x:Name="TBUpdateCustomerPhoneNumber" Text="{Binding Path=PhoneNumber}" Grid.Row="3"  Grid.Column="1" materialDesign:HintAssist.Hint="מספר טלפון לקוח" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" Margin="80,0,80,0" TextAlignment="Center" Height="34"  MaxLength="12" KeyDown="TBUpdateCustomerPhoneNumber_KeyDown"/>
+            
             <Grid x:Name="Cards" Grid.Row="4" Margin="0,22,0,5">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <materialDesign:Card   Background="{DynamicResource PrimaryHueLightBrush}" Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"   
-                                      UniformCornerRadius="6" Margin="10,-11,-324,10" >
+                                      UniformCornerRadius="6" Margin="10,-11,-371,10" >
                     <Grid Margin="0,21,0,6" >
                         <Grid.RowDefinitions>
                             <RowDefinition Height="37*"/>
                             <RowDefinition Height="122*"/>
                         </Grid.RowDefinitions>
                         <TextBlock Grid.Row="0" Text="משלוחים יוצאים" Margin="152,-11,124,22" FontWeight="Bold" FontSize="14" TextAlignment="Center" ></TextBlock>
-                        <ListView x:Name="listOfDronesInCahrge" ItemsSource="{Binding Items1}" Margin="0,-3,10,10" FontSize="12" Grid.RowSpan="2">
+                        <ListView x:Name="listOfCustomeSend" ItemsSource="{Binding Items1}" Margin="0,-3,10,10" FontSize="12" Grid.RowSpan="2">
                             <ListView.ItemContainerStyle>
                                 <Style TargetType="{x:Type ListViewItem}">
                                     <Setter Property="HorizontalContentAlignment" Value="Center"/>
@@ -98,24 +97,25 @@
                             <ListView.View>
                                 <GridView>
                                     <GridViewColumn DisplayMemberBinding="{Binding Id}" Header="מספר מזהה" />
-                                    <GridViewColumn DisplayMemberBinding="{Binding Model}" Header="דחיפות"  Width="105"/>
-                                    <GridViewColumn DisplayMemberBinding="{Binding MaxWeight}" Header="משקל"  />
-                                    <GridViewColumn DisplayMemberBinding="{Binding Statuses}" Header="סטטוס" />
-                                    <GridViewColumn DisplayMemberBinding="{Binding CurrentLocation}" Header="  מיקום קו רוחב       מיקום קו אורך" Width="250"  />
+                                    <GridViewColumn DisplayMemberBinding="{Binding Prior}" Header="דחיפות"  Width="105"/>
+                                    <GridViewColumn DisplayMemberBinding="{Binding Weight}" Header="משקל"  />
+                                    <GridViewColumn DisplayMemberBinding="{Binding Status}" Header="סטטוס" />
+                                    <GridViewColumn DisplayMemberBinding="{Binding OtherCustomer.Id}" Header=" מס' מזהה יעד" Width="150" />
+                                    <GridViewColumn DisplayMemberBinding="{Binding OtherCustomer.Name}" Header=" שם יעד" />
                                 </GridView>
                             </ListView.View>
                         </ListView>
                     </Grid>
                 </materialDesign:Card>
                 <materialDesign:Card   Background="{DynamicResource PrimaryHueLightBrush}" Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"   
-                    UniformCornerRadius="6" Margin="10,203,-324,-204" >
+                    UniformCornerRadius="6" Margin="10,203,-371,-204" >
                     <Grid Margin="0,21,0,6" >
                         <Grid.RowDefinitions>
                             <RowDefinition Height="37*"/>
                             <RowDefinition Height="122*"/>
                         </Grid.RowDefinitions>
                         <TextBlock Grid.Row="0" Text="משלוחים נכנסים" Margin="152,-11,124,22" FontWeight="Bold" FontSize="14" TextAlignment="Center" />
-                        <ListView x:Name="listOfDronesInCahrge1" ItemsSource="{Binding Items1}" Margin="0,-3,10,10" FontSize="12" Grid.RowSpan="2">
+                        <ListView x:Name="listOfCustomerReceive" ItemsSource="{Binding Items1}" Margin="0,-3,10,10" FontSize="12" Grid.RowSpan="2">
                             <ListView.ItemContainerStyle>
                                 <Style TargetType="{x:Type ListViewItem}">
                                     <Setter Property="HorizontalContentAlignment" Value="Center"/>
@@ -124,10 +124,11 @@
                             <ListView.View>
                                 <GridView>
                                     <GridViewColumn DisplayMemberBinding="{Binding Id}" Header="מספר מזהה" />
-                                    <GridViewColumn DisplayMemberBinding="{Binding Model}" Header="דחיפות"  Width="105"/>
-                                    <GridViewColumn DisplayMemberBinding="{Binding MaxWeight}" Header="משקל"  />
-                                    <GridViewColumn DisplayMemberBinding="{Binding Statuses}" Header="סטטוס" />
-                                    <GridViewColumn DisplayMemberBinding="{Binding CurrentLocation}" Header="  מיקום קו רוחב       מיקום קו אורך" Width="250"  />
+                                    <GridViewColumn DisplayMemberBinding="{Binding Prior}" Header="דחיפות"  Width="105"/>
+                                    <GridViewColumn DisplayMemberBinding="{Binding Weight}" Header="משקל"  />
+                                    <GridViewColumn DisplayMemberBinding="{Binding Status}" Header="סטטוס" />
+                                    <GridViewColumn DisplayMemberBinding="{Binding OtherCustomer.Id}" Header=" מס' מזהה שולח" Width="150" />
+                                    <GridViewColumn DisplayMemberBinding="{Binding OtherCustomer.Name}" Header=" שם שולח" />
                                 </GridView>
                             </ListView.View>
                         </ListView>
@@ -136,7 +137,7 @@
             </Grid>
             <Button x:Name="BUpdate" Grid.Row="6" Grid.ColumnSpan="2" Style="{StaticResource MaterialDesignRaisedButton}" materialDesign:ButtonProgressAssist.Value="-1" materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
              materialDesign:ButtonProgressAssist.IsIndeterminate="True" Content="עדכון לקוח" Margin="0,17,0,0"
-             IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" />
+             IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Click="BUpdate_Click" />
 
             <Grid Grid.Row="1" Grid.Column="1" Margin="0,0,0,3">
                 <TextBlock Text=":מספר הלקוח" TextWrapping="Wrap" Margin="219,39,10,10" FontWeight="Bold" FontFamily="Consolas" FontSize="14" />
@@ -144,7 +145,7 @@
             </Grid>
             <Button x:Name="BDelete" Grid.Row="1" Grid.Column="0" Style="{StaticResource MaterialDesignRaisedButton}" materialDesign:ButtonProgressAssist.Value="-1" materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
                 materialDesign:ButtonProgressAssist.IsIndeterminate="True" Content="מחיקת לקוח" Margin="74,33,74,6"
-                IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" Background="#FFFF0909" BorderBrush="#FFF14A2F" FontSize="12" FontWeight="Bold"  />
+                IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" Background="#FFFF0909" BorderBrush="#FFF14A2F" FontSize="12" FontWeight="Bold" Click="BDelete_Click"  />
             <materialDesign:Card Grid.Column="0" Background="{DynamicResource PrimaryHueLightBrush}" Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}" Padding="8" 
                     UniformCornerRadius="6" Margin="49,18,49,12" Grid.RowSpan="2" Grid.Row="2">
                 <Grid>
@@ -153,7 +154,7 @@
                         <RowDefinition Height="35*"/>
                     </Grid.RowDefinitions>
                     <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Height="20" Width="184" TextAlignment="Center" FontWeight="Bold"><Run FlowDirection="RightToLeft" Language="he-il" Text="מיקום"/></TextBlock>
-                    <TextBlock x:Name="TBlocation" HorizontalAlignment="Center" Grid.Row="1" Text="{Binding Path=LocationOfCustomer}" TextWrapping="Wrap" VerticalAlignment="Center" Height="88" Width="128" FontSize="14" FontWeight="Bold" FontFamily="Consolas" TextAlignment="Center"/>
+                    <TextBlock x:Name="TBlocation" HorizontalAlignment="Center" Grid.Row="1" Text="{Binding Path=LocationOfCustomer}" TextWrapping="Wrap" VerticalAlignment="Center" Height="40" Width="242" FontSize="14" FontWeight="Bold" FontFamily="Consolas" TextAlignment="Center"/>
                 </Grid>
             </materialDesign:Card>
 
