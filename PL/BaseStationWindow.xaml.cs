@@ -43,19 +43,9 @@ namespace PL
 
             addBaseStation.Visibility = Visibility.Visible;
 
-            Width = 440; //לכאורה זה אותו גודל
-
             AccessIbl = bl;
 
-            ListWindow = _ListWindow;        
-        }
-
-        private void TBstaitonId_TextChanged(object sender, TextChangedEventArgs e)//מה זה?????????????????????
-        {
-            if (true)
-            {
-
-            }
+            ListWindow = _ListWindow;
         }
 
         /// <summary>
@@ -66,7 +56,7 @@ namespace PL
         private void BAdd_Click(object sender, RoutedEventArgs e)
         {
             //Check that all fields are filled.
-            if (TBstaitonId.Text.Length!=0 && TBstaitonName.Text.Length != 0 && TBstationChargeSlots.Text.Length != 0 && TBstaitonLongtude.Text.Length != 0 && TBstaitonLattude.Text.Length != 0)
+            if (TBstaitonId.Text.Length != 0 && TBstaitonName.Text.Length != 0 && TBstationChargeSlots.Text.Length != 0 && TBstaitonLongtude.Text.Length != 0 && TBstaitonLattude.Text.Length != 0)
             {
                 //Check that the location does not exceed the boundaries of Gush Dan.
                 if (!(double.Parse(TBstaitonLongtude.Text) < 31.8 || double.Parse(TBstaitonLongtude.Text) > 32.2 || double.Parse(TBstaitonLattude.Text) < 34.6 || double.Parse(TBstaitonLattude.Text) > 35.1))
@@ -171,7 +161,7 @@ namespace PL
         {
             if (e.Key < Key.D0 || e.Key > Key.D9)
             {
-                if (e.Key < Key.NumPad0 || e.Key > Key.NumPad9 ) // we want keys from the num pud too
+                if (e.Key < Key.NumPad0 || e.Key > Key.NumPad9) // we want keys from the num pud too
                 {
                     if (e.Key == Key.Decimal)
                         e.Handled = false;
@@ -215,7 +205,7 @@ namespace PL
         public BaseStation baseStation;
 
         public int indexSelected;
-
+        #region בנאי לעדכון
         /// <summary>
         /// update constractor
         /// </summary>
@@ -252,7 +242,7 @@ namespace PL
         /// <param name="e"></param>
         private void BUpdate_Click(object sender, RoutedEventArgs e)
         {
-           
+
             try
             {
                 AccessIbl.UpdateBaseStaison(baseStation.Id, TBUpdateStaitonName.Text, TBstationFreeChargeSlotS.Text);
@@ -261,7 +251,6 @@ namespace PL
                 {
                     case MessageBoxResult.OK:
                         ListWindow.BaseStationToLists[indexSelected] = AccessIbl.GetBaseStationList().FirstOrDefault(x => x.Id == baseStation.Id);//עדכון המשקיף
-
                         ListWindow.IsEnabled = true;
                         ClosingWindow = false;
                         Close();
@@ -269,7 +258,7 @@ namespace PL
                     default:
                         break;
                 }
-            }      
+            }
             catch (MoreDroneInChargingThanTheProposedChargingStations ex)
             {
                 MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -312,5 +301,30 @@ namespace PL
             Close();
         }
         #endregion close  
+        /// <summary>
+        /// this fanction remove and delete the chosen base station (and ask before doing it)
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BDelete_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show("האם אתה בטוח שאתה רוצה לבצע מחיקה", "מצב מחיקה", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            switch (result)
+            {
+                case MessageBoxResult.Yes:
+                    AccessIbl.RemoveStation(baseStation);// accses to delete from the bl list 
+                    ListWindow.BaseStationToLists.RemoveAt(indexSelected);// we go to the index to delete from the observer 
+                    ListWindow.IsEnabled = true;
+                    ClosingWindow = false;// allowd to close the window 
+                    Close();
+                    ListWindow.StatusSelectorChanged();// update the displey of the list view to observ the changes
+                    break;
+                case MessageBoxResult.No: // in case that the user dont want to delete he have the option to abort withot any change 
+                    break;
+                default:
+                    break;
+            }
+        }
+        #endregion
     }
 }

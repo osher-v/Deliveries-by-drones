@@ -103,11 +103,16 @@ namespace BL
             return baseStationBL.FindAll(x => predicate == null ? true : predicate(x));
         }
 
-        public void RemoveStation(int baseStationId)
+        public void RemoveStation(BaseStation baseStation)
         {           
             try    // throw if the id is nonExsist
             {
-                AccessIdal.RemoveStation(baseStationId);
+                AccessIdal.RemoveStation(baseStation.Id);
+                foreach (var item in baseStation.DroneInChargsList)
+                {
+                    DronesBL.Find(x => x.Id == item.Id).Statuses = DroneStatuses.free;
+                }
+               
             }
             catch (DO.NonExistentObjectException)
             {

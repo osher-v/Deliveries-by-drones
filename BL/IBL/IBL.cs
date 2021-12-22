@@ -173,7 +173,7 @@ namespace BlApi
         /// The function removes the Station from the list.
         /// </summary>
         /// <param name="baseStationId"></param>
-        public void RemoveStation(int baseStationId);
+        public void RemoveStation(BaseStation baseStationId);
 
         /// <summary>
         /// The function removes the Drone from the list.

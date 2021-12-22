@@ -24,5 +24,35 @@ namespace PL
         {
             InitializeComponent();
         }
+        private void BAdd_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+        private void BcloseAdd_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void TBcustomerId_KeyDown(object sender, KeyEventArgs e)
+        {
+
+        }
+
+        private void TBcustomerPhoneNumber_KeyDown(object sender, KeyEventArgs e)
+        {
+
+        }
+
+        private void TBcustomerLattude_KeyDown(object sender, KeyEventArgs e)
+        {
+
+        }
+
+        private void TBcustomerLongtude_KeyDown(object sender, KeyEventArgs e)
+        {
+
+        }
+
+       
     }
 }
