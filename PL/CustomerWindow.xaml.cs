@@ -35,6 +35,8 @@ namespace PL
         {
             InitializeComponent();
 
+            Width = 440;
+
             addCustomer.Visibility = Visibility.Visible;
 
             AccessIbl = bl;

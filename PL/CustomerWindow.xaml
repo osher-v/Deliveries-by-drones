@@ -37,7 +37,7 @@
                     </Button>
                 </StackPanel>
             </Grid>
-            <TextBox x:Name="TBcustomerId" Grid.Row="2" materialDesign:HintAssist.Hint="מספר מזהה" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" HorizontalAlignment="Left" Width="279" TextAlignment="Center" Margin="88,0,0,0"  Height="34" MaxLength="9" KeyDown="TBcustomerId_KeyDown" />
+            <TextBox x:Name="TBcustomerId" Grid.Row="2" materialDesign:HintAssist.Hint="מספר מזהה" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center"   TextAlignment="Center" Margin="88,0,73,0"  Height="34" MaxLength="9" KeyDown="TBcustomerId_KeyDown" />
             <TextBox x:Name="TBcustomerName" Grid.Row="3" materialDesign:HintAssist.Hint="שם לקוח" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" Margin="88,0,73,0" TextAlignment="Center"  Height="34" MaxLength="10"  />
             <TextBox x:Name="TBcustomerPhoneNumber" Grid.Row="4" materialDesign:HintAssist.Hint="מספר טלפון" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" Margin="88,0,73,0" TextAlignment="Center"  Height="34" MaxLength="12" KeyDown="TBcustomerPhoneNumber_KeyDown" />
             <TextBox x:Name="TBcustomerLongtude" Grid.Row="5" materialDesign:HintAssist.Hint="קו אורך" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" Margin="242,0,23,0" TextAlignment="Center"  Height="34" KeyDown="TBcustomerLongtude_KeyDown" />
@@ -74,7 +74,7 @@
             </Grid>
             <!--<TextBox x:Name="TBUpdateStaitonI" Grid.Row="2" materialDesign:HintAssist.Hint="מספר מזהה" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" HorizontalAlignment="Left" Width="279" TextAlignment="Center" Margin="88,0,0,0" TextChanged="TBstaitonId_TextChanged" KeyDown="TBstaitonId_KeyDown" />-->
             <TextBox x:Name="TBUpdateCustomerName" Text="{Binding Path=Name}" Grid.Row="2" Grid.Column="1" materialDesign:HintAssist.Hint="שם הלקוח" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" Margin="80,0,81,0" TextAlignment="Center" Height="37"  />
-            <TextBox x:Name="TBUpdateCustomerPhoneNUMBER" Text="" Grid.Row="3"  Grid.Column="1" materialDesign:HintAssist.Hint="מספר טלפון לקוח" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" Margin="80,0,80,0" TextAlignment="Center" Height="34" />
+            <TextBox x:Name="TBUpdateCustomerPhoneNumber" Text="{Binding Path=PhoneNumber}" Grid.Row="3"  Grid.Column="1" materialDesign:HintAssist.Hint="מספר טלפון לקוח" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" Margin="80,0,80,0" TextAlignment="Center" Height="34" />
             <!--<TextBox x:Name="TBstaitonLongtud" Grid.Row="5" materialDesign:HintAssist.Hint="קו אורך" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" Margin="242,0,23,0" TextAlignment="Center" KeyDown="TBstaitonLongtude_KeyDown" />
             <TextBox x:Name="TBstaitonLattud" Grid.Row="5" materialDesign:HintAssist.Hint="קו רוחב" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" Margin="38,0,227,0" TextAlignment="Center" KeyDown="TBstaitonLattude_KeyDown" />-->
             <Grid x:Name="Cards" Grid.Row="4" Margin="0,22,0,5">
@@ -82,7 +82,7 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <materialDesign:Card   Background="{DynamicResource PrimaryHueLightBrush}" Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"   
-                                      UniformCornerRadius="6" Margin="10,-11,-326,10" >
+                                      UniformCornerRadius="6" Margin="10,-11,-324,10" >
                     <Grid Margin="0,21,0,6" >
                         <Grid.RowDefinitions>
                             <RowDefinition Height="37*"/>
@@ -90,6 +90,32 @@
                         </Grid.RowDefinitions>
                         <TextBlock Grid.Row="0" Text="משלוחים יוצאים" Margin="152,-11,124,22" FontWeight="Bold" FontSize="14" TextAlignment="Center" ></TextBlock>
                         <ListView x:Name="listOfDronesInCahrge" ItemsSource="{Binding Items1}" Margin="0,-3,10,10" FontSize="12" Grid.RowSpan="2">
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="{x:Type ListViewItem}">
+                                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                </Style>
+                            </ListView.ItemContainerStyle>
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn DisplayMemberBinding="{Binding Id}" Header="מספר מזהה" />
+                                    <GridViewColumn DisplayMemberBinding="{Binding Model}" Header="דחיפות"  Width="105"/>
+                                    <GridViewColumn DisplayMemberBinding="{Binding MaxWeight}" Header="משקל"  />
+                                    <GridViewColumn DisplayMemberBinding="{Binding Statuses}" Header="סטטוס" />
+                                    <GridViewColumn DisplayMemberBinding="{Binding CurrentLocation}" Header="  מיקום קו רוחב       מיקום קו אורך" Width="250"  />
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </Grid>
+                </materialDesign:Card>
+                <materialDesign:Card   Background="{DynamicResource PrimaryHueLightBrush}" Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"   
+                    UniformCornerRadius="6" Margin="10,203,-324,-204" >
+                    <Grid Margin="0,21,0,6" >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="37*"/>
+                            <RowDefinition Height="122*"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0" Text="משלוחים נכנסים" Margin="152,-11,124,22" FontWeight="Bold" FontSize="14" TextAlignment="Center" />
+                        <ListView x:Name="listOfDronesInCahrge1" ItemsSource="{Binding Items1}" Margin="0,-3,10,10" FontSize="12" Grid.RowSpan="2">
                             <ListView.ItemContainerStyle>
                                 <Style TargetType="{x:Type ListViewItem}">
                                     <Setter Property="HorizontalContentAlignment" Value="Center"/>
@@ -127,33 +153,7 @@
                         <RowDefinition Height="35*"/>
                     </Grid.RowDefinitions>
                     <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Height="20" Width="184" TextAlignment="Center" FontWeight="Bold"><Run FlowDirection="RightToLeft" Language="he-il" Text="מיקום"/></TextBlock>
-                    <TextBlock x:Name="TBlocation" HorizontalAlignment="Center" Grid.Row="1" Text="{Binding BaseStationLocation}" TextWrapping="Wrap" VerticalAlignment="Center" Height="88" Width="128" FontSize="14" FontWeight="Bold" FontFamily="Consolas" TextAlignment="Center"/>
-                </Grid>
-            </materialDesign:Card>
-            <materialDesign:Card   Background="{DynamicResource PrimaryHueLightBrush}" Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"   
-                UniformCornerRadius="6" Margin="10,10,14,26" Grid.ColumnSpan="2" Grid.Row="5" >
-                <Grid Margin="0,21,0,6" >
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="37*"/>
-                        <RowDefinition Height="122*"/>
-                    </Grid.RowDefinitions>
-                    <TextBlock Grid.Row="0" Text="משלוחים נכנסים" Margin="152,-11,124,22" FontWeight="Bold" FontSize="14" TextAlignment="Center" />
-                    <ListView x:Name="listOfDronesInCahrge1" ItemsSource="{Binding Items1}" Margin="0,-3,10,10" FontSize="12" Grid.RowSpan="2">
-                        <ListView.ItemContainerStyle>
-                            <Style TargetType="{x:Type ListViewItem}">
-                                <Setter Property="HorizontalContentAlignment" Value="Center"/>
-                            </Style>
-                        </ListView.ItemContainerStyle>
-                        <ListView.View>
-                            <GridView>
-                                <GridViewColumn DisplayMemberBinding="{Binding Id}" Header="מספר מזהה" />
-                                <GridViewColumn DisplayMemberBinding="{Binding Model}" Header="דחיפות"  Width="105"/>
-                                <GridViewColumn DisplayMemberBinding="{Binding MaxWeight}" Header="משקל"  />
-                                <GridViewColumn DisplayMemberBinding="{Binding Statuses}" Header="סטטוס" />
-                                <GridViewColumn DisplayMemberBinding="{Binding CurrentLocation}" Header="  מיקום קו רוחב       מיקום קו אורך" Width="250"  />
-                            </GridView>
-                        </ListView.View>
-                    </ListView>
+                    <TextBlock x:Name="TBlocation" HorizontalAlignment="Center" Grid.Row="1" Text="{Binding Path=LocationOfCustomer}" TextWrapping="Wrap" VerticalAlignment="Center" Height="88" Width="128" FontSize="14" FontWeight="Bold" FontFamily="Consolas" TextAlignment="Center"/>
                 </Grid>
             </materialDesign:Card>
 
