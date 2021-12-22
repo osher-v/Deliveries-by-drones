@@ -108,11 +108,10 @@ namespace BL
             try    // throw if the id is nonExsist
             {
                 AccessIdal.RemoveStation(baseStation.Id);
-                foreach (var item in baseStation.DroneInChargsList)
+                foreach (var item in baseStation.DroneInChargsList)//שחרור הרחפנים שהיו בטעינה בתחנה הנמחקת
                 {
-                    DronesBL.Find(x => x.Id == item.Id).Statuses = DroneStatuses.free;
-                }
-               
+                    ReleaseDroneFromCharging(item.Id);
+                }            
             }
             catch (DO.NonExistentObjectException)
             {

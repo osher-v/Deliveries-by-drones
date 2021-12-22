@@ -185,7 +185,7 @@ namespace BlApi
         /// The function removes the Customer from the list.
         /// </summary>
         /// <param name="CustomerId"></param>
-        public void RemoveCustomer(int CustomerId);
+        public void RemoveCustomer(Customer CustomerId);
 
         /// <summary>
         /// The function removes the Parcel from the list.

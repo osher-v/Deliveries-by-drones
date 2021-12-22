@@ -204,13 +204,17 @@ namespace PL
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        //private void closeUpdate_Click(object sender, RoutedEventArgs e)
-        //{
-        //    ListWindow.IsEnabled = true;
-        //    ClosingWindow = false; // we alowd the close option
-        //    Close();
-        //}
+        private void closeUpdate_Click(object sender, RoutedEventArgs e)
+        {
+            ListWindow.IsEnabled = true;
+            ClosingWindow = false; // we alowd the close option
+            Close();
+        }
         #endregion close  
+
+        public Customer customer;
+
+        public int indexSelected;
 
         public CustomerWindow(BlApi.IBL bl, ListView _ListWindow, CustomerToList CustomerTo, int _indexCustomer)
         {
@@ -221,6 +225,49 @@ namespace PL
             AccessIbl = bl;
 
             ListWindow = _ListWindow;
+
+            indexSelected = _indexCustomer;
+
+            customer = AccessIbl.GetCustomer(CustomerTo.Id);
+            DataContext = customer;
+
+            listOfCustomeSend.ItemsSource = AccessIbl.GetCustomer(customer.Id).ParcelFromTheCustomer;
+            listOfCustomerReceive.ItemsSource = AccessIbl.GetCustomer(customer.Id).ParcelToTheCustomer;
+        }
+
+        private void BDelete_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show("האם אתה בטוח שאתה רוצה לבצע מחיקה", "מצב מחיקה", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            switch (result)
+            {
+                case MessageBoxResult.Yes:
+                    AccessIbl.RemoveCustomer(customer);// accses to delete from the bl list 
+                    ListWindow.CustomerToLists.RemoveAt(indexSelected);// we go to the index to delete from the observer 
+
+                    ListWindow.IsEnabled = true;
+                    ClosingWindow = false;// allowd to close the window 
+                    Close();
+                    break;
+                case MessageBoxResult.No: // in case that the user dont want to delete he have the option to abort withot any change 
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void TBUpdateCustomerPhoneNumber_KeyDown(object sender, KeyEventArgs e)
+        {
+
+        }
+
+        /// <summary>
+        /// The function updates customer details.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BUpdate_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
