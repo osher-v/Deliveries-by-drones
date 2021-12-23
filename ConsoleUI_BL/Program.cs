@@ -337,7 +337,7 @@ Your choice:");
 
                     try
                     {
-                        bl.ReleaseDroneFromCharging(droneId, time);
+                        bl.ReleaseDroneFromCharging(droneId);
                         Console.WriteLine("The operation was successful");
                     }
                     catch (NonExistentObjectException ex)
@@ -582,7 +582,7 @@ please choose again");
 
         static void Main(string[] args)
         {
-            BlApi.IBL BLObject = BL.others.BlFactory.GetBL();
+            BlApi.IBL BLObject = BlFactory.GetBL();
 
             int choice;
             do

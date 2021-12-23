@@ -13,16 +13,143 @@
         TextOptions.TextFormattingMode="Ideal"
         TextOptions.TextRenderingMode="Auto"
         FontFamily="{DynamicResource MaterialDesignFont}"
-        Title="ParcelWindow" Height="450" Width="800">
+        Title="ParcelWindow" Height="720" Width="440">
     <Grid>
         <Grid x:Name="addParcel" Visibility="Visible">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="8"/>
+                <RowDefinition Height="79*"/>
+                <RowDefinition Height="89*"/>
+                <RowDefinition Height="90*"/>
+                <RowDefinition Height="83*"/>
+                <RowDefinition Height="45.16"/>
+            </Grid.RowDefinitions>
+            <Grid Background="#FF673AB7" Opacity="0.7" >
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <TextBlock TextWrapping="Wrap" Width="221" FontFamily="Consolas" FontSize="16" FontWeight="Bold" Height="18" Foreground="White"><Run FlowDirection="RightToLeft" Language="he-il" Text="הוספת חבילה "/><LineBreak/><Run FlowDirection="RightToLeft" Language="he-il"/><LineBreak/><Run FlowDirection="RightToLeft" Language="he-il"/></TextBlock>
+                    <Button x:Name="BcloseAdd" Background="{x:Null}" BorderBrush="{x:Null}" Click="BcloseAdd_Click"  >
+                        <materialDesign:PackIcon Kind="Close" Height="25" Width="25" VerticalAlignment="Center" />
+                    </Button>
+                </StackPanel>
+            </Grid>
+            <TextBox x:Name="TBParcelSenderId" Grid.Row="2" materialDesign:HintAssist.Hint="מספר מזהה שולח" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center"   TextAlignment="Center" Margin="92,0,92,0"  Height="34" MaxLength="9" KeyDown="TBParcelSenderId_KeyDown"  />
+            <TextBox x:Name="TBParcelReciverId" Grid.Row="3" materialDesign:HintAssist.Hint="מספר מזהה מקבל" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center"   TextAlignment="Center" Margin="92,0,92,0"  Height="34" MaxLength="9" KeyDown="TBParcelReciverId_KeyDown"  />
 
+            <Button x:Name="BAddParcel" Grid.Row="6" Style="{StaticResource MaterialDesignRaisedButton}" materialDesign:ButtonProgressAssist.Value="-1" materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
+             materialDesign:ButtonProgressAssist.IsIndeterminate="True" Content="הוספה למאגר הנתונים" Margin="0,12,0,1"/>
+
+            <ComboBox x:Name="CBPriorSelector"  Grid.Row="4" Style="{StaticResource MaterialDesignOutlinedComboBox}"  materialDesign:HintAssist.Hint="דחיפות חבילה"   Margin="92,17,92,18" />
+            <ComboBox x:Name="CBWeightSelctor" Grid.Row="5" Style="{StaticResource MaterialDesignOutlinedComboBox}"  materialDesign:HintAssist.Hint="משקל חבילה"  Margin="92,12,92,17" />
 
         </Grid>
 
-        <Grid x:Name="updateParcel" Visibility="Hidden">
+        <!--<Grid x:Name="updateParcel" Visibility="Visible">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="39"/>
+                <RowDefinition Height="73*"/>
+                <RowDefinition Height="61*"/>
+                <RowDefinition Height="95*"/>
+                <RowDefinition Height="146*"/>
+                <RowDefinition Height="241*"/>
+                <RowDefinition Height="49*"/>
+
+            </Grid.RowDefinitions>
+            <materialDesign:Card  Grid.Row="3" Background="{DynamicResource PrimaryHueLightBrush}" Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}" Padding="8" 
+                    UniformCornerRadius="6" Margin="10,10,10,10">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                </Grid>
+                
+            </materialDesign:Card>
+            <Grid Background="#FF673AB7" Opacity="0.7" Margin="0,-6,0,0" >
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <TextBlock TextWrapping="Wrap" Width="221" FontFamily="Consolas" FontSize="16" FontWeight="Bold" Height="18" Foreground="White"><Run FlowDirection="RightToLeft" Language="he-il" Text="עדכון פרטי תחנה "/><LineBreak/><Run FlowDirection="RightToLeft" Language="he-il"/><LineBreak/><Run FlowDirection="RightToLeft"/><LineBreak/><Run FlowDirection="RightToLeft"/></TextBlock>
+                    <Button x:Name="closeUpdate" Background="{x:Null}" BorderBrush="{x:Null}" Click="closeUpdate_Click" >
+                        <materialDesign:PackIcon Kind="Close" Height="25" Width="25" VerticalAlignment="Center" />
+                    </Button>
+                </StackPanel>
+            </Grid>
+            --><!--<TextBox x:Name="TBUpdateStaitonI" Grid.Row="2" materialDesign:HintAssist.Hint="מספר מזהה" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" HorizontalAlignment="Left" Width="279" TextAlignment="Center" Margin="88,0,0,0" TextChanged="TBstaitonId_TextChanged" KeyDown="TBstaitonId_KeyDown" />-->
+            <!--<TextBox x:Name="TBstaitonLongtud" Grid.Row="5" materialDesign:HintAssist.Hint="קו אורך" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" Margin="242,0,23,0" TextAlignment="Center" KeyDown="TBstaitonLongtude_KeyDown" />
+            <TextBox x:Name="TBstaitonLattud" Grid.Row="5" materialDesign:HintAssist.Hint="קו רוחב" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" Margin="38,0,227,0" TextAlignment="Center" KeyDown="TBstaitonLattude_KeyDown" />--><!--
+            <Grid x:Name="Cards" Grid.Row="4" Margin="0,22,0,5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <materialDesign:Card   Background="{DynamicResource PrimaryHueLightBrush}" Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"   
+                                      UniformCornerRadius="6" Margin="10,-11,10,10" >
+                    <Grid Margin="0,32,0,18" >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="37*"/>
+                            <RowDefinition Height="122*"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0" Text="רחפנים בהטענה" Margin="152,-22,124,22" FontWeight="Bold" FontSize="14" TextAlignment="Center" ></TextBlock>
+                    </Grid>
+                </materialDesign:Card>
+            </Grid>
+            <Grid Grid.Row="5" Margin="0,4,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <materialDesign:Card  Grid.Row="4" Grid.Column="1" Background="{DynamicResource PrimaryHueLightBrush}" Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}" Padding="8" 
+                    UniformCornerRadius="6" Margin="10,24,10,10">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="11*"/>
+                            <RowDefinition Height="35*"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Height="20" Width="184" TextAlignment="Center" FontWeight="Bold"><Run FlowDirection="RightToLeft" Language="he-il" Text="מספר מקומות פנויים "/></TextBlock>
+                        <TextBlock HorizontalAlignment="Center" Grid.Row="1" Text="{Binding Path=FreeChargeSlots}" TextWrapping="Wrap" VerticalAlignment="Top" Height="84" Width="164" FontSize="78" FontWeight="Bold" FontFamily="Consolas" TextAlignment="Center"/>
+                    </Grid>
+                </materialDesign:Card>
 
 
-        </Grid>
+                <materialDesign:Card  Grid.Row="4" Grid.Column="0" Background="{DynamicResource PrimaryHueLightBrush}" Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}" Padding="8" 
+                    UniformCornerRadius="6" Margin="10,24,10,10">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="11*"/>
+                            <RowDefinition Height="35*"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Height="20" Width="184" TextAlignment="Center" FontWeight="Bold"><Run FlowDirection="RightToLeft" Language="he-il" Text="מיקום"/></TextBlock>
+                        <TextBlock x:Name="TBlocation" HorizontalAlignment="Center" Grid.Row="1" Text="{Binding Path=BaseStationLocation}" TextWrapping="Wrap" VerticalAlignment="Top" Height="95" Width="128" FontSize="14" FontWeight="Bold" FontFamily="Consolas" TextAlignment="Center"/>
+                    </Grid>
+                </materialDesign:Card>
+            </Grid>
+            <Button x:Name="BUpdate" Grid.Row="6" Style="{StaticResource MaterialDesignRaisedButton}" materialDesign:ButtonProgressAssist.Value="-1" materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
+             materialDesign:ButtonProgressAssist.IsIndeterminate="True" Content="עדכון התחנה" Margin="0,13,0,4"
+             IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Click="BUpdate_Click" />
+
+            <Grid Grid.Row="1" Margin="0,0,0,3">
+                <TextBlock Text=":מספר התחנה" TextWrapping="Wrap" Margin="302,24,9,33" FontWeight="Bold" FontFamily="Consolas" FontSize="14"/>
+                <TextBlock Text="{Binding Path=Id}" TextWrapping="Wrap" Margin="143,21,149,38" FontWeight="Bold" FontFamily="Consolas" FontSize="18" TextAlignment="Center"/>
+                <TextBlock TextWrapping="Wrap" Margin="347,101,41,-48" FontWeight="Bold" FontFamily="Consolas" FontSize="14"><Run Text=":"/><Run FlowDirection="RightToLeft" Language="he-il" Text="משקל"/></TextBlock>
+                <TextBlock Text="{Binding Id}" TextWrapping="Wrap" Margin="242,101,104,-42" FontWeight="Bold" FontFamily="Consolas" FontSize="18" TextAlignment="Center"/>
+                <TextBlock Text="{Binding Id}" TextWrapping="Wrap" Margin="30,104,316,-45" FontWeight="Bold" FontFamily="Consolas" FontSize="18" TextAlignment="Center"/>
+                <TextBlock TextWrapping="Wrap" Margin="143,101,245,-46" FontWeight="Bold" FontFamily="Consolas" FontSize="14"><Run Text=":"/><Run FlowDirection="RightToLeft" Language="he-il" Text="משקל"/></TextBlock>
+            </Grid>
+            <Button x:Name="BDelete" Grid.Row="1" Style="{StaticResource MaterialDesignRaisedButton}" materialDesign:ButtonProgressAssist.Value="-1" materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
+                materialDesign:ButtonProgressAssist.IsIndeterminate="True" Content="מחיקת תחנה" Margin="10,20,311,21"
+                IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" Background="#FFFF0909" BorderBrush="#FFF14A2F" FontSize="12" FontWeight="Bold" Click="BDelete_Click"  />
+
+
+        </Grid>-->
     </Grid>
 </Window>
