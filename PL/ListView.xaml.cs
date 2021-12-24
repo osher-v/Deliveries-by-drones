@@ -102,7 +102,7 @@ namespace PL
             }
 
             //new event that will call evre time that the ObservableCollection didact a change 
-            //BaseStationToLists.CollectionChanged += BaseStationToLists_CollectionChanged;
+            ParcelToLists.CollectionChanged += ParcelToLists_CollectionChanged;
 
             //display the defult list 
             listOfParcels.ItemsSource = ParcelToLists;
@@ -143,6 +143,17 @@ namespace PL
         {
             //display the defult list 
             listOfCustomers.ItemsSource = CustomerToLists;
+        }
+
+        /// <summary>
+        /// /// a new event that we crate in the intaklizer :ParcelToLists_CollectionChanged:
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>  
+        private void ParcelToLists_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            //display the defult list 
+            listOfParcels.ItemsSource = ParcelToLists;
         }
 
         /// <summary>
@@ -275,7 +286,7 @@ namespace PL
             if (parcel != null)// if the user click on empty space in the view list we donr open anything
             {
                 int indexParcel = listOfParcels.SelectedIndex;
-                //this.IsEnabled = false; // to privent anotur click on the list window chosse we donr want alot of windows togter.
+                this.IsEnabled = false; // to privent anotur click on the list window chosse we donr want alot of windows togter.
                 new ParcelWindow(AccessIbl, this, parcel, indexParcel).Show();//open the drone windowon acction
             }
         }

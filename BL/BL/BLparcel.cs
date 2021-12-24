@@ -11,17 +11,24 @@ namespace BL
     {
         public void AddParcel(Parcel newParcel)
         {
-            //Check if the customers exist in the system.
-            try
+            try //Check if the customers exist in the system.
             {
                 AccessIdal.GetCustomer(newParcel.Sender.Id);
+            }
+            catch (DO.NonExistentObjectException)
+            {
+                throw new NonExistentObjectException("Erorr: is no Customer Sender id");
+            }
+
+            try //Check if the customers exist in the system.
+            {         
                 AccessIdal.GetCustomer(newParcel.Receiver.Id);
             }
             catch (DO.NonExistentObjectException)
             {
-                throw new NonExistentObjectException("Erorr is no Customer id");
+                throw new NonExistentObjectException("Erorr: is no Customer Receiver id");
             }
-            
+
             DO.Parcel parcel = new DO.Parcel()
             {
                 SenderId = newParcel.Sender.Id,

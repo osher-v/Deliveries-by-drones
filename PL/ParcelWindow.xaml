@@ -15,7 +15,7 @@
         FontFamily="{DynamicResource MaterialDesignFont}"
         Title="ParcelWindow" Height="720" Width="440">
     <Grid>
-        <Grid x:Name="addParcel" Visibility="Visible">
+        <Grid x:Name="addParcel" Visibility="Hidden">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
@@ -40,14 +40,14 @@
             <TextBox x:Name="TBParcelReciverId" Grid.Row="3" materialDesign:HintAssist.Hint="מספר מזהה מקבל" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center"   TextAlignment="Center" Margin="92,0,92,0"  Height="34" MaxLength="9" KeyDown="TBParcelReciverId_KeyDown"  />
 
             <Button x:Name="BAddParcel" Grid.Row="6" Style="{StaticResource MaterialDesignRaisedButton}" materialDesign:ButtonProgressAssist.Value="-1" materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
-             materialDesign:ButtonProgressAssist.IsIndeterminate="True" Content="הוספה למאגר הנתונים" Margin="0,12,0,1"/>
+             materialDesign:ButtonProgressAssist.IsIndeterminate="True" Content="הוספה למאגר הנתונים" Margin="0,12,0,1" Click="BAddParcel_Click"/>
 
             <ComboBox x:Name="CBPriorSelector"  Grid.Row="4" Style="{StaticResource MaterialDesignOutlinedComboBox}"  materialDesign:HintAssist.Hint="דחיפות חבילה"   Margin="92,17,92,18" />
             <ComboBox x:Name="CBWeightSelctor" Grid.Row="5" Style="{StaticResource MaterialDesignOutlinedComboBox}"  materialDesign:HintAssist.Hint="משקל חבילה"  Margin="92,12,92,17" />
 
         </Grid>
 
-        <!--<Grid x:Name="updateParcel" Visibility="Visible">
+        <Grid x:Name="updateParcel" Visibility="Hidden">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
@@ -72,21 +72,20 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-
                 </Grid>
                 
             </materialDesign:Card>
             <Grid Background="#FF673AB7" Opacity="0.7" Margin="0,-6,0,0" >
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                     <TextBlock TextWrapping="Wrap" Width="221" FontFamily="Consolas" FontSize="16" FontWeight="Bold" Height="18" Foreground="White"><Run FlowDirection="RightToLeft" Language="he-il" Text="עדכון פרטי תחנה "/><LineBreak/><Run FlowDirection="RightToLeft" Language="he-il"/><LineBreak/><Run FlowDirection="RightToLeft"/><LineBreak/><Run FlowDirection="RightToLeft"/></TextBlock>
-                    <Button x:Name="closeUpdate" Background="{x:Null}" BorderBrush="{x:Null}" Click="closeUpdate_Click" >
+                    <Button x:Name="BcloseUpdate" Background="{x:Null}" BorderBrush="{x:Null}" Click="BcloseUpdate_Click" >
                         <materialDesign:PackIcon Kind="Close" Height="25" Width="25" VerticalAlignment="Center" />
                     </Button>
                 </StackPanel>
             </Grid>
-            --><!--<TextBox x:Name="TBUpdateStaitonI" Grid.Row="2" materialDesign:HintAssist.Hint="מספר מזהה" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" HorizontalAlignment="Left" Width="279" TextAlignment="Center" Margin="88,0,0,0" TextChanged="TBstaitonId_TextChanged" KeyDown="TBstaitonId_KeyDown" />-->
-            <!--<TextBox x:Name="TBstaitonLongtud" Grid.Row="5" materialDesign:HintAssist.Hint="קו אורך" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" Margin="242,0,23,0" TextAlignment="Center" KeyDown="TBstaitonLongtude_KeyDown" />
-            <TextBox x:Name="TBstaitonLattud" Grid.Row="5" materialDesign:HintAssist.Hint="קו רוחב" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" Margin="38,0,227,0" TextAlignment="Center" KeyDown="TBstaitonLattude_KeyDown" />--><!--
+            <!--<TextBox x:Name="TBUpdateStaitonI" Grid.Row="2" materialDesign:HintAssist.Hint="מספר " Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" HorizontalAlignment="Left" Width="279" TextAlignment="Center" Margin="88,0,0,0"  />
+            <TextBox x:Name="TBstaitonLongtud" Grid.Row="5" materialDesign:HintAssist.Hint="קו אורך" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" Margin="242,0,23,0" TextAlignment="Center" KeyDown="TBstaitonLongtude_KeyDown" />
+            <TextBox x:Name="TBstaitonLattud" Grid.Row="5" materialDesign:HintAssist.Hint="קו רוחב" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" Margin="38,0,227,0" TextAlignment="Center" KeyDown="TBstaitonLattude_KeyDown" />-->
             <Grid x:Name="Cards" Grid.Row="4" Margin="0,22,0,5">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -133,9 +132,9 @@
                     </Grid>
                 </materialDesign:Card>
             </Grid>
-            <Button x:Name="BUpdate" Grid.Row="6" Style="{StaticResource MaterialDesignRaisedButton}" materialDesign:ButtonProgressAssist.Value="-1" materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
+            <!--<Button x:Name="BUpdate" Grid.Row="6" Style="{StaticResource MaterialDesignRaisedButton}" materialDesign:ButtonProgressAssist.Value="-1" materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
              materialDesign:ButtonProgressAssist.IsIndeterminate="True" Content="עדכון התחנה" Margin="0,13,0,4"
-             IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Click="BUpdate_Click" />
+             IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Click="BUpdate_Click" />-->
 
             <Grid Grid.Row="1" Margin="0,0,0,3">
                 <TextBlock Text=":מספר התחנה" TextWrapping="Wrap" Margin="302,24,9,33" FontWeight="Bold" FontFamily="Consolas" FontSize="14"/>
@@ -145,11 +144,9 @@
                 <TextBlock Text="{Binding Id}" TextWrapping="Wrap" Margin="30,104,316,-45" FontWeight="Bold" FontFamily="Consolas" FontSize="18" TextAlignment="Center"/>
                 <TextBlock TextWrapping="Wrap" Margin="143,101,245,-46" FontWeight="Bold" FontFamily="Consolas" FontSize="14"><Run Text=":"/><Run FlowDirection="RightToLeft" Language="he-il" Text="משקל"/></TextBlock>
             </Grid>
-            <Button x:Name="BDelete" Grid.Row="1" Style="{StaticResource MaterialDesignRaisedButton}" materialDesign:ButtonProgressAssist.Value="-1" materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
-                materialDesign:ButtonProgressAssist.IsIndeterminate="True" Content="מחיקת תחנה" Margin="10,20,311,21"
-                IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" Background="#FFFF0909" BorderBrush="#FFF14A2F" FontSize="12" FontWeight="Bold" Click="BDelete_Click"  />
-
-
-        </Grid>-->
+            <!--<Button x:Name="BDelete" Grid.Row="1" Style="{StaticResource MaterialDesignRaisedButton}" materialDesign:ButtonProgressAssist.Value="-1" materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
+                materialDesign:ButtonProgressAssist.IsIndeterminate="True" Content="מחיקת חבילה" Margin="10,20,311,21"
+                IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" Background="#FFFF0909" BorderBrush="#FFF14A2F" FontSize="12" FontWeight="Bold" Click="BDelete_Click"  />-->
+        </Grid>
     </Grid>
 </Window>

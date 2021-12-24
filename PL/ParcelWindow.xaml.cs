@@ -39,6 +39,8 @@ namespace PL
         {
             InitializeComponent();
 
+            addParcel.Visibility = Visibility.Visible;
+
             AccessIbl = bl;
 
             ListWindow = _ListWindow;
@@ -63,7 +65,6 @@ namespace PL
                 {
                     e.Handled = true;
                 }
-
                 else
                 {
                     e.Handled = false;
@@ -84,14 +85,12 @@ namespace PL
                 {
                     e.Handled = true;
                 }
-
                 else
                 {
                     e.Handled = false;
                 }
             }
         }
-    
 
         #region close
         /// <summary>
@@ -120,7 +119,7 @@ namespace PL
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void closeUpdate_Click(object sender, RoutedEventArgs e)
+        private void BcloseUpdate_Click(object sender, RoutedEventArgs e)//חריגהההההההההההההה
         {
             ListWindow.IsEnabled = true;
             ClosingWindow = false; // we alowd the close option
@@ -128,9 +127,72 @@ namespace PL
         }
         #endregion close  
 
+        /// <summary>
+        /// The function handles adding a parcel.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BAddParcel_Click(object sender, RoutedEventArgs e)
+        {
+            //Check that all fields are filled.
+            if (TBParcelSenderId.Text.Length != 0 && TBParcelReciverId.Text.Length != 0 && CBPriorSelector.SelectedItem != null && CBWeightSelctor.SelectedItem != null)
+            {           
+                BO.Parcel parcelAdd = new Parcel()
+                {
+                    Sender = new CustomerInDelivery() { Id = int.Parse(TBParcelSenderId.Text) },
+                    Receiver = new CustomerInDelivery() { Id = int.Parse(TBParcelReciverId.Text) },
+                     Prior = (Priorities)CBPriorSelector.SelectedItem,
+                    Weight = (WeightCategories)CBWeightSelctor.SelectedItem
+                };
+
+                try
+                {
+                    AccessIbl.AddParcel(parcelAdd);
+                    MessageBoxResult result = MessageBox.Show("The operation was successful", "info", MessageBoxButton.OK, MessageBoxImage.Information);
+                    switch (result)
+                    {
+                        case MessageBoxResult.OK:
+                            BO.ParcelToList parcelsToList = AccessIbl.GetParcelList().ToList().Find(i => i.Id == parcelAdd.Id);
+                            ListWindow.ParcelToLists.Add(parcelsToList); //Updating the observer list of stations.
+
+                            ListWindow.IsEnabled = true;
+                            ClosingWindow = false;
+                            Close();
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                catch (NonExistentObjectException ex)
+                {
+                    MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                    switch (ex.Message)
+                    {
+                        case "Erorr: is no Customer Sender id":
+                            TBParcelSenderId.Text = "";
+                            TBParcelSenderId.BorderBrush = Brushes.Red;
+                            break;
+                        case "Erorr: is no Customer Receiver id":
+                            TBParcelReciverId.Text = "";
+                            TBParcelReciverId.BorderBrush = Brushes.Red;
+                            break;
+                        default: 
+                            break;
+                    }         
+                }
+            }
+            else //If not all fields are filled.
+            {
+                MessageBox.Show("נא ודאו שכל השדות מלאים", "!שגיאה", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
         public ParcelWindow(BlApi.IBL bl, ListView _ListWindow, ParcelToList parcelTo, int _indexParcel)
         {
             InitializeComponent();
+
+            updateParcel.Visibility = Visibility.Visible;
+
         }
     }
 }
