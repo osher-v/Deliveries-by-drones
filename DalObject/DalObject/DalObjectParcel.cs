@@ -80,14 +80,7 @@ namespace DalObject
             {
                 throw new NonExistentObjectException();
             }
-            DataSource.ParcelsList.RemoveAt(index); //else
-
-            ////this Remove fanction return true if item is successfully removed; otherwise, false. This method also returns false if item was not found in the List<T>.
-            //bool successOperation = DataSource.ParcelsList.Remove(Parcel);
-            //if (!successOperation)
-            //{
-            //    throw new NonExistentObjectException();
-            //}
+            DataSource.ParcelsList.RemoveAt(index); //else    
         }
     }
 }

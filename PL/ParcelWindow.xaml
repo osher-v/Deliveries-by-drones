@@ -47,7 +47,7 @@
 
         </Grid>
 
-        <Grid x:Name="updateParcel" Visibility="Hidden">
+        <Grid x:Name="updateParcel" Visibility="Visible">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
@@ -76,17 +76,17 @@
                     <TextBlock  Grid.Row="1" Grid.Column="1" Text=":איסוף"  FontWeight="Bold" FontFamily="Consolas" FontSize="14" Margin="151,10,0,20" />
                     <TextBlock  Grid.Row="0" Grid.Column="1" Text=":יצירה"  FontWeight="Bold" FontFamily="Consolas" FontSize="14" Margin="150,10,10,20" />
                     <TextBlock  Grid.Row="1" Grid.Column="0" Text=":אספקה"  FontWeight="Bold" FontFamily="Consolas" FontSize="14" Margin="132,10,10,20" />
-                    <TextBlock  Grid.Row="0" Grid.Column="0"  FontWeight="Bold" FontFamily="Consolas" FontSize="14" Margin="22,10,75,21" />
-                    <TextBlock  Grid.Row="1" Grid.Column="1"  FontWeight="Bold" FontFamily="Consolas" FontSize="14" Margin="41,10,56,20" />
-                    <TextBlock  Grid.Row="1" Grid.Column="0"  FontWeight="Bold" FontFamily="Consolas" FontSize="14" Margin="22,10,75,20" />
-                    <TextBlock  Grid.Row="0" Grid.Column="1"  FontWeight="Bold" FontFamily="Consolas" FontSize="14" Margin="25,10,72,20" />
+                    <TextBlock  Grid.Row="0" Grid.Column="1" Text="{Binding Path=Requested}" FontWeight="Bold" FontFamily="Consolas" FontSize="14" Margin="25,10,72,20" />
+                    <TextBlock  Grid.Row="0" Grid.Column="0" Text="{Binding Path=Assigned}" FontWeight="Bold" FontFamily="Consolas" FontSize="14" Margin="22,10,75,21" />
+                    <TextBlock  Grid.Row="1" Grid.Column="1" Text="{Binding Path=PickedUp}" FontWeight="Bold" FontFamily="Consolas" FontSize="14" Margin="41,10,56,20" />
+                    <TextBlock  Grid.Row="1" Grid.Column="0" Text="{Binding Path=Delivered}" FontWeight="Bold" FontFamily="Consolas" FontSize="14" Margin="22,10,75,20" />
                 </Grid>
 
             </materialDesign:Card>
             <Grid Background="#FF673AB7" Opacity="0.7" Margin="0,-6,0,0" >
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                    <TextBlock TextWrapping="Wrap" Width="221" FontFamily="Consolas" FontSize="16" FontWeight="Bold" Height="18" Foreground="White"><Run FlowDirection="RightToLeft" Language="he-il" Text="עדכון פרטי חבילה"/><LineBreak/><Run/><LineBreak/><Run FlowDirection="RightToLeft"/><LineBreak/><Run FlowDirection="RightToLeft"/><LineBreak/><Run FlowDirection="RightToLeft"/></TextBlock>
-                    <Button x:Name="BcloseUpdate" Background="{x:Null}" BorderBrush="{x:Null}" >
+                    <TextBlock TextWrapping="Wrap" Width="221" FontFamily="Consolas" FontSize="16" FontWeight="Bold" Height="18" Foreground="White"><Run FlowDirection="RightToLeft" Language="he-il" Text="פרטי חבילה"/><LineBreak/><Run/><LineBreak/><Run FlowDirection="RightToLeft"/><LineBreak/><Run FlowDirection="RightToLeft"/><LineBreak/><Run FlowDirection="RightToLeft"/></TextBlock>
+                    <Button x:Name="BcloseUpdate" Background="{x:Null}" BorderBrush="{x:Null}" Click="BcloseUpdate_Click" >
                         <materialDesign:PackIcon Kind="Close" Height="25" Width="25" VerticalAlignment="Center" />
                     </Button>
                 </StackPanel>
@@ -107,12 +107,12 @@
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
                         <TextBlock Grid.Row="0" Text="רחפן מבצע" Margin="152,-22,124,22" FontWeight="Bold" FontSize="14" TextAlignment="Center" Grid.ColumnSpan="2" ></TextBlock>
-                        <TextBlock  Grid.Row="0" Grid.Column="0"  FontWeight="Bold" FontFamily="Consolas" FontSize="14" Margin="22,6,83,4" ></TextBlock>
+                        <TextBlock  Grid.Row="0" Grid.Column="0" Text="{Binding Path=MyDrone.BatteryStatus}" FontWeight="Bold" FontFamily="Consolas" FontSize="14" Margin="22,6,83,4" ></TextBlock>
                         <TextBlock  Grid.Row="0" Grid.Column="0" Text=":סוללה"  FontWeight="Bold" FontFamily="Consolas" FontSize="14" Margin="152,6,7,4" ></TextBlock>
                         <TextBlock  Grid.Row="1" Grid.Column="1" Text=":מיקום רחפן"  FontWeight="Bold" FontFamily="Consolas" FontSize="14" Margin="117,10,5,0" />
                         <TextBlock  Grid.Row="0" Grid.Column="1" Text=":מס' מזהה"  FontWeight="Bold" FontFamily="Consolas" FontSize="14" Margin="123,6,5,4" />
-                        <TextBlock  Grid.Row="1" Grid.Column="0"  FontWeight="Bold" FontFamily="Consolas" FontSize="14" Margin="89,6,105,4" Grid.ColumnSpan="2" />
-                        <TextBlock  Grid.Row="0" Grid.Column="1"  FontWeight="Bold" FontFamily="Consolas" FontSize="14" Margin="14,7,91,3" />
+                        <TextBlock  Grid.Row="1" Grid.Column="0" Text="{Binding Path=MyDrone.CurrentLocation}" FontWeight="Bold" FontFamily="Consolas" FontSize="14" Margin="89,6,105,4" Grid.ColumnSpan="2" />
+                        <TextBlock  Grid.Row="0" Grid.Column="1" Text="{Binding Path=MyDrone.Id}" FontWeight="Bold" FontFamily="Consolas" FontSize="14" Margin="14,7,91,3" />
                     </Grid>
                 </materialDesign:Card>
             </Grid>
@@ -135,14 +135,13 @@
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
                             <TextBlock  Grid.Row="0" Text=":שם השולח"  FontWeight="Bold" FontFamily="Consolas" FontSize="14" Margin="51,10,51,32" />
-                            <TextBlock  Grid.Row="0"  FontWeight="Bold" FontFamily="Consolas" FontSize="14" Margin="40,35,40,7" />
+                            <TextBlock  Grid.Row="0" Text="{Binding Path=Sender.Id}" FontWeight="Bold" FontFamily="Consolas" FontSize="14" Margin="40,35,40,7" />
                             <TextBlock  Grid.Row="1" Text=":מס' מזהה"  FontWeight="Bold" FontFamily="Consolas" FontSize="14" Margin="51,11,51,31" />
-                            <TextBlock  Grid.Row="1"  FontWeight="Bold" FontFamily="Consolas" FontSize="14" Margin="40,35,40,6" />
+                            <TextBlock  Grid.Row="1" Text="{Binding Path=Sender.Name}" FontWeight="Bold" FontFamily="Consolas" FontSize="14" Margin="40,35,40,6" />
                         </Grid>
-                        <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Height="20" Width="184" TextAlignment="Center" FontWeight="Bold"><Run FlowDirection="RightToLeft" Language="he-il" Text="פרטי שולח"/></TextBlock>
+                        <TextBlock Text="פרטי שולח" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Height="20" Width="184" TextAlignment="Center" FontWeight="Bold"><Run FlowDirection="RightToLeft" Language="he-il" /></TextBlock>
                     </Grid>
                 </materialDesign:Card>
-
 
                 <materialDesign:Card  Grid.Row="4" Grid.Column="0" Background="{DynamicResource PrimaryHueLightBrush}" Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}" Padding="8" 
                     UniformCornerRadius="6" Margin="10,24,10,10">
@@ -156,30 +155,33 @@
                                 <RowDefinition Height="*"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
-                            <TextBlock  Grid.Row="0"  FontWeight="Bold" FontFamily="Consolas" FontSize="14" Margin="51,10,51,32" ><Run Text=":שם "/><Run FlowDirection="RightToLeft" Language="he-il" Text="המקל"/></TextBlock>
-                            <TextBlock  Grid.Row="0"  FontWeight="Bold" FontFamily="Consolas" FontSize="14" Margin="40,35,40,7" />
+                            <TextBlock  Grid.Row="0" Text="שם המקבל" FontWeight="Bold" FontFamily="Consolas" FontSize="14" Margin="51,10,51,32" ><Run /><Run FlowDirection="RightToLeft" Language="he-il"/></TextBlock>
+                            <TextBlock  Grid.Row="0" Text="{Binding Path=Receiver.Id}"  FontWeight="Bold" FontFamily="Consolas" FontSize="14" Margin="40,35,40,7" />
                             <TextBlock  Grid.Row="1" Text=":מס' מזהה"  FontWeight="Bold" FontFamily="Consolas" FontSize="14" Margin="51,11,51,31" />
-                            <TextBlock  Grid.Row="1"  FontWeight="Bold" FontFamily="Consolas" FontSize="14" Margin="40,35,40,6" />
+                            <TextBlock  Grid.Row="1" Text="{Binding Path=Receiver.Name}" FontWeight="Bold" FontFamily="Consolas" FontSize="14" Margin="40,35,40,6" />
                         </Grid>
                         <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Height="20" Width="184" TextAlignment="Center" FontWeight="Bold"><Run FlowDirection="RightToLeft" Language="he-il" Text="פרטי מקבל"/></TextBlock>
                     </Grid>
                 </materialDesign:Card>
+                
             </Grid>
-            <Button x:Name="BUpdate" Grid.Row="6" Style="{StaticResource MaterialDesignRaisedButton}" materialDesign:ButtonProgressAssist.Value="-1" materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
+            
+            <Button x:Name="BUpdateParcel" Grid.Row="6" Style="{StaticResource MaterialDesignRaisedButton}" materialDesign:ButtonProgressAssist.Value="-1" materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
              materialDesign:ButtonProgressAssist.IsIndeterminate="True" Content="" Margin="0,17,0,0"
-             IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"  />
+             IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Click="BUpdateParcel_Click"  />
 
             <Grid Grid.Row="1" Margin="0,0,0,3">
                 <TextBlock TextWrapping="Wrap" Margin="302,21,9,13" FontWeight="Bold" FontFamily="Consolas" FontSize="14"><Run Text=":"/><Run FlowDirection="RightToLeft" Language="he-il" Text="מספר חבילה"/><LineBreak/><Run FlowDirection="RightToLeft" Language="he-il"/></TextBlock>
                 <TextBlock Text="{Binding Path=Id}" TextWrapping="Wrap" Margin="143,21,149,38" FontWeight="Bold" FontFamily="Consolas" FontSize="18" TextAlignment="Center"/>
                 <TextBlock TextWrapping="Wrap" Margin="347,101,28,-48" FontWeight="Bold" FontFamily="Consolas" FontSize="14"><Run Text=":"/><Run FlowDirection="RightToLeft" Language="he-il" Text="משקל"/></TextBlock>
-                <TextBlock Text="{Binding Id}" TextWrapping="Wrap" Margin="248,101,98,-45" FontWeight="Bold" FontFamily="Consolas" FontSize="18" TextAlignment="Center"/>
-                <TextBlock Text="{Binding Id}" TextWrapping="Wrap" Margin="30,104,316,-45" FontWeight="Bold" FontFamily="Consolas" FontSize="18" TextAlignment="Center"/>
+                <TextBlock Text="{Binding Weight}" TextWrapping="Wrap" Margin="248,101,98,-45" FontWeight="Bold" FontFamily="Consolas" FontSize="18" TextAlignment="Center"/>
                 <TextBlock TextWrapping="Wrap" Margin="143,101,223,-51" FontWeight="Bold" FontFamily="Consolas" FontSize="14"><Run Text=":"/><Run FlowDirection="RightToLeft" Language="he-il" Text="דחיפות"/></TextBlock>
+                <TextBlock Text="{Binding Prior}" TextWrapping="Wrap" Margin="30,104,316,-45" FontWeight="Bold" FontFamily="Consolas" FontSize="18" TextAlignment="Center"/>
             </Grid>
+            
             <Button x:Name="BDelete" Visibility="Hidden" Grid.Row="1" Style="{StaticResource MaterialDesignRaisedButton}" materialDesign:ButtonProgressAssist.Value="-1" materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
                 materialDesign:ButtonProgressAssist.IsIndeterminate="True" Content="מחיקת חבילה" Margin="24,21,297,20"
-                IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" Background="#FFFF0909" BorderBrush="#FFF14A2F" FontSize="12" FontWeight="Bold" />
+                IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" Background="#FFFF0909" BorderBrush="#FFF14A2F" FontSize="12" FontWeight="Bold" Click="BDelete_Click" />
         </Grid>
     </Grid>
 </Window>
