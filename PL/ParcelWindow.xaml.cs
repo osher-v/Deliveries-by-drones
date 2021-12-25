@@ -1,6 +1,7 @@
 ﻿using BO;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -122,7 +123,7 @@ namespace PL
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void BcloseUpdate_Click(object sender, RoutedEventArgs e)//חריגהההההההההההההה
+        private void BcloseUpdate_Click(object sender, RoutedEventArgs e)
         {
             ListWindow.IsEnabled = true;
             ClosingWindow = false; // we alowd the close option
@@ -168,7 +169,7 @@ namespace PL
                 }
                 catch (NonExistentObjectException ex)
                 {
-                    MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show(ex.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
                     switch (ex.Message)
                     {
                         case "Erorr: is no Customer Sender id":
@@ -191,6 +192,17 @@ namespace PL
         }
         #endregion הוספה
 
+        public Parcel parcel;
+
+        public int indexSelected;
+
+        /// <summary>
+        /// update constractor.
+        /// </summary>
+        /// <param name="bl"></param>
+        /// <param name="_ListWindow"></param>
+        /// <param name="parcelTo"></param>
+        /// <param name="_indexParcel"></param>
         public ParcelWindow(BlApi.IBL bl, ListView _ListWindow, ParcelToList parcelTo, int _indexParcel)
         {
             InitializeComponent();
@@ -200,6 +212,126 @@ namespace PL
             AccessIbl = bl;
 
             ListWindow = _ListWindow;
+
+            indexSelected = _indexParcel;
+
+            parcel = AccessIbl.GetParcel(parcelTo.Id);
+            DataContext = parcel;
+
+            switch (parcelTo.Status)//להיזהר ולבדוק שהרשימות אכן מתעדדנות כשיש שינוי במצב החבילה
+            {
+                case DeliveryStatus.created:
+                    BDelete.Visibility = Visibility.Visible; //אפשר לבצע מחיקה אך ורק אם החבילה לא שויכה
+                    break;
+                case DeliveryStatus.Assigned:
+                    BUpdateParcel.Content = "חבילה נאספה";
+                    break;
+                case DeliveryStatus.PickedUp:
+                    BUpdateParcel.Content = "חבילה סופקה";
+                    break;
+                case DeliveryStatus.Delivered:
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// The function deletes a parcel.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BDelete_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show("האם אתה בטוח שאתה רוצה לבצע מחיקה", "מצב מחיקה", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            switch (result)
+            {
+                case MessageBoxResult.Yes:
+                    AccessIbl.RemoveParcel(parcel.Id);// accses to delete from the bl list 
+                    ListWindow.ParcelToLists.RemoveAt(indexSelected);// we go to the index to delete from the observer 
+
+                    ListWindow.IsEnabled = true;
+                    ClosingWindow = false;// allowd to close the window 
+                    Close();
+
+                    break;
+                case MessageBoxResult.No: // in case that the user dont want to delete he have the option to abort withot any change 
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// The function updates a parcel.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BUpdateParcel_Click(object sender, RoutedEventArgs e)
+        {
+            switch (BUpdateParcel.Content)
+            {
+                case "חבילה נאספה":
+                    try
+                    {
+                        AccessIbl.PickedUpPackageByTheDrone(parcel.MyDrone.Id);
+
+                        MessageBoxResult result = MessageBox.Show("The operation was successful", "info", MessageBoxButton.OK, MessageBoxImage.Information);
+                        switch (result)
+                        {
+                            case MessageBoxResult.OK:
+                                //to conecct the binding to set the value of my Parcel to the proprtis
+                                parcel = AccessIbl.GetParcel(parcel.Id);
+                                DataContext = parcel;
+
+                                ListWindow.ParcelToLists[indexSelected] = AccessIbl.GetParcelList().ToList().Find(x => x.Id == parcel.Id);//עדכון המשקיף
+                                ListWindow.StatusSelectorChanged();//??????????????????????????????????????
+         
+                                BUpdateParcel.Content = "חבילה סופקה";
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                    catch (NonExistentObjectException ex)
+                    {
+                        MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                    catch (UnableToCollectParcel ex)
+                    {
+                        MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                    break;
+                case "חבילה סופקה":
+                    try
+                    {
+                        AccessIbl.DeliveryPackageToTheCustomer(parcel.MyDrone.Id);
+
+                        MessageBoxResult result = MessageBox.Show("The operation was successful", "info", MessageBoxButton.OK, MessageBoxImage.Information);
+                        switch (result)
+                        {
+                            case MessageBoxResult.OK:
+                                //to conecct the binding to set the value of my Parcel to the proprtis
+                                parcel = AccessIbl.GetParcel(parcel.Id);
+                                DataContext = parcel;
+
+                                ListWindow.ParcelToLists[indexSelected] = AccessIbl.GetParcelList().ToList().Find(x => x.Id == parcel.Id);//עדכון המשקיף
+                                ListWindow.StatusSelectorChanged();
+
+                                BUpdateParcel.Content = "";
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                    catch (DeliveryCannotBeMade ex)
+                    {
+                        MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                    break;             
+                default:
+                    break;
+            }
         }
     }
 }

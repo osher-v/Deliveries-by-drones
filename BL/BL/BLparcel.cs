@@ -329,7 +329,7 @@ namespace BL
             return parcels.FindAll(x => predicate == null ? true : predicate(x));
         }
 
-        public void RemoveParcel(int ParcelId)
+        public void RemoveParcel(int ParcelId)//להוסיף חריגה אם החבילה כבר משויכת
         {
             try    // throw if the id is nonExsist
             {
