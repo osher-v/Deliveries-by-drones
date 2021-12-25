@@ -9,7 +9,7 @@ namespace BL
 {
     partial class BL
     {
-        public void AddParcel(Parcel newParcel)
+        public int AddParcel(Parcel newParcel)
         {
             try //Check if the customers exist in the system.
             {
@@ -42,7 +42,8 @@ namespace BL
                 DroneId = 0
             };
 
-            AccessIdal.AddParcel(parcel);
+            int IdOfParcel = AccessIdal.AddParcel(parcel);
+            return IdOfParcel;
         }
 
         public void AssignPackageToDdrone(int droneId)

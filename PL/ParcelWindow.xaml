@@ -47,7 +47,7 @@
 
         </Grid>
 
-        <Grid x:Name="updateParcel" Visibility="Hidden">
+        <Grid x:Name="updateParcel" Visibility="Visible">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
@@ -83,9 +83,9 @@
                     </Button>
                 </StackPanel>
             </Grid>
-            <!--<TextBox x:Name="TBUpdateStaitonI" Grid.Row="2" materialDesign:HintAssist.Hint="מספר " Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" HorizontalAlignment="Left" Width="279" TextAlignment="Center" Margin="88,0,0,0"  />
+            <TextBox x:Name="TBUpdateStaitonI" Grid.Row="2" materialDesign:HintAssist.Hint="מספר " Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" HorizontalAlignment="Left" Width="279" TextAlignment="Center" Margin="88,0,0,0"  />
             <TextBox x:Name="TBstaitonLongtud" Grid.Row="5" materialDesign:HintAssist.Hint="קו אורך" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" Margin="242,0,23,0" TextAlignment="Center" KeyDown="TBstaitonLongtude_KeyDown" />
-            <TextBox x:Name="TBstaitonLattud" Grid.Row="5" materialDesign:HintAssist.Hint="קו רוחב" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" Margin="38,0,227,0" TextAlignment="Center" KeyDown="TBstaitonLattude_KeyDown" />-->
+            <TextBox x:Name="TBstaitonLattud" Grid.Row="5" materialDesign:HintAssist.Hint="קו רוחב" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" Margin="38,0,227,0" TextAlignment="Center" KeyDown="TBstaitonLattude_KeyDown" />
             <Grid x:Name="Cards" Grid.Row="4" Margin="0,22,0,5">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -132,9 +132,9 @@
                     </Grid>
                 </materialDesign:Card>
             </Grid>
-            <!--<Button x:Name="BUpdate" Grid.Row="6" Style="{StaticResource MaterialDesignRaisedButton}" materialDesign:ButtonProgressAssist.Value="-1" materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
+            <Button x:Name="BUpdate" Grid.Row="6" Style="{StaticResource MaterialDesignRaisedButton}" materialDesign:ButtonProgressAssist.Value="-1" materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
              materialDesign:ButtonProgressAssist.IsIndeterminate="True" Content="עדכון התחנה" Margin="0,13,0,4"
-             IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Click="BUpdate_Click" />-->
+             IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Click="BUpdate_Click" />
 
             <Grid Grid.Row="1" Margin="0,0,0,3">
                 <TextBlock Text=":מספר התחנה" TextWrapping="Wrap" Margin="302,24,9,33" FontWeight="Bold" FontFamily="Consolas" FontSize="14"/>
@@ -144,9 +144,9 @@
                 <TextBlock Text="{Binding Id}" TextWrapping="Wrap" Margin="30,104,316,-45" FontWeight="Bold" FontFamily="Consolas" FontSize="18" TextAlignment="Center"/>
                 <TextBlock TextWrapping="Wrap" Margin="143,101,245,-46" FontWeight="Bold" FontFamily="Consolas" FontSize="14"><Run Text=":"/><Run FlowDirection="RightToLeft" Language="he-il" Text="משקל"/></TextBlock>
             </Grid>
-            <!--<Button x:Name="BDelete" Grid.Row="1" Style="{StaticResource MaterialDesignRaisedButton}" materialDesign:ButtonProgressAssist.Value="-1" materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
+            <Button x:Name="BDelete" Grid.Row="1" Style="{StaticResource MaterialDesignRaisedButton}" materialDesign:ButtonProgressAssist.Value="-1" materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
                 materialDesign:ButtonProgressAssist.IsIndeterminate="True" Content="מחיקת חבילה" Margin="10,20,311,21"
-                IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" Background="#FFFF0909" BorderBrush="#FFF14A2F" FontSize="12" FontWeight="Bold" Click="BDelete_Click"  />-->
+                IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" Background="#FFFF0909" BorderBrush="#FFF14A2F" FontSize="12" FontWeight="Bold" Click="BDelete_Click"  />
         </Grid>
     </Grid>
 </Window>

@@ -39,7 +39,7 @@ namespace BlApi
         /// The function adds a Parcel.
         /// </summary>
         /// <param name="newParcel">newParcel object</param>
-        void AddParcel(Parcel newParcel);
+        int AddParcel(Parcel newParcel);
         #endregion Adding functions
 
         #region Update functions

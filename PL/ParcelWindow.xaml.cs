@@ -30,6 +30,7 @@ namespace PL
         /// <summary> a bool to help us disable the x bootum  </summary>
         public bool ClosingWindow { get; private set; } = true;
 
+        #region הוספה
         /// <summary>
         /// Add constractor.
         /// </summary>
@@ -59,6 +60,7 @@ namespace PL
         /// <param name="e"></param>
         private void TBParcelSenderId_KeyDown(object sender, KeyEventArgs e)
         {
+            TBParcelSenderId.BorderBrush = Brushes.Gray;
             if (e.Key < Key.D0 || e.Key > Key.D9)
             {
                 if (e.Key < Key.NumPad0 || e.Key > Key.NumPad9) // we want keys from the num pud too
@@ -79,6 +81,7 @@ namespace PL
         /// <param name="e"></param>
         private void TBParcelReciverId_KeyDown(object sender, KeyEventArgs e)
         {
+            TBParcelReciverId.BorderBrush = Brushes.Gray;
             if (e.Key < Key.D0 || e.Key > Key.D9)
             {
                 if (e.Key < Key.NumPad0 || e.Key > Key.NumPad9) // we want keys from the num pud too
@@ -141,18 +144,18 @@ namespace PL
                 {
                     Sender = new CustomerInDelivery() { Id = int.Parse(TBParcelSenderId.Text) },
                     Receiver = new CustomerInDelivery() { Id = int.Parse(TBParcelReciverId.Text) },
-                     Prior = (Priorities)CBPriorSelector.SelectedItem,
+                    Prior = (Priorities)CBPriorSelector.SelectedItem,
                     Weight = (WeightCategories)CBWeightSelctor.SelectedItem
                 };
 
                 try
                 {
-                    AccessIbl.AddParcel(parcelAdd);
+                    int IdOfParcel = AccessIbl.AddParcel(parcelAdd);
                     MessageBoxResult result = MessageBox.Show("The operation was successful", "info", MessageBoxButton.OK, MessageBoxImage.Information);
                     switch (result)
                     {
                         case MessageBoxResult.OK:
-                            BO.ParcelToList parcelsToList = AccessIbl.GetParcelList().ToList().Find(i => i.Id == parcelAdd.Id);
+                            BO.ParcelToList parcelsToList = AccessIbl.GetParcelList().ToList().Find(i => i.Id == IdOfParcel);
                             ListWindow.ParcelToLists.Add(parcelsToList); //Updating the observer list of stations.
 
                             ListWindow.IsEnabled = true;
@@ -186,6 +189,7 @@ namespace PL
                 MessageBox.Show("נא ודאו שכל השדות מלאים", "!שגיאה", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+        #endregion הוספה
 
         public ParcelWindow(BlApi.IBL bl, ListView _ListWindow, ParcelToList parcelTo, int _indexParcel)
         {
@@ -193,6 +197,9 @@ namespace PL
 
             updateParcel.Visibility = Visibility.Visible;
 
+            AccessIbl = bl;
+
+            ListWindow = _ListWindow;
         }
     }
 }
