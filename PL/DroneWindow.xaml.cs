@@ -40,7 +40,8 @@ namespace PL
         {
             InitializeComponent();
 
-            this.Width = 440;
+            Width = 440;
+            Height = 540;
             addDrone.Visibility = Visibility.Visible;
 
             AccessIbl = bl;
@@ -212,8 +213,6 @@ namespace PL
 
                 case DroneStatuses.inMaintenance:
                     BReleaseDrone.Visibility = Visibility.Visible;
-                    BReleaseDrone.IsEnabled = false;
-                    TimeChoose.Visibility = Visibility.Visible;
                     break;
 
                 case DroneStatuses.busy:
@@ -296,9 +295,6 @@ namespace PL
                         BSendToCharge.Visibility = Visibility.Hidden;
                         BReleaseDrone.Visibility = Visibility.Visible;
                         BAssignPackage.Visibility = Visibility.Hidden;
-
-                        BReleaseDrone.IsEnabled = false;
-                        TimeChoose.Visibility = Visibility.Visible;
                         break;
                     default:
                         break;
@@ -316,10 +312,7 @@ namespace PL
         /// <param name="e"></param>
         private void BReleaseDrone_Click(object sender, RoutedEventArgs e)
         {
-            DateTime time;
-            string stringTime = $"{TBhours.Text}:{TBmin.Text}:{TBsec.Text}";//to convert the strings to a string that the datetime can hold
-            DateTime.TryParse(stringTime, out time);
-            AccessIbl.ReleaseDroneFromCharging(MyDrone.Id); //, time);
+                 AccessIbl.ReleaseDroneFromCharging(MyDrone.Id); //, time);
 
             MessageBoxResult result = MessageBox.Show("The operation was successful", "info", MessageBoxButton.OK, MessageBoxImage.Information);//לטלפל בX
             switch (result)
@@ -336,12 +329,7 @@ namespace PL
                     BAssignPackage.Visibility = Visibility.Visible;
 
                     //we set that back to the start posison for the next time.
-                    BReleaseDrone.IsEnabled = false;
-                    TBhours.Text = "00";
-                    TBmin.Text = "00";
-                    TBsec.Text = "00";
-                    TimeChoose.Visibility = Visibility.Hidden;
-                    CBtimeOk.IsChecked = false;
+                   
 
                     break;
                 default:
@@ -488,116 +476,7 @@ namespace PL
                 e.Handled = true;
             }
         }
-
-        #region Handles charging time buttons
-        /// <summary>
-        /// to see if the hours time is correcet 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void TBhours_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key < Key.D0 || e.Key > Key.D9)
-            {
-                e.Handled = e.Key is < Key.NumPad0 or > Key.NumPad9;
-            }
-            if (TBhours.Text.Length > 1)
-            {
-                e.Handled = true;
-            }
-            TBhours.BorderBrush = Brushes.Gray; //בונוס 
-
-
-        }
-        /// <summary>
-        /// to see if the min time is correcet 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void TBmin_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key < Key.D0 || e.Key > Key.D9)
-            {
-                e.Handled = e.Key is < Key.NumPad0 or > Key.NumPad9;
-            }
-            if (TBmin.Text.Length > 1)
-            {
-                e.Handled = true;
-            }
-            TBmin.BorderBrush = Brushes.Gray; //bounus
-
-        }
-        /// <summary>
-        /// to see if the sec time is correcet 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void TBsec_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key < Key.D0 || e.Key > Key.D9)
-            {
-                e.Handled = e.Key is < Key.NumPad0 or > Key.NumPad9;
-            }
-            if (TBsec.Text.Length > 1)
-            {
-                e.Handled = true;
-            }
-            TBsec.BorderBrush = Brushes.Gray; //bounus 
-
-        }
-        /// <summary>
-        /// if you press on it you can relise the drone amd cahck the formet 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void CBtimeOk_Checked(object sender, RoutedEventArgs e)
-        {
-            int hours, min, sec;
-            int.TryParse(TBhours.Text, out hours);
-            int.TryParse(TBmin.Text, out min);
-            int.TryParse(TBsec.Text, out sec);
-
-
-            if (hours > 23 || TBhours.Text == "")
-            {
-                MessageBox.Show("נא הכנס שעות בין 0-23", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
-                TBhours.BorderBrush = Brushes.Red; //bounus 
-                CBtimeOk.IsChecked = false;
-
-            }
-            else if (min > 59 || TBmin.Text == "")
-            {
-                MessageBox.Show("נא הכנס דקות בין 0-59", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
-                TBmin.BorderBrush = Brushes.Red; //bounus 
-                CBtimeOk.IsChecked = false;
-            }
-            else if (sec > 59 || TBsec.Text == "")
-            {
-                MessageBox.Show("נא הכנס שניות בין 0-59", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
-                TBsec.BorderBrush = Brushes.Red; //bounus 
-                CBtimeOk.IsChecked = false;
-            }
-            else
-            {
-                BReleaseDrone.IsEnabled = true;
-                TBhours.IsReadOnly = true;
-                TBmin.IsReadOnly = true;
-                TBsec.IsReadOnly = true;
-            }
-        }
-        /// <summary>
-        /// if you un check you cant frre the drone 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void CBtimeOk_Unchecked(object sender, RoutedEventArgs e)
-        {
-            BReleaseDrone.IsEnabled = false;
-            TBhours.IsReadOnly = false;
-            TBmin.IsReadOnly = false;
-            TBsec.IsReadOnly = false;
-        }
-        #endregion Handles charging time buttons
+  
 
         #endregion drone in operations  
     }

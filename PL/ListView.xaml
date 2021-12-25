@@ -18,8 +18,8 @@
         Title="ListView" Height="700" Width="1100">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="293*"/>
-            <RowDefinition Height="49*"/>
+            <RowDefinition Height="148*"/>
+            <RowDefinition Height="23*"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
             <TabControl x:Name="TCmenu" Style="{StaticResource MaterialDesignNavigatilRailTabControl}" materialDesign:ColorZoneAssist.Mode="Standard" materialDesign:ShadowAssist.ShadowDepth="Depth3" Height="594" VerticalAlignment="Top">
@@ -84,7 +84,7 @@
                         </ListView>
                     </Grid>
                 </TabItem>
-                
+
                 <!--מתעסק ברשימת התחנות-->
                 <TabItem Name="station">
                     <TabItem.Header>
@@ -123,7 +123,7 @@
                         </ListView>
                     </Grid>
                 </TabItem>
-                
+
                 <!--מטפל ברשימת לקוחות-->
                 <TabItem Name="customer">
                     <TabItem.Header>
@@ -207,10 +207,10 @@
                     </Grid>
                 </TabItem>
             </TabControl>
-            
-            <StackPanel/>
+
+            <StackPanel Margin="0,0,0,-2"/>
         </Grid>
-        <StackPanel Background="#FFBFBDBD" Opacity="0.7" Margin="0,586,0,0" Grid.RowSpan="2">
+        <StackPanel Background="#FFBFBDBD" Opacity="0.7" Margin="0,3,0,0" Grid.Row="1">
             <Grid Height="96">
                 <Button  x:Name="BAdd"
   Style="{StaticResource MaterialDesignFloatingActionMiniButton}"
