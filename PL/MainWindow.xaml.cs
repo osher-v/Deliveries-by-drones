@@ -76,25 +76,25 @@ namespace PL
                 Blogin.IsEnabled = true;
                 DoubleAnimation doubleAnimmation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(5));
                 AddOn.BeginAnimation(Grid.OpacityProperty, doubleAnimmation);
-                DoubleAnimation DSF = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(2));
+                DoubleAnimation DSF = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(1));
                 Disiaper.BeginAnimation(Grid.OpacityProperty, DSF);
-                
             }
         }
 
-        private void TCadmin_GotFocus(object sender, RoutedEventArgs e)
+        private void BNewUser_Click(object sender, RoutedEventArgs e)
         {
+            //new CustomerWindow(AccessIbl).Show();
+        }
+
+        private void TICadmin_GotFocus(object sender, RoutedEventArgs e)
+        {
+            Blogin.Visibility = Visibility.Visible;
             Blogin.Content = "כניסה כמנהל";
         }
 
-        private void TIRegister_GotFocus(object sender, RoutedEventArgs e)
+        private void TextBlock_GotFocus(object sender, RoutedEventArgs e)
         {
-            Blogin.Content = "הרשמת לקוח למערכת";
-
-        }
-
-        private void TabItem_GotFocus(object sender, RoutedEventArgs e)
-        {
+            Blogin.Visibility = Visibility.Visible;
             Blogin.Content = "כניסת לקוח";
 
         }

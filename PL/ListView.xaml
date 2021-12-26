@@ -156,10 +156,10 @@
                                     <GridViewColumn DisplayMemberBinding="{Binding Id}" Header="מספר מזהה" />
                                     <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="שם" />
                                     <GridViewColumn DisplayMemberBinding="{Binding PhoneNumber}" Header="מס' טלפון"  />
-                                    <GridViewColumn DisplayMemberBinding="{Binding NumberOfPackagesSentAndDelivered}" Header="מס' חבילות ששלח וסופקו" />
-                                    <GridViewColumn DisplayMemberBinding="{Binding NumberOfPackagesSentAndNotYetDelivered}" Header="מס' חבילות ששלח אך עוד לא סופקו" />
-                                    <GridViewColumn DisplayMemberBinding="{Binding NumberOfPackagesWhoReceived}" Header="מס' חבילות שקיבל" />
-                                    <GridViewColumn DisplayMemberBinding="{Binding NumberPackagesOnTheWayToTheCustomer}" Header="מס' חבילות שבדרך אל הלקוח" />
+                                    <GridViewColumn DisplayMemberBinding="{Binding NumberOfPackagesSentAndDelivered}" Header="שלח וסופקו" />
+                                    <GridViewColumn DisplayMemberBinding="{Binding NumberOfPackagesSentAndNotYetDelivered}" Header="ששלח ולא סופקו" />
+                                    <GridViewColumn DisplayMemberBinding="{Binding NumberOfPackagesWhoReceived}" Header="חבילות שקיבל" />
+                                    <GridViewColumn DisplayMemberBinding="{Binding NumberPackagesOnTheWayToTheCustomer}" Header="חבילות בדרך ללקוח" />
                                 </GridView>
                             </ListView.View>
                         </ListView>
