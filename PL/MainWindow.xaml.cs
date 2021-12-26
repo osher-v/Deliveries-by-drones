@@ -41,17 +41,20 @@ namespace PL
             {
                 case "כניסה כמנהל":
                     new ListView(AccessIbl).Show();
-                    this.Close(); // we close the login window
-                    break;
-                case "הרשמת לקוח למערכת":
-                    
                     break;
                 case "כניסת לקוח":
-                    new ClientWindow().Show();
-                    this.Close(); // we close the login window
+                    try
+                    {
+                         AccessIbl.GetCustomer(int.Parse(TBuserID.Text));
+                    }
+                    catch (BO.NonExistentObjectException)
+                    {
+                        
+                        throw;
+                    }
+                    new ClientWindow(AccessIbl, int.Parse(TBuserID.Text)).Show();
                     break;
-                default:
-                  
+                default:   
                     break;
             }
             //enter.Unloaded -= enter_Unloaded;

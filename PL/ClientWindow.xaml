@@ -24,28 +24,70 @@
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="24*"/>
-                <RowDefinition Height="178*"/>
-                <RowDefinition Height="165*"/>
+                <RowDefinition Height="205*"/>
+                <RowDefinition Height="138*"/>
             </Grid.RowDefinitions>
             <Grid Grid.Column="1" Grid.RowSpan="3" Background="#FF673AB7" Opacity="0.3"></Grid>
-            <Grid Grid.Row="1">
-                <ListView  ItemsSource="{Binding Items1}" Margin="0,0,399,11">
-                    <ListView.ItemContainerStyle>
-                        <Style TargetType="{x:Type ListViewItem}">
-                            <Setter Property="HorizontalContentAlignment" Value="Center"/>
-                        </Style>
-                    </ListView.ItemContainerStyle>
-                    <ListView.View>
-                        <GridView>
-                            <GridViewColumn DisplayMemberBinding="{Binding Id}" Header="מספר מזהה" />
-                            <GridViewColumn DisplayMemberBinding="{Binding Model}" Header="דחיפות"  Width="105"/>
-                            <GridViewColumn DisplayMemberBinding="{Binding MaxWeight}" Header="משקל"  />
-                            <GridViewColumn DisplayMemberBinding="{Binding Statuses}" Header="סטטוס" />
-                            <GridViewColumn DisplayMemberBinding="{Binding CurrentLocation}" Header="  מיקום קו רוחב       מיקום קו אורך"  />
-                        </GridView>
-                    </ListView.View>
-                </ListView>
+            <Grid x:Name="Cards" Grid.Row="1" Margin="0,22,364,3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <materialDesign:Card   Background="{DynamicResource PrimaryHueLightBrush}" Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"   
+                                      UniformCornerRadius="6" Margin="10,10,10,201" >
+                    <Grid Margin="0,21,0,6" >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="37*"/>
+                            <RowDefinition Height="122*"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0" Text="משלוחים יוצאים" Margin="152,-11,124,22" FontWeight="Bold" FontSize="14" TextAlignment="Center" ></TextBlock>
+                        <ListView x:Name="listOfCustomeSend" ItemsSource="{Binding Items1}" Margin="10,-3,10,10" FontSize="12" Grid.RowSpan="2">
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="{x:Type ListViewItem}">
+                                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                </Style>
+                            </ListView.ItemContainerStyle>
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn DisplayMemberBinding="{Binding Id}" Header="מספר מזהה" />
+                                    <GridViewColumn DisplayMemberBinding="{Binding Prior}" Header="דחיפות"  Width="105"/>
+                                    <GridViewColumn DisplayMemberBinding="{Binding Weight}" Header="משקל"  />
+                                    <GridViewColumn DisplayMemberBinding="{Binding Status}" Header="סטטוס" />
+                                    <GridViewColumn DisplayMemberBinding="{Binding OtherCustomer.Id}" Header=" מס' מזהה יעד" Width="150" />
+                                    <GridViewColumn DisplayMemberBinding="{Binding OtherCustomer.Name}" Header=" שם יעד" />
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </Grid>
+                </materialDesign:Card>
+                <materialDesign:Card   Background="{DynamicResource PrimaryHueLightBrush}" Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"   
+                    UniformCornerRadius="6" Margin="10,207,10,10" >
+                    <Grid Margin="0,21,17,6" >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="37*"/>
+                            <RowDefinition Height="122*"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0" Text="משלוחים נכנסים" Margin="152,-11,124,22" FontWeight="Bold" FontSize="14" TextAlignment="Center" />
+                        <ListView x:Name="listOfCustomerReceive" ItemsSource="{Binding Items1}" Margin="10,-3,0,10" FontSize="12" Grid.RowSpan="2">
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="{x:Type ListViewItem}">
+                                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                </Style>
+                            </ListView.ItemContainerStyle>
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn DisplayMemberBinding="{Binding Id}" Header="מספר מזהה" />
+                                    <GridViewColumn DisplayMemberBinding="{Binding Prior}" Header="דחיפות"  Width="105"/>
+                                    <GridViewColumn DisplayMemberBinding="{Binding Weight}" Header="משקל"  />
+                                    <GridViewColumn DisplayMemberBinding="{Binding Status}" Header="סטטוס" />
+                                    <GridViewColumn DisplayMemberBinding="{Binding OtherCustomer.Id}" Header=" מס' מזהה שולח" Width="150" />
+                                    <GridViewColumn DisplayMemberBinding="{Binding OtherCustomer.Name}" Header=" שם שולח" />
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </Grid>
+                </materialDesign:Card>
             </Grid>
+
             <Grid Grid.Column="0"  Grid.Row="2" Background="Gray" Opacity="0.3" Margin="0,2,0,0">
                 <Grid.ColumnDefinitions >
                     <ColumnDefinition Width="*"/>
@@ -86,7 +128,7 @@
 
             </Grid>
             <TextBlock HorizontalAlignment="Left" Margin="1005,0,0,0" TextWrapping="Wrap" VerticalAlignment="Center" Height="28" Width="89" FontSize="24" FontWeight="Bold" FontFamily="Consolas"><Run FlowDirection="RightToLeft" Language="he-il" Text="שלום,"/></TextBlock>
-            <TextBlock HorizontalAlignment="Left" Margin="858,0,0,0" TextWrapping="Wrap" VerticalAlignment="Center" Height="28" Width="142" FontSize="24" FontWeight="Bold" FontFamily="Consolas" TextAlignment="Right"><Run FlowDirection="RightToLeft" Language="he-il" Text="לקוח חתיך"/></TextBlock>
+            <TextBlock  x:Name="TBuserName" HorizontalAlignment="Left" Margin="858,0,0,0" TextWrapping="Wrap" VerticalAlignment="Center" Height="28" Width="142" FontSize="24" FontWeight="Bold" FontFamily="Consolas" TextAlignment="Right"><Run FlowDirection="RightToLeft" Language="he-il" Text="{Binding Name}"/></TextBlock>
 
         </Grid>
     </Grid>
