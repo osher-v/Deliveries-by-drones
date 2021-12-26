@@ -40,7 +40,7 @@ namespace PL
             switch (Blogin.Content)
             {
                 case "כניסה כמנהל":
-                    new ListView().Show();//(AccessIbl).Show();?????????????????????????????????????????????????????????????????
+                    new ListView(AccessIbl).Show();
                     this.Close(); // we close the login window
                     break;
                 case "הרשמת לקוח למערכת":
@@ -83,7 +83,8 @@ namespace PL
 
         private void BNewUser_Click(object sender, RoutedEventArgs e)
         {
-            //new CustomerWindow(AccessIbl).Show();
+            ListView listView = new ListView(AccessIbl);
+            new CustomerWindow(AccessIbl, listView).Show();
         }
 
         private void TICadmin_GotFocus(object sender, RoutedEventArgs e)
@@ -92,11 +93,10 @@ namespace PL
             Blogin.Content = "כניסה כמנהל";
         }
 
-        private void TextBlock_GotFocus(object sender, RoutedEventArgs e)
+        private void TIUser_GotFocus(object sender, RoutedEventArgs e)
         {
             Blogin.Visibility = Visibility.Visible;
             Blogin.Content = "כניסת לקוח";
-
         }
     }
 }

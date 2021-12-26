@@ -14,7 +14,7 @@
         FontFamily="{DynamicResource MaterialDesignFont}"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"       
-        Title="BaseStationWindow" Height="720" Width="780">
+        Title="CustomerWindow" Height="720" Width="780">
     <Grid>
         <Grid x:Name="addCustomer" Visibility="Hidden">
             <Grid.ColumnDefinitions>
@@ -31,7 +31,7 @@
             </Grid.RowDefinitions>
             <Grid Background="#FF673AB7" Opacity="0.7" >
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                    <TextBlock TextWrapping="Wrap" Width="221" FontFamily="Consolas" FontSize="16" FontWeight="Bold" Height="18" Foreground="White"><Run FlowDirection="RightToLeft" Language="he-il" Text="הוספת תחנה "/><LineBreak/><Run FlowDirection="RightToLeft" Language="he-il"/><LineBreak/><Run FlowDirection="RightToLeft" Language="he-il"/></TextBlock>
+                    <TextBlock TextWrapping="Wrap" Width="221" FontFamily="Consolas" FontSize="16" FontWeight="Bold" Height="18" Foreground="White"><Run FlowDirection="RightToLeft" Language="he-il" Text="הוספת לקוח "/><LineBreak/><Run FlowDirection="RightToLeft" Language="he-il"/><LineBreak/><Run FlowDirection="RightToLeft" Language="he-il"/></TextBlock>
                     <Button x:Name="BcloseAdd" Background="{x:Null}" BorderBrush="{x:Null}" Click="BcloseAdd_Click" >
                         <materialDesign:PackIcon Kind="Close" Height="25" Width="25" VerticalAlignment="Center" />
                     </Button>

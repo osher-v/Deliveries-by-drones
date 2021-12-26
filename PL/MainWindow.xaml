@@ -44,11 +44,11 @@
 
                     </TabItem>
 
-                    <TabItem x:Name="TIUser" >
+                    <TabItem x:Name="TIUser" GotFocus="TIUser_GotFocus" >
                         <TabItem.Header>
                             <StackPanel   Height="auto"   Width="auto">
                                 <materialDesign:PackIcon Kind="User" Width="24" Height="24"  HorizontalAlignment="Center" />
-                                <TextBlock Text="לקוח" HorizontalAlignment="Center" GotFocus="TextBlock_GotFocus" />
+                                <TextBlock Text="לקוח" HorizontalAlignment="Center" />
                             </StackPanel>
                         </TabItem.Header>
                         <Grid Background="{DynamicResource MaterialDesignDarkBackground}" Opacity="0.3">

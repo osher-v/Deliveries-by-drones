@@ -28,7 +28,7 @@ namespace PL
         /// <summary> a bool to help us disable the x bootum  </summary>
         public bool ClosingWindow { get; private set; } = true;
         /// <summary> the calling window, becuse we want to use it here </summary> 
-        private ListView DroneListWindow;
+        private ListView listWindow;
 
         #region drone to add
         /// <summary>
@@ -46,7 +46,7 @@ namespace PL
 
             AccessIbl = bl;
 
-            DroneListWindow = _DroneListWindow;
+            listWindow = _DroneListWindow;
 
             // the combobox use it to show the Weight Categories
             TBWeight.ItemsSource = Enum.GetValues(typeof(WeightCategories));
@@ -120,8 +120,8 @@ namespace PL
                     {
                         case MessageBoxResult.OK:
                             newdrone = AccessIbl.GetDroneList().ToList().Find(i => i.Id == newdrone.Id);
-                            DroneListWindow.droneToLists.Add(newdrone);
-                            DroneListWindow.IsEnabled = true;
+                            listWindow.droneToLists.Add(newdrone); //עדכון המשקיף
+                            listWindow.IsEnabled = true;
                             ClosingWindow = false;
                             Close();
                             break;
@@ -164,7 +164,7 @@ namespace PL
         /// <param name="e"></param>
         private void Bclose_Click(object sender, RoutedEventArgs e)
         {
-            DroneListWindow.IsEnabled = true;
+            listWindow.IsEnabled = true;
             ClosingWindow = false;
             Close();
         }
@@ -196,7 +196,7 @@ namespace PL
             indexDrone = _indexDrone;
             AccessIbl = bl;
 
-            DroneListWindow = _DroneListWindow;
+            listWindow = _DroneListWindow;
             //to conecct the binding to set the value of my drone to the proprtis
             MyDrone = bl.GetDrone(droneTo.Id);
             DataContext = MyDrone;
@@ -241,7 +241,7 @@ namespace PL
         /// <param name="e"></param>
         private void BClose1_Click(object sender, RoutedEventArgs e)
         {
-            DroneListWindow.IsEnabled = true;//allowd to use drone window list again
+            listWindow.IsEnabled = true;//allowd to use drone window list again
             ClosingWindow = false;
             Close();
         }
@@ -258,9 +258,9 @@ namespace PL
             {
                 case MessageBoxResult.OK:
                     BModalUpdate.IsEnabled = false;
-                    DroneListWindow.StatusSelectorChanged();
-                    //DroneListWindow.droneToLists[indexDrone].Model = TBmodel.Text;
-                    //DroneListWindow.droneToLists[indexDrone] = DroneListWindow.droneToLists[indexDrone];
+                    listWindow.StatusSelectorChanged();
+                    //listWindow.droneToLists[indexDrone].Model = TBmodel.Text;
+                    //listWindow.droneToLists[indexDrone] = listWindow.droneToLists[indexDrone];
                     break;
                 default:
                     break;
@@ -282,12 +282,12 @@ namespace PL
                 {
                     case MessageBoxResult.OK:
 
-                        //DroneListWindow.droneToLists[indexDrone].Statuses = DroneStatuses.inMaintenance;
-                        //DroneListWindow.droneToLists[indexDrone].CurrentLocation = AccessIbl.GetDrone(MyDrone.Id).CurrentLocation;
-                        //DroneListWindow.droneToLists[indexDrone].BatteryStatus = AccessIbl.GetDrone(MyDrone.Id).BatteryStatus;
-                        //DroneListWindow.droneToLists[indexDrone] = DroneListWindow.droneToLists[indexDrone];
-                        DroneListWindow.StatusSelectorChanged();
-
+                        //listWindow.droneToLists[indexDrone].Statuses = DroneStatuses.inMaintenance;
+                        //listWindow.droneToLists[indexDrone].CurrentLocation = AccessIbl.GetDrone(MyDrone.Id).CurrentLocation;
+                        //listWindow.droneToLists[indexDrone].BatteryStatus = AccessIbl.GetDrone(MyDrone.Id).BatteryStatus;
+                        //listWindow.droneToLists[indexDrone] = listWindow.droneToLists[indexDrone];
+                        listWindow.StatusSelectorChanged(); //עדכון הרשימה
+                                                            //
                         //to conecct the binding to set the value of my drone to the proprtis
                         MyDrone = AccessIbl.GetDrone(MyDrone.Id);
                         DataContext = MyDrone;
@@ -318,7 +318,7 @@ namespace PL
             switch (result)
             {
                 case MessageBoxResult.OK:
-                    DroneListWindow.StatusSelectorChanged();
+                    listWindow.StatusSelectorChanged();
 
                     //to conecct the binding to set the value of my drone to the proprtis
                     MyDrone = AccessIbl.GetDrone(MyDrone.Id);
@@ -351,7 +351,12 @@ namespace PL
                 switch (result)
                 {
                     case MessageBoxResult.OK:
-                        DroneListWindow.StatusSelectorChanged();
+                        listWindow.StatusSelectorChanged();
+
+                        //listWindow.
+                        //int 
+                        //listWindow.ParcelToLists[] = AccessIbl.GetParcelList().ToList().Find(x => x.Id == MyDrone.Delivery.Id);
+                        listWindow.listOfParcels.ItemsSource = AccessIbl.GetParcelList(); //עדכון רשימת החבילות
 
                         //to conecct the binding to set the value of my drone to the proprtis
                         MyDrone = AccessIbl.GetDrone(MyDrone.Id);
@@ -392,7 +397,10 @@ namespace PL
                 switch (result)
                 {
                     case MessageBoxResult.OK:
-                        DroneListWindow.StatusSelectorChanged();
+                        listWindow.StatusSelectorChanged();
+
+                        listWindow.listOfParcels.ItemsSource = AccessIbl.GetParcelList(); //עדכון רשימת החבילות
+                        listWindow.listOfCustomers.ItemsSource = AccessIbl.GetCustomerList(); //עדכון רשימת הלקוחות
 
                         //to conecct the binding to set the value of my drone to the proprtis
                         MyDrone = AccessIbl.GetDrone(MyDrone.Id);
@@ -425,7 +433,10 @@ namespace PL
                 switch (result)
                 {
                     case MessageBoxResult.OK:
-                        DroneListWindow.StatusSelectorChanged();
+                        listWindow.StatusSelectorChanged();
+
+                        listWindow.listOfParcels.ItemsSource = AccessIbl.GetParcelList(); //עדכון רשימת החבילות
+                        listWindow.listOfCustomers.ItemsSource = AccessIbl.GetCustomerList(); //עדכון רשימת הלקוחות
 
                         //to conecct the binding to set the value of my drone to the proprtis
                         MyDrone = AccessIbl.GetDrone(MyDrone.Id);

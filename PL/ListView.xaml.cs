@@ -23,7 +23,7 @@ namespace PL
     public partial class ListView : Window
     {
         //Access object to the BL class
-        public BlApi.IBL AccessIbl = BlApi.BlFactory.GetBL();
+        public BlApi.IBL AccessIbl; // = BlApi.BlFactory.GetBL();
 
         /// <summary> crate a observabs list of type IBL.BO.object (to see changes in live) </summary>
         public ObservableCollection<BO.DroneToList> droneToLists;
@@ -38,11 +38,11 @@ namespace PL
         /// constractor for the ListWindow that will start the InitializeComponent ans fill the Observable Collection.
         /// </summary>
         /// <param name="bl">get AccessIbl from main win</param>
-        public ListView()
+        public ListView(BlApi.IBL bl)
         {
             InitializeComponent();
 
-            //AccessIbl = bl;
+            AccessIbl = bl;
 
             #region drone Observable and listOfDrones
             //craet observer and set the list accordale to ibl drone list.
@@ -153,7 +153,7 @@ namespace PL
         private void ParcelToLists_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             //display the defult list 
-            listOfParcels.ItemsSource = ParcelToLists;
+            listOfParcels.ItemsSource = ParcelToLists.ToList();
         }
 
         /// <summary>
