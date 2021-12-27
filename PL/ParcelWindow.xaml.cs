@@ -219,10 +219,10 @@ namespace PL
             parcel = AccessIbl.GetParcel(parcelTo.Id);
             DataContext = parcel;
 
-            switch (parcelTo.Status)//להיזהר ולבדוק שהרשימות אכן מתעדדנות כשיש שינוי במצב החבילה
+            switch (parcelTo.Status)
             {
                 case DeliveryStatus.created:
-                    BDelete.Visibility = Visibility.Visible; //אפשר לבצע מחיקה אך ורק אם החבילה לא שויכה
+                    BDelete.Visibility = Visibility.Visible; //we can only delete if the package is not associated.
                     break;
                 case DeliveryStatus.Assigned:
                     BUpdateParcel.Content = "חבילה נאספה";
@@ -289,7 +289,7 @@ namespace PL
 
                                 ListWindow.ParcelToLists[indexSelected] = AccessIbl.GetParcelList().ToList().Find(x => x.Id == parcel.Id);//עדכון המשקיף
 
-                                //ListWindow.StatusSelectorChanged();//עדכון הרחפנים נעשה ממילא רק צריך לשמור על הסינון
+                                //ListWindow.StatusDroneSelectorChanged();//עדכון הרחפנים נעשה ממילא רק צריך לשמור על הסינון
                                 int indexOfDroneInTheObservable = ListWindow.DroneToLists.IndexOf(ListWindow.DroneToLists.First(x => x.Id == IdOfTheDrone));
                                 ListWindow.DroneToLists[indexOfDroneInTheObservable] = AccessIbl.GetDroneList().First(x => x.Id == IdOfTheDrone);//עדכון המשקיף של רשימת הרחפנים
 
@@ -331,7 +331,7 @@ namespace PL
 
                                 ListWindow.ParcelToLists[indexSelected] = AccessIbl.GetParcelList().ToList().Find(x => x.Id == parcel.Id);//עדכון המשקיף
 
-                                //ListWindow.StatusSelectorChanged();//עדכון הרחפן ברשימת הרחפנים נעשה ממילא רק צריך לשמור על הסינון
+                                //ListWindow.StatusDroneSelectorChanged();//עדכון הרחפן ברשימת הרחפנים נעשה ממילא רק צריך לשמור על הסינון
                                 int indexOfDroneInTheObservable = ListWindow.DroneToLists.IndexOf(ListWindow.DroneToLists.First(x => x.Id == IdOfTheDrone));
                                 ListWindow.DroneToLists[indexOfDroneInTheObservable] = AccessIbl.GetDroneList().First(x => x.Id == IdOfTheDrone);//עדכון המשקיף של רשימת הרחפנים
 
@@ -357,6 +357,6 @@ namespace PL
                 default:
                     break;
             }
-        }
+        } //אולי פשוט נמחק את זה כי זה כבר קיים ברחפן
     }
 }

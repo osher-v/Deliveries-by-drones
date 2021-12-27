@@ -111,6 +111,11 @@ namespace PL
             //combobox of dronesList handling.
             CBStatusSelector.ItemsSource = Enum.GetValues(typeof(DroneStatuses));
             CBWeightSelctor.ItemsSource = Enum.GetValues(typeof(WeightCategories));
+
+            //combobox of parcelList handling.
+            CBparcelWhaigt.ItemsSource = Enum.GetValues(typeof(WeightCategories));
+            CBparcelStatus.ItemsSource = Enum.GetValues(typeof(DeliveryStatus));
+            CBparcelWprior.ItemsSource = Enum.GetValues(typeof(Priorities));
         }
 
         /// <summary>
@@ -120,7 +125,7 @@ namespace PL
         /// <param name="e"></param>   
         private void DroneToLists_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-            StatusSelectorChanged();
+            StatusDroneSelectorChanged();
         }
 
         /// <summary>
@@ -159,7 +164,7 @@ namespace PL
         /// <summary>
         /// help fanction to choose what to show on the user side accordingly to user cohises ( bonous)
         /// </summary>
-        public void StatusSelectorChanged()
+        public void StatusDroneSelectorChanged()
         {
             if (CBWeightSelctor.SelectedItem == null && CBStatusSelector.SelectedItem == null)
             {
@@ -187,7 +192,7 @@ namespace PL
         /// <param name="e"></param>
         private void CBStatusSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            StatusSelectorChanged();
+            StatusDroneSelectorChanged();
         }
 
         /// <summary>
@@ -197,7 +202,7 @@ namespace PL
         /// <param name="e"></param>
         private void CBWeightSelctor_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            StatusSelectorChanged();
+            StatusDroneSelectorChanged();
         }
 
         /// <summary>
@@ -208,7 +213,7 @@ namespace PL
         private void BResetStatus_Click(object sender, RoutedEventArgs e)
         {
             CBStatusSelector.SelectedItem = null;
-            StatusSelectorChanged();
+            StatusDroneSelectorChanged();
         }
 
         /// <summary>
@@ -219,12 +224,8 @@ namespace PL
         private void BResetWeight_Click(object sender, RoutedEventArgs e)
         {
             CBWeightSelctor.SelectedItem = null;
-            StatusSelectorChanged();
+            StatusDroneSelectorChanged();
         }
-
-
-
-
         #endregion combobox of dronesList handling
 
         /// <summary>
@@ -348,6 +349,114 @@ namespace PL
             Close();
         }
         #endregion close     
+
+        #region combobox of parcelList handling
+        /// <summary>
+        /// Filter the list by weight.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CBparcelWhaigt_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            StatusParcelSelectorChanged();
+        }
+
+        /// <summary>
+        /// Reset the list from the weight filter.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BRparcelWhaigt_Click(object sender, RoutedEventArgs e)
+        {
+            CBparcelWhaigt.SelectedItem = null;
+            StatusParcelSelectorChanged();
+        }
+
+        /// <summary>
+        /// Filter the list by status.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CBparcelStatus_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            StatusParcelSelectorChanged();
+        }
+
+        /// <summary>
+        /// Reset the list from the status filter.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BRparcelStatus_Click(object sender, RoutedEventArgs e)
+        {
+            CBparcelStatus.SelectedItem = null;
+            StatusParcelSelectorChanged();
+        }
+
+        /// <summary>
+        /// Filter the list by priority.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CBparcelWprior_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            StatusParcelSelectorChanged();
+        }
+
+        /// <summary>
+        /// Resetting the list from the priority filter.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BRparcelprior_Click(object sender, RoutedEventArgs e)
+        {
+            CBparcelWprior.SelectedItem = null;
+            StatusParcelSelectorChanged();
+        }
+        #endregion combobox of parcelList handling
+
+        /// <summary>
+        /// The function calculates the list of packages according to all the filters.
+        /// </summary>
+        public void StatusParcelSelectorChanged()
+        {
+            if (CBparcelWhaigt.SelectedItem == null && CBparcelStatus.SelectedItem == null && CBparcelWprior.SelectedItem == null)
+            {
+                listOfParcels.ItemsSource = ParcelToLists.ToList();
+            }
+            else if (CBparcelWhaigt.SelectedItem == null && CBparcelStatus.SelectedItem == null && CBparcelWprior.SelectedItem != null)
+            {
+                listOfParcels.ItemsSource = ParcelToLists.ToList().FindAll(x => x.Prior == (Priorities)CBparcelWprior.SelectedIndex);
+            }
+            else if (CBparcelWhaigt.SelectedItem == null && CBparcelStatus.SelectedItem != null && CBparcelWprior.SelectedItem == null)
+            {
+                listOfParcels.ItemsSource = ParcelToLists.ToList().FindAll(x => x.Status == (DeliveryStatus)CBparcelStatus.SelectedIndex);
+            }
+            else if (CBparcelWhaigt.SelectedItem == null && CBparcelStatus.SelectedItem != null && CBparcelWprior.SelectedItem != null)
+            {
+                listOfParcels.ItemsSource = ParcelToLists.ToList().FindAll(x => x.Status == (DeliveryStatus)CBparcelStatus.SelectedIndex && x.Prior == (Priorities)CBparcelWprior.SelectedIndex);
+            }
+            if (CBparcelWhaigt.SelectedItem != null && CBparcelStatus.SelectedItem == null && CBparcelWprior.SelectedItem == null)
+            {
+                listOfParcels.ItemsSource = ParcelToLists.ToList().FindAll(x => x.Weight == (WeightCategories)CBparcelWhaigt.SelectedIndex);
+            }
+            else if (CBparcelWhaigt.SelectedItem != null && CBparcelStatus.SelectedItem == null && CBparcelWprior.SelectedItem != null)
+            {
+                listOfParcels.ItemsSource = ParcelToLists.ToList().FindAll(x => x.Weight == (WeightCategories)CBparcelWhaigt.SelectedIndex && x.Prior == (Priorities)CBparcelWprior.SelectedIndex);
+            }
+            else if (CBparcelWhaigt.SelectedItem != null && CBparcelStatus.SelectedItem != null && CBparcelWprior.SelectedItem == null)
+            {
+                listOfParcels.ItemsSource = ParcelToLists.ToList().FindAll(x => x.Weight == (WeightCategories)CBparcelWhaigt.SelectedIndex && x.Status == (DeliveryStatus)CBparcelStatus.SelectedIndex);
+            }
+            else if (CBparcelWhaigt.SelectedItem != null && CBparcelStatus.SelectedItem != null && CBparcelWprior.SelectedItem != null)
+            {
+                listOfParcels.ItemsSource = ParcelToLists.ToList().FindAll
+                    (x => x.Weight == (WeightCategories)CBparcelWhaigt.SelectedIndex &&
+                    x.Status == (DeliveryStatus)CBparcelStatus.SelectedIndex &&
+                    x.Prior == (Priorities)CBparcelWprior.SelectedIndex);
+            }
+        }
+
 
     }
 }

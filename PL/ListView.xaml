@@ -193,9 +193,9 @@
                                         <ColumnDefinition />
                                     </Grid.ColumnDefinitions>
                                     <CheckBox x:Name="CBchaeck" IsChecked="True" Margin="45,0,19,8" Content="עריכה" />
-                                    <Button x:Name="BRparcelWhaigt"  Content="איפוס" Style="{StaticResource MaterialDesignFlatButton}" HorizontalAlignment="Left"  Grid.Column="1" Margin="40,0,0,0" Width="89"  />
+                                    <Button x:Name="BRparcelWhaigt"  Content="איפוס" Style="{StaticResource MaterialDesignFlatButton}" HorizontalAlignment="Left"  Grid.Column="1" Margin="40,0,0,0" Width="89" Click="BRparcelWhaigt_Click"  />
                                 </Grid>
-                                <ComboBox x:Name="CBparcelWhaigt" Style="{StaticResource MaterialDesignOutlinedComboBox}" IsEnabled="{Binding IsChecked, ElementName=OutlinedComboBoxEnabledCheckBox1}" materialDesign:HintAssist.Hint="סינון רשימת החבילות לפי משקל" Width="244" />
+                                <ComboBox x:Name="CBparcelWhaigt" Style="{StaticResource MaterialDesignOutlinedComboBox}" IsEnabled="{Binding IsChecked, ElementName=OutlinedComboBoxEnabledCheckBox1}" materialDesign:HintAssist.Hint="סינון רשימת החבילות לפי משקל" Width="244" SelectionChanged="CBparcelWhaigt_SelectionChanged" />
                             </StackPanel>
                             <StackPanel Grid.Column="1">
                                 <Grid>
@@ -204,9 +204,9 @@
                                         <ColumnDefinition />
                                     </Grid.ColumnDefinitions>
                                     <CheckBox x:Name="CBchaeck2" IsChecked="True" Margin="47,0,0,8" Content="עריכה" />
-                                    <Button x:Name="BRparcelStatus" Content="איפוס" Style="{StaticResource MaterialDesignFlatButton}" HorizontalAlignment="Left"  Grid.Column="1" Margin="59,0,0,0"  />
+                                    <Button x:Name="BRparcelStatus" Content="איפוס" Style="{StaticResource MaterialDesignFlatButton}" HorizontalAlignment="Left"  Grid.Column="1" Margin="59,0,0,0" Click="BRparcelStatus_Click"  />
                                 </Grid>
-                                <ComboBox x:Name="CBparcelStatus" Style="{StaticResource MaterialDesignOutlinedComboBox}" IsEnabled="{Binding IsChecked, ElementName=OutlinedComboBoxEnabledCheckBox2}" materialDesign:HintAssist.Hint="סינון רשימת החבילות לפי סטטוס" Width="244" />
+                                <ComboBox x:Name="CBparcelStatus" Style="{StaticResource MaterialDesignOutlinedComboBox}" IsEnabled="{Binding IsChecked, ElementName=OutlinedComboBoxEnabledCheckBox2}" materialDesign:HintAssist.Hint="סינון רשימת החבילות לפי סטטוס" Width="244" SelectionChanged="CBparcelStatus_SelectionChanged" />
                             </StackPanel>
                             <StackPanel Grid.Column="2">
                                 <Grid>
@@ -215,9 +215,9 @@
                                         <ColumnDefinition />
                                     </Grid.ColumnDefinitions>
                                     <CheckBox x:Name="CBchaeck3" IsChecked="True" Margin="45,0,19,8" Content="עריכה" />
-                                    <Button x:Name="BRparcelprior"  Content="איפוס" Style="{StaticResource MaterialDesignFlatButton}" HorizontalAlignment="Left"  Grid.Column="1" Margin="52,0,0,0"  />
+                                    <Button x:Name="BRparcelprior"  Content="איפוס" Style="{StaticResource MaterialDesignFlatButton}" HorizontalAlignment="Left"  Grid.Column="1" Margin="52,0,0,0" Click="BRparcelprior_Click"  />
                                 </Grid>
-                                <ComboBox x:Name="CBparcelWprior" Style="{StaticResource MaterialDesignOutlinedComboBox}" IsEnabled="{Binding IsChecked, ElementName=OutlinedComboBoxEnabledCheckBox1}" materialDesign:HintAssist.Hint="סינון רשימת החבילות לפי עדיפות" Width="244"  />
+                                <ComboBox x:Name="CBparcelWprior" Style="{StaticResource MaterialDesignOutlinedComboBox}" IsEnabled="{Binding IsChecked, ElementName=OutlinedComboBoxEnabledCheckBox1}" materialDesign:HintAssist.Hint="סינון רשימת החבילות לפי עדיפות" Width="244" SelectionChanged="CBparcelWprior_SelectionChanged"  />
                             </StackPanel>
                         </Grid>
 

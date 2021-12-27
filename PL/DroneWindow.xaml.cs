@@ -278,7 +278,7 @@ namespace PL
             {
                 case MessageBoxResult.OK:
                     BModalUpdate.IsEnabled = false;
-                    listWindow.StatusSelectorChanged();                 
+                    listWindow.StatusDroneSelectorChanged();                 
                     break;
                 default:
                     break;
@@ -300,7 +300,7 @@ namespace PL
                 switch (result)
                 {
                     case MessageBoxResult.OK:
-                        listWindow.StatusSelectorChanged(); //עקיפת המשקיף/עדכון הרשימה
+                        listWindow.StatusDroneSelectorChanged(); //עקיפת המשקיף/עדכון הרשימה
 
                         ////עדכון משקיף הרשימ
                         int IdOfBaseStation = AccessIbl.GetBaseCharge(MyDrone.Id);
@@ -340,7 +340,7 @@ namespace PL
             switch (result)
             {
                 case MessageBoxResult.OK:
-                    listWindow.StatusSelectorChanged();
+                    listWindow.StatusDroneSelectorChanged();
 
                     ////עדכון משקיף הרשימ
                     int indexOfBaseStationInTheObservable = listWindow.BaseStationToLists.IndexOf(listWindow.BaseStationToLists.First(x => x.Id == IdOfBaseStation));
@@ -375,7 +375,7 @@ namespace PL
                 switch (result)
                 {
                     case MessageBoxResult.OK:
-                        listWindow.StatusSelectorChanged();
+                        listWindow.StatusDroneSelectorChanged();
 
                         //to conecct the binding to set the value of my drone to the proprtis
                         MyDrone = AccessIbl.GetDrone(MyDrone.Id);
@@ -421,7 +421,7 @@ namespace PL
                 switch (result)
                 {
                     case MessageBoxResult.OK:
-                        listWindow.StatusSelectorChanged();
+                        listWindow.StatusDroneSelectorChanged();
 
                         //to conecct the binding to set the value of my drone to the proprtis
                         MyDrone = AccessIbl.GetDrone(MyDrone.Id);
@@ -476,7 +476,7 @@ namespace PL
                 switch (result)
                 {
                     case MessageBoxResult.OK:
-                        listWindow.StatusSelectorChanged();
+                        listWindow.StatusDroneSelectorChanged();
    
                         //to conecct the binding to set the value of my drone to the proprtis
                         MyDrone = AccessIbl.GetDrone(MyDrone.Id);

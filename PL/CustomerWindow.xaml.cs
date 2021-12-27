@@ -32,6 +32,11 @@ namespace PL
         public bool ClosingWindow { get; private set; } = true;
 
         #region בנאי הוספה
+        /// <summary>
+        /// add constractor.
+        /// </summary>
+        /// <param name="bl"></param>
+        /// <param name="_ListWindow"></param>
         public CustomerWindow(BlApi.IBL bl, ListView _ListWindow)
         {
             InitializeComponent();
@@ -46,6 +51,11 @@ namespace PL
         }
 
         #region מטפל בכפתורים
+        /// <summary>
+        /// Locks the keyboard for numbers only.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void TBcustomerId_KeyDown(object sender, KeyEventArgs e)
         {
             TBcustomerId.BorderBrush = Brushes.Gray;
@@ -63,6 +73,11 @@ namespace PL
 
         }
 
+        /// <summary>
+        /// Locks the keyboard for numbers only.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void TBcustomerPhoneNumber_KeyDown(object sender, KeyEventArgs e)
         {
             TBcustomerId.BorderBrush = Brushes.Gray;
@@ -79,6 +94,11 @@ namespace PL
             }
         }
 
+        /// <summary>
+        /// Locks the keyboard for numbers only.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void TBcustomerLattude_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key < Key.D0 || e.Key > Key.D9)
@@ -101,6 +121,11 @@ namespace PL
             }
         }
 
+        /// <summary>
+        /// Locks the keyboard for numbers only.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void TBcustomerLongtude_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key < Key.D0 || e.Key > Key.D9)
@@ -124,6 +149,11 @@ namespace PL
         }
         #endregion מטפל בכפתורים
 
+        /// <summary>
+        /// add Customer to data.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BAdd_Click(object sender, RoutedEventArgs e)
         {
             //Check that all fields are filled.
@@ -217,6 +247,13 @@ namespace PL
 
         public int indexSelected;
 
+        /// <summary>
+        /// update constractor.
+        /// </summary>
+        /// <param name="bl"></param>
+        /// <param name="_ListWindow"></param>
+        /// <param name="CustomerTo"></param>
+        /// <param name="_indexCustomer"></param>
         public CustomerWindow(BlApi.IBL bl, ListView _ListWindow, CustomerToList CustomerTo, int _indexCustomer)
         {
             InitializeComponent();
@@ -236,6 +273,11 @@ namespace PL
             listOfCustomerReceive.ItemsSource = AccessIbl.GetCustomer(customer.Id).ParcelToTheCustomer;
         }
 
+        /// <summary>
+        /// Locks the keyboard for numbers only
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void TBUpdateCustomerPhoneNumber_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key < Key.D0 || e.Key > Key.D9)
@@ -286,6 +328,38 @@ namespace PL
             {
                 MessageBox.Show("ERROR");    
             }
+        }
+
+        /// <summary>
+        /// Open a parcel window.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void listOfCustomeSend_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            //int IdOfCustomer = ((Customer)listOfCustomeSend.SelectedItem).Id;
+            //int indexCustomerInObservable = ListWindow.CustomerToLists.IndexOf(ListWindow.CustomerToLists.First(x => x.Id == IdOfCustomer));
+            //CustomerToList customer = AccessIbl.GetCustomerList().First(x => x.Id == IdOfCustomer);
+            //new CustomerWindow(AccessIbl, ListWindow, customer, indexCustomerInObservable).Show();
+
+            //ClosingWindow = false; // עקרונית צריכים לעדכן את החלון הזה השאלה איך עושים
+            //Close();
+        }
+
+        /// <summary>
+        /// Open a parcel window.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void listOfCustomerReceive_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            //int IdOfDroneInCharg = ((DroneInCharg)listOfDronesInCahrge.SelectedItem).Id;
+            //int indexDroneInObservable = ListWindow.DroneToLists.IndexOf(ListWindow.DroneToLists.First(x => x.Id == IdOfDroneInCharg));
+            //DroneToList drone = AccessIbl.GetDroneList().First(x => x.Id == IdOfDroneInCharg);
+            //new DroneWindow(AccessIbl, ListWindow, drone, indexDroneInObservable).Show();
+
+            //ClosingWindow = false; // עקרונית צריכים לעדכן את החלון הזה השאלה איך עושים
+            //Close();
         }
     }
 }

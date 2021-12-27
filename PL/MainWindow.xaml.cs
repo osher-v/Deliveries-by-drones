@@ -33,7 +33,11 @@ namespace PL
         // we crate an obejt that give us accses to the ibl intrface  
         public BlApi.IBL AccessIbl = BlApi.BlFactory.GetBL();
 
-        /// <summary> open the drone list window  </summary>
+        /// <summary>
+        /// Login to a manager or client interface.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Blogin_Click(object sender, RoutedEventArgs e)
         {
            
@@ -56,15 +60,15 @@ namespace PL
                     break;
                 default:   
                     break;
-            }
-            //enter.Unloaded -= enter_Unloaded;
-            //enter.Source = null;
-            //enter.Close();
+            }       
         }
         #endregion
 
-       
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void enter_Loaded(object sender, RoutedEventArgs e)
         {
             AddOn.Opacity = 0;
@@ -72,6 +76,11 @@ namespace PL
             PBloding.BeginAnimation(ProgressBar.ValueProperty, Animmation);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void PBloding_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             if(PBloding.Value == 100)
@@ -84,18 +93,33 @@ namespace PL
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BNewUser_Click(object sender, RoutedEventArgs e)
         {
             ListView listView = new ListView(AccessIbl);
             new CustomerWindow(AccessIbl, listView).Show();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void TICadmin_GotFocus(object sender, RoutedEventArgs e)
         {
             Blogin.Visibility = Visibility.Visible;
             Blogin.Content = "כניסה כמנהל";
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void TIUser_GotFocus(object sender, RoutedEventArgs e)
         {
             Blogin.Visibility = Visibility.Visible;

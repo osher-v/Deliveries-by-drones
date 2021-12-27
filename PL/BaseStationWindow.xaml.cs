@@ -105,6 +105,11 @@ namespace PL
         }
 
         #region מטפל בבדיקות כפתורים
+        /// <summary>
+        /// Locks the keyboard for numbers only.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void TBstaitonId_KeyDown(object sender, KeyEventArgs e)
         {
             TBstaitonId.BorderBrush = Brushes.Gray;
@@ -121,7 +126,11 @@ namespace PL
             }  
         }
 
-
+        /// <summary>
+        /// Locks the keyboard for numbers only.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void TBstaitonLattude_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key < Key.D0 || e.Key > Key.D9)
@@ -140,6 +149,11 @@ namespace PL
             }   
         }
 
+        /// <summary>
+        /// Locks the keyboard for numbers only.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void TBstaitonLongtude_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key < Key.D0 || e.Key > Key.D9)
@@ -150,7 +164,6 @@ namespace PL
                         e.Handled = false;
                     else
                         e.Handled = true;
-
                 }
                 else
                 {
@@ -159,6 +172,11 @@ namespace PL
             }
         }
 
+        /// <summary>
+        /// Locks the keyboard for numbers only.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void TBstationChargeSlots_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key < Key.D0 || e.Key > Key.D9)
@@ -204,7 +222,7 @@ namespace PL
             baseStation = AccessIbl.GetBaseStation(BaseStationTo.Id);
             DataContext = baseStation;
 
-            TBstationFreeChargeSlotS.Text = (BaseStationTo.BusyChargeSlots + baseStation.FreeChargeSlots).ToString();//לברר מה זה הכפתור הזה זה לכאורה לא המקומות הפנויים אלא הכוללת אז להחליף שם
+            TBstationFreeChargeSlotS.Text = (BaseStationTo.BusyChargeSlots + baseStation.FreeChargeSlots).ToString();
 
             listOfDronesInCahrge.ItemsSource = baseStation.DroneInChargsList;
         }
@@ -278,6 +296,20 @@ namespace PL
 
         #endregion
 
+        /// <summary>
+        /// Opening a drone window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void listOfDronesInCahrge_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            int IdOfDroneInCharg = ((DroneInCharg)listOfDronesInCahrge.SelectedItem).Id;
+            int indexDroneInObservable = ListWindow.DroneToLists.IndexOf(ListWindow.DroneToLists.First(x => x.Id == IdOfDroneInCharg));
+            DroneToList drone = AccessIbl.GetDroneList().First(x => x.Id == IdOfDroneInCharg); 
+            new DroneWindow(AccessIbl, ListWindow, drone, indexDroneInObservable).Show();
 
+            ClosingWindow = false; // עקרונית צריכים לעדכן את החלון הזה השאלה איך עושים
+            Close();         
+        }
     }
 }
