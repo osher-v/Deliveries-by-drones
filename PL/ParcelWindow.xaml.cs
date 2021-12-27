@@ -42,6 +42,7 @@ namespace PL
             InitializeComponent();
 
             addParcel.Visibility = Visibility.Visible;
+            Width = 440;
 
             AccessIbl = bl;
 

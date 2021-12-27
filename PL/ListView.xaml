@@ -26,7 +26,7 @@
                 <TabItem Name="droens">
                     <TabItem.Header>
                         <StackPanel Height="auto" Width="auto">
-                            <materialDesign:PackIcon  Kind="Drone" Width="24" Height="24" HorizontalAlignment="Center" />
+                            <materialDesign:PackIcon  Kind="Quadcopter" Width="24" Height="24" HorizontalAlignment="Center" />
                             <TextBlock Text="רחפנים" HorizontalAlignment="Center" />
                         </StackPanel>
                     </TabItem.Header>
@@ -47,7 +47,7 @@
                                         <ColumnDefinition />
                                         <ColumnDefinition />
                                     </Grid.ColumnDefinitions>
-                                    <CheckBox x:Name="OutlinedComboBoxEnabledCheckBox1" IsChecked="True" Margin="45,0,19,8" Content="נעילה" />
+                                    <CheckBox x:Name="OutlinedComboBoxEnabledCheckBox1" IsChecked="True" Margin="45,0,19,8" Content="עריכה" />
                                     <Button x:Name="BResetStatus"  Content="איפוס" Style="{StaticResource MaterialDesignFlatButton}" HorizontalAlignment="Left"  Grid.Column="1" Margin="61,0,0,0" Click="BResetStatus_Click" />
                                 </Grid>
                                 <ComboBox x:Name="CBStatusSelector" Style="{StaticResource MaterialDesignOutlinedComboBox}" IsEnabled="{Binding IsChecked, ElementName=OutlinedComboBoxEnabledCheckBox1}" materialDesign:HintAssist.Hint="סינון רשימת הרחפנים לפי סטטוס" Width="256" SelectionChanged="CBStatusSelector_SelectionChanged" />
@@ -58,7 +58,7 @@
                                         <ColumnDefinition />
                                         <ColumnDefinition />
                                     </Grid.ColumnDefinitions>
-                                    <CheckBox x:Name="OutlinedComboBoxEnabledCheckBox2" IsChecked="True" Margin="47,0,0,8" Content="נעילה" />
+                                    <CheckBox x:Name="OutlinedComboBoxEnabledCheckBox2" IsChecked="True" Margin="47,0,0,8" Content="עריכה" />
                                     <Button x:Name="BResetWeight" Content="איפוס" Style="{StaticResource MaterialDesignFlatButton}" HorizontalAlignment="Left"  Grid.Column="1" Margin="59,0,0,0" Click="BResetWeight_Click" />
                                 </Grid>
                                 <ComboBox x:Name="CBWeightSelctor" Style="{StaticResource MaterialDesignOutlinedComboBox}" IsEnabled="{Binding IsChecked, ElementName=OutlinedComboBoxEnabledCheckBox2}" materialDesign:HintAssist.Hint="סינון רשימת הרחפנים לפי סטטוס" Width="256" SelectionChanged="CBWeightSelctor_SelectionChanged" />
@@ -184,7 +184,41 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <CheckBox x:Name="CBchaeck" IsChecked="True" Margin="45,0,19,8" Content="עריכה" />
+                                    <Button x:Name="BRparcelWhaigt"  Content="איפוס" Style="{StaticResource MaterialDesignFlatButton}" HorizontalAlignment="Left"  Grid.Column="1" Margin="40,0,0,0" Width="89"  />
+                                </Grid>
+                                <ComboBox x:Name="CBparcelWhaigt" Style="{StaticResource MaterialDesignOutlinedComboBox}" IsEnabled="{Binding IsChecked, ElementName=OutlinedComboBoxEnabledCheckBox1}" materialDesign:HintAssist.Hint="סינון רשימת החבילות לפי משקל" Width="244" />
+                            </StackPanel>
+                            <StackPanel Grid.Column="1">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <CheckBox x:Name="CBchaeck2" IsChecked="True" Margin="47,0,0,8" Content="עריכה" />
+                                    <Button x:Name="BRparcelStatus" Content="איפוס" Style="{StaticResource MaterialDesignFlatButton}" HorizontalAlignment="Left"  Grid.Column="1" Margin="59,0,0,0"  />
+                                </Grid>
+                                <ComboBox x:Name="CBparcelStatus" Style="{StaticResource MaterialDesignOutlinedComboBox}" IsEnabled="{Binding IsChecked, ElementName=OutlinedComboBoxEnabledCheckBox2}" materialDesign:HintAssist.Hint="סינון רשימת החבילות לפי סטטוס" Width="244" />
+                            </StackPanel>
+                            <StackPanel Grid.Column="2">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <CheckBox x:Name="CBchaeck3" IsChecked="True" Margin="45,0,19,8" Content="עריכה" />
+                                    <Button x:Name="BRparcelprior"  Content="איפוס" Style="{StaticResource MaterialDesignFlatButton}" HorizontalAlignment="Left"  Grid.Column="1" Margin="52,0,0,0"  />
+                                </Grid>
+                                <ComboBox x:Name="CBparcelWprior" Style="{StaticResource MaterialDesignOutlinedComboBox}" IsEnabled="{Binding IsChecked, ElementName=OutlinedComboBoxEnabledCheckBox1}" materialDesign:HintAssist.Hint="סינון רשימת החבילות לפי עדיפות" Width="244"  />
+                            </StackPanel>
                         </Grid>
 
                         <ListView x:Name="listOfParcels" ItemsSource="{Binding Items1}" Margin="0,1,0,10" Grid.Row="1" MouseDoubleClick="listOfParcels_MouseDoubleClick">

@@ -105,15 +105,6 @@ namespace PL
         }
 
         #region מטפל בבדיקות כפתורים
-        private void TBstaitonName_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (TBstaitonName.Text.Length > 20)
-            {
-                e.Handled = true;
-            }
-        }
-
-
         private void TBstaitonId_KeyDown(object sender, KeyEventArgs e)
         {
             TBstaitonId.BorderBrush = Brushes.Gray;
@@ -127,11 +118,7 @@ namespace PL
                 {
                     e.Handled = false;
                 }
-            }
-            if (TBstaitonId.Text.Length > 8)
-            {
-                e.Handled = true;
-            }
+            }  
         }
 
 
@@ -150,11 +137,7 @@ namespace PL
                 {
                     e.Handled = false;
                 }
-            }
-            if (TBstaitonLattude.Text.Length > 10)
-            {
-                e.Handled = true;
-            }
+            }   
         }
 
         private void TBstaitonLongtude_KeyDown(object sender, KeyEventArgs e)
@@ -174,10 +157,6 @@ namespace PL
                     e.Handled = false;
                 }
             }
-            if (TBstaitonLongtude.Text.Length > 10)
-            {
-                e.Handled = true;
-            }
         }
 
         private void TBstationChargeSlots_KeyDown(object sender, KeyEventArgs e)
@@ -192,10 +171,6 @@ namespace PL
                 {
                     e.Handled = false;
                 }
-            }
-            if (TBstationChargeSlots.Text.Length > 8)
-            {
-                e.Handled = true;
             }
         }
         #endregion מטפל בבדיקות כפתורים
@@ -301,30 +276,8 @@ namespace PL
         }
         #endregion close  
 
-        /// <summary>
-        /// this fanction remove and delete the chosen base station (and ask before doing it)
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void BDelete_Click(object sender, RoutedEventArgs e)
-        {
-            MessageBoxResult result = MessageBox.Show("האם אתה בטוח שאתה רוצה לבצע מחיקה", "מצב מחיקה", MessageBoxButton.YesNo, MessageBoxImage.Question);
-            switch (result)
-            {
-                case MessageBoxResult.Yes:
-                    AccessIbl.RemoveStation(baseStation);// accses to delete from the bl list 
-                    ListWindow.BaseStationToLists.RemoveAt(indexSelected);// we go to the index to delete from the observer 
-                    ListWindow.IsEnabled = true;
-                    ClosingWindow = false;// allowd to close the window 
-                    Close();
-                    ListWindow.StatusSelectorChanged();// update the displey of the list view to observ the changes
-                    break;
-                case MessageBoxResult.No: // in case that the user dont want to delete he have the option to abort withot any change 
-                    break;
-                default:
-                    break;
-            }
-        }
         #endregion
+
+
     }
 }

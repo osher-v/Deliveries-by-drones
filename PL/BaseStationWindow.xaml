@@ -38,11 +38,11 @@
                     </Button>
                 </StackPanel>
             </Grid>
-            <TextBox x:Name="TBstaitonId" Grid.Row="2" materialDesign:HintAssist.Hint="מספר מזהה" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" HorizontalAlignment="Left" Width="279" TextAlignment="Center" Margin="88,0,0,0" KeyDown="TBstaitonId_KeyDown" Height="34" />
-            <TextBox x:Name="TBstaitonName" Grid.Row="3" materialDesign:HintAssist.Hint="שם התחנה" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" Margin="88,0,73,0" TextAlignment="Center" KeyDown="TBstaitonName_KeyDown" Height="34"  />
-            <TextBox x:Name="TBstationChargeSlots" Grid.Row="4" materialDesign:HintAssist.Hint="מספר עמדות הטענה בתחנה" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" Margin="88,0,73,0" TextAlignment="Center" KeyDown="TBstationChargeSlots_KeyDown" Height="34" />
-            <TextBox x:Name="TBstaitonLongtude" Grid.Row="5" materialDesign:HintAssist.Hint="קו אורך" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" Margin="242,0,23,0" TextAlignment="Center" KeyDown="TBstaitonLongtude_KeyDown" Height="34" />
-            <TextBox x:Name="TBstaitonLattude" Grid.Row="5" materialDesign:HintAssist.Hint="קו רוחב" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" Margin="38,0,227,0" TextAlignment="Center" KeyDown="TBstaitonLattude_KeyDown" Height="34" />
+            <TextBox x:Name="TBstaitonId" Grid.Row="2" materialDesign:HintAssist.Hint="מספר מזהה" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" HorizontalAlignment="Center" Width="263" TextAlignment="Center" KeyDown="TBstaitonId_KeyDown" Height="34" MaxLength="9" />
+            <TextBox x:Name="TBstaitonName" Grid.Row="3" materialDesign:HintAssist.Hint="שם התחנה" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" Margin="88,0,73,0" TextAlignment="Center" Height="34" MaxLength="20"  />
+            <TextBox x:Name="TBstationChargeSlots" Grid.Row="4" materialDesign:HintAssist.Hint="מספר עמדות הטענה בתחנה" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" Margin="88,0,73,0" TextAlignment="Center" KeyDown="TBstationChargeSlots_KeyDown" Height="34" MaxLength="2" />
+            <TextBox x:Name="TBstaitonLongtude" Grid.Row="5" materialDesign:HintAssist.Hint="קו אורך" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" Margin="242,0,23,0" TextAlignment="Center" KeyDown="TBstaitonLongtude_KeyDown" Height="34" MaxLength="20"/>
+            <TextBox x:Name="TBstaitonLattude" Grid.Row="5" materialDesign:HintAssist.Hint="קו רוחב" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" Margin="38,0,227,0" TextAlignment="Center" KeyDown="TBstaitonLattude_KeyDown" Height="34" MaxLength="20" />
 
             <Button x:Name="BAdd" Grid.Row="6" Style="{StaticResource MaterialDesignRaisedButton}" materialDesign:ButtonProgressAssist.Value="-1" materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
              materialDesign:ButtonProgressAssist.IsIndeterminate="True" Content="הוספה למאגר הנתונים" Margin="0,10,0,0"
@@ -73,8 +73,8 @@
                 </StackPanel>
             </Grid>
             <!--<TextBox x:Name="TBUpdateStaitonI" Grid.Row="2" materialDesign:HintAssist.Hint="מספר מזהה" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" HorizontalAlignment="Left" Width="279" TextAlignment="Center" Margin="88,0,0,0" TextChanged="TBstaitonId_TextChanged" KeyDown="TBstaitonId_KeyDown" />-->
-            <TextBox x:Name="TBUpdateStaitonName" Text="{Binding Path=Name}" Grid.Row="2" materialDesign:HintAssist.Hint="שם התחנה" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Top" Margin="88,11,73,0" TextAlignment="Center" KeyDown="TBstaitonName_KeyDown" Height="37"  />
-            <TextBox x:Name="TBstationFreeChargeSlotS" Text="" Grid.Row="3" materialDesign:HintAssist.Hint="מספר עמדות הטענה בתחנה" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" Margin="88,0,73,0" TextAlignment="Center" KeyDown="TBstationChargeSlots_KeyDown" Height="34" />
+            <TextBox x:Name="TBUpdateStaitonName" Text="{Binding Path=Name}" Grid.Row="2" materialDesign:HintAssist.Hint="שם התחנה" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Top" Margin="88,11,73,0" TextAlignment="Center"  Height="37" MaxLength="20" />
+            <TextBox x:Name="TBstationFreeChargeSlotS" Text="" Grid.Row="3" materialDesign:HintAssist.Hint="מספר עמדות הטענה בתחנה" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" Margin="88,0,73,0" TextAlignment="Center" KeyDown="TBstationChargeSlots_KeyDown" Height="34" MaxLength="2" />
             <!--<TextBox x:Name="TBstaitonLongtud" Grid.Row="5" materialDesign:HintAssist.Hint="קו אורך" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" Margin="242,0,23,0" TextAlignment="Center" KeyDown="TBstaitonLongtude_KeyDown" />
             <TextBox x:Name="TBstaitonLattud" Grid.Row="5" materialDesign:HintAssist.Hint="קו רוחב" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" Margin="38,0,227,0" TextAlignment="Center" KeyDown="TBstaitonLattude_KeyDown" />-->
             <Grid x:Name="Cards" Grid.Row="4" Margin="0,22,0,5">
@@ -119,7 +119,7 @@
                             <RowDefinition Height="35*"/>
                         </Grid.RowDefinitions>
                         <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Height="20" Width="184" TextAlignment="Center" FontWeight="Bold"><Run FlowDirection="RightToLeft" Language="he-il" Text="מספר מקומות פנויים "/></TextBlock>
-                        <TextBlock HorizontalAlignment="Center" Grid.Row="1" Text="{Binding Path=FreeChargeSlots}" TextWrapping="Wrap" VerticalAlignment="Top" Height="84" Width="164" FontSize="78" FontWeight="Bold" FontFamily="Consolas" TextAlignment="Center"/>
+                        <TextBlock HorizontalAlignment="Center" Grid.Row="1" Text="{Binding Path=FreeChargeSlots}" TextWrapping="Wrap" VerticalAlignment="Top" Height="84" Width="164" FontSize="78" FontWeight="Bold" FontFamily="Consolas" TextAlignment="Center" Margin="0,4,0,0"/>
                     </Grid>
                 </materialDesign:Card>
 
@@ -132,7 +132,7 @@
                             <RowDefinition Height="35*"/>
                         </Grid.RowDefinitions>
                         <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Height="20" Width="184" TextAlignment="Center" FontWeight="Bold"><Run FlowDirection="RightToLeft" Language="he-il" Text="מיקום"/></TextBlock>
-                        <TextBlock x:Name="TBlocation" HorizontalAlignment="Center" Grid.Row="1" Text="{Binding Path=BaseStationLocation}" TextWrapping="Wrap" VerticalAlignment="Top" Height="95" Width="128" FontSize="14" FontWeight="Bold" FontFamily="Consolas" TextAlignment="Center"/>
+                        <TextBlock x:Name="TBlocation" HorizontalAlignment="Center" Grid.Row="1" Text="{Binding Path=BaseStationLocation}" TextWrapping="Wrap" VerticalAlignment="Top" Height="95" Width="128" FontSize="14" FontWeight="Bold" FontFamily="Consolas" TextAlignment="Center" Margin="0,10,0,0"/>
                     </Grid>
                 </materialDesign:Card>
             </Grid>
@@ -144,9 +144,6 @@
                 <TextBlock Text=":מספר התחנה" TextWrapping="Wrap" Margin="302,24,9,33" FontWeight="Bold" FontFamily="Consolas" FontSize="14"/>
                 <TextBlock Text="{Binding Path=Id}" TextWrapping="Wrap" Margin="143,21,149,38" FontWeight="Bold" FontFamily="Consolas" FontSize="18" TextAlignment="Center"/>
             </Grid>
-            <Button x:Name="BDelete" Grid.Row="1" Style="{StaticResource MaterialDesignRaisedButton}" materialDesign:ButtonProgressAssist.Value="-1" materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
-                materialDesign:ButtonProgressAssist.IsIndeterminate="True" Content="מחיקת תחנה" Margin="10,16,311,36"
-                IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" Background="#FFFF0909" BorderBrush="#FFF14A2F" FontSize="12" FontWeight="Bold" Click="BDelete_Click"  />
 
         </Grid>
     </Grid>

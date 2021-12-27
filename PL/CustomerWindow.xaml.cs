@@ -236,26 +236,6 @@ namespace PL
             listOfCustomerReceive.ItemsSource = AccessIbl.GetCustomer(customer.Id).ParcelToTheCustomer;
         }
 
-        private void BDelete_Click(object sender, RoutedEventArgs e)
-        {
-            MessageBoxResult result = MessageBox.Show("האם אתה בטוח שאתה רוצה לבצע מחיקה", "מצב מחיקה", MessageBoxButton.YesNo, MessageBoxImage.Question);
-            switch (result)
-            {
-                case MessageBoxResult.Yes:
-                    AccessIbl.RemoveCustomer(customer);// accses to delete from the bl list 
-                    ListWindow.CustomerToLists.RemoveAt(indexSelected);// we go to the index to delete from the observer 
-
-                    ListWindow.IsEnabled = true;
-                    ClosingWindow = false;// allowd to close the window 
-                    Close();
-                    break;
-                case MessageBoxResult.No: // in case that the user dont want to delete he have the option to abort withot any change 
-                    break;
-                default:
-                    break;
-            }
-        }
-
         private void TBUpdateCustomerPhoneNumber_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key < Key.D0 || e.Key > Key.D9)
