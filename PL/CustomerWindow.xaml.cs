@@ -337,13 +337,13 @@ namespace PL
         /// <param name="e"></param>
         private void listOfCustomeSend_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            //int IdOfCustomer = ((Customer)listOfCustomeSend.SelectedItem).Id;
-            //int indexCustomerInObservable = ListWindow.CustomerToLists.IndexOf(ListWindow.CustomerToLists.First(x => x.Id == IdOfCustomer));
-            //CustomerToList customer = AccessIbl.GetCustomerList().First(x => x.Id == IdOfCustomer);
-            //new CustomerWindow(AccessIbl, ListWindow, customer, indexCustomerInObservable).Show();
+            int IdOfParcel = ((ParcelAtCustomer)listOfCustomeSend.SelectedItem).Id;
+            int indexParcelInObservable = ListWindow.ParcelToLists.IndexOf(ListWindow.ParcelToLists.First(x => x.Id == IdOfParcel));
+            ParcelToList customer = AccessIbl.GetParcelList().First(x => x.Id == IdOfParcel);
+            new ParcelWindow(AccessIbl, ListWindow, customer, indexParcelInObservable).Show();
 
-            //ClosingWindow = false; // עקרונית צריכים לעדכן את החלון הזה השאלה איך עושים
-            //Close();
+            ClosingWindow = false; // עקרונית צריכים לעדכן את החלון הזה השאלה איך עושים
+            Close();
         }
 
         /// <summary>
@@ -353,13 +353,13 @@ namespace PL
         /// <param name="e"></param>
         private void listOfCustomerReceive_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            //int IdOfDroneInCharg = ((DroneInCharg)listOfDronesInCahrge.SelectedItem).Id;
-            //int indexDroneInObservable = ListWindow.DroneToLists.IndexOf(ListWindow.DroneToLists.First(x => x.Id == IdOfDroneInCharg));
-            //DroneToList drone = AccessIbl.GetDroneList().First(x => x.Id == IdOfDroneInCharg);
-            //new DroneWindow(AccessIbl, ListWindow, drone, indexDroneInObservable).Show();
+            int IdOfParcel = ((ParcelAtCustomer)listOfCustomerReceive.SelectedItem).Id;
+            int indexParcelInObservable = ListWindow.ParcelToLists.IndexOf(ListWindow.ParcelToLists.First(x => x.Id == IdOfParcel));
+            ParcelToList customer = AccessIbl.GetParcelList().First(x => x.Id == IdOfParcel);
+            new ParcelWindow(AccessIbl, ListWindow, customer, indexParcelInObservable).Show();
 
-            //ClosingWindow = false; // עקרונית צריכים לעדכן את החלון הזה השאלה איך עושים
-            //Close();
+            ClosingWindow = false; // עקרונית צריכים לעדכן את החלון הזה השאלה איך עושים
+            Close();
         }
     }
 }

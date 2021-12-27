@@ -184,9 +184,9 @@
 
             </Grid>
 
-            <Button x:Name="BUpdateParcel" Grid.Row="6" Style="{StaticResource MaterialDesignRaisedButton}" materialDesign:ButtonProgressAssist.Value="-1" materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
+            <!--<Button x:Name="BUpdateParcel" Grid.Row="6" Style="{StaticResource MaterialDesignRaisedButton}" materialDesign:ButtonProgressAssist.Value="-1" materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
              materialDesign:ButtonProgressAssist.IsIndeterminate="True" Content="" Margin="0,17,0,0"
-             IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Click="BUpdateParcel_Click"  />
+             IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Click="BUpdateParcel_Click"  />-->
 
             <Grid Grid.Row="1" Margin="0,0,0,3">
                 <TextBlock TextWrapping="Wrap" Margin="260,21,126,27" FontWeight="Bold" FontFamily="Consolas" FontSize="14"><Run Text=":"/><Run FlowDirection="RightToLeft" Language="he-il" Text="מספר חבילה"/><LineBreak/><Run FlowDirection="RightToLeft" Language="he-il"/></TextBlock>
