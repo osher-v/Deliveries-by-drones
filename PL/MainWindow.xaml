@@ -50,11 +50,23 @@
                             </StackPanel>
                         </TabItem.Header>
                         <Grid Background="{DynamicResource MaterialDesignDarkBackground}">
-                            <TextBox x:Name="TBuserID" materialDesign:HintAssist.Hint="שם משתמש" HorizontalContentAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Top" Width="706" MaxLength="10" Height="105" Foreground="#FFFBFBFB" FontSize="32" Margin="0,147,0,0" FontFamily="Consolas" FontWeight="Bold" />
-
-                            <Button x:Name="BNewUser" Visibility="Visible" Style="{StaticResource MaterialDesignRaisedButton}"  materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
-                    materialDesign:ButtonProgressAssist.IsIndeterminate="True" Content="הרשמה" Margin="304,319,304,79"
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock TextWrapping="Wrap" Height="58" FontSize="32" FontWeight="Bold" Foreground="{DynamicResource MaterialDesignCheckBoxDisabled}" Width="250" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="277,120,0,0" Grid.ColumnSpan="2" ><Run FlowDirection="RightToLeft" Language="he-il" Text="הכנס מזהה לקוח"/></TextBlock>
+                            <PasswordBox x:Name="TBuserID" Style="{StaticResource MaterialDesignFilledPasswordBox}"  Password="000000"  HorizontalContentAlignment="Center" Width="324" MaxLength="10" Foreground="#FFFBFBFB" FontSize="32" FontFamily="Consolas" FontWeight="Bold" Background="{x:Null}" BorderBrush="{x:Null}" Margin="232,178,232,159" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
+                            <Grid Margin="0,0,0,10">
+                                <Button x:Name="BNewUser" Visibility="Visible" Style="{StaticResource MaterialDesignRaisedButton}"  materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
+                    materialDesign:ButtonProgressAssist.IsIndeterminate="True" Content="לקוח חדש? הרשם עכשיו" Margin="295,327,-113,-168"
                      Background="#FFFF0909" BorderBrush="#FFF14A2F" FontSize="14" FontWeight="Bold" Click="BNewUser_Click"   />
+                                <Grid
+  Width="124"/>
+                            </Grid>
 
                         </Grid>
                     </TabItem>
@@ -65,7 +77,7 @@
               Click="Blogin_Click"  IsEnabled="False" FontSize="14" Grid.Row="1"  />
 
             </Grid>
-            <Grid x:Name="Disiaper" Visibility="Visible">
+            <Grid x:Name="Disiaper" Visibility="Visible" d:IsHidden="True">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
@@ -75,9 +87,8 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock HorizontalAlignment="Left" Margin="126,162,0,0" Text="{Binding Value, ElementName=PBloding, StringFormat=\{0:#0.0\}%}"  TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FFEEDADA" FontSize="10" FontWeight="Bold" Width="34" Grid.Column="1" Grid.Row="1" Height="17"/>
-                <Label Content="בס&quot;ד&#xD;&#xA;" Grid.Column="1" HorizontalAlignment="Left" Margin="291,10,0,0" VerticalAlignment="Top" Foreground="#FFF5F4F4" FontWeight="Bold" FontFamily="Consolas"/>
+                <Label Content="בס&quot;ד&#xD;&#xA;" Grid.Column="1" HorizontalAlignment="Left" Margin="383,10,0,0" VerticalAlignment="Top" Foreground="#FFF5F4F4" FontWeight="Bold" FontFamily="Consolas"/>
                 <Label Content="Loding.." HorizontalAlignment="Left" Margin="400,135,0,0" VerticalAlignment="Top" Foreground="#FFF5F4F4" FontWeight="Bold" FontFamily="Consolas" Height="25" Grid.ColumnSpan="2" Grid.Row="1"/>
-                <Label Content="בס&quot;ד&#xD;&#xA;" Grid.Column="1" HorizontalAlignment="Left" Margin="291,10,0,0" VerticalAlignment="Top" Foreground="#FFF5F4F4" FontWeight="Bold" FontFamily="Consolas"/>
                 <ProgressBar x:Name="PBloding" HorizontalAlignment="Left" Height="14" Margin="325,165,0,0" VerticalAlignment="Top" Width="210" ValueChanged="PBloding_ValueChanged" Grid.ColumnSpan="2" Grid.Row="1" BorderBrush="{x:Null}">
                     <ProgressBar.Foreground>
                         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">

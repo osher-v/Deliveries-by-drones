@@ -49,14 +49,13 @@ namespace PL
                 case "כניסת לקוח":
                     try
                     {
-                         AccessIbl.GetCustomer(int.Parse(TBuserID.Text)); //לשים לב שזה מקפיץ חריגה אם הלקוח נכנס ללא שם משתמש
+                         AccessIbl.GetCustomer(int.Parse(TBuserID.Password)); //לשים לב שזה מקפיץ חריגה אם הלקוח נכנס ללא שם משתמש
+                        new ClientWindow(AccessIbl, int.Parse(TBuserID.Password)).Show();
                     }
-                    catch (BO.NonExistentObjectException)
+                    catch (BO.NonExistentObjectException ex)
                     {
-                        
-                        throw;
+                        MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
-                    new ClientWindow(AccessIbl, int.Parse(TBuserID.Text)).Show();
                     break;
                 default:   
                     break;
