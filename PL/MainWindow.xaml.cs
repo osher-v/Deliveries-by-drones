@@ -45,7 +45,7 @@ namespace PL
                 case "כניסת לקוח":
                     try
                     {
-                         AccessIbl.GetCustomer(int.Parse(TBuserID.Text));
+                         AccessIbl.GetCustomer(int.Parse(TBuserID.Text)); //לשים לב שזה מקפיץ חריגה אם הלקוח נכנס ללא שם משתמש
                     }
                     catch (BO.NonExistentObjectException)
                     {

@@ -47,6 +47,7 @@
             <ComboBox x:Name="BaseStationID" Grid.Row="5" Style="{StaticResource MaterialDesignOutlinedComboBox}"  materialDesign:HintAssist.Hint="מספר תחנה להטענה ראשונית"  Margin="92,12,92,17" />
 
         </Grid>
+        
         <!--this grid is for update option-->
         <Grid x:Name="updateDrone" Visibility="Hidden">
             <Grid.ColumnDefinitions>

@@ -42,7 +42,7 @@ namespace BL
             AccessIdal.SendingDroneforChargingAtBaseStation(BLbaseStations.Find(x => x.BaseStationLocation == drone.CurrentLocation).Id, drone.Id);     
         }
 
-        public void ReleaseDroneFromCharging(int droneId)//, DateTime time)
+        public void ReleaseDroneFromCharging(int droneId)
         {
             DroneToList drone = DronesBL.Find(x => x.Id == droneId);
             if (drone == default)
@@ -57,18 +57,27 @@ namespace BL
 
             double horsnInCahrge = interval.Hours + (((double)interval.Minutes) / 60) + (((double)interval.Seconds) / 3600);
 
-            //double horsnInCahrge = time.Hour + (((double)time.Minute) / 60) + (((double)time.Second) / 3600);
-            Console.WriteLine(horsnInCahrge);
-
             double batrryCharge = horsnInCahrge * DroneLoadingRate + drone.BatteryStatus;
             if (batrryCharge > 100)
                 batrryCharge = 100;
             drone.BatteryStatus = batrryCharge;
-            Console.WriteLine(drone.BatteryStatus);
             drone.Statuses = DroneStatuses.free;
 
             AccessIdal.UpdatePluseChargeSlots(AccessIdal.GetBaseCharge(drone.Id).StationId);
             AccessIdal.ReleaseDroneFromChargingAtBaseStation(droneId);
+        }
+
+        public int GetBaseCharge(int droneID)
+        {
+            try
+            {
+               DO.DroneCharge BaseCharge = AccessIdal.GetBaseCharge(droneID);
+                return BaseCharge.StationId;
+            }
+            catch(DO.NonExistentObjectException)
+            {
+                throw new NonExistentObjectException();
+            }         
         }
     }
 }

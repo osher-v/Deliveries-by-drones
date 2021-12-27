@@ -26,7 +26,7 @@ namespace PL
         public BlApi.IBL AccessIbl; // = BlApi.BlFactory.GetBL();
 
         /// <summary> crate a observabs list of type IBL.BO.object (to see changes in live) </summary>
-        public ObservableCollection<BO.DroneToList> droneToLists;
+        public ObservableCollection<BO.DroneToList> DroneToLists;
         public ObservableCollection<BO.BaseStationsToList> BaseStationToLists;
         public ObservableCollection<BO.CustomerToList> CustomerToLists;
         public ObservableCollection<BO.ParcelToList> ParcelToLists;
@@ -46,18 +46,18 @@ namespace PL
 
             #region drone Observable and listOfDrones
             //craet observer and set the list accordale to ibl drone list.
-            droneToLists = new ObservableCollection<DroneToList>();
+            DroneToLists = new ObservableCollection<DroneToList>();
             List<BO.DroneToList> drones = AccessIbl.GetDroneList().ToList();//למה העברנו את זה ככה??
             foreach (var item in drones)
             {
-                droneToLists.Add(item);
+                DroneToLists.Add(item);
             }
 
             //new event that will call evre time that the ObservableCollection didact a change 
-            droneToLists.CollectionChanged += DroneToLists_CollectionChanged;
+            DroneToLists.CollectionChanged += DroneToLists_CollectionChanged;
 
             //display the defult list 
-            listOfDrones.ItemsSource = droneToLists;
+            listOfDrones.ItemsSource = DroneToLists;
             #endregion drone Observable and listOfDrones
 
             #region baseStations Observable and listOfBaseStations
@@ -153,7 +153,7 @@ namespace PL
         private void ParcelToLists_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             //display the defult list 
-            listOfParcels.ItemsSource = ParcelToLists.ToList();
+            listOfParcels.ItemsSource = ParcelToLists;
         }
 
         /// <summary>
@@ -163,19 +163,19 @@ namespace PL
         {
             if (CBWeightSelctor.SelectedItem == null && CBStatusSelector.SelectedItem == null)
             {
-                listOfDrones.ItemsSource = droneToLists.ToList();
+                listOfDrones.ItemsSource = DroneToLists.ToList();
             }
             else if (CBWeightSelctor.SelectedItem == null)
             {
-                listOfDrones.ItemsSource = droneToLists.ToList().FindAll(x => x.Statuses == (DroneStatuses)CBStatusSelector.SelectedIndex);
+                listOfDrones.ItemsSource = DroneToLists.ToList().FindAll(x => x.Statuses == (DroneStatuses)CBStatusSelector.SelectedIndex);
             }
             else if (CBStatusSelector.SelectedItem == null)
             {
-                listOfDrones.ItemsSource = droneToLists.ToList().FindAll(x => x.MaxWeight == (WeightCategories)CBWeightSelctor.SelectedIndex);
+                listOfDrones.ItemsSource = DroneToLists.ToList().FindAll(x => x.MaxWeight == (WeightCategories)CBWeightSelctor.SelectedIndex);
             }
             else //If 2 filters are enabled.
             {
-                listOfDrones.ItemsSource = droneToLists.ToList().FindAll(x => x.Statuses == (DroneStatuses)CBStatusSelector.SelectedIndex && x.MaxWeight == (WeightCategories)CBWeightSelctor.SelectedIndex);
+                listOfDrones.ItemsSource = DroneToLists.ToList().FindAll(x => x.Statuses == (DroneStatuses)CBStatusSelector.SelectedIndex && x.MaxWeight == (WeightCategories)CBWeightSelctor.SelectedIndex);
             }
         }
 

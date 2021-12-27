@@ -248,7 +248,8 @@ namespace PL
                 switch (result)
                 {
                     case MessageBoxResult.OK:
-                        ListWindow.BaseStationToLists[indexSelected] = AccessIbl.GetBaseStationList().FirstOrDefault(x => x.Id == baseStation.Id);//עדכון המשקיף
+                        ListWindow.BaseStationToLists[indexSelected] = AccessIbl.GetBaseStationList().First(x => x.Id == baseStation.Id);//עדכון המשקיף
+
                         ListWindow.IsEnabled = true;
                         ClosingWindow = false;
                         Close();
@@ -299,6 +300,7 @@ namespace PL
             Close();
         }
         #endregion close  
+
         /// <summary>
         /// this fanction remove and delete the chosen base station (and ask before doing it)
         /// </summary>

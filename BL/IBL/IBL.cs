@@ -76,11 +76,10 @@ namespace BlApi
         void SendingDroneforCharging(int droneId);
 
         /// <summary>
-        /// The function frees the skimmer from charging.
+        /// The function frees the drone from charging.
         /// </summary>
         /// <param name="droneId">drone Id</param>
-        /// <param name="time">Time the drone is charging</param>
-        void ReleaseDroneFromCharging(int droneId); //, DateTime time);
+        void ReleaseDroneFromCharging(int droneId); 
 
         /// <summary>
         /// The function assigns a drone to the parcel.
@@ -132,6 +131,13 @@ namespace BlApi
         /// <param name="idForDisplayObject">Id for display object</param>
         /// <returns>a Parcel</returns>
         Parcel GetParcel(int idForDisplayObject);
+
+        /// <summary>
+        /// The function returns the number of the station where the drone is loaded.
+        /// </summary>
+        /// <param name="droneID"></param>
+        /// <returns></returns>
+        public int GetBaseCharge(int droneID);
         #endregion Functions that return object.
 
         #region Functions that return a list of objects

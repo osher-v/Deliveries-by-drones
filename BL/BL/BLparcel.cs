@@ -289,7 +289,8 @@ namespace BL
                 PickedUp = printParcel.PickedUp,
                 Delivered = printParcel.Delivered
             };
-            if (parcel.Assigned != null)
+
+            if (parcel.Assigned != null && parcel.Delivered == null)//ברגע שחבילה סופקה אין רחפן בקשר
             {
                 DroneInThePackage droneInThePackage = new DroneInThePackage()
                 {

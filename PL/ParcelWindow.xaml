@@ -47,7 +47,7 @@
 
         </Grid>
 
-        <Grid x:Name="updateParcel" Visibility="Visible">
+        <Grid x:Name="updateParcel" Visibility="Hidden">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>

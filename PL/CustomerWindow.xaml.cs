@@ -1,6 +1,7 @@
 ﻿using BO;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -285,6 +286,13 @@ namespace PL
                 {
                     case MessageBoxResult.OK:
                         ListWindow.CustomerToLists[indexSelected] = AccessIbl.GetCustomerList().FirstOrDefault(x => x.Id == customer.Id);//עדכון המשקיף
+
+                        ListWindow.ParcelToLists.Clear();  //עדכון המשקיף לרשימה חדשה עבור הלקוחות
+                        List<BO.ParcelToList> parcel = AccessIbl.GetParcelList().ToList();
+                        foreach (var item in parcel)
+                        {
+                            ListWindow.ParcelToLists.Add(item);
+                        }
 
                         ListWindow.IsEnabled = true;
                         ClosingWindow = false;

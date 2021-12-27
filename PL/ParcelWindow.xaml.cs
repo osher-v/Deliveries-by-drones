@@ -269,8 +269,10 @@ namespace PL
         /// <param name="e"></param>
         private void BUpdateParcel_Click(object sender, RoutedEventArgs e)
         {
+            int IdOfTheDrone = parcel.MyDrone.Id;
             switch (BUpdateParcel.Content)
             {
+
                 case "חבילה נאספה":
                     try
                     {
@@ -285,8 +287,19 @@ namespace PL
                                 DataContext = parcel;
 
                                 ListWindow.ParcelToLists[indexSelected] = AccessIbl.GetParcelList().ToList().Find(x => x.Id == parcel.Id);//עדכון המשקיף
-                                ListWindow.StatusSelectorChanged();//??????????????????????????????????????
-         
+
+                                //ListWindow.StatusSelectorChanged();//עדכון הרחפנים נעשה ממילא רק צריך לשמור על הסינון
+                                int indexOfDroneInTheObservable = ListWindow.DroneToLists.IndexOf(ListWindow.DroneToLists.First(x => x.Id == IdOfTheDrone));
+                                ListWindow.DroneToLists[indexOfDroneInTheObservable] = AccessIbl.GetDroneList().First(x => x.Id == IdOfTheDrone);//עדכון המשקיף של רשימת הרחפנים
+
+                                //עדכון השולח ברשימת הלקוחות
+                                int indexOfSenderCustomerInTheObservable = ListWindow.CustomerToLists.IndexOf(ListWindow.CustomerToLists.First(x => x.Id == parcel.Sender.Id));
+                                ListWindow.CustomerToLists[indexOfSenderCustomerInTheObservable] = AccessIbl.GetCustomerList().First(x => x.Id == parcel.Sender.Id);
+
+                                //עדכון המקבל ברשימת הלקוחות
+                                int indexOfReceiverCustomerInTheObservable = ListWindow.CustomerToLists.IndexOf(ListWindow.CustomerToLists.First(x => x.Id == parcel.Receiver.Id));
+                                ListWindow.CustomerToLists[indexOfReceiverCustomerInTheObservable] = AccessIbl.GetCustomerList().First(x => x.Id == parcel.Receiver.Id);
+
                                 BUpdateParcel.Content = "חבילה סופקה";
                                 break;
                             default:
@@ -304,7 +317,7 @@ namespace PL
                     break;
                 case "חבילה סופקה":
                     try
-                    {
+                    {                       
                         AccessIbl.DeliveryPackageToTheCustomer(parcel.MyDrone.Id);
 
                         MessageBoxResult result = MessageBox.Show("The operation was successful", "info", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -316,7 +329,18 @@ namespace PL
                                 DataContext = parcel;
 
                                 ListWindow.ParcelToLists[indexSelected] = AccessIbl.GetParcelList().ToList().Find(x => x.Id == parcel.Id);//עדכון המשקיף
-                                ListWindow.StatusSelectorChanged();
+
+                                //ListWindow.StatusSelectorChanged();//עדכון הרחפן ברשימת הרחפנים נעשה ממילא רק צריך לשמור על הסינון
+                                int indexOfDroneInTheObservable = ListWindow.DroneToLists.IndexOf(ListWindow.DroneToLists.First(x => x.Id == IdOfTheDrone));
+                                ListWindow.DroneToLists[indexOfDroneInTheObservable] = AccessIbl.GetDroneList().First(x => x.Id == IdOfTheDrone);//עדכון המשקיף של רשימת הרחפנים
+
+                                //עדכון השולח ברשימת הלקוחות
+                                int indexOfSenderCustomerInTheObservable = ListWindow.CustomerToLists.IndexOf(ListWindow.CustomerToLists.First(x => x.Id == parcel.Sender.Id));
+                                ListWindow.CustomerToLists[indexOfSenderCustomerInTheObservable] = AccessIbl.GetCustomerList().First(x => x.Id == parcel.Sender.Id);
+
+                                //עדכון המקבל ברשימת הלקוחות
+                                int indexOfReceiverCustomerInTheObservable = ListWindow.CustomerToLists.IndexOf(ListWindow.CustomerToLists.First(x => x.Id == parcel.Receiver.Id));
+                                ListWindow.CustomerToLists[indexOfReceiverCustomerInTheObservable] = AccessIbl.GetCustomerList().First(x => x.Id == parcel.Receiver.Id);
 
                                 BUpdateParcel.Content = "";
                                 break;
