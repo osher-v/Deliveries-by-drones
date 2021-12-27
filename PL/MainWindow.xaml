@@ -36,7 +36,7 @@
                             </StackPanel>
                         </TabItem.Header>
                         <Grid Background="{DynamicResource MaterialDesignDarkBackground}">
-                            <TextBox materialDesign:HintAssist.Hint="שם משתמש" HorizontalContentAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" Width="606" MaxLength="10" Height="86" Foreground="White" FontSize="32" FontWeight="Bold" FontFamily="Consolas" />
+                            <TextBox x:Name="TBadmin" materialDesign:HintAssist.Hint="שם משתמש" HorizontalContentAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" Width="606" MaxLength="10" Height="86" Foreground="White" FontSize="32" FontWeight="Bold" FontFamily="Consolas" KeyUp="TBadmin_KeyUp" />
 
                         </Grid>
 
@@ -59,7 +59,7 @@
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <TextBlock TextWrapping="Wrap" Height="58" FontSize="32" FontWeight="Bold" Foreground="{DynamicResource MaterialDesignCheckBoxDisabled}" Width="250" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="277,120,0,0" Grid.ColumnSpan="2" ><Run FlowDirection="RightToLeft" Language="he-il" Text="הכנס מזהה לקוח"/></TextBlock>
-                            <PasswordBox x:Name="TBuserID" Style="{StaticResource MaterialDesignFilledPasswordBox}"  Password="000000"  HorizontalContentAlignment="Center" Width="324" MaxLength="10" Foreground="#FFFBFBFB" FontSize="32" FontFamily="Consolas" FontWeight="Bold" Background="{x:Null}" BorderBrush="{x:Null}" Margin="232,178,232,159" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
+                            <PasswordBox x:Name="TBuserID" Style="{StaticResource MaterialDesignFilledPasswordBox}"  Password="000000"  HorizontalContentAlignment="Center" Width="324" MaxLength="10" Foreground="#FFFBFBFB" FontSize="32" FontFamily="Consolas" FontWeight="Bold" Background="{x:Null}" BorderBrush="{x:Null}" Margin="232,178,232,159" Grid.ColumnSpan="2" Grid.RowSpan="2" KeyUp="TBuserID_KeyUp"/>
                             <Grid Margin="0,0,0,10">
                                 <Button x:Name="BNewUser" Visibility="Visible" Style="{StaticResource MaterialDesignRaisedButton}"  materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
                     materialDesign:ButtonProgressAssist.IsIndeterminate="True" Content="לקוח חדש? הרשם עכשיו" Margin="295,327,-113,-168"

@@ -223,6 +223,15 @@ namespace PL
             {
                 BDelete.Visibility = Visibility.Visible; //we can only delete if the package is not associated.
             }
+
+            if (parcelTo.Status == DeliveryStatus.Assigned || parcelTo.Status == DeliveryStatus.PickedUp)
+            {
+                Bdrone.Visibility = Visibility.Visible;
+                Breciver.Visibility = Visibility.Visible;
+                Bsender.Visibility = Visibility.Visible;
+
+            };
+
             //switch (parcelTo.Status)
             //{
             //    case DeliveryStatus.created:
@@ -265,6 +274,51 @@ namespace PL
                 default:
                     break;
             }
+        }
+        /// <summary>
+        /// open window for more informiton about the reciver
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Breciver_Click(object sender, RoutedEventArgs e)
+        {
+            int IdOfcustomer = parcel.Receiver.Id;
+            int indexcustomerInObservable = ListWindow.CustomerToLists.IndexOf(ListWindow.CustomerToLists.First(x => x.Id == IdOfcustomer));
+            CustomerToList customer = AccessIbl.GetCustomerList().First(x => x.Id == IdOfcustomer);
+            new CustomerWindow(AccessIbl, ListWindow, customer, indexcustomerInObservable).Show();
+            
+            ClosingWindow = false; // עקרונית צריכים לעדכן את החלון הזה השאלה איך עושים
+            Close();
+        }
+        /// <summary>
+        /// open window for more informiton about the sender
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Bsender_Click(object sender, RoutedEventArgs e)
+        {
+            int IdOfcustomer = parcel.Sender.Id;
+            int indexcustomerInObservable = ListWindow.CustomerToLists.IndexOf(ListWindow.CustomerToLists.First(x => x.Id == IdOfcustomer));
+            CustomerToList customer = AccessIbl.GetCustomerList().First(x => x.Id == IdOfcustomer);
+            new CustomerWindow(AccessIbl, ListWindow, customer, indexcustomerInObservable).Show();
+
+            ClosingWindow = false; // עקרונית צריכים לעדכן את החלון הזה השאלה איך עושים
+            Close();
+        }
+        /// <summary>
+        /// open window for more informiton about the linked drone
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Bdrone_Click(object sender, RoutedEventArgs e)
+        {
+            int IdOfDrone = parcel.MyDrone.Id;
+            int indexDroneInObservable = ListWindow.DroneToLists.IndexOf(ListWindow.DroneToLists.First(x => x.Id == IdOfDrone));
+            DroneToList drone = AccessIbl.GetDroneList().First(x => x.Id == IdOfDrone);
+            new DroneWindow(AccessIbl, ListWindow, drone , indexDroneInObservable).Show();
+
+            ClosingWindow = false; // עקרונית צריכים לעדכן את החלון הזה השאלה איך עושים
+            Close();
         }
 
         ///// <summary>

@@ -124,5 +124,31 @@ namespace PL
             Blogin.Visibility = Visibility.Visible;
             Blogin.Content = "כניסת לקוח";
         }
+
+     
+
+        private void TBadmin_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (TBadmin.Text.Length != 0)
+            {
+                Blogin.IsEnabled = true;
+            }
+            else
+            {
+                Blogin.IsEnabled = false;
+            }
+        }
+
+        private void TBuserID_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (TBuserID.Password.Length != 0)
+            {
+                Blogin.IsEnabled = true;
+            }
+            else
+            {
+                Blogin.IsEnabled = false;
+            }
+        }
     }
 }
