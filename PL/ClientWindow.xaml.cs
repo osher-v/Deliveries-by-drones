@@ -56,6 +56,8 @@ namespace PL
         {
             if(CBPickUpList.SelectedItem != null)
             {
+                int id = ((ParcelToList)CBPickUpList.SelectedItem).Id;
+                PickedUp(AccessIbl.GetParcel(id).MyDrone.Id);
 
             }
             else
@@ -69,9 +71,8 @@ namespace PL
         {
             if (CBDeliverdList.SelectedItem != null)
             {
-                int id=((ParcelToList)CBDeliverdList.SelectedItem).Id;
-                PickedUp(AccessIbl.GetParcel(id).MyDrone.Id);
-               
+                int id = ((ParcelToList)CBDeliverdList.SelectedItem).Id;
+                DeliveryPackage(AccessIbl.GetParcel(id).MyDrone.Id);
             }
             else
             {
@@ -89,37 +90,14 @@ namespace PL
         {
             try
             {
+                IsEnabled = false;
                 AccessIbl.PickedUpPackageByTheDrone(DroneId);
-
                 MessageBoxResult result = MessageBox.Show("The operation was successful", "info", MessageBoxButton.OK, MessageBoxImage.Information);
                 switch (result)
                 {
                     case MessageBoxResult.OK:
-                        //listWindow.StatusDroneSelectorChanged();
-
-                        ////to conecct the binding to set the value of my drone to the proprtis
-                        //MyDrone = AccessIbl.GetDrone(MyDrone.Id);
-                        //DataContext = MyDrone;
-
-                        ////עדכון רשימת החבילות
-                        //int indexOfParcelInTheObservable = listWindow.ParcelToLists.IndexOf(listWindow.ParcelToLists.First(x => x.Id == MyDrone.Delivery.Id));
-                        //listWindow.ParcelToLists[indexOfParcelInTheObservable] = AccessIbl.GetParcelList().First(x => x.Id == MyDrone.Delivery.Id);
-
-                        ////עדכון השולח ברשימת הלקוחות
-                        //int indexOfSenderCustomerInTheObservable = listWindow.CustomerToLists.IndexOf(listWindow.CustomerToLists.First(x => x.Id == MyDrone.Delivery.Sender.Id));
-                        //listWindow.CustomerToLists[indexOfSenderCustomerInTheObservable] = AccessIbl.GetCustomerList().First(x => x.Id == MyDrone.Delivery.Sender.Id);
-
-                        ////עדכון המקבל ברשימת הלקוחות
-                        //int indexOfReceiverCustomerInTheObservable = listWindow.CustomerToLists.IndexOf(listWindow.CustomerToLists.First(x => x.Id == MyDrone.Delivery.Receiver.Id));
-                        //listWindow.CustomerToLists[indexOfReceiverCustomerInTheObservable] = AccessIbl.GetCustomerList().First(x => x.Id == MyDrone.Delivery.Receiver.Id);
-
-                        //BPickedUp.Visibility = Visibility.Hidden;
-                        //BDeliveryPackage.Visibility = Visibility.Visible;
-
-                        //if (parcelWindow != null)//עדכון שינוי מיקום וסוללת הרחפן אם נפתח חלון רחפן דרך חבילה
-                        //{
-                        //    parcelWindow.UpdateChangesFromDroneWindow();
-                        //}
+                        IsEnabled = true;
+                        CBSendToPickUp.IsChecked = false;
                         break;
                     default:
                         break;
@@ -128,12 +106,57 @@ namespace PL
             catch (NonExistentObjectException ex)
             {
                 MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                IsEnabled = true;
+
             }
             catch (UnableToCollectParcel ex)
             {
                 MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                IsEnabled = true;
+                CBSendToDeliverd.IsChecked = false;
             }
         }
 
+        /// <summary>
+        /// The function handles the delivery of a package to the customer.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void DeliveryPackage(int DroneId)
+        {
+            try
+            {
+                IsEnabled = false;
+                AccessIbl.DeliveryPackageToTheCustomer(DroneId);
+                MessageBoxResult result = MessageBox.Show("The operation was successful", "info", MessageBoxButton.OK, MessageBoxImage.Information);
+                switch (result)
+                {
+                    case MessageBoxResult.OK:
+                        IsEnabled = true;
+                        CBSendToDeliverd.IsChecked = false;
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+            catch (DeliveryCannotBeMade ex)
+            {
+                MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                IsEnabled = true;
+                CBSendToDeliverd.IsChecked = false;
+            }
+        }
+
+        private void BRrestComboBox_Click(object sender, RoutedEventArgs e)
+        {
+            CBPickUpList.SelectedItem = null;
+        }
+
+        private void BRrestComboBox2_Click(object sender, RoutedEventArgs e)
+        {
+            CBDeliverdList.SelectedItem = null;
+
+        }
     }
 }
