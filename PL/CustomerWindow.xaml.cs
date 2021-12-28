@@ -247,6 +247,8 @@ namespace PL
 
         public int indexSelected;
 
+        public ParcelWindow parcelWindow; //שדה שנצטרך כאשר ניכנס לחלון לקוח דרך חלון חבילה ונצטרך לעדכן
+
         /// <summary>
         /// update constractor.
         /// </summary>
@@ -254,7 +256,7 @@ namespace PL
         /// <param name="_ListWindow"></param>
         /// <param name="CustomerTo"></param>
         /// <param name="_indexCustomer"></param>
-        public CustomerWindow(BlApi.IBL bl, ListView _ListWindow, CustomerToList CustomerTo, int _indexCustomer)
+        public CustomerWindow(BlApi.IBL bl, ListView _ListWindow, CustomerToList CustomerTo, int _indexCustomer, ParcelWindow _parcelWindow = null)
         {
             InitializeComponent();
 
@@ -271,6 +273,8 @@ namespace PL
 
             listOfCustomeSend.ItemsSource = AccessIbl.GetCustomer(customer.Id).ParcelFromTheCustomer;
             listOfCustomerReceive.ItemsSource = AccessIbl.GetCustomer(customer.Id).ParcelToTheCustomer;
+
+            parcelWindow = _parcelWindow;
         }
 
         /// <summary>
@@ -314,6 +318,11 @@ namespace PL
                         foreach (var item in parcel)
                         {
                             ListWindow.ParcelToLists.Add(item);
+                        }
+
+                        if(parcelWindow != null)
+                        {
+                            parcelWindow.UpdateChangesFromCustomerWindow();
                         }
 
                         ListWindow.IsEnabled = true;

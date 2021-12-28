@@ -219,35 +219,18 @@ namespace PL
             parcel = AccessIbl.GetParcel(parcelTo.Id);
             DataContext = parcel;
 
-            if(parcelTo.Status == DeliveryStatus.created)
+            Breciver.Visibility = Visibility.Visible;
+            Bsender.Visibility = Visibility.Visible;
+
+            if (parcelTo.Status == DeliveryStatus.created)
             {
                 BDelete.Visibility = Visibility.Visible; //we can only delete if the package is not associated.
             }
 
             if (parcelTo.Status == DeliveryStatus.Assigned || parcelTo.Status == DeliveryStatus.PickedUp)
             {
-                Bdrone.Visibility = Visibility.Visible;
-                Breciver.Visibility = Visibility.Visible;
-                Bsender.Visibility = Visibility.Visible;
-
-            };
-
-            //switch (parcelTo.Status)
-            //{
-            //    case DeliveryStatus.created:
-            //        BDelete.Visibility = Visibility.Visible; //we can only delete if the package is not associated.
-            //        break;
-            //    case DeliveryStatus.Assigned:
-            //        BUpdateParcel.Content = "חבילה נאספה";
-            //        break;
-            //    case DeliveryStatus.PickedUp:
-            //        BUpdateParcel.Content = "חבילה סופקה";
-            //        break;
-            //    case DeliveryStatus.Delivered:
-            //        break;
-            //    default:
-            //        break;
-            //}
+                Bdrone.Visibility = Visibility.Visible;         
+            };      
         }
 
         /// <summary>
@@ -275,21 +258,7 @@ namespace PL
                     break;
             }
         }
-        /// <summary>
-        /// open window for more informiton about the reciver
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Breciver_Click(object sender, RoutedEventArgs e)
-        {
-            int IdOfcustomer = parcel.Receiver.Id;
-            int indexcustomerInObservable = ListWindow.CustomerToLists.IndexOf(ListWindow.CustomerToLists.First(x => x.Id == IdOfcustomer));
-            CustomerToList customer = AccessIbl.GetCustomerList().First(x => x.Id == IdOfcustomer);
-            new CustomerWindow(AccessIbl, ListWindow, customer, indexcustomerInObservable).Show();
-            
-            ClosingWindow = false; // עקרונית צריכים לעדכן את החלון הזה השאלה איך עושים
-            Close();
-        }
+
         /// <summary>
         /// open window for more informiton about the sender
         /// </summary>
@@ -300,11 +269,31 @@ namespace PL
             int IdOfcustomer = parcel.Sender.Id;
             int indexcustomerInObservable = ListWindow.CustomerToLists.IndexOf(ListWindow.CustomerToLists.First(x => x.Id == IdOfcustomer));
             CustomerToList customer = AccessIbl.GetCustomerList().First(x => x.Id == IdOfcustomer);
-            new CustomerWindow(AccessIbl, ListWindow, customer, indexcustomerInObservable).Show();
-
-            ClosingWindow = false; // עקרונית צריכים לעדכן את החלון הזה השאלה איך עושים
-            Close();
+            new CustomerWindow(AccessIbl, ListWindow, customer, indexcustomerInObservable, this).Show();
         }
+
+        /// <summary>
+        /// open window for more informiton about the reciver
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Breciver_Click(object sender, RoutedEventArgs e)
+        {
+            int IdOfcustomer = parcel.Receiver.Id;
+            int indexcustomerInObservable = ListWindow.CustomerToLists.IndexOf(ListWindow.CustomerToLists.First(x => x.Id == IdOfcustomer));
+            CustomerToList customer = AccessIbl.GetCustomerList().First(x => x.Id == IdOfcustomer);
+            new CustomerWindow(AccessIbl, ListWindow, customer, indexcustomerInObservable, this).Show();  
+        }
+
+        /// <summary>
+        /// Update changes from customer window(name).
+        /// </summary>
+        public void UpdateChangesFromCustomerWindow()
+        {
+            parcel = AccessIbl.GetParcel(parcel.Id);
+            DataContext = parcel;
+        }
+
         /// <summary>
         /// open window for more informiton about the linked drone
         /// </summary>
@@ -315,106 +304,120 @@ namespace PL
             int IdOfDrone = parcel.MyDrone.Id;
             int indexDroneInObservable = ListWindow.DroneToLists.IndexOf(ListWindow.DroneToLists.First(x => x.Id == IdOfDrone));
             DroneToList drone = AccessIbl.GetDroneList().First(x => x.Id == IdOfDrone);
-            new DroneWindow(AccessIbl, ListWindow, drone , indexDroneInObservable).Show();
+            new DroneWindow(AccessIbl, ListWindow, drone , indexDroneInObservable, this).Show();
 
-            ClosingWindow = false; // עקרונית צריכים לעדכן את החלון הזה השאלה איך עושים
-            Close();
+            //ClosingWindow = false; // עקרונית צריכים לעדכן את החלון הזה השאלה איך עושים
+            //Close();
         }
 
-        ///// <summary>
-        ///// The function updates a parcel.
-        ///// </summary>
-        ///// <param name="sender"></param>
-        ///// <param name="e"></param>
-        //private void BUpdateParcel_Click(object sender, RoutedEventArgs e)
-        //{
-        //    int IdOfTheDrone = parcel.MyDrone.Id;
-        //    switch (BUpdateParcel.Content)
-        //    {
+        /// <summary>
+        /// Update changes from customer window(name).
+        /// </summary>
+        public void UpdateChangesFromDroneWindow()
+        {
+            parcel = AccessIbl.GetParcel(parcel.Id);
+            DataContext = parcel;
 
-        //        case "חבילה נאספה":
-        //            try
-        //            {
-        //                AccessIbl.PickedUpPackageByTheDrone(parcel.MyDrone.Id);
-
-        //                MessageBoxResult result = MessageBox.Show("The operation was successful", "info", MessageBoxButton.OK, MessageBoxImage.Information);
-        //                switch (result)
-        //                {
-        //                    case MessageBoxResult.OK:
-        //                        //to conecct the binding to set the value of my Parcel to the proprtis
-        //                        parcel = AccessIbl.GetParcel(parcel.Id);
-        //                        DataContext = parcel;
-
-        //                        ListWindow.ParcelToLists[indexSelected] = AccessIbl.GetParcelList().ToList().Find(x => x.Id == parcel.Id);//עדכון המשקיף
-
-        //                        //ListWindow.StatusDroneSelectorChanged();//עדכון הרחפנים נעשה ממילא רק צריך לשמור על הסינון
-        //                        int indexOfDroneInTheObservable = ListWindow.DroneToLists.IndexOf(ListWindow.DroneToLists.First(x => x.Id == IdOfTheDrone));
-        //                        ListWindow.DroneToLists[indexOfDroneInTheObservable] = AccessIbl.GetDroneList().First(x => x.Id == IdOfTheDrone);//עדכון המשקיף של רשימת הרחפנים
-
-        //                        //עדכון השולח ברשימת הלקוחות
-        //                        int indexOfSenderCustomerInTheObservable = ListWindow.CustomerToLists.IndexOf(ListWindow.CustomerToLists.First(x => x.Id == parcel.Sender.Id));
-        //                        ListWindow.CustomerToLists[indexOfSenderCustomerInTheObservable] = AccessIbl.GetCustomerList().First(x => x.Id == parcel.Sender.Id);
-
-        //                        //עדכון המקבל ברשימת הלקוחות
-        //                        int indexOfReceiverCustomerInTheObservable = ListWindow.CustomerToLists.IndexOf(ListWindow.CustomerToLists.First(x => x.Id == parcel.Receiver.Id));
-        //                        ListWindow.CustomerToLists[indexOfReceiverCustomerInTheObservable] = AccessIbl.GetCustomerList().First(x => x.Id == parcel.Receiver.Id);
-
-        //                        BUpdateParcel.Content = "חבילה סופקה";
-        //                        break;
-        //                    default:
-        //                        break;
-        //                }
-        //            }
-        //            catch (NonExistentObjectException ex)
-        //            {
-        //                MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
-        //            }
-        //            catch (UnableToCollectParcel ex)
-        //            {
-        //                MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
-        //            }
-        //            break;
-        //        case "חבילה סופקה":
-        //            try
-        //            {                       
-        //                AccessIbl.DeliveryPackageToTheCustomer(parcel.MyDrone.Id);
-
-        //                MessageBoxResult result = MessageBox.Show("The operation was successful", "info", MessageBoxButton.OK, MessageBoxImage.Information);
-        //                switch (result)
-        //                {
-        //                    case MessageBoxResult.OK:
-        //                        //to conecct the binding to set the value of my Parcel to the proprtis
-        //                        parcel = AccessIbl.GetParcel(parcel.Id);
-        //                        DataContext = parcel;
-
-        //                        ListWindow.ParcelToLists[indexSelected] = AccessIbl.GetParcelList().ToList().Find(x => x.Id == parcel.Id);//עדכון המשקיף
-
-        //                        //ListWindow.StatusDroneSelectorChanged();//עדכון הרחפן ברשימת הרחפנים נעשה ממילא רק צריך לשמור על הסינון
-        //                        int indexOfDroneInTheObservable = ListWindow.DroneToLists.IndexOf(ListWindow.DroneToLists.First(x => x.Id == IdOfTheDrone));
-        //                        ListWindow.DroneToLists[indexOfDroneInTheObservable] = AccessIbl.GetDroneList().First(x => x.Id == IdOfTheDrone);//עדכון המשקיף של רשימת הרחפנים
-
-        //                        //עדכון השולח ברשימת הלקוחות
-        //                        int indexOfSenderCustomerInTheObservable = ListWindow.CustomerToLists.IndexOf(ListWindow.CustomerToLists.First(x => x.Id == parcel.Sender.Id));
-        //                        ListWindow.CustomerToLists[indexOfSenderCustomerInTheObservable] = AccessIbl.GetCustomerList().First(x => x.Id == parcel.Sender.Id);
-
-        //                        //עדכון המקבל ברשימת הלקוחות
-        //                        int indexOfReceiverCustomerInTheObservable = ListWindow.CustomerToLists.IndexOf(ListWindow.CustomerToLists.First(x => x.Id == parcel.Receiver.Id));
-        //                        ListWindow.CustomerToLists[indexOfReceiverCustomerInTheObservable] = AccessIbl.GetCustomerList().First(x => x.Id == parcel.Receiver.Id);
-
-        //                        BUpdateParcel.Content = "";
-        //                        break;
-        //                    default:
-        //                        break;
-        //                }
-        //            }
-        //            catch (DeliveryCannotBeMade ex)
-        //            {
-        //                MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
-        //            }
-        //            break;             
-        //        default:
-        //            break;
-        //    }
-        //} //אולי פשוט נמחק את זה כי זה כבר קיים ברחפן
+            if(parcel.Delivered != null)//להסתיר את כפתור רחפן אם אין אחד שמשויך כי כבר סיפק
+            {
+                Bdrone.Visibility = Visibility.Hidden;
+            }
+        }
     }
 }
+
+///// <summary>
+///// The function updates a parcel.
+///// </summary>
+///// <param name="sender"></param>
+///// <param name="e"></param>
+//private void BUpdateParcel_Click(object sender, RoutedEventArgs e)
+//{
+//    int IdOfTheDrone = parcel.MyDrone.Id;
+//    switch (BUpdateParcel.Content)
+//    {
+
+//        case "חבילה נאספה":
+//            try
+//            {
+//                AccessIbl.PickedUpPackageByTheDrone(parcel.MyDrone.Id);
+
+//                MessageBoxResult result = MessageBox.Show("The operation was successful", "info", MessageBoxButton.OK, MessageBoxImage.Information);
+//                switch (result)
+//                {
+//                    case MessageBoxResult.OK:
+//                        //to conecct the binding to set the value of my Parcel to the proprtis
+//                        parcel = AccessIbl.GetParcel(parcel.Id);
+//                        DataContext = parcel;
+
+//                        ListWindow.ParcelToLists[indexSelected] = AccessIbl.GetParcelList().ToList().Find(x => x.Id == parcel.Id);//עדכון המשקיף
+
+//                        //ListWindow.StatusDroneSelectorChanged();//עדכון הרחפנים נעשה ממילא רק צריך לשמור על הסינון
+//                        int indexOfDroneInTheObservable = ListWindow.DroneToLists.IndexOf(ListWindow.DroneToLists.First(x => x.Id == IdOfTheDrone));
+//                        ListWindow.DroneToLists[indexOfDroneInTheObservable] = AccessIbl.GetDroneList().First(x => x.Id == IdOfTheDrone);//עדכון המשקיף של רשימת הרחפנים
+
+//                        //עדכון השולח ברשימת הלקוחות
+//                        int indexOfSenderCustomerInTheObservable = ListWindow.CustomerToLists.IndexOf(ListWindow.CustomerToLists.First(x => x.Id == parcel.Sender.Id));
+//                        ListWindow.CustomerToLists[indexOfSenderCustomerInTheObservable] = AccessIbl.GetCustomerList().First(x => x.Id == parcel.Sender.Id);
+
+//                        //עדכון המקבל ברשימת הלקוחות
+//                        int indexOfReceiverCustomerInTheObservable = ListWindow.CustomerToLists.IndexOf(ListWindow.CustomerToLists.First(x => x.Id == parcel.Receiver.Id));
+//                        ListWindow.CustomerToLists[indexOfReceiverCustomerInTheObservable] = AccessIbl.GetCustomerList().First(x => x.Id == parcel.Receiver.Id);
+
+//                        BUpdateParcel.Content = "חבילה סופקה";
+//                        break;
+//                    default:
+//                        break;
+//                }
+//            }
+//            catch (NonExistentObjectException ex)
+//            {
+//                MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+//            }
+//            catch (UnableToCollectParcel ex)
+//            {
+//                MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+//            }
+//            break;
+//        case "חבילה סופקה":
+//            try
+//            {                       
+//                AccessIbl.DeliveryPackageToTheCustomer(parcel.MyDrone.Id);
+
+//                MessageBoxResult result = MessageBox.Show("The operation was successful", "info", MessageBoxButton.OK, MessageBoxImage.Information);
+//                switch (result)
+//                {
+//                    case MessageBoxResult.OK:
+//                        //to conecct the binding to set the value of my Parcel to the proprtis
+//                        parcel = AccessIbl.GetParcel(parcel.Id);
+//                        DataContext = parcel;
+
+//                        ListWindow.ParcelToLists[indexSelected] = AccessIbl.GetParcelList().ToList().Find(x => x.Id == parcel.Id);//עדכון המשקיף
+
+//                        //ListWindow.StatusDroneSelectorChanged();//עדכון הרחפן ברשימת הרחפנים נעשה ממילא רק צריך לשמור על הסינון
+//                        int indexOfDroneInTheObservable = ListWindow.DroneToLists.IndexOf(ListWindow.DroneToLists.First(x => x.Id == IdOfTheDrone));
+//                        ListWindow.DroneToLists[indexOfDroneInTheObservable] = AccessIbl.GetDroneList().First(x => x.Id == IdOfTheDrone);//עדכון המשקיף של רשימת הרחפנים
+
+//                        //עדכון השולח ברשימת הלקוחות
+//                        int indexOfSenderCustomerInTheObservable = ListWindow.CustomerToLists.IndexOf(ListWindow.CustomerToLists.First(x => x.Id == parcel.Sender.Id));
+//                        ListWindow.CustomerToLists[indexOfSenderCustomerInTheObservable] = AccessIbl.GetCustomerList().First(x => x.Id == parcel.Sender.Id);
+
+//                        //עדכון המקבל ברשימת הלקוחות
+//                        int indexOfReceiverCustomerInTheObservable = ListWindow.CustomerToLists.IndexOf(ListWindow.CustomerToLists.First(x => x.Id == parcel.Receiver.Id));
+//                        ListWindow.CustomerToLists[indexOfReceiverCustomerInTheObservable] = AccessIbl.GetCustomerList().First(x => x.Id == parcel.Receiver.Id);
+
+//                        BUpdateParcel.Content = "";
+//                        break;
+//                    default:
+//                        break;
+//                }
+//            }
+//            catch (DeliveryCannotBeMade ex)
+//            {
+//                MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+//            }
+//            break;             
+//        default:
+//            break;
+//    }
+//} //אולי פשוט נמחק את זה כי זה כבר קיים ברחפן

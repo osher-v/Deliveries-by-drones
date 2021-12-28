@@ -196,6 +196,8 @@ namespace PL
 
         public int indexDrone;//indexe of the drone how chosse by doubly click 
 
+        ParcelWindow parcelWindow;//עדכון לחלון החבילה
+
         /// <summary>
         /// constractor for acction staet  And updates the views accordingly
         /// </summary>
@@ -203,7 +205,7 @@ namespace PL
         /// <param name="_DroneListWindow">the call window</param>
         /// <param name="id">the drone id that chosen</param>
         /// <param name="_indexDrone">/indexe of the drone in the list</param>
-        public DroneWindow(BlApi.IBL bl, ListView _DroneListWindow, DroneToList droneTo, int _indexDrone)
+        public DroneWindow(BlApi.IBL bl, ListView _DroneListWindow, DroneToList droneTo, int _indexDrone, ParcelWindow _parcelWindow = null)
         {
             InitializeComponent();
 
@@ -220,6 +222,8 @@ namespace PL
             DataContext = MyDrone;
 
             BModalUpdate.IsEnabled = false;
+
+            parcelWindow = _parcelWindow;
 
             //The switch checks the drone's status value and opens buttons 
             switch ((DroneStatuses)MyDrone.Statuses)
@@ -313,7 +317,7 @@ namespace PL
 
                         BSendToCharge.Visibility = Visibility.Hidden;
                         BReleaseDrone.Visibility = Visibility.Visible;
-                        BAssignPackage.Visibility = Visibility.Hidden;
+                        BAssignPackage.Visibility = Visibility.Hidden;              
                         break;
                     default:
                         break;
@@ -441,6 +445,11 @@ namespace PL
 
                         BPickedUp.Visibility = Visibility.Hidden;
                         BDeliveryPackage.Visibility = Visibility.Visible;
+
+                        if (parcelWindow != null)//עדכון שינוי מיקום וסוללת הרחפן אם נפתח חלון רחפן דרך חבילה
+                        {
+                            parcelWindow.UpdateChangesFromDroneWindow();
+                        }
                         break;
                     default:
                         break;
@@ -500,6 +509,10 @@ namespace PL
                         GRIDparcelInDelivery.Visibility = Visibility.Hidden;
                         TBnotAssigned.Visibility = Visibility.Visible;
 
+                        if (parcelWindow != null)//עדכון שינוי מיקום וסוללת הרחפן אם נפתח חלון רחפן דרך חבילה
+                        {
+                            parcelWindow.UpdateChangesFromDroneWindow();
+                        }
                         break;
                     default:
                         break;
