@@ -47,7 +47,7 @@
 
         </Grid>
 
-        <Grid x:Name="updateParcel" Visibility="Visible">
+        <Grid x:Name="updateParcel" Visibility="Hidden">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
@@ -188,9 +188,9 @@
 
             </Grid>
 
-            <!--<Button x:Name="BUpdateParcel" Grid.Row="6" Style="{StaticResource MaterialDesignRaisedButton}" materialDesign:ButtonProgressAssist.Value="-1" materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
+            <Button x:Name="BUpdateParcel" Grid.Row="6" Style="{StaticResource MaterialDesignRaisedButton}" materialDesign:ButtonProgressAssist.Value="-1" materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
              materialDesign:ButtonProgressAssist.IsIndeterminate="True" Content="" Margin="0,17,0,0"
-             IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Click="BUpdateParcel_Click"  />-->
+             IsEnabled="False"/>
 
             <Grid Grid.Row="1" Margin="0,0,0,3">
                 <TextBlock TextWrapping="Wrap" Margin="260,21,126,27" FontWeight="Bold" FontFamily="Consolas" FontSize="14"><Run Text=":"/><Run FlowDirection="RightToLeft" Language="he-il" Text="מספר חבילה"/><LineBreak/><Run FlowDirection="RightToLeft" Language="he-il"/></TextBlock>
@@ -204,9 +204,15 @@
             <Button x:Name="BDelete" Visibility="Hidden" Grid.Row="1" Style="{StaticResource MaterialDesignRaisedButton}" materialDesign:ButtonProgressAssist.Value="-1" materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
                 materialDesign:ButtonProgressAssist.IsIndeterminate="True" Content="מחיקת חבילה" Margin="24,21,351,22"
                 IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" Background="#FFFF0909" BorderBrush="#FFF14A2F" FontSize="12" FontWeight="Bold" Click="BDelete_Click" />
-            <Button x:Name="Breciver" Visibility="Hidden" Content="חלון מקבל" HorizontalAlignment="Left" Margin="60,11,0,0" Grid.Row="6" VerticalAlignment="Top" Click="Breciver_Click" />
-            <Button x:Name="Bsender"  Visibility="Hidden" Content="חלון שולח" HorizontalAlignment="Left" Margin="367,11,0,0" Grid.Row="6" VerticalAlignment="Top" Click="Bsender_Click"/>
-            <Button x:Name="Bdrone"   Visibility="Hidden" Content="רחפן" HorizontalAlignment="Center" Margin="0,11,0,0" Grid.Row="6" VerticalAlignment="Top" Width="92" Click="Bdrone_Click"/>
+            <Button x:Name="Breciver" Style="{StaticResource MaterialDesignFloatingActionButton}" materialDesign:ButtonProgressAssist.IsIndicatorVisible="True" materialDesign:ButtonProgressAssist.Value="-1" materialDesign:ButtonProgressAssist.IsIndeterminate="True" Visibility="Hidden"  HorizontalAlignment="Left" Margin="19,35,0,0"  Width="30" Height="30" Grid.Row="5" VerticalAlignment="Top" Click="Breciver_Click" >
+                <materialDesign:PackIcon Kind="CogOutline" Height="20" Width="29" VerticalAlignment="Center" HorizontalAlignment="Center" />
+            </Button>
+            <Button x:Name="Bsender"   Visibility="Hidden"  Style="{StaticResource MaterialDesignFloatingActionButton}" materialDesign:ButtonProgressAssist.IsIndicatorVisible="True" materialDesign:ButtonProgressAssist.Value="-1" materialDesign:ButtonProgressAssist.IsIndeterminate="True" HorizontalAlignment="Left" Margin="280,35,0,0" Grid.Row="5" VerticalAlignment="Top" Click="Bsender_Click" Height="27" Width="28" >
+                <materialDesign:PackIcon Kind="CogOutline" Height="20" Width="29" VerticalAlignment="Center" HorizontalAlignment="Center" />
+            </Button>
+            <Button x:Name="Bdrone"   Visibility="Hidden" Style="{StaticResource MaterialDesignFloatingActionButton}" materialDesign:ButtonProgressAssist.IsIndicatorVisible="True" materialDesign:ButtonProgressAssist.Value="-1" materialDesign:ButtonProgressAssist.IsIndeterminate="True" HorizontalAlignment="Left" Margin="24,17,0,0" Grid.Row="4" VerticalAlignment="Top" Width="30" Click="Bdrone_Click" Height="30" RenderTransformOrigin="0.5,0.5">
+                <materialDesign:PackIcon Kind="CogOutline" Height="20" Width="29" VerticalAlignment="Center" HorizontalAlignment="Center" />
+            </Button>
         </Grid>
     </Grid>
 </Window>
