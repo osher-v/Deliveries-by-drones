@@ -31,23 +31,23 @@ namespace PL
         public Customer customer;
 
         public int indexSelected;
+        public int customerId;
+
         public ClientWindow(BlApi.IBL bl,int id)
         {
             InitializeComponent();
             AccessIbl = bl;
-
+            customerId = id;
             customer = AccessIbl.GetCustomer(id);
             DataContext = customer;
-
             listOfCustomeSend.ItemsSource = AccessIbl.GetCustomer(customer.Id).ParcelFromTheCustomer;
             listOfCustomerReceive.ItemsSource = AccessIbl.GetCustomer(customer.Id).ParcelToTheCustomer;
 
-
-            // the combobox use it to show the BaseStation ID
+            // the combobox use it to show the parcel  ID
             CBPickUpList.ItemsSource = AccessIbl.GetParcelList(x => x.CustomerSenderName == customer.Name && x.Status == DeliveryStatus.Assigned);
             CBPickUpList.DisplayMemberPath = "Id";
-
-            // the combobox use it to show the BaseStation ID
+            
+            // the combobox use it to show the parcel  ID
             CBDeliverdList.ItemsSource = AccessIbl.GetParcelList(x => x.CustomerReceiverName == customer.Name && x.Status == DeliveryStatus.PickedUp);
             CBDeliverdList.DisplayMemberPath = "Id";
         }
@@ -98,6 +98,15 @@ namespace PL
                     case MessageBoxResult.OK:
                         IsEnabled = true;
                         CBSendToPickUp.IsChecked = false;
+
+                        // the combobox use it to show the parcel  ID
+                        CBPickUpList.ItemsSource = AccessIbl.GetParcelList(x => x.CustomerSenderName == customer.Name && x.Status == DeliveryStatus.Assigned);
+                        CBPickUpList.DisplayMemberPath = "Id";
+
+                        customer = AccessIbl.GetCustomer(customerId);
+                        DataContext = customer;
+                        //לבדוק אם יש דרך יעילה יותר
+                        listOfCustomeSend.ItemsSource = AccessIbl.GetCustomer(customer.Id).ParcelFromTheCustomer;
                         break;
                     default:
                         break;
@@ -134,6 +143,15 @@ namespace PL
                     case MessageBoxResult.OK:
                         IsEnabled = true;
                         CBSendToDeliverd.IsChecked = false;
+
+                        // the combobox use it to show the parcel  ID
+                        CBDeliverdList.ItemsSource = AccessIbl.GetParcelList(x => x.CustomerReceiverName == customer.Name && x.Status == DeliveryStatus.PickedUp);
+                        CBDeliverdList.DisplayMemberPath = "Id";
+
+                        customer = AccessIbl.GetCustomer(customerId);
+                        DataContext = customer;
+                        //לבדוק אם יש דרך יעילה יותר
+                        listOfCustomerReceive.ItemsSource = AccessIbl.GetCustomer(customer.Id).ParcelToTheCustomer;
                         break;
 
                     default:
@@ -158,5 +176,14 @@ namespace PL
             CBDeliverdList.SelectedItem = null;
 
         }
+
+        private void Bcustomer_Click(object sender, RoutedEventArgs e)
+        {
+            //int indexcustomerInObservable = ListWindow.CustomerToLists.IndexOf(ListWindow.CustomerToLists.First(x => x.Id == customerId));
+            CustomerToList customer = AccessIbl.GetCustomerList().First(x => x.Id == customerId);
+            new CustomerWindow(AccessIbl, ListWindow, customer, 0).Show();
+        }
+
+  
     }
 }
