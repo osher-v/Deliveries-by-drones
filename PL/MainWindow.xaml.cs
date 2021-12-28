@@ -44,13 +44,13 @@ namespace PL
             switch (Blogin.Content)
             {
                 case "כניסה כמנהל":
-                    new ListView(AccessIbl).Show();
+                    new ListView(AccessIbl).ShowDialog();
                     break;
                 case "כניסת לקוח":
                     try
                     {
                          AccessIbl.GetCustomer(int.Parse(TBuserID.Password)); //לשים לב שזה מקפיץ חריגה אם הלקוח נכנס ללא שם משתמש
-                        new ClientWindow(AccessIbl, int.Parse(TBuserID.Password)).Show();
+                        new ClientWindow(AccessIbl, int.Parse(TBuserID.Password)).ShowDialog();
                     }
                     catch (BO.NonExistentObjectException ex)
                     {

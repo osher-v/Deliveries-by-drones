@@ -22,8 +22,6 @@ namespace PL
     {
         public BlApi.IBL AccessIbl;
 
-        //object of ListView window.
-        public ListView ListWindow;
 
         /// <summary> a bool to help us disable the x bootum  </summary>
         public bool ClosingWindow { get; private set; } = true;
@@ -105,7 +103,6 @@ namespace PL
 
                         customer = AccessIbl.GetCustomer(customerId);
                         DataContext = customer;
-                        //לבדוק אם יש דרך יעילה יותר
                         listOfCustomeSend.ItemsSource = AccessIbl.GetCustomer(customer.Id).ParcelFromTheCustomer;
                         break;
                     default:
@@ -150,7 +147,6 @@ namespace PL
 
                         customer = AccessIbl.GetCustomer(customerId);
                         DataContext = customer;
-                        //לבדוק אם יש דרך יעילה יותר
                         listOfCustomerReceive.ItemsSource = AccessIbl.GetCustomer(customer.Id).ParcelToTheCustomer;
                         break;
 
@@ -174,16 +170,36 @@ namespace PL
         private void BRrestComboBox2_Click(object sender, RoutedEventArgs e)
         {
             CBDeliverdList.SelectedItem = null;
-
         }
 
         private void Bcustomer_Click(object sender, RoutedEventArgs e)
         {
-            //int indexcustomerInObservable = ListWindow.CustomerToLists.IndexOf(ListWindow.CustomerToLists.First(x => x.Id == customerId));
-            CustomerToList customer = AccessIbl.GetCustomerList().First(x => x.Id == customerId);
-            new CustomerWindow(AccessIbl, ListWindow, customer, 0).Show();
+
+        //object of ListView window.
+         ListView ListWindow =new ListView(AccessIbl) ;
+         int indexcustomerInObservable = ListWindow.CustomerToLists.IndexOf(ListWindow.CustomerToLists.First(x => x.Id == customerId));
+         CustomerToList customers = AccessIbl.GetCustomerList().First(x => x.Id == customerId);
+            new CustomerWindow(AccessIbl, ListWindow, customers, indexcustomerInObservable,null,this).Show();
+          
         }
 
-  
+        /// <summary>
+        /// Update changes from customer window(name).
+        /// </summary>
+        public void UpdateChangesFromCustomerWindow()
+        {
+            customer = AccessIbl.GetCustomer(customerId);
+            DataContext = customer;
+        }
+        /// <summary>
+        /// opend the window that adding parcels
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BAddParcel_Click(object sender, RoutedEventArgs e)
+        {
+            ListView listView = new ListView(AccessIbl);
+            new  ParcelWindow(AccessIbl, listView).Show();
+        }
     }
 }

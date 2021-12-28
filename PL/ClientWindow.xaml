@@ -23,12 +23,12 @@
                 <ColumnDefinition Width="2*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="24*"/>
-                <RowDefinition Height="205*"/>
-                <RowDefinition Height="138*"/>
+                <RowDefinition Height="48*"/>
+                <RowDefinition Height="495*"/>
+                <RowDefinition Height="191*"/>
             </Grid.RowDefinitions>
             <Grid Grid.Column="1" Grid.RowSpan="3" Background="#FF673AB7" Opacity="0.3"/>
-            <Grid Grid.Row="1">
+            <Grid Margin="0,48,0,0" Grid.RowSpan="2">
                 <Grid.ColumnDefinitions >
                     <ColumnDefinition Width="63*"/>
                     <ColumnDefinition Width="29*"/>
@@ -38,7 +38,7 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <materialDesign:Card   Background="{DynamicResource PrimaryHueLightBrush}" Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"   
-                                      UniformCornerRadius="6" Margin="10,10,10,201" >
+                                      UniformCornerRadius="6" Margin="10,10,10,258" >
                         <Grid Margin="0,21,0,6" >
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="37*"/>
@@ -65,7 +65,7 @@
                         </Grid>
                     </materialDesign:Card>
                     <materialDesign:Card   Background="{DynamicResource PrimaryHueLightBrush}" Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"   
-                    UniformCornerRadius="6" Margin="10,207,10,10" >
+                    UniformCornerRadius="6" Margin="10,235,10,10" >
                         <Grid Margin="0,21,17,6" >
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="37*"/>
@@ -170,6 +170,9 @@
             <TextBlock  x:Name="TBuserName" HorizontalAlignment="Left" Margin="858,0,0,0" TextWrapping="Wrap" VerticalAlignment="Center" Height="28" Width="142" FontSize="24" FontWeight="Bold" FontFamily="Consolas" TextAlignment="Right"><Run FlowDirection="RightToLeft" Language="he-il" Text="{Binding Name}"/></TextBlock>
             <Button x:Name="Bcustomer" Style="{StaticResource MaterialDesignFloatingActionButton}" materialDesign:ButtonProgressAssist.IsIndicatorVisible="True" materialDesign:ButtonProgressAssist.Value="-1" materialDesign:ButtonProgressAssist.IsIndeterminate="True" Visibility="Visible"  HorizontalAlignment="Left"  Width="30" Height="30"  VerticalAlignment="Top"  Margin="31,8,0,0" Click="Bcustomer_Click" >
                 <materialDesign:PackIcon Kind="CogOutline" Height="20" Width="29" VerticalAlignment="Center" HorizontalAlignment="Center" />
+            </Button>
+            <Button x:Name="BAddParcel" Style="{StaticResource MaterialDesignFloatingActionButton}" materialDesign:ButtonProgressAssist.IsIndicatorVisible="True" materialDesign:ButtonProgressAssist.Value="-1" materialDesign:ButtonProgressAssist.IsIndeterminate="True" Visibility="Visible"  HorizontalAlignment="Left"  Width="30" Height="30"  VerticalAlignment="Top"  Margin="116,8,0,0" Click="BAddParcel_Click"  >
+                <materialDesign:PackIcon Kind="ArchivePlus" Height="20" Width="29" VerticalAlignment="Center" HorizontalAlignment="Center" />
             </Button>
 
         </Grid>
