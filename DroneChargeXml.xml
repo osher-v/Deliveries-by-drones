@@ -25,4 +25,19 @@
     <DroneId>169727286</DroneId>
     <StartChargeTime>2021-12-29T19:02:22.4967615+02:00</StartChargeTime>
   </DroneCharge>
+  <DroneCharge>
+    <StationId>309342120</StationId>
+    <DroneId>629210332</DroneId>
+    <StartChargeTime>2021-12-29T19:37:45.4950271+02:00</StartChargeTime>
+  </DroneCharge>
+  <DroneCharge>
+    <StationId>309342120</StationId>
+    <DroneId>169727286</DroneId>
+    <StartChargeTime>2021-12-29T19:37:45.5418889+02:00</StartChargeTime>
+  </DroneCharge>
+  <DroneCharge>
+    <StationId>110016339</StationId>
+    <DroneId>724101518</DroneId>
+    <StartChargeTime>2021-12-29T19:37:45.5582406+02:00</StartChargeTime>
+  </DroneCharge>
 </ArrayOfDroneCharge>

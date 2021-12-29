@@ -217,7 +217,8 @@ namespace DalXml
 
             DroneCharge charge =(from cha in element.Elements()
                                  where cha.Element("Id").Value==droneID.ToString()
-                                 select new DroneCharge(){
+                                 select new DroneCharge()
+                                 {
                                       DroneId=int.Parse(cha.Element("DroneId").Value),
                                       StationId= int.Parse(cha.Element("StationId").Value),
                                       StartChargeTime= DateTime.ParseExact(cha.Element("StartChargeTime").Value, "hh\\:mm\\:ss", CultureInfo.InvariantCulture),
@@ -231,8 +232,15 @@ namespace DalXml
 
         public IEnumerable<DroneCharge> GetBaseChargeList(Predicate<DroneCharge> predicate = null)//????????????????????????
         {
-            //return DataSource.DroneChargeList.FindAll(x => predicate == null ? true : predicate(x));
-            return DataSource.DroneChargeList.Where(x => predicate == null ? true : predicate(x));
+            XElement element = XMLTools.LoadListFromXMLElement(DroneChargeXml);
+            IEnumerable<DroneCharge> Parcel = from par in element.Elements()
+                                         select new DroneCharge()
+                                         {
+                                             StationId = int.Parse(par.Element("StationId").Value),
+                                             DroneId = int.Parse(par.Element("DroneId").Value),
+                                             StartChargeTime = DateTime.ParseExact(par.Element("StartChargeTime").Value, "hh\\:mm\\:ss", CultureInfo.InvariantCulture),
+                                         };
+            return Parcel.Where(x => predicate == null ? true : predicate(x));
         }
         #endregion DroneCharge
 
@@ -268,9 +276,8 @@ namespace DalXml
             XElement temp = (from par in element.Elements()
                            where par.Element("Id").Value == ParcelId.ToString()
                            select par).FirstOrDefault();
-            //Update the package.
-            
-            if (temp == null) //becuse its stract we cant chack if null so we go to defult testing
+   
+            if (temp == null) 
                 throw new NonExistentObjectException();
             else
             {
@@ -282,27 +289,36 @@ namespace DalXml
 
         public void PickedUpPackageByTheDrone(int ParcelId)
         {
-            //Update the package.
-            int indexaforParcel = DataSource.ParcelsList.FindIndex(x => x.Id == ParcelId);
+            XElement element = XMLTools.LoadListFromXMLElement(ParcelXml);
 
-            if (indexaforParcel == -1)
+            XElement temp = (from par in element.Elements()
+                             where par.Element("Id").Value == ParcelId.ToString()
+                             select par).FirstOrDefault();
+       
+            if (temp == null) 
                 throw new NonExistentObjectException();
-
-            Parcel temp = DataSource.ParcelsList[indexaforParcel];
-            temp.PickedUp = DateTime.Now;
-            DataSource.ParcelsList[indexaforParcel] = temp;
+            else
+            {
+                temp.Element("PickedUp").Value = DateTime.Now.ToString();
+                XMLTools.SaveListToXMLElement(element, ParcelXml);
+            }  
         }
 
         public void DeliveryPackageToTheCustomer(int ParcelId)
         {
-            int indexaforParcel = DataSource.ParcelsList.FindIndex(x => x.Id == ParcelId);
+            XElement element = XMLTools.LoadListFromXMLElement(ParcelXml);
 
-            if (indexaforParcel == -1)
+            XElement temp = (from par in element.Elements()
+                             where par.Element("Id").Value == ParcelId.ToString()
+                             select par).FirstOrDefault();
+
+            if (temp == null)
                 throw new NonExistentObjectException();
-
-            Parcel temp = DataSource.ParcelsList[indexaforParcel];
-            temp.Delivered = DateTime.Now;
-            DataSource.ParcelsList[indexaforParcel] = temp;
+            else
+            {
+                temp.Element("Delivered").Value = DateTime.Now.ToString();
+                XMLTools.SaveListToXMLElement(element, ParcelXml);
+            }    
         }
 
         public Parcel GetParcel(int ID)
@@ -343,10 +359,25 @@ namespace DalXml
 
         public IEnumerable<Parcel> GetParcelList(Predicate<Parcel> prdicat = null)
         {
-            //return DataSource.ParcelsList.FindAll(x => prdicat == null ? true : prdicat(x));
-            return DataSource.ParcelsList.Where(x => prdicat == null ? true : prdicat(x));
+            XElement element = XMLTools.LoadListFromXMLElement(ParcelXml);
+            IEnumerable<Parcel> Parcel = from par in element.Elements()
+                                         select new Parcel()
+                                         {
+                                             Id = int.Parse(par.Element("Id").Value),
+                                             SenderId = int.Parse(par.Element("SenderId").Value),
+                                             TargetId = int.Parse(par.Element("TargetId").Value),
+                                             Weight = (WeightCategories)Enum.Parse(typeof(WeightCategories), par.Element("Weight").Value),
+                                             Priority = (Priorities)Enum.Parse(typeof(Priorities), par.Element("Priority").Value),
+                                             DroneId = int.Parse(par.Element("DroneId").Value),
+                                             Requested = DateTime.ParseExact(par.Element("Requested").Value, "hh\\:mm\\:ss", CultureInfo.InvariantCulture),
+                                             Assigned = DateTime.ParseExact(par.Element("Assigned").Value, "hh\\:mm\\:ss", CultureInfo.InvariantCulture),
+                                             PickedUp = DateTime.ParseExact(par.Element("PickedUp").Value, "hh\\:mm\\:ss", CultureInfo.InvariantCulture),
+                                             Delivered = DateTime.ParseExact(par.Element("Delivered").Value, "hh\\:mm\\:ss", CultureInfo.InvariantCulture),
+                                         };
+            return Parcel.Where(x => prdicat == null ? true : prdicat(x));
+            //return DataSource.ParcelsList.Where(x => prdicat == null ? true : prdicat(x));
         }
-
+       
         public void RemoveParcel(int ParcelId) //????????????????????????????????????????
         {
             XElement element = XMLTools.LoadListFromXMLElement(ParcelXml);
@@ -362,14 +393,6 @@ namespace DalXml
                 ParcelElem.Remove();
                 XMLTools.SaveListToXMLElement(element, ParcelXml);
             }
-
-
-            //int index = DataSource.ParcelsList.FindIndex(x => x.Id == ParcelId);
-            //if (index == -1)
-            //{
-            //    throw new NonExistentObjectException();
-            //}
-            //DataSource.ParcelsList.RemoveAt(index); //else    
         }
         #endregion Parcel
     }

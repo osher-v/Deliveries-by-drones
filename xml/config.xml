@@ -5,7 +5,7 @@
 	<dl>xml</dl>
 	<dl-packages>
 		<xml namespace="DalXml" class="DalXml">DalXml</xml>
-		<xmle namespace="DalObject" class="DalObject">DalObject</xmle>
+		<!--<xml namespace="DalObject" class="DalObject">DalObject</xml>-->
 	</dl-packages>
 	
 </config>
