@@ -457,7 +457,24 @@ namespace PL
             }
         }
 
+        private void grouping_Click(object sender, RoutedEventArgs e)
+        {
+            //IEnumerable<IGrouping<DroneStatuses, DroneToList>> droneGroup =from drone in AccessIbl.GetDroneList() group drone by drone.Statuses;
+            //List<DroneToList> droneList = new();
 
+            //foreach (var group in droneGroup)
+            //{
+            //    foreach (var drone in group)
+            //    {
+            //        droneList.Add(drone);
+            //    }
+            //}
+            //listOfDrones.ItemsSource = droneList;
+
+            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(listOfDrones.ItemsSource);
+            PropertyGroupDescription groupDescription = new PropertyGroupDescription("Statuses");
+            view.GroupDescriptions.Add(groupDescription);
+        }
     }
 }
 

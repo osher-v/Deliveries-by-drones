@@ -27,7 +27,7 @@
                     <TabItem.Header>
                         <StackPanel Height="auto" Width="auto">
                             <materialDesign:PackIcon  Kind="Quadcopter" Width="24" Height="24" HorizontalAlignment="Center" />
-                            <TextBlock Text="רחפנים" HorizontalAlignment="Center" />
+                            <TextBlock Text="רחפנים" />
                         </StackPanel>
                     </TabItem.Header>
                     <Grid>
@@ -41,6 +41,19 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
+                            <Grid Grid.Column="2">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Button  Name="grouping"  VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="2" Width="94"  Content="מיון לפי מצב"
+                                     Style="{StaticResource MaterialDesignRaisedButton}" materialDesign:ButtonProgressAssist.Value="-1" materialDesign:ButtonProgressAssist.IsIndicatorVisible="True" materialDesign:ButtonProgressAssist.IsIndeterminate="True" Click="grouping_Click" Height="37" FontSize="10" FontFamily="Consolas"/>
+                                <Button  Name="grouping2"  VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1" Width="94"  Content="מיון לפי מצב"
+                                     Style="{StaticResource MaterialDesignRaisedButton}" materialDesign:ButtonProgressAssist.Value="-1" materialDesign:ButtonProgressAssist.IsIndicatorVisible="True" materialDesign:ButtonProgressAssist.IsIndeterminate="True" Click="grouping_Click" Height="37" FontSize="10" FontFamily="Consolas"/>
+                                <Button  Name="grouping3"  VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="0" Width="94"  Content="מיון לפי מצב"
+                                     Style="{StaticResource MaterialDesignRaisedButton}" materialDesign:ButtonProgressAssist.Value="-1" materialDesign:ButtonProgressAssist.IsIndicatorVisible="True" materialDesign:ButtonProgressAssist.IsIndeterminate="True" Click="grouping_Click" Height="37" FontSize="10" FontFamily="Consolas"/>
+                            </Grid>
                             <StackPanel Grid.Column="0">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
@@ -64,7 +77,7 @@
                                 <ComboBox x:Name="CBWeightSelctor" Style="{StaticResource MaterialDesignOutlinedComboBox}" IsEnabled="{Binding IsChecked, ElementName=OutlinedComboBoxEnabledCheckBox2}" materialDesign:HintAssist.Hint="סינון רשימת הרחפנים לפי סטטוס" Width="256" SelectionChanged="CBWeightSelctor_SelectionChanged" />
                             </StackPanel>
                         </Grid>
-                        <ListView x:Name="listOfDrones" ItemsSource="{Binding Items1}" Margin="0,1,0,10" Grid.Row="1" MouseDoubleClick="listOfDrones_MouseDoubleClick">
+                        <ListView x:Name="listOfDrones" ItemsSource="{Binding Items1}" Margin="10,1,0,10" Grid.Row="1" MouseDoubleClick="listOfDrones_MouseDoubleClick">
                             <ListView.ItemContainerStyle>
                                 <Style TargetType="{x:Type ListViewItem}">
                                     <Setter Property="HorizontalContentAlignment" Value="Center"/>
@@ -81,6 +94,30 @@
                                     <GridViewColumn DisplayMemberBinding="{Binding NumberOfLinkedParcel}" Header="חבילה משויכת"   />
                                 </GridView>
                             </ListView.View>
+                            <ListView.GroupStyle>
+                                <GroupStyle>
+                                    <GroupStyle.ContainerStyle>
+                                        <Style TargetType="{x:Type GroupItem}">
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate>
+                                                        <Expander IsExpanded="True">
+                                                            <Expander.Header>
+                                                                <StackPanel Orientation="Horizontal">
+                                                                    <TextBlock Text="{Binding Name}" FontWeight="Bold" Foreground="{DynamicResource PrimaryHueMidBrush}" FontSize="18" VerticalAlignment="Bottom" />
+                                                                    <TextBlock Text="{Binding ItemCount}" FontSize="16" Foreground="{DynamicResource PrimaryHueLightBrush}" FontWeight="Bold" FontStyle="Italic" Margin="10,0,0,0" VerticalAlignment="Bottom" />
+                                                                    <TextBlock Text=" item(s)" FontSize="12" Foreground="{DynamicResource PrimaryHueLightBrush}" FontStyle="Italic" VerticalAlignment="Bottom"  />
+                                                                </StackPanel>
+                                                            </Expander.Header>
+                                                            <ItemsPresenter />
+                                                        </Expander>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </GroupStyle.ContainerStyle>
+                                </GroupStyle>
+                            </ListView.GroupStyle>
                         </ListView>
                     </Grid>
                 </TabItem>
