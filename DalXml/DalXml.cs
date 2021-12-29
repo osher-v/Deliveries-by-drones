@@ -103,8 +103,6 @@ namespace DalXml
         {
             List<BaseStation> baseStations = XMLTools.LoadListFromXMLSerializer<BaseStation>(BaseStationXml);
             return baseStations.Where(x => predicate == null ? true : predicate(x));
-
-            //return DataSource.BaseStationsList.FindAll(x => predicate == null ? true : predicate(x));
         }
 
         #endregion Stations
@@ -250,8 +248,6 @@ namespace DalXml
             element.Add(ParcelElem);
 
             XMLTools.SaveListToXMLElement(element, ParcelXml);
-
-            DataSource.ParcelsList.Add(newParcel);//?????????????????????????????????????
 
             return newParcel.Id; //Returns the id of the current Parcel.
         }
