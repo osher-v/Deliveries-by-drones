@@ -7,6 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Targil0", "Targil0\Targil0.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{97B220C6-0C25-4A1D-9B68-99647313D1F9}"
 	ProjectSection(SolutionItems) = preProject
+		DroneXml.xml = DroneXml.xml
 		README.md = README.md
 	EndProjectSection
 EndProject
@@ -26,7 +27,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DalXml", "DalXml\DalXml.csp
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "xml", "xml", "{1BE98C43-C4D3-471B-91FA-FC4095EAA851}"
 	ProjectSection(SolutionItems) = preProject
-		BL\xml\config.xml = BL\xml\config.xml
+		xml\config.xml = xml\config.xml
 	EndProjectSection
 EndProject
 Global
