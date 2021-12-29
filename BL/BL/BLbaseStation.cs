@@ -102,21 +102,6 @@ namespace BL
 
             return baseStationBL.FindAll(x => predicate == null ? true : predicate(x));
         }
-
-        public void RemoveStation(BaseStation baseStation)
-        {           
-            try    // throw if the id is nonExsist
-            {
-                AccessIdal.RemoveStation(baseStation.Id);
-                foreach (var item in baseStation.DroneInChargsList)//שחרור הרחפנים שהיו בטעינה בתחנה הנמחקת
-                {
-                    ReleaseDroneFromCharging(item.Id);
-                }            
-            }
-            catch (DO.NonExistentObjectException)
-            {
-                throw new NonExistentObjectException("BaseStation");
-            }
-        }
+ 
     }
 }

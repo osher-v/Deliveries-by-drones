@@ -211,13 +211,22 @@ namespace DalXml
             XMLTools.SaveListToXMLSerializer(droneCharge, DroneChargeXml);
         }
 
-        public DroneCharge GetBaseCharge(int droneID)//???????????????????????????????
+        public DroneCharge GetBaseCharge(int droneID)
         {
-            if (!DataSource.DroneChargeList.Exists(x => x.DroneId == droneID))
+            XElement element = XMLTools.LoadListFromXMLElement(DroneChargeXml);
+
+            DroneCharge charge =(from cha in element.Elements()
+                                 where cha.Element("Id").Value==droneID.ToString()
+                                 select new DroneCharge(){
+                                      DroneId=int.Parse(cha.Element("DroneId").Value),
+                                      StationId= int.Parse(cha.Element("StationId").Value),
+                                      StartChargeTime= DateTime.ParseExact(cha.Element("StartChargeTime").Value, "hh\\:mm\\:ss", CultureInfo.InvariantCulture),
+                                 }).FirstOrDefault();
+            if (charge.DroneId == 0)
             {
                 throw new NonExistentObjectException();
             }
-            return DataSource.DroneChargeList.Find(x => x.DroneId == droneID);
+            return charge;
         }
 
         public IEnumerable<DroneCharge> GetBaseChargeList(Predicate<DroneCharge> predicate = null)//????????????????????????
@@ -254,16 +263,21 @@ namespace DalXml
 
         public void AssignPackageToDdrone(int ParcelId, int droneId)
         {
+            XElement element = XMLTools.LoadListFromXMLElement(ParcelXml);
+
+            XElement temp = (from par in element.Elements()
+                           where par.Element("Id").Value == ParcelId.ToString()
+                           select par).FirstOrDefault();
             //Update the package.
-            int indexaforParcel = DataSource.ParcelsList.FindIndex(x => x.Id == ParcelId);
-
-            if (indexaforParcel == -1)
+            
+            if (temp == null) //becuse its stract we cant chack if null so we go to defult testing
                 throw new NonExistentObjectException();
-
-            Parcel temp = DataSource.ParcelsList[indexaforParcel];
-            temp.DroneId = droneId;
-            temp.Assigned = DateTime.Now;
-            DataSource.ParcelsList[indexaforParcel] = temp;
+            else
+            {
+                temp.Element("DroneId").Value = droneId.ToString();
+                temp.Element("Assigned").Value = DateTime.Now.ToString();
+                XMLTools.SaveListToXMLElement(element, ParcelXml);
+            }
         }
 
         public void PickedUpPackageByTheDrone(int ParcelId)
@@ -311,8 +325,15 @@ namespace DalXml
                                  Delivered = DateTime.ParseExact(par.Element("Delivered").Value, "hh\\:mm\\:ss", CultureInfo.InvariantCulture),
                              }
                         ).FirstOrDefault();
-
-            return parcel ?? throw new NonExistentObjectException();
+            if (parcel.Id == 0)
+            {
+                throw new NonExistentObjectException();
+            }
+            else
+            {
+                return parcel;
+            }
+            //return parcel ?? throw new NonExistentObjectException();//לשאול את יהודה  ???????????????????
             //if (!DataSource.ParcelsList.Exists(x => x.Id == ID))
             //{
             //    throw new NonExistentObjectException();

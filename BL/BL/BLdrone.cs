@@ -124,17 +124,5 @@ namespace BL
             return DronesBL.FindAll(x => predicate == null ? true : predicate(x));
         }
 
-        public void RemoveDrone(int DroneId)
-        {
-            try //if the id is Non Existent throw Exception
-            {
-                AccessIdal.RemoveDrone(DroneId);
-                DronesBL.RemoveAt(DronesBL.FindIndex(x => x.Id == DroneId));
-            }
-            catch (DO.NonExistentObjectException)
-            {
-                throw new NonExistentObjectException("BaseStation");
-            }
-        }
     }
 }
