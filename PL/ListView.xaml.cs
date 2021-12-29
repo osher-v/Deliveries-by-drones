@@ -166,6 +166,8 @@ namespace PL
         /// </summary>
         public void StatusDroneSelectorChanged()
         {
+
+
             if (CBWeightSelctor.SelectedItem == null && CBStatusSelector.SelectedItem == null)
             {
                 listOfDrones.ItemsSource = DroneToLists.ToList();
@@ -182,6 +184,13 @@ namespace PL
             {
                 listOfDrones.ItemsSource = DroneToLists.ToList().FindAll(x => x.Statuses == (DroneStatuses)CBStatusSelector.SelectedIndex && x.MaxWeight == (WeightCategories)CBWeightSelctor.SelectedIndex);
             }
+
+            //CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(listOfDrones.ItemsSource);
+            //if (view.GroupDescriptions.Count < 1) // prevent from do it more then once 
+            //{
+            //    PropertyGroupDescription groupDescription = new PropertyGroupDescription("Statuses");
+            //    view.GroupDescriptions.Add(groupDescription);
+            //}
         }
 
         #region combobox of dronesList handling
@@ -456,10 +465,14 @@ namespace PL
                     x.Prior == (Priorities)CBparcelWprior.SelectedIndex);
             }
         }
-
+        /// <summary>
+        /// grouping items by the settings we need 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void grouping_Click(object sender, RoutedEventArgs e)
         {
-            //IEnumerable<IGrouping<DroneStatuses, DroneToList>> droneGroup =from drone in AccessIbl.GetDroneList() group drone by drone.Statuses;
+            //IEnumerable<IGrouping<DroneStatuses, DroneToList>> droneGroup = from drone in AccessIbl.GetDroneList() group drone by drone.Statuses;
             //List<DroneToList> droneList = new();
 
             //foreach (var group in droneGroup)
@@ -470,12 +483,33 @@ namespace PL
             //    }
             //}
             //listOfDrones.ItemsSource = droneList;
-
             CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(listOfDrones.ItemsSource);
-            PropertyGroupDescription groupDescription = new PropertyGroupDescription("Statuses");
-            view.GroupDescriptions.Add(groupDescription);
+            if (view.GroupDescriptions.Count < 1)
+            {
+                PropertyGroupDescription groupDescription = new PropertyGroupDescription("Statuses");
+                view.GroupDescriptions.Add(groupDescription);
+            }
+        }
+
+        private void groupingBaseStaiton_Click(object sender, RoutedEventArgs e)
+        {
+            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(listOfBaseStations.ItemsSource);
+            if (view.GroupDescriptions.Count < 1) // prevent from do it more then once 
+            {
+                //BaseStationToLists.OrderBy(x=>x.FreeChargeSlots);
+                PropertyGroupDescription groupDescription = new PropertyGroupDescription("FreeChargeSlots");
+                view.GroupDescriptions.Add(groupDescription);
+            }
+        }
+        /// <summary>
+        /// clear the gruop proprties 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BRefresh_Click(object sender, RoutedEventArgs e)
+        {
+            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(listOfBaseStations.ItemsSource);
+            view.GroupDescriptions.Clear();
         }
     }
 }
-
-

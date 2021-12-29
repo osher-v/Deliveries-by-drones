@@ -23,6 +23,7 @@
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
             <TabControl x:Name="TCmenu" Style="{StaticResource MaterialDesignNavigatilRailTabControl}" materialDesign:ColorZoneAssist.Mode="Standard" materialDesign:ShadowAssist.ShadowDepth="Depth3" Height="594" VerticalAlignment="Top">
+                <!--מתעסק ברשימת הרחפנים-->
                 <TabItem Name="droens">
                     <TabItem.Header>
                         <StackPanel Height="auto" Width="auto">
@@ -45,13 +46,8 @@
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-                                <Button  Name="grouping"  VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="2" Width="94"  Content="מיון לפי מצב"
-                                     Style="{StaticResource MaterialDesignRaisedButton}" materialDesign:ButtonProgressAssist.Value="-1" materialDesign:ButtonProgressAssist.IsIndicatorVisible="True" materialDesign:ButtonProgressAssist.IsIndeterminate="True" Click="grouping_Click" Height="37" FontSize="10" FontFamily="Consolas"/>
-                                <Button  Name="grouping2"  VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1" Width="94"  Content="מיון לפי מצב"
-                                     Style="{StaticResource MaterialDesignRaisedButton}" materialDesign:ButtonProgressAssist.Value="-1" materialDesign:ButtonProgressAssist.IsIndicatorVisible="True" materialDesign:ButtonProgressAssist.IsIndeterminate="True" Click="grouping_Click" Height="37" FontSize="10" FontFamily="Consolas"/>
-                                <Button  Name="grouping3"  VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="0" Width="94"  Content="מיון לפי מצב"
+                                <Button  Name="grouping"  VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="2" Width="116"  Content="מיון לפי סטטוס"
                                      Style="{StaticResource MaterialDesignRaisedButton}" materialDesign:ButtonProgressAssist.Value="-1" materialDesign:ButtonProgressAssist.IsIndicatorVisible="True" materialDesign:ButtonProgressAssist.IsIndeterminate="True" Click="grouping_Click" Height="37" FontSize="10" FontFamily="Consolas"/>
                             </Grid>
                             <StackPanel Grid.Column="0">
@@ -141,9 +137,13 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
+                            <Button  Name="groupingBaseStaiton"  VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="2" Width="156"  Content="מיון לפי עמדות טעינה"
+                                     Style="{StaticResource MaterialDesignRaisedButton}" materialDesign:ButtonProgressAssist.Value="-1" materialDesign:ButtonProgressAssist.IsIndicatorVisible="True" materialDesign:ButtonProgressAssist.IsIndeterminate="True" Height="39" FontSize="10" FontFamily="Consolas" Click="groupingBaseStaiton_Click" Margin="115,0,0,0"/>
+                            <Button x:Name="BRefresh" Margin="29,27,233,33" Content="{materialDesign:PackIcon Kind=Refresh, Size=25 }" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"  Click="BRefresh_Click" Grid.Column="2" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{DynamicResource PrimaryHueDarkBrush}" RenderTransformOrigin="0.489,0.478"/>
+
                         </Grid>
 
-                        <ListView x:Name="listOfBaseStations" ItemsSource="{Binding Items1}" Margin="0,1,0,10" Grid.Row="1" MouseDoubleClick="listOfBaseStations_MouseDoubleClick">
+                        <ListView x:Name="listOfBaseStations" ItemsSource="{Binding Items1}" Margin="10,1,0,10" Grid.Row="1" MouseDoubleClick="listOfBaseStations_MouseDoubleClick">
                             <ListView.ItemContainerStyle>
                                 <Style TargetType="{x:Type ListViewItem}">
                                     <Setter Property="HorizontalContentAlignment" Value="Center"/>
@@ -157,6 +157,30 @@
                                     <GridViewColumn DisplayMemberBinding="{Binding BusyChargeSlots}" Header="מס' עמדות טעינה תפוסות" />
                                 </GridView>
                             </ListView.View>
+                            <ListView.GroupStyle>
+                                <GroupStyle>
+                                    <GroupStyle.ContainerStyle>
+                                        <Style TargetType="{x:Type GroupItem}">
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate>
+                                                        <Expander IsExpanded="True">
+                                                            <Expander.Header>
+                                                                <StackPanel Orientation="Horizontal">
+                                                                    <TextBlock Text="{Binding Name}" FontWeight="Bold" Foreground="{DynamicResource PrimaryHueMidBrush}" FontSize="18" VerticalAlignment="Bottom" />
+                                                                    <TextBlock Text="{Binding ItemCount}" FontSize="16" Foreground="{DynamicResource PrimaryHueLightBrush}" FontWeight="Bold" FontStyle="Italic" Margin="10,0,0,0" VerticalAlignment="Bottom" />
+                                                                    <TextBlock Text=" item(s)" FontSize="12" Foreground="{DynamicResource PrimaryHueLightBrush}" FontStyle="Italic" VerticalAlignment="Bottom"  />
+                                                                </StackPanel>
+                                                            </Expander.Header>
+                                                            <ItemsPresenter />
+                                                        </Expander>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </GroupStyle.ContainerStyle>
+                                </GroupStyle>
+                            </ListView.GroupStyle>
                         </ListView>
                     </Grid>
                 </TabItem>
@@ -223,6 +247,14 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
+                            <Grid Grid.Column="3">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Button  Name="BgroupingCustomar"  VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="2" Width="116"  Content="מיון לפי שמות"
+                                     Style="{StaticResource MaterialDesignRaisedButton}" materialDesign:ButtonProgressAssist.Value="-1" materialDesign:ButtonProgressAssist.IsIndicatorVisible="True" materialDesign:ButtonProgressAssist.IsIndeterminate="True" Height="37" FontSize="10" FontFamily="Consolas"/>
+                            </Grid>
                             <StackPanel Grid.Column="0">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
@@ -258,7 +290,7 @@
                             </StackPanel>
                         </Grid>
 
-                        <ListView x:Name="listOfParcels" ItemsSource="{Binding Items1}" Margin="0,1,0,10" Grid.Row="1" MouseDoubleClick="listOfParcels_MouseDoubleClick">
+                        <ListView x:Name="listOfParcels" ItemsSource="{Binding Items1}" Margin="10,1,0,10" Grid.Row="1" MouseDoubleClick="listOfParcels_MouseDoubleClick">
                             <ListView.ItemContainerStyle>
                                 <Style TargetType="{x:Type ListViewItem}">
                                     <Setter Property="HorizontalContentAlignment" Value="Center"/>
@@ -274,12 +306,35 @@
                                     <GridViewColumn DisplayMemberBinding="{Binding Status}" Header="מצב" />
                                 </GridView>
                             </ListView.View>
+                            <ListView.GroupStyle>
+                                <GroupStyle>
+                                    <GroupStyle.ContainerStyle>
+                                        <Style TargetType="{x:Type GroupItem}">
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate>
+                                                        <Expander IsExpanded="True">
+                                                            <Expander.Header>
+                                                                <StackPanel Orientation="Horizontal">
+                                                                    <TextBlock Text="{Binding Name}" FontWeight="Bold" Foreground="{DynamicResource PrimaryHueMidBrush}" FontSize="18" VerticalAlignment="Bottom" />
+                                                                    <TextBlock Text="{Binding ItemCount}" FontSize="16" Foreground="{DynamicResource PrimaryHueLightBrush}" FontWeight="Bold" FontStyle="Italic" Margin="10,0,0,0" VerticalAlignment="Bottom" />
+                                                                    <TextBlock Text=" item(s)" FontSize="12" Foreground="{DynamicResource PrimaryHueLightBrush}" FontStyle="Italic" VerticalAlignment="Bottom"  />
+                                                                </StackPanel>
+                                                            </Expander.Header>
+                                                            <ItemsPresenter />
+                                                        </Expander>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </GroupStyle.ContainerStyle>
+                                </GroupStyle>
+                            </ListView.GroupStyle>
                         </ListView>
                     </Grid>
                 </TabItem>
             </TabControl>
 
-            <StackPanel Margin="0,0,0,-2"/>
         </Grid>
         <StackPanel Background="#FFBFBDBD" Opacity="0.7" Margin="0,3,0,0" Grid.Row="1">
             <Grid Height="96">
