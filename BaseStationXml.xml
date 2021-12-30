@@ -3,14 +3,14 @@
   <BaseStation>
     <Id>110016339</Id>
     <StationName>BnyBrak</StationName>
-    <FreeChargeSlots>0</FreeChargeSlots>
+    <FreeChargeSlots>-3</FreeChargeSlots>
     <Longitude>32.086456</Longitude>
     <Latitude>34.844476</Latitude>
   </BaseStation>
   <BaseStation>
     <Id>309342120</Id>
     <StationName>Holon</StationName>
-    <FreeChargeSlots>2</FreeChargeSlots>
+    <FreeChargeSlots>-9</FreeChargeSlots>
     <Longitude>32.021679</Longitude>
     <Latitude>34.78999</Latitude>
   </BaseStation>

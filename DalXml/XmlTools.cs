@@ -9,12 +9,12 @@ namespace DalXml
 {
     internal class XMLTools
     {
-        // static string dir = @"xml\";
-        //static XMLTools()
-        //{
-        // if (!Directory.Exists(dir))
-        // Directory.CreateDirectory(dir);
-        //}
+        static string dir = @"xml\";
+        static XMLTools()
+        {
+            if (!Directory.Exists(dir))
+                Directory.CreateDirectory(dir);
+        }
 
         #region SaveLoadWithXElement
         public static void SaveListToXMLElement(XElement rootElem, string filePath)

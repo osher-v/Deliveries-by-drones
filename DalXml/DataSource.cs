@@ -111,12 +111,7 @@ namespace DalObject
                     Delivered = null    
                 });
             }
-            #endregion init Parcel
-
-            XMLTools.SaveListToXMLSerializer<BaseStation>(BaseStationsList, DalXml.DalXml.BaseStationXml);
-            XMLTools.SaveListToXMLSerializer<Drone>(DronesList, DalXml.DalXml.DroneXml);
-            XMLTools.SaveListToXMLSerializer<Customer>(CustomersList, DalXml.DalXml.CustomerXml);
-            XMLTools.SaveListToXMLSerializer<Parcel>(ParcelsList, DalXml.DalXml.ParcelXml);
+            #endregion init Parcel    
         }
     }
 }

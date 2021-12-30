@@ -24,7 +24,12 @@ namespace DalXml
 
         static DalXml()// static ctor to ensure instance init is done just before first usage
         {
-            // DataSource.Initialize();
+            //XMLTools.SaveListToXMLSerializer(DataSource.ParcelsList, ParcelXml);
+        //    DataSource.Initialize();
+        //    foreach (var item in DataSource.ParcelsList)
+        //    {
+        //        AddParcel1(item);
+        //    }
         }
 
         private DalXml() //private  
@@ -232,42 +237,59 @@ namespace DalXml
 
         public IEnumerable<DroneCharge> GetBaseChargeList(Predicate<DroneCharge> predicate = null)//????????????????????????
         {
-            XElement element = XMLTools.LoadListFromXMLElement(DroneChargeXml);
-            IEnumerable<DroneCharge> Parcel = from par in element.Elements()
-                                         select new DroneCharge()
-                                         {
-                                             StationId = int.Parse(par.Element("StationId").Value),
-                                             DroneId = int.Parse(par.Element("DroneId").Value),
-                                             StartChargeTime = DateTime.ParseExact(par.Element("StartChargeTime").Value, "hh\\:mm\\:ss", CultureInfo.InvariantCulture),
-                                         };
-            return Parcel.Where(x => predicate == null ? true : predicate(x));
+            //List<DroneCharge> droneCharge = XMLTools.LoadListFromXMLSerializer<DroneCharge>(DroneChargeXml);
+            //return droneCharge.Select(item => item);
+            return XMLTools.LoadListFromXMLSerializer<DroneCharge>(DroneChargeXml).Select(item => item);
+            //XElement element = XMLTools.LoadListFromXMLElement(DroneChargeXml);
+            //IEnumerable<DroneCharge> Parcel = from par in element.Elements()
+            //                                  select new DroneCharge()
+            //                                  {
+            //                                      StationId = int.Parse(par.Element("StationId").Value),
+            //                                      DroneId = int.Parse(par.Element("DroneId").Value),
+            //                                      StartChargeTime = DateTime.ParseExact(par.Element("StartChargeTime").Value, "hh\\:mm\\:ss", CultureInfo.InvariantCulture),
+            //                                  };
+            //return Parcel.Where(x => predicate == null ? true : predicate(x));
+            //////return DataSource.DroneChargeList.Where(x => predicate == null ? true : predicate(x));
         }
         #endregion DroneCharge
 
         #region Parcel
-        public int AddParcel(Parcel newParcel)
+
+        public static  int AddParcel1(Parcel newParcel)
         {
-            XElement element = XMLTools.LoadListFromXMLElement(ParcelXml);
+            List<Parcel> parcel = XMLTools.LoadListFromXMLSerializer<Parcel>(ParcelXml);
+            if (parcel.Exists(x => x.Id == newParcel.Id))
+            {
+                throw new AddAnExistingObjectException();
+            }
+            parcel.Add(newParcel);
+            XMLTools.SaveListToXMLSerializer(parcel, ParcelXml);
+            //XElement element = XMLTools.LoadListFromXMLElement(ParcelXml);
 
-            newParcel.Id = DataSource.Config.CountIdPackage++; //??????????????????????????????
+            //newParcel.Id = DataSource.Config.CountIdPackage++; //??????????????????????????????
 
-            XElement ParcelElem = new XElement("Parcel",
-                                 new XElement("Id", newParcel.Id),
-                                 new XElement("SenderId", newParcel.SenderId),
-                                 new XElement("TargetId", newParcel.TargetId),
-                                 new XElement("Weight", newParcel.Weight),
-                                 new XElement("Priority", newParcel.Priority),
-                                 new XElement("DroneId", newParcel.DroneId),
-                                 new XElement("Requested", newParcel.Requested),
-                                 new XElement("Assigned", newParcel.Assigned),
-                                 new XElement("PickedUp", newParcel.PickedUp),
-                                 new XElement("Delivered", newParcel.Delivered));
-            element.Add(ParcelElem);
+            //XElement ParcelElem = new XElement("Parcel",
+            //                     new XElement("Id", newParcel.Id),
+            //                     new XElement("SenderId", newParcel.SenderId),
+            //                     new XElement("TargetId", newParcel.TargetId),
+            //                     new XElement("Weight", newParcel.Weight),
+            //                     new XElement("Priority", newParcel.Priority),
+            //                     new XElement("DroneId", newParcel.DroneId),
+            //                     new XElement("Requested", newParcel.Requested),
+            //                     new XElement("Assigned", newParcel.Assigned),
+            //                     new XElement("PickedUp", newParcel.PickedUp),
+            //                     new XElement("Delivered", newParcel.Delivered));
+            //element.Add(ParcelElem);
 
-            XMLTools.SaveListToXMLElement(element, ParcelXml);
+            //XMLTools.SaveListToXMLElement(element, ParcelXml);
 
             return newParcel.Id; //Returns the id of the current Parcel.
         }
+        public int AddParcel(Parcel newParcel)
+        {
+            return 0;
+        }
+       
 
         public void AssignPackageToDdrone(int ParcelId, int droneId)
         {
@@ -349,33 +371,29 @@ namespace DalXml
             {
                 return parcel;
             }
-            //return parcel ?? throw new NonExistentObjectException();//לשאול את יהודה  ???????????????????
-            //if (!DataSource.ParcelsList.Exists(x => x.Id == ID))
-            //{
-            //    throw new NonExistentObjectException();
-            //}
-            //return DataSource.ParcelsList.Find(x => x.Id == ID);
         }
 
         public IEnumerable<Parcel> GetParcelList(Predicate<Parcel> prdicat = null)
         {
-            XElement element = XMLTools.LoadListFromXMLElement(ParcelXml);
-            IEnumerable<Parcel> Parcel = from par in element.Elements()
-                                         select new Parcel()
-                                         {
-                                             Id = int.Parse(par.Element("Id").Value),
-                                             SenderId = int.Parse(par.Element("SenderId").Value),
-                                             TargetId = int.Parse(par.Element("TargetId").Value),
-                                             Weight = (WeightCategories)Enum.Parse(typeof(WeightCategories), par.Element("Weight").Value),
-                                             Priority = (Priorities)Enum.Parse(typeof(Priorities), par.Element("Priority").Value),
-                                             DroneId = int.Parse(par.Element("DroneId").Value),
-                                             Requested = DateTime.ParseExact(par.Element("Requested").Value, "hh\\:mm\\:ss", CultureInfo.InvariantCulture),
-                                             Assigned = DateTime.ParseExact(par.Element("Assigned").Value, "hh\\:mm\\:ss", CultureInfo.InvariantCulture),
-                                             PickedUp = DateTime.ParseExact(par.Element("PickedUp").Value, "hh\\:mm\\:ss", CultureInfo.InvariantCulture),
-                                             Delivered = DateTime.ParseExact(par.Element("Delivered").Value, "hh\\:mm\\:ss", CultureInfo.InvariantCulture),
-                                         };
-            return Parcel.Where(x => prdicat == null ? true : prdicat(x));
-            //return DataSource.ParcelsList.Where(x => prdicat == null ? true : prdicat(x));
+            List<Parcel> parcel = XMLTools.LoadListFromXMLSerializer<Parcel>(ParcelXml);
+            return parcel.Select(item => item);
+            //XElement element = XMLTools.LoadListFromXMLElement(ParcelXml);
+            //IEnumerable<Parcel> Parcel = from par in element.Elements()
+            //                             select new Parcel()
+            //                             {
+            //                                 Id = int.Parse(par.Element("Id").Value),
+            //                                 SenderId = int.Parse(par.Element("SenderId").Value),
+            //                                 TargetId = int.Parse(par.Element("TargetId").Value),
+            //                                 Weight = (WeightCategories)Enum.Parse(typeof(WeightCategories), par.Element("Weight").Value),
+            //                                 Priority = (Priorities)Enum.Parse(typeof(Priorities), par.Element("Priority").Value),
+            //                                 DroneId = int.Parse(par.Element("DroneId").Value),
+            //                                 Requested = DateTime.ParseExact(par.Element("Requested").Value, "hh\\:mm\\:ss", CultureInfo.InvariantCulture),
+            //                                 Assigned = DateTime.ParseExact(par.Element("Assigned").Value, "hh\\:mm\\:ss", CultureInfo.InvariantCulture),
+            //                                 PickedUp = DateTime.ParseExact(par.Element("PickedUp").Value, "hh\\:mm\\:ss", CultureInfo.InvariantCulture),
+            //                                 Delivered = DateTime.ParseExact(par.Element("Delivered").Value, "hh\\:mm\\:ss", CultureInfo.InvariantCulture),
+            //                             };
+            //return Parcel.Where(x => prdicat == null ? true : prdicat(x));
+            ////return DataSource.ParcelsList.Where(x => prdicat == null ? true : prdicat(x));
         }
        
         public void RemoveParcel(int ParcelId) //????????????????????????????????????????
