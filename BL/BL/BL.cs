@@ -179,8 +179,7 @@ namespace BL
             IEnumerable<double> listOfDistance = from item in baseStationBL
                                                  select GetDistance(location, item.BaseStationLocation);
             double minDistance = listOfDistance.Min();
-            return (baseStationBL., minDistance);
-
+            return (baseStationBL.First(x => minDistance == GetDistance(location, x.BaseStationLocation)).BaseStationLocation, minDistance);//לבדוק איך אפשר לייעל
             //foreach (var obj in baseStationBL)
             //{
             //    listOfDistance.Add(GetDistance(location, obj.BaseStationLocation));

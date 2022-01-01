@@ -91,8 +91,6 @@ namespace BL
 
         public IEnumerable<BaseStationsToList> GetBaseStationList(Predicate<BaseStationsToList> predicate = null)
         {
-
-
             IEnumerable<DO.BaseStation> holdDalBaseStation = AccessIdal.GetBaseStationList();
             IEnumerable<BaseStationsToList> baseStationBL = from item in holdDalBaseStation
                                                             select new BaseStationsToList()

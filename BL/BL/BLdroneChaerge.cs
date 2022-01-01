@@ -40,6 +40,7 @@ namespace BL
                 throw new TheDroneCanNotBeSentForCharging("Error, there are no free charging stations");
 
             double distence = minDistanceBetweenBaseStationsAndLocation(BLbaseStations, drone.CurrentLocation).Item2;
+
             if (drone.BatteryStatus - distence * Free < 0)
             {
                 throw new TheDroneCanNotBeSentForCharging("Error, to the drone does not have enough battery to go to recharge at the nearest available station");
@@ -48,8 +49,9 @@ namespace BL
             drone.BatteryStatus -= distence * Free;
             drone.CurrentLocation = minDistanceBetweenBaseStationsAndLocation(BLbaseStations, drone.CurrentLocation).Item1;
             drone.Statuses = DroneStatuses.inMaintenance;
-            AccessIdal.UpdateMinusChargeSlots(BLbaseStations.Find(x => x.BaseStationLocation == drone.CurrentLocation).Id);
-            AccessIdal.SendingDroneforChargingAtBaseStation(BLbaseStations.Find(x => x.BaseStationLocation == drone.CurrentLocation).Id, drone.Id);     
+
+            AccessIdal.UpdateMinusChargeSlots(BLbaseStations.First(x => x.BaseStationLocation == drone.CurrentLocation).Id);
+            AccessIdal.SendingDroneforChargingAtBaseStation(BLbaseStations.First(x => x.BaseStationLocation == drone.CurrentLocation).Id, drone.Id);     
         }
 
         public void ReleaseDroneFromCharging(int droneId)

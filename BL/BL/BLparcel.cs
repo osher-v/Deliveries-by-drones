@@ -49,102 +49,141 @@ namespace BL
         public void AssignPackageToDdrone(int droneId)
         {
             DroneToList myDrone = DronesBL.Find(x => x.Id == droneId);
-            if(myDrone == default)
+            if (myDrone == default)
                 throw new NonExistentObjectException();
 
             if (myDrone.Statuses != DroneStatuses.free)
                 throw new DroneCantBeAssigend();
-        
-            List<DO.Parcel> highestPriority = highestPriorityList(myDrone);
 
-            List<DO.Parcel> highestWeight = highestWeightList(highestPriority, myDrone);
+            IEnumerable<DO.Parcel> tempParcels = from item in AccessIdal.GetParcelList(x => x.DroneId == 0 &&
+                                                      myDrone.MaxWeight >= (WeightCategories)x.Weight && possibleDistance(x, myDrone))
+                                                 orderby item.Priority descending, item.Weight descending,
+                                                         GetDistance(GetCustomer(item.SenderId).LocationOfCustomer, myDrone.CurrentLocation)        
+                                                 select item;
 
-            if (!highestWeight.Any())
+            if (!tempParcels.Any())
                 throw new NoSuitablePsrcelWasFoundToBelongToTheDrone();
 
-            DO.Parcel theRightPackage = minDistance(highestWeight, myDrone.CurrentLocation);
+            DO.Parcel theRightParcel = tempParcels.First();//מביא את האיבר הראשון שהוא המתאים ביותר לאחר כל הסינונים והמיונים
 
             myDrone.Statuses = DroneStatuses.busy;
-            myDrone.NumberOfLinkedParcel = theRightPackage.Id;
+            myDrone.NumberOfLinkedParcel = theRightParcel.Id;
 
-            AccessIdal.AssignPackageToDdrone(theRightPackage.Id, droneId);   
+            AccessIdal.AssignPackageToDdrone(theRightParcel.Id, droneId);
         }
 
-        //********************* Auxiliary functions for the AssignPackageToDdrone function *****************************
+        //public void AssignPackageToDdrone(int droneId)
+        //{
+        //    DroneToList myDrone = DronesBL.Find(x => x.Id == droneId);
+        //    if (myDrone == default)
+        //        throw new NonExistentObjectException();
 
-        /// <summary>
-        /// The function finds a list of the most urgent parcels.
-        /// </summary>
-        /// <param name="myDrone">drone object</param>
-        /// <returns>list of the most urgent packages</returns>
-        private List<DO.Parcel> highestPriorityList(DroneToList myDrone)
-        {
-            List<DO.Parcel> parcels = AccessIdal.GetParcelList(x => x.DroneId == 0 ).ToList();
+        //    if (myDrone.Statuses != DroneStatuses.free)
+        //        throw new DroneCantBeAssigend();
 
-            List<DO.Parcel> parcelsWithHighestPriority = new List<DO.Parcel>();
-            List<DO.Parcel> parcelsWithMediumPriority = new List<DO.Parcel>();
-            List<DO.Parcel> parcelsWithRegulerPriority = new List<DO.Parcel>();
+        //    List<DO.Parcel> highestPriority = highestPriorityList(myDrone);
 
-            foreach (var item in parcels)
-            {
-                if (myDrone.MaxWeight >= (WeightCategories)item.Weight && possibleDistance(item, myDrone))
-                {
-                    switch ((Priorities)item.Priority)
-                    {
-                        case Priorities.regular:
-                            parcelsWithRegulerPriority.Add(item);
-                            break;
+        //    List<DO.Parcel> highestWeight = highestWeightList(highestPriority, myDrone);
 
-                        case Priorities.fast:
-                            parcelsWithMediumPriority.Add(item);
-                            break;
+        //    if (!highestWeight.Any())
+        //        throw new NoSuitablePsrcelWasFoundToBelongToTheDrone();
 
-                        case Priorities.urgent:
-                            parcelsWithHighestPriority.Add(item);
-                            break;
+        //    DO.Parcel theRightPackage = minDistance(highestWeight, myDrone.CurrentLocation);
 
-                        default:
-                            break;
-                    }
-                }
-            }
+        //    myDrone.Statuses = DroneStatuses.busy;
+        //    myDrone.NumberOfLinkedParcel = theRightPackage.Id;
 
-            return (parcelsWithHighestPriority.Any() ? parcelsWithHighestPriority : parcelsWithMediumPriority.Any() ?
-                parcelsWithMediumPriority : parcelsWithRegulerPriority);
-        }
+        //    AccessIdal.AssignPackageToDdrone(theRightPackage.Id, droneId);
+        //}
 
-        /// <summary>
-        /// The function finds a list of the heaviest packages for the drone.
-        /// </summary>
-        /// <param name="parcels">list of the most urgent parcels</param>
-        /// <param name="myDrone">drone object</param>
-        /// <returns></returns>
-        private List<DO.Parcel> highestWeightList(List<DO.Parcel> parcels, DroneToList myDrone)
-        {
-            List<DO.Parcel> parcelsHeavy = new List<DO.Parcel>();
-            List<DO.Parcel> parcelsMedium = new List<DO.Parcel>();
-            List<DO.Parcel> parcelsLight = new List<DO.Parcel>();
+        ////********************* Auxiliary functions for the AssignPackageToDdrone function *****************************
 
-            foreach (var item in parcels)
-            {
-                switch ((WeightCategories)item.Weight)
-                {
-                    case WeightCategories.light:
-                        parcelsLight.Add(item);
-                        break;
-                    case WeightCategories.medium:
-                        parcelsMedium.Add(item);
-                        break;
-                    case WeightCategories.heavy:
-                        parcelsHeavy.Add(item);
-                        break;
-                    default:
-                        break;
-                }
-            }
-            return (parcelsHeavy.Any() ? parcelsHeavy : parcelsMedium.Any() ?
-                parcelsMedium : parcelsLight);
-        }
+        ///// <summary>
+        ///// The function finds a list of the most urgent parcels.
+        ///// </summary>
+        ///// <param name="myDrone">drone object</param>
+        ///// <returns>list of the most urgent packages</returns>
+        //private List<DO.Parcel> highestPriorityList(DroneToList myDrone)
+        //{
+        //    List<DO.Parcel> parcels = AccessIdal.GetParcelList(x => x.DroneId == 0).ToList();
+
+        //    List<DO.Parcel> parcelsWithHighestPriority = new List<DO.Parcel>();
+        //    List<DO.Parcel> parcelsWithMediumPriority = new List<DO.Parcel>();
+        //    List<DO.Parcel> parcelsWithRegulerPriority = new List<DO.Parcel>();
+
+        //    foreach (var item in parcels)
+        //    {
+        //        if (myDrone.MaxWeight >= (WeightCategories)item.Weight && possibleDistance(item, myDrone))
+        //        {
+        //            switch ((Priorities)item.Priority)
+        //            {
+        //                case Priorities.regular:
+        //                    parcelsWithRegulerPriority.Add(item);
+        //                    break;
+
+        //                case Priorities.fast:
+        //                    parcelsWithMediumPriority.Add(item);
+        //                    break;
+
+        //                case Priorities.urgent:
+        //                    parcelsWithHighestPriority.Add(item);
+        //                    break;
+
+        //                default:
+        //                    break;
+        //            }
+        //        }
+        //    }
+
+        //    return (parcelsWithHighestPriority.Any() ? parcelsWithHighestPriority : parcelsWithMediumPriority.Any() ?
+        //        parcelsWithMediumPriority : parcelsWithRegulerPriority);
+        //}
+
+        ///// <summary>
+        ///// The function finds a list of the heaviest packages for the drone.
+        ///// </summary>
+        ///// <param name="parcels">list of the most urgent parcels</param>
+        ///// <param name="myDrone">drone object</param>
+        ///// <returns></returns>
+        //private List<DO.Parcel> highestWeightList(List<DO.Parcel> parcels, DroneToList myDrone)
+        //{
+        //    List<DO.Parcel> parcelsHeavy = new List<DO.Parcel>();
+        //    List<DO.Parcel> parcelsMedium = new List<DO.Parcel>();
+        //    List<DO.Parcel> parcelsLight = new List<DO.Parcel>();
+
+        //    foreach (var item in parcels)
+        //    {
+        //        switch ((WeightCategories)item.Weight)
+        //        {
+        //            case WeightCategories.light:
+        //                parcelsLight.Add(item);
+        //                break;
+        //            case WeightCategories.medium:
+        //                parcelsMedium.Add(item);
+        //                break;
+        //            case WeightCategories.heavy:
+        //                parcelsHeavy.Add(item);
+        //                break;
+        //            default:
+        //                break;
+        //        }
+        //    }
+        //    return (parcelsHeavy.Any() ? parcelsHeavy : parcelsMedium.Any() ?
+        //        parcelsMedium : parcelsLight);
+        //}
+        //private DO.Parcel minDistance(List<DO.Parcel> parcels, Location location)
+        //{
+        //    List<double> listOfDistance = new List<double>();
+        //    foreach (var obj in parcels)
+        //    {
+        //        Location locationOfSender = GetCustomer(obj.SenderId).LocationOfCustomer;
+        //        listOfDistance.Add(GetDistance(location, locationOfSender));
+        //    }
+        //    return parcels[listOfDistance.FindIndex(x => x == listOfDistance.Min())];
+        //}
+
+        ////**************************************************************************************************************
+        
 
         /// <summary>
         /// The function calculates whether the drone can reach the parcel.
@@ -153,55 +192,48 @@ namespace BL
         /// <param name="myDrone">drone object</param>
         /// <returns></returns>
         private bool possibleDistance(DO.Parcel parcel, DroneToList myDrone)
-        {
-            double electricityUse = GetDistance(myDrone.CurrentLocation, GetCustomer(parcel.SenderId).LocationOfCustomer) * Free;
-            double distanceSenderToDestination = GetDistance(GetCustomer(parcel.SenderId).LocationOfCustomer, GetCustomer(parcel.TargetId).LocationOfCustomer);
-            switch ((WeightCategories)parcel.Weight)
             {
-                case WeightCategories.light:
-                    electricityUse += distanceSenderToDestination * LightWeightCarrier;
-                    break;
-                case WeightCategories.medium:
-                    electricityUse += distanceSenderToDestination * MediumWeightBearing;
-                    break;
-                case WeightCategories.heavy:
-                    electricityUse += distanceSenderToDestination * CarriesHeavyWeight;
-                    break;
-                default:
-                    break;
+                double electricityUse = GetDistance(myDrone.CurrentLocation, GetCustomer(parcel.SenderId).LocationOfCustomer) * Free;
+                double distanceSenderToDestination = GetDistance(GetCustomer(parcel.SenderId).LocationOfCustomer, GetCustomer(parcel.TargetId).LocationOfCustomer);
+                switch ((WeightCategories)parcel.Weight)
+                {
+                    case WeightCategories.light:
+                        electricityUse += distanceSenderToDestination * LightWeightCarrier;
+                        break;
+                    case WeightCategories.medium:
+                        electricityUse += distanceSenderToDestination * MediumWeightBearing;
+                        break;
+                    case WeightCategories.heavy:
+                        electricityUse += distanceSenderToDestination * CarriesHeavyWeight;
+                        break;
+                    default:
+                        break;
+                }
+
+                if (myDrone.BatteryStatus - electricityUse < 0)//if its lowest than zero no need to continue
+                    return false;
+
+            IEnumerable<DO.BaseStation> holdDalBaseStation = AccessIdal.GetBaseStationList();
+            IEnumerable<BaseStation> baseStationBL = from item in holdDalBaseStation
+                                                            select new BaseStation()
+                                                            {
+                                                                Id = item.Id,
+                                                                Name = item.StationName,
+                                                                FreeChargeSlots = item.FreeChargeSlots,
+                                                                BaseStationLocation = new Location()
+                                                                {
+                                                                    longitude = item.Longitude,
+                                                                    latitude = item.Latitude
+                                                                }
+                                                            };
+                electricityUse += minDistanceBetweenBaseStationsAndLocation(baseStationBL, GetCustomer(parcel.TargetId).LocationOfCustomer).Item2 * Free;
+
+                if (myDrone.BatteryStatus - electricityUse < 0)
+                    return false;
+
+                return true;
             }
 
-            if (myDrone.BatteryStatus - electricityUse < 0)
-                return false;
-
-            List<BaseStation> baseStationBL = new List<BaseStation>();
-            List<DO.BaseStation> holdDalBaseStation = AccessIdal.GetBaseStationList().ToList();
-            foreach (var item in holdDalBaseStation)
-            {
-                baseStationBL.Add(new BaseStation {Id = item.Id, Name = item.StationName,FreeChargeSlots = item.FreeChargeSlots,
-                    BaseStationLocation = new Location() { longitude = item.Longitude, latitude = item.Latitude }});
-            }
-
-            electricityUse += minDistanceBetweenBaseStationsAndLocation(baseStationBL, GetCustomer(parcel.TargetId).LocationOfCustomer).Item2 * Free;
-
-            if (myDrone.BatteryStatus - electricityUse < 0)
-                return false;
-            return true;
-        }
-
-        private DO.Parcel minDistance(List<DO.Parcel> parcels, Location location)
-        {
-            List<double> listOfDistance = new List<double>();
-            foreach (var obj in parcels)
-            {
-                Location locationOfSender = GetCustomer(obj.SenderId).LocationOfCustomer;
-                listOfDistance.Add(GetDistance(location, locationOfSender));
-            }
-            return parcels[listOfDistance.FindIndex(x => x == listOfDistance.Min())];
-        }
-
-        //**************************************************************************************************************
- 
         public void PickedUpPackageByTheDrone(int droneId)
         {
             DroneToList drone = DronesBL.Find(x => x.Id == droneId);
