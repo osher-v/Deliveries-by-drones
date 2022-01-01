@@ -14,9 +14,9 @@ namespace BO
     {
         public Location LocationOfCustomer { get; set; }
 
-        public List<ParcelAtCustomer> ParcelFromTheCustomer { get; set; }
+        public IEnumerable<ParcelAtCustomer> ParcelFromTheCustomer { get; set; }
 
-        public List<ParcelAtCustomer> ParcelToTheCustomer { get; set; }
+        public IEnumerable<ParcelAtCustomer> ParcelToTheCustomer { get; set; }
 
         public override string ToString()
         {

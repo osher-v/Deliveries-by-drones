@@ -62,82 +62,73 @@ namespace BL
             }
 
             Location dalCustomerLocation = new Location() { longitude = printCustomer.Longitude, latitude = printCustomer.Latitude };
+
             Customer blCustomer = new Customer(){Id = printCustomer.Id, Name = printCustomer.Name,PhoneNumber = printCustomer.PhoneNumber,
-                LocationOfCustomer = dalCustomerLocation, ParcelFromTheCustomer=new List<ParcelAtCustomer>(),  ParcelToTheCustomer =new List<ParcelAtCustomer>() };
+                LocationOfCustomer = dalCustomerLocation};
 
-            List<DO.Parcel> holdDalParcels = AccessIdal.GetParcelList(i => i.SenderId == idForDisplayObject).ToList();
-            // the for run on all the parcel list and put the coract info into it  
-            foreach (var item in holdDalParcels)
-            {
-                CustomerInDelivery customerInDelivery = new CustomerInDelivery { Id = item.TargetId, Name = AccessIdal.GetCustomer(item.TargetId).Name };
+            IEnumerable<DO.Parcel> holdDalParcels = AccessIdal.GetParcelList(i => i.SenderId == idForDisplayObject);
 
-                ParcelAtCustomer parcelAtCustomer = new ParcelAtCustomer() { Id = item.Id, Prior = (Priorities)item.Priority,
-                    Weight = (WeightCategories)item.Weight, OtherCustomer= customerInDelivery};
-                
-                if (item.Delivered != null) 
-                    parcelAtCustomer.Status = DeliveryStatus.Delivered;
-                else if (item.PickedUp != null)
-                    parcelAtCustomer.Status = DeliveryStatus.PickedUp;
-                else if (item.Assigned != null)
-                    parcelAtCustomer.Status = DeliveryStatus.Assigned;
-                else
-                    parcelAtCustomer.Status = DeliveryStatus.created;
+            blCustomer.ParcelFromTheCustomer = from item in holdDalParcels
+                                               select new ParcelAtCustomer()
+                                               {
+                                                   Id = item.Id,
+                                                   Prior = (Priorities)item.Priority,
+                                                   Weight = (WeightCategories)item.Weight,
+                                                   OtherCustomer = new CustomerInDelivery
+                                                   {
+                                                       Id = item.TargetId,
+                                                       Name = AccessIdal.GetCustomer(item.TargetId).Name
+                                                   },
+                                                   Status = item.Delivered != null ? DeliveryStatus.Delivered : item.PickedUp != null ?
+                                                   DeliveryStatus.PickedUp : item.Assigned != null ? DeliveryStatus.Assigned : DeliveryStatus.created
+                                               };
 
-                blCustomer.ParcelFromTheCustomer.Add(parcelAtCustomer);
-            }
+            IEnumerable<DO.Parcel> holdDalSentParcels = AccessIdal.GetParcelList(i => i.TargetId == idForDisplayObject);
 
-            List<DO.Parcel> holdDalSentParcels = AccessIdal.GetParcelList(i => i.TargetId == idForDisplayObject).ToList();
-            // the for run on all the parcel list and put the coract info into it  
-            foreach (var item in holdDalSentParcels)
-            {
-                CustomerInDelivery customerInDelivery = new CustomerInDelivery { Id = item.SenderId, Name = AccessIdal.GetCustomer(item.SenderId).Name };
-                ParcelAtCustomer parcelAtCustomer = new ParcelAtCustomer()
-                {
-                    Id = item.Id,
-                    Prior = (Priorities)item.Priority,
-                    Weight = (WeightCategories)item.Weight,
-                    OtherCustomer = customerInDelivery             
-                };        
-                if (item.Delivered != null)
-                    parcelAtCustomer.Status = DeliveryStatus.Delivered;
-                else if (item.PickedUp != null)
-                    parcelAtCustomer.Status = DeliveryStatus.PickedUp;
-                else if (item.Assigned != null)
-                    parcelAtCustomer.Status = DeliveryStatus.Assigned;
-                else
-                    parcelAtCustomer.Status = DeliveryStatus.created;
+            blCustomer.ParcelToTheCustomer = from item in holdDalSentParcels
+                                             select new ParcelAtCustomer()
+                                               {
+                                                   Id = item.Id,
+                                                   Prior = (Priorities)item.Priority,
+                                                   Weight = (WeightCategories)item.Weight,
+                                                   OtherCustomer = new CustomerInDelivery
+                                                   {
+                                                       Id = item.SenderId,
+                                                       Name = AccessIdal.GetCustomer(item.SenderId).Name
+                                                   },
+                                                   Status = item.Delivered != null ? DeliveryStatus.Delivered : item.PickedUp != null ?
+                                                   DeliveryStatus.PickedUp : item.Assigned != null ? DeliveryStatus.Assigned : DeliveryStatus.created
+                                               };
 
-                blCustomer.ParcelToTheCustomer.Add(parcelAtCustomer);
-            }
             return blCustomer;
         }
 
         public IEnumerable<CustomerToList> GetCustomerList(Predicate<CustomerToList> predicate = null)
         {
-            List<CustomerToList> CustomerBL = new List<CustomerToList>();
-            List<DO.Customer> holdDalCustomer = AccessIdal.GetCustomerList().ToList();
-            // the for run on all the customer list and put the coract info into it  
+            //List<CustomerToList> CustomerBL = new List<CustomerToList>();
+            //List<DO.Customer> holdDalCustomer = AccessIdal.GetCustomerList().ToList();
+            //// the for run on all the customer list and put the coract info into it  
 
-            foreach (var item in holdDalCustomer)
-            {
-                CustomerBL.Add(new CustomerToList
-                {
-                    Id=item.Id, Name=item.Name ,PhoneNumber=item.PhoneNumber, 
-                    NumberOfPackagesSentAndDelivered= AccessIdal.GetParcelList
-                    (x => x.Delivered != null && x.SenderId==item.Id).ToList().Count, 
+            //foreach (var item in holdDalCustomer)
+            //{
+            //    CustomerBL.Add(new CustomerToList
+            //    {
+            //        Id=item.Id, Name=item.Name ,PhoneNumber=item.PhoneNumber, 
+            //        NumberOfPackagesSentAndDelivered= AccessIdal.GetParcelList
+            //        (x => x.Delivered != null && x.SenderId==item.Id).ToList().Count, 
 
-                     NumberOfPackagesSentAndNotYetDelivered= AccessIdal.GetParcelList
-                    (x => x.PickedUp != null && x.Delivered == null && x.SenderId == item.Id).ToList().Count,
+            //         NumberOfPackagesSentAndNotYetDelivered= AccessIdal.GetParcelList
+            //        (x => x.PickedUp != null && x.Delivered == null && x.SenderId == item.Id).ToList().Count,
                         
-                      NumberOfPackagesWhoReceived = AccessIdal.GetParcelList
-                    (x => x.Delivered != null && x.TargetId == item.Id).ToList().Count,
+            //          NumberOfPackagesWhoReceived = AccessIdal.GetParcelList
+            //        (x => x.Delivered != null && x.TargetId == item.Id).ToList().Count,
 
-                       NumberPackagesOnTheWayToTheCustomer = AccessIdal.GetParcelList
-                    (x => x.PickedUp != null && x.Delivered == null && x.TargetId == item.Id).ToList().Count,
-                });
-            }
+            //           NumberPackagesOnTheWayToTheCustomer = AccessIdal.GetParcelList
+            //        (x => x.PickedUp != null && x.Delivered == null && x.TargetId == item.Id).ToList().Count,
+            //    });
+            //}
 
-            return CustomerBL.FindAll(x => predicate == null ? true : predicate(x));
+            //return CustomerBL.FindAll(x => predicate == null ? true : predicate(x));
         }
     }
 }

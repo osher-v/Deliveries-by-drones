@@ -14,7 +14,7 @@ namespace BO
     public class BaseStation : BaseStationParnt
     {
         public Location BaseStationLocation { get; set; }
-        public List<DroneInCharg> DroneInChargsList { get; set; }
+        public IEnumerable<DroneInCharg> DroneInChargsList { get; set; }
 
         public override string ToString()
         {

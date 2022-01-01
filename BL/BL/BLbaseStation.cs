@@ -78,15 +78,21 @@ namespace BL
             }
 
             Location dalBaseLocation = new Location() { longitude = printBase.Longitude, latitude=printBase.Latitude };
+
             BaseStation blBase = new BaseStation() { Id = printBase.Id, Name=printBase.StationName, BaseStationLocation = dalBaseLocation,
-                FreeChargeSlots=printBase.FreeChargeSlots, DroneInChargsList=new List<DroneInCharg>()};
+                FreeChargeSlots=printBase.FreeChargeSlots};
 
             IEnumerable<DO.DroneCharge> droneInCharge = AccessIdal.GetBaseChargeList(i => i.StationId == idForDisplayObject);
-            foreach (var item in droneInCharge)
-            {
-                blBase.DroneInChargsList.Add(new DroneInCharg { Id = item.DroneId,
-                    BatteryStatus = DronesBL.Find(x => x.Id == item.DroneId).BatteryStatus });// put only the ones with the data we want 
-            }
+
+            blBase.DroneInChargsList = from item in droneInCharge
+                                       select new DroneInCharg { Id = item.DroneId, BatteryStatus = DronesBL.Find(x => x.Id == item.DroneId).BatteryStatus };
+
+            //IEnumerable<DO.DroneCharge> droneInCharge = AccessIdal.GetBaseChargeList(i => i.StationId == idForDisplayObject);
+            //foreach (var item in droneInCharge)
+            //{
+            //    blBase.DroneInChargsList.Add(new DroneInCharg { Id = item.DroneId,
+            //        BatteryStatus = DronesBL.Find(x => x.Id == item.DroneId).BatteryStatus });// put only the ones with the data we want 
+            //}
             return blBase;
         }
 
