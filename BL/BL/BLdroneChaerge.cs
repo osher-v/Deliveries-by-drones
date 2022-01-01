@@ -16,15 +16,25 @@ namespace BL
                 throw new NonExistentObjectException();
 
             if (drone.Statuses != DroneStatuses.free)
-                throw new TheDroneCanNotBeSentForCharging("Error, Only a free drone can be sent for charging"); 
+                throw new TheDroneCanNotBeSentForCharging("Error, Only a free drone can be sent for charging");
 
-            List<DO.BaseStation> dalListStations = AccessIdal.GetBaseStationList(x => x.FreeChargeSlots > 0).ToList();
-            List<BaseStation> BLbaseStations = new List<BaseStation>();
-            foreach (var item in dalListStations)
-            {
-                BLbaseStations.Add(new BaseStation{Id = item.Id,Name = item.StationName,FreeChargeSlots = item.FreeChargeSlots,
-                    BaseStationLocation = new Location() { longitude = item.Longitude, latitude = item.Latitude } });
-            }
+            IEnumerable<DO.BaseStation> dalListStations = AccessIdal.GetBaseStationList(x => x.FreeChargeSlots > 0);
+            IEnumerable<BaseStation> BLbaseStations = from item in dalListStations
+                                                            select new BaseStation()
+                                                            {
+                                                                Id = item.Id,
+                                                                Name = item.StationName,
+                                                                FreeChargeSlots = item.FreeChargeSlots,
+                                                                BaseStationLocation = new Location() { longitude = item.Longitude, latitude = item.Latitude }
+                                                            };
+
+            //List<DO.BaseStation> dalListStations = AccessIdal.GetBaseStationList(x => x.FreeChargeSlots > 0).ToList();
+            //List<BaseStation> BLbaseStations = new List<BaseStation>();
+            //foreach (var item in dalListStations)
+            //{
+            //    BLbaseStations.Add(new BaseStation{Id = item.Id,Name = item.StationName,FreeChargeSlots = item.FreeChargeSlots,
+            //        BaseStationLocation = new Location() { longitude = item.Longitude, latitude = item.Latitude } });
+            //}
 
             if (!BLbaseStations.Any()) //if the List is empty and is no Free charge slots in the all Base station.
                 throw new TheDroneCanNotBeSentForCharging("Error, there are no free charging stations");

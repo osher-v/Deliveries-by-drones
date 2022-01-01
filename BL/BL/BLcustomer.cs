@@ -105,30 +105,24 @@ namespace BL
 
         public IEnumerable<CustomerToList> GetCustomerList(Predicate<CustomerToList> predicate = null)
         {
-            //List<CustomerToList> CustomerBL = new List<CustomerToList>();
-            //List<DO.Customer> holdDalCustomer = AccessIdal.GetCustomerList().ToList();
-            //// the for run on all the customer list and put the coract info into it  
 
-            //foreach (var item in holdDalCustomer)
-            //{
-            //    CustomerBL.Add(new CustomerToList
-            //    {
-            //        Id=item.Id, Name=item.Name ,PhoneNumber=item.PhoneNumber, 
-            //        NumberOfPackagesSentAndDelivered= AccessIdal.GetParcelList
-            //        (x => x.Delivered != null && x.SenderId==item.Id).ToList().Count, 
-
-            //         NumberOfPackagesSentAndNotYetDelivered= AccessIdal.GetParcelList
-            //        (x => x.PickedUp != null && x.Delivered == null && x.SenderId == item.Id).ToList().Count,
-                        
-            //          NumberOfPackagesWhoReceived = AccessIdal.GetParcelList
-            //        (x => x.Delivered != null && x.TargetId == item.Id).ToList().Count,
-
-            //           NumberPackagesOnTheWayToTheCustomer = AccessIdal.GetParcelList
-            //        (x => x.PickedUp != null && x.Delivered == null && x.TargetId == item.Id).ToList().Count,
-            //    });
-            //}
-
-            //return CustomerBL.FindAll(x => predicate == null ? true : predicate(x));
+            IEnumerable<DO.Customer> holdDalCustomer = AccessIdal.GetCustomerList();
+            IEnumerable<CustomerToList> CustomerBL = from item in holdDalCustomer
+                                                     select new CustomerToList()
+                                                     {
+                                                         Id = item.Id,
+                                                         Name = item.Name,
+                                                         PhoneNumber = item.PhoneNumber,
+                                                         NumberOfPackagesSentAndDelivered = AccessIdal.GetParcelList
+                                                             (x => x.Delivered != null && x.SenderId == item.Id).Count(),
+                                                         NumberOfPackagesSentAndNotYetDelivered = AccessIdal.GetParcelList
+                                                             (x => x.PickedUp != null && x.Delivered == null && x.SenderId == item.Id).Count(),
+                                                         NumberOfPackagesWhoReceived = AccessIdal.GetParcelList
+                                                             (x => x.Delivered != null && x.TargetId == item.Id).Count(),
+                                                         NumberPackagesOnTheWayToTheCustomer = AccessIdal.GetParcelList
+                                                             (x => x.PickedUp != null && x.Delivered == null && x.TargetId == item.Id).Count(),
+                                                     };
+           return CustomerBL.Where(x => predicate == null ? true : predicate(x));
         }
     }
 }

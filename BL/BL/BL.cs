@@ -174,15 +174,19 @@ namespace BL
         /// <param name="baseStationBL">baseStationBL List</param>
         /// <param name="location">location</param>
         /// <returns>The location of the base station closest to the location and the min distance</returns>
-        private (Location,double) minDistanceBetweenBaseStationsAndLocation(List<BaseStation> baseStationBL, Location location)
+        private (Location,double) minDistanceBetweenBaseStationsAndLocation(IEnumerable<BaseStation> baseStationBL, Location location)
         {
-            List<double> listOfDistance = new List<double>();
-            foreach (var obj in baseStationBL)
-            {
-                listOfDistance.Add(GetDistance(location, obj.BaseStationLocation));
-            }
+            IEnumerable<double> listOfDistance = from item in baseStationBL
+                                                 select GetDistance(location, item.BaseStationLocation);
             double minDistance = listOfDistance.Min();
-            return (baseStationBL[listOfDistance.FindIndex(x => x == minDistance)].BaseStationLocation, minDistance);
+            return (baseStationBL., minDistance);
+
+            //foreach (var obj in baseStationBL)
+            //{
+            //    listOfDistance.Add(GetDistance(location, obj.BaseStationLocation));
+            //}
+            //double minDistance = listOfDistance.Min();
+            //return (baseStationBL[listOfDistance.FindIndex(x => x == minDistance)].BaseStationLocation, minDistance);
         }
         #endregion Function of finding the location of the base station closest to the location
 

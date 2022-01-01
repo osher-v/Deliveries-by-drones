@@ -86,27 +86,23 @@ namespace BL
 
             blBase.DroneInChargsList = from item in droneInCharge
                                        select new DroneInCharg { Id = item.DroneId, BatteryStatus = DronesBL.Find(x => x.Id == item.DroneId).BatteryStatus };
-
-            //IEnumerable<DO.DroneCharge> droneInCharge = AccessIdal.GetBaseChargeList(i => i.StationId == idForDisplayObject);
-            //foreach (var item in droneInCharge)
-            //{
-            //    blBase.DroneInChargsList.Add(new DroneInCharg { Id = item.DroneId,
-            //        BatteryStatus = DronesBL.Find(x => x.Id == item.DroneId).BatteryStatus });// put only the ones with the data we want 
-            //}
             return blBase;
         }
 
         public IEnumerable<BaseStationsToList> GetBaseStationList(Predicate<BaseStationsToList> predicate = null)
         {
-            List<BaseStationsToList> baseStationBL = new List<BaseStationsToList>();
-            List<DO.BaseStation> holdDalBaseStation = AccessIdal.GetBaseStationList().ToList();
-            foreach (var item in holdDalBaseStation)
-            {
-                baseStationBL.Add(new BaseStationsToList { Id = item.Id, Name = item.StationName, FreeChargeSlots = item.FreeChargeSlots,
-                     BusyChargeSlots = AccessIdal.GetBaseChargeList(x => x.StationId == item.Id).ToList().Count });
-            }
 
-            return baseStationBL.FindAll(x => predicate == null ? true : predicate(x));
+
+            IEnumerable<DO.BaseStation> holdDalBaseStation = AccessIdal.GetBaseStationList();
+            IEnumerable<BaseStationsToList> baseStationBL = from item in holdDalBaseStation
+                                                            select new BaseStationsToList()
+                                                            {
+                                                                Id = item.Id,
+                                                                Name = item.StationName,
+                                                                FreeChargeSlots = item.FreeChargeSlots,
+                                                                BusyChargeSlots = AccessIdal.GetBaseChargeList(x => x.StationId == item.Id).Count()
+                                                            };
+            return baseStationBL.Where(x => predicate == null ? true : predicate(x));
         }
  
     }
