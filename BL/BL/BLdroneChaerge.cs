@@ -28,14 +28,6 @@ namespace BL
                                                                 BaseStationLocation = new Location() { longitude = item.Longitude, latitude = item.Latitude }
                                                             };
 
-            //List<DO.BaseStation> dalListStations = AccessIdal.GetBaseStationList(x => x.FreeChargeSlots > 0).ToList();
-            //List<BaseStation> BLbaseStations = new List<BaseStation>();
-            //foreach (var item in dalListStations)
-            //{
-            //    BLbaseStations.Add(new BaseStation{Id = item.Id,Name = item.StationName,FreeChargeSlots = item.FreeChargeSlots,
-            //        BaseStationLocation = new Location() { longitude = item.Longitude, latitude = item.Latitude } });
-            //}
-
             if (!BLbaseStations.Any()) //if the List is empty and is no Free charge slots in the all Base station.
                 throw new TheDroneCanNotBeSentForCharging("Error, there are no free charging stations");
 
@@ -46,24 +38,29 @@ namespace BL
             {
                 throw new TheDroneCanNotBeSentForCharging("Error, to the drone does not have enough battery to go to recharge at the nearest available station");
             }
+
             // if all is good and we update the date 
             drone.BatteryStatus -= minDistence * Free;
-            //drone.CurrentLocation = minDistanceBetweenBaseStationsAndLocation(BLbaseStations, drone.CurrentLocation).Item1;
             drone.CurrentLocation = locationOfTheNearestStation;
             drone.Statuses = DroneStatuses.inMaintenance;
-         
-            foreach (var item in BLbaseStations)
-            {
-                BaseStation eeee = item;
-                if (!(item.BaseStationLocation == locationOfTheNearestStation))
-                {   
-                    AccessIdal.UpdateMinusChargeSlots(item.Id);
-                    AccessIdal.SendingDroneforChargingAtBaseStation(item.Id, drone.Id);
-                }
-            }
-            
-            //AccessIdal.UpdateMinusChargeSlots(BLbaseStations.First(x => x.BaseStationLocation == drone.CurrentLocation).Id);
-            //AccessIdal.SendingDroneforChargingAtBaseStation(BLbaseStations.First(x => x.BaseStationLocation == drone.CurrentLocation).Id, drone.Id);     
+
+            //foreach (var item in BLbaseStations)
+            //{
+            //    if (item.BaseStationLocation.longitude == locationOfTheNearestStation.longitude &&
+            //        item.BaseStationLocation.latitude == locationOfTheNearestStation.latitude)
+            //    {   
+            //        AccessIdal.UpdateMinusChargeSlots(item.Id);
+            //        AccessIdal.SendingDroneforChargingAtBaseStation(item.Id, drone.Id);
+            //    }
+            //}
+
+            //AccessIdal.UpdateMinusChargeSlots(BLbaseStations.First(x => x.BaseStationLocation == locationOfTheNearestStation).Id);
+            //AccessIdal.SendingDroneforChargingAtBaseStation(BLbaseStations.First(x => x.BaseStationLocation == locationOfTheNearestStation).Id, drone.Id);
+
+            AccessIdal.UpdateMinusChargeSlots(BLbaseStations.First(item => item.BaseStationLocation.longitude == locationOfTheNearestStation.longitude &&
+                    item.BaseStationLocation.latitude == locationOfTheNearestStation.latitude).Id);
+            AccessIdal.SendingDroneforChargingAtBaseStation(BLbaseStations.First(item => item.BaseStationLocation.longitude == locationOfTheNearestStation.longitude &&
+                    item.BaseStationLocation.latitude == locationOfTheNearestStation.latitude).Id, drone.Id);
         }
 
         public void ReleaseDroneFromCharging(int droneId)

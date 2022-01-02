@@ -23,13 +23,8 @@ namespace DalXml
         #region Singelton
 
         static DalXml()// static ctor to ensure instance init is done just before first usage
-        {
-            //XMLTools.SaveListToXMLSerializer(DataSource.ParcelsList, ParcelXml);
-        //    DataSource.Initialize();
-        //    foreach (var item in DataSource.ParcelsList)
-        //    {
-        //        AddParcel1(item);
-        //    }
+        {     
+             DataSource.Initialize();  
         }
 
         private DalXml() //private  
@@ -255,19 +250,19 @@ namespace DalXml
 
         #region Parcel
 
-        public static  int AddParcel1(Parcel newParcel)
+        public int AddParcel(Parcel newParcel)
         {
             List<Parcel> parcel = XMLTools.LoadListFromXMLSerializer<Parcel>(ParcelXml);
-            if (parcel.Exists(x => x.Id == newParcel.Id))
-            {
-                throw new AddAnExistingObjectException();
-            }
+            newParcel.Id = DataSource.Config.CountIdPackage++; //??????????????????????????????
+            //if (parcel.Exists(x => x.Id == newParcel.Id))
+            //{
+            //    throw new AddAnExistingObjectException();
+            //}
             parcel.Add(newParcel);
             XMLTools.SaveListToXMLSerializer(parcel, ParcelXml);
+
             //XElement element = XMLTools.LoadListFromXMLElement(ParcelXml);
-
             //newParcel.Id = DataSource.Config.CountIdPackage++; //??????????????????????????????
-
             //XElement ParcelElem = new XElement("Parcel",
             //                     new XElement("Id", newParcel.Id),
             //                     new XElement("SenderId", newParcel.SenderId),
@@ -285,11 +280,6 @@ namespace DalXml
 
             return newParcel.Id; //Returns the id of the current Parcel.
         }
-        public int AddParcel(Parcel newParcel)
-        {
-            return 0;
-        }
-       
 
         public void AssignPackageToDdrone(int ParcelId, int droneId)
         {
@@ -387,6 +377,7 @@ namespace DalXml
             //                                 Weight = (WeightCategories)Enum.Parse(typeof(WeightCategories), par.Element("Weight").Value),
             //                                 Priority = (Priorities)Enum.Parse(typeof(Priorities), par.Element("Priority").Value),
             //                                 DroneId = int.Parse(par.Element("DroneId").Value),
+            //                                 //Requested = DateTime.Parse(par.Element("Requested").Value, "yyyy-MM-ddTHH:mm:ss.fffffffzzz"),
             //                                 Requested = DateTime.ParseExact(par.Element("Requested").Value, "hh\\:mm\\:ss", CultureInfo.InvariantCulture),
             //                                 Assigned = DateTime.ParseExact(par.Element("Assigned").Value, "hh\\:mm\\:ss", CultureInfo.InvariantCulture),
             //                                 PickedUp = DateTime.ParseExact(par.Element("PickedUp").Value, "hh\\:mm\\:ss", CultureInfo.InvariantCulture),

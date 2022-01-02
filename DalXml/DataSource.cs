@@ -112,6 +112,11 @@ namespace DalObject
                 });
             }
             #endregion init Parcel    
+
+            XMLTools.SaveListToXMLSerializer(DronesList, @"DroneXml.xml");
+            XMLTools.SaveListToXMLSerializer(BaseStationsList, @"BaseStationXml.xml");
+            XMLTools.SaveListToXMLSerializer(CustomersList, @"CustomerXml.xml");
+            XMLTools.SaveListToXMLSerializer(ParcelsList, @"ParcelXml.xml");
         }
     }
 }
