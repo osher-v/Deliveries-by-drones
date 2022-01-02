@@ -50,8 +50,18 @@ namespace BL
             drone.CurrentLocation = minDistanceBetweenBaseStationsAndLocation(BLbaseStations, drone.CurrentLocation).Item1;
             drone.Statuses = DroneStatuses.inMaintenance;
 
-            AccessIdal.UpdateMinusChargeSlots(BLbaseStations.First(x => x.BaseStationLocation == drone.CurrentLocation).Id);
-            AccessIdal.SendingDroneforChargingAtBaseStation(BLbaseStations.First(x => x.BaseStationLocation == drone.CurrentLocation).Id, drone.Id);     
+           
+            foreach (var item in BLbaseStations)
+            {
+                if (item.BaseStationLocation == drone.CurrentLocation)
+                {   
+                    AccessIdal.UpdateMinusChargeSlots(item.Id);
+                    AccessIdal.SendingDroneforChargingAtBaseStation(item.Id, drone.Id);
+                }
+            }
+            
+            //AccessIdal.UpdateMinusChargeSlots(BLbaseStations.FirstOrDefault(x => x.BaseStationLocation == drone.CurrentLocation).Id);
+            //AccessIdal.SendingDroneforChargingAtBaseStation(BLbaseStations.First(x => x.BaseStationLocation == drone.CurrentLocation).Id, drone.Id);     
         }
 
         public void ReleaseDroneFromCharging(int droneId)
