@@ -56,7 +56,6 @@ namespace PL
             {
                 int id = ((ParcelToList)CBPickUpList.SelectedItem).Id;
                 PickedUp(AccessIbl.GetParcel(id).MyDrone.Id);
-
             }
             else
             {
@@ -184,13 +183,17 @@ namespace PL
         }
 
         /// <summary>
-        /// Update changes from customer window(name).
+        /// Update changes from Parcel window(name).
         /// </summary>
-        public void UpdateChangesFromCustomerWindow()
+        public void UpdateChangesFromParcelWindow()
         {
             customer = AccessIbl.GetCustomer(customerId);
             DataContext = customer;
+
+            listOfCustomeSend.ItemsSource = AccessIbl.GetCustomer(customer.Id).ParcelFromTheCustomer;
+            listOfCustomerReceive.ItemsSource = AccessIbl.GetCustomer(customer.Id).ParcelToTheCustomer;
         }
+
         /// <summary>
         /// opend the window that adding parcels
         /// </summary>

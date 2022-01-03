@@ -1,16 +1,16 @@
 <?xml version="1.0"?>
 <ArrayOfBaseStation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <BaseStation>
-    <Id>693831151</Id>
+    <Id>203500814</Id>
     <StationName>BnyBrak</StationName>
-    <FreeChargeSlots>-4</FreeChargeSlots>
+    <FreeChargeSlots>7</FreeChargeSlots>
     <Longitude>32.086456</Longitude>
     <Latitude>34.844476</Latitude>
   </BaseStation>
   <BaseStation>
-    <Id>590842534</Id>
+    <Id>944357391</Id>
     <StationName>Holon</StationName>
-    <FreeChargeSlots>-5</FreeChargeSlots>
+    <FreeChargeSlots>7</FreeChargeSlots>
     <Longitude>32.021679</Longitude>
     <Latitude>34.78999</Latitude>
   </BaseStation>

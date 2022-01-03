@@ -1,73 +1,73 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0"?>
 <ArrayOfCustomer xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Customer>
-    <Id>978365539</Id>
+    <Id>963173030</Id>
     <Name>James</Name>
-    <PhoneNumber>053-3413655</PhoneNumber>
-    <Longitude>31.958080291748047</Longitude>
-    <Latitude>34.91633224487305</Latitude>
+    <PhoneNumber>051-5568076</PhoneNumber>
+    <Longitude>31.957918167114258</Longitude>
+    <Latitude>35.03744888305664</Latitude>
   </Customer>
   <Customer>
-    <Id>549699329</Id>
+    <Id>840335826</Id>
     <Name>Robert</Name>
-    <PhoneNumber>050-8221251</PhoneNumber>
-    <Longitude>31.86920166015625</Longitude>
-    <Latitude>35.04436111450195</Latitude>
+    <PhoneNumber>056-241437</PhoneNumber>
+    <Longitude>32.03040313720703</Longitude>
+    <Latitude>34.848121643066406</Latitude>
   </Customer>
   <Customer>
-    <Id>335079053</Id>
-    <Name>Jofgdfgfhn</Name>
-    <PhoneNumber>050-823106</PhoneNumber>
-    <Longitude>31.800548553466797</Longitude>
-    <Latitude>34.7568359375</Latitude>
+    <Id>158164329</Id>
+    <Name>John</Name>
+    <PhoneNumber>057-9412888</PhoneNumber>
+    <Longitude>32.10646057128906</Longitude>
+    <Latitude>34.62073516845703</Latitude>
   </Customer>
   <Customer>
-    <Id>334197914</Id>
+    <Id>528376896</Id>
     <Name>Michael</Name>
-    <PhoneNumber>053-4028280</PhoneNumber>
-    <Longitude>32.105777740478516</Longitude>
-    <Latitude>34.8520393371582</Latitude>
+    <PhoneNumber>057-4469212</PhoneNumber>
+    <Longitude>31.815528869628906</Longitude>
+    <Latitude>34.873226165771484</Latitude>
   </Customer>
   <Customer>
-    <Id>515795192</Id>
+    <Id>972251919</Id>
     <Name>William</Name>
-    <PhoneNumber>052-2672416</PhoneNumber>
-    <Longitude>31.924297332763672</Longitude>
-    <Latitude>34.60927963256836</Latitude>
+    <PhoneNumber>052-2768253</PhoneNumber>
+    <Longitude>31.884014129638672</Longitude>
+    <Latitude>34.9848518371582</Latitude>
   </Customer>
   <Customer>
-    <Id>886719210</Id>
+    <Id>600381651</Id>
     <Name>David</Name>
-    <PhoneNumber>053-8372167</PhoneNumber>
-    <Longitude>32.19649124145508</Longitude>
-    <Latitude>34.68476486206055</Latitude>
+    <PhoneNumber>050-5315192</PhoneNumber>
+    <Longitude>31.911699295043945</Longitude>
+    <Latitude>34.63396453857422</Latitude>
   </Customer>
   <Customer>
-    <Id>909111718</Id>
+    <Id>316539621</Id>
     <Name>Richard</Name>
-    <PhoneNumber>054-1858538</PhoneNumber>
-    <Longitude>32.16148376464844</Longitude>
-    <Latitude>34.91971969604492</Latitude>
+    <PhoneNumber>057-3186545</PhoneNumber>
+    <Longitude>31.921297073364258</Longitude>
+    <Latitude>34.72783279418945</Latitude>
   </Customer>
   <Customer>
-    <Id>368718736</Id>
+    <Id>640179112</Id>
     <Name>Thomas</Name>
-    <PhoneNumber>057-8728266</PhoneNumber>
-    <Longitude>32.002593994140625</Longitude>
-    <Latitude>34.753944396972656</Latitude>
+    <PhoneNumber>055-2930992</PhoneNumber>
+    <Longitude>32.0244026184082</Longitude>
+    <Latitude>34.87201690673828</Latitude>
   </Customer>
   <Customer>
-    <Id>320895372</Id>
+    <Id>444913408</Id>
     <Name>Mark</Name>
-    <PhoneNumber>056-1964167</PhoneNumber>
-    <Longitude>32.06266403198242</Longitude>
-    <Latitude>34.727203369140625</Latitude>
+    <PhoneNumber>050-8445810</PhoneNumber>
+    <Longitude>31.97677230834961</Longitude>
+    <Latitude>34.858367919921875</Latitude>
   </Customer>
   <Customer>
-    <Id>555714511</Id>
+    <Id>539188334</Id>
     <Name>Donald</Name>
-    <PhoneNumber>055-4771290</PhoneNumber>
-    <Longitude>31.9996280670166</Longitude>
-    <Latitude>35.067501068115234</Latitude>
+    <PhoneNumber>051-5463717</PhoneNumber>
+    <Longitude>32.11276626586914</Longitude>
+    <Latitude>35.07463455200195</Latitude>
   </Customer>
 </ArrayOfCustomer>

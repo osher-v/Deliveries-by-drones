@@ -328,7 +328,7 @@ namespace PL
                         }
                         if (clientWindow != null)
                         {
-                            clientWindow.UpdateChangesFromCustomerWindow();
+                            clientWindow.UpdateChangesFromParcelWindow();
                         }
                         ListWindow.IsEnabled = true;
                         ClosingWindow = false;

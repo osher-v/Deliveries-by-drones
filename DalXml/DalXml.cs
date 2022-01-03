@@ -38,11 +38,11 @@ namespace DalXml
 
         public double[] RequestPowerConsumptionByDrone()
         {
-            double[] temp = { DataSource.Config.Free, DataSource.Config.LightWeightCarrier,
-            DataSource.Config.MediumWeightBearing, DataSource.Config.CarriesHeavyWeight,
-                DataSource.Config.DroneLoadingRate};
+            List<string> config = XMLTools.LoadListFromXMLSerializer<string>(@"DalXmlConfig.xml");
+            double[] temp = { double.Parse(config[0]), double.Parse(config[1]), double.Parse(config[2]),
+                     double.Parse(config[3]),double.Parse(config[4])};
             return temp;
-        } //צריך לראות מה עושים עפ זה
+        } 
 
         #region Stations
         public void AddStation(BaseStation newbaseStation)
@@ -276,7 +276,13 @@ namespace DalXml
         public int AddParcel(Parcel newParcel)
         {
             List<Parcel> parcel = XMLTools.LoadListFromXMLSerializer<Parcel>(ParcelXml);
-            newParcel.Id = DataSource.Config.CountIdPackage++;
+
+            List<string> config = XMLTools.LoadListFromXMLSerializer<string>(@"DalXmlConfig.xml");
+            int CountIdPackage = int.Parse(config[5]);
+            newParcel.Id = CountIdPackage++;
+            config[5] = CountIdPackage.ToString();
+            XMLTools.SaveListToXMLSerializer<string>(config,@"DalXmlConfig.xml");
+
             parcel.Add(newParcel);
             XMLTools.SaveListToXMLSerializer(parcel, ParcelXml);
             return newParcel.Id; //Returns the id of the current Parcel.
