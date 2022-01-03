@@ -15,7 +15,7 @@
         FontFamily="{DynamicResource MaterialDesignFont}"
         Title="ParcelWindow" Height="720" Width="520">
     <Grid>
-        <Grid x:Name="addParcel" Visibility="Visible">
+        <Grid x:Name="addParcel" Visibility="Hidden">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
