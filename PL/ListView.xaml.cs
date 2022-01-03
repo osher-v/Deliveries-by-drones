@@ -354,14 +354,6 @@ namespace PL
         /// <param name="e"></param>
         private void Bclose_Click_1(object sender, RoutedEventArgs e)
         {
-            foreach (var item in DroneToLists)//שחרור הרחפנים שבטעינה כדי שלא יישמר בקובץ xml
-            {
-                if(item.Statuses == DroneStatuses.inMaintenance)
-                {
-                    AccessIbl.ReleaseDroneFromCharging(item.Id);
-                }
-            }
-           
             ClosingWindow = false; // we alowd the close option
             Close();
         }

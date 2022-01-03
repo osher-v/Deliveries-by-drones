@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Media;
 using System.Windows.Media.Animation;
+using System.ComponentModel;
 
 namespace PL
 {
@@ -30,6 +31,27 @@ namespace PL
             InitializeComponent();
         }
 
+        /// <summary>
+        /// cancel the option to clik x to close the window 
+        /// </summary>
+        /// <param name="e">close window</param>
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            e.Cancel = false;
+            IEnumerable<BO.DroneToList> DroneToList = from item in AccessIbl.GetDroneList()
+                                                       where item.Statuses == BO.DroneStatuses.inMaintenance
+                                                       select item;
+            if (DroneToList.Any())
+            {
+                foreach (var item in DroneToList)//when we close the app we need to put all of the drones that are inmintinan to free
+                                                 //becuse we dont have such area to store the in charge drones 
+                {
+                    AccessIbl.ReleaseDroneFromCharging(item.Id);
+                }
+            }
+            Application.Current.Shutdown();     
+        }
+
         // we crate an obejt that give us accses to the ibl intrface  
         public BlApi.IBL AccessIbl = BlApi.BlFactory.GetBL();
 
@@ -44,12 +66,20 @@ namespace PL
             switch (Blogin.Content)
             {
                 case "כניסה כמנהל":
-                    new ListView(AccessIbl).ShowDialog();
+                    if (TBadmin.Text == "admin" && PBadminID.Password == "770")
+                    {
+                        new ListView(AccessIbl).ShowDialog();
+                    }
+                    else
+                    {
+                        MessageBox.Show("שם משתמש או סיסמא אינם נכונים", "שגיאה", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                    
                     break;
                 case "כניסת לקוח":
                     try
                     {
-                         AccessIbl.GetCustomer(int.Parse(TBuserID.Password)); //לשים לב שזה מקפיץ חריגה אם הלקוח נכנס ללא שם משתמש
+                        AccessIbl.GetCustomer(int.Parse(TBuserID.Password));
                         new ClientWindow(AccessIbl, int.Parse(TBuserID.Password)).ShowDialog();
                     }
                     catch (BO.NonExistentObjectException ex)
@@ -142,6 +172,18 @@ namespace PL
         private void TBuserID_KeyUp(object sender, KeyEventArgs e)
         {
             if (TBuserID.Password.Length != 0)
+            {
+                Blogin.IsEnabled = true;
+            }
+            else
+            {
+                Blogin.IsEnabled = false;
+            }
+        }
+
+        private void PBadminID_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (PBadminID.Password.Length != 0)
             {
                 Blogin.IsEnabled = true;
             }

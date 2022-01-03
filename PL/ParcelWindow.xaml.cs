@@ -37,9 +37,15 @@ namespace PL
         /// </summary>
         /// <param name="bl"></param>
         /// <param name="_ListWindow"></param>
-        public ParcelWindow(BlApi.IBL bl, ListView _ListWindow)
+        public ParcelWindow(BlApi.IBL bl, ListView _ListWindow,Customer customerFromClientWindow = null)
         {
             InitializeComponent();
+
+            if (customerFromClientWindow != null)
+            {
+                TBParcelSenderId.Text = customerFromClientWindow.Id.ToString();
+                TBParcelSenderId.IsEnabled = false;
+            }
 
             addParcel.Visibility = Visibility.Visible;
             Width = 440;

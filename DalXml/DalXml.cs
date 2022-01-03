@@ -24,7 +24,7 @@ namespace DalXml
 
         static DalXml()// static ctor to ensure instance init is done just before first usage
         {
-            DataSource.Initialize();
+            //DataSource.Initialize();
         }
 
         private DalXml() //private  
