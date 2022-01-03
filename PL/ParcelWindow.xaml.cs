@@ -28,6 +28,8 @@ namespace PL
         //object of ListView window.
         public ListView ListWindow;
 
+        public ClientWindow clientWindow;//for using if we enter from customer window
+
         /// <summary> a bool to help us disable the x bootum  </summary>
         public bool ClosingWindow { get; private set; } = true;
 
@@ -37,12 +39,13 @@ namespace PL
         /// </summary>
         /// <param name="bl"></param>
         /// <param name="_ListWindow"></param>
-        public ParcelWindow(BlApi.IBL bl, ListView _ListWindow,Customer customerFromClientWindow = null)
+        public ParcelWindow(BlApi.IBL bl, ListView _ListWindow,Customer customerFromClientWindow = null, ClientWindow _clientWindow = null)
         {
             InitializeComponent();
 
             if (customerFromClientWindow != null)
             {
+                clientWindow = _clientWindow;
                 TBParcelSenderId.Text = customerFromClientWindow.Id.ToString();
                 TBParcelSenderId.IsEnabled = false;
             }
@@ -165,6 +168,11 @@ namespace PL
                         case MessageBoxResult.OK:
                             BO.ParcelToList parcelsToList = AccessIbl.GetParcelList().ToList().Find(i => i.Id == IdOfParcel);
                             ListWindow.ParcelToLists.Add(parcelsToList); //Updating the observer list of stations.
+
+                            if (clientWindow != null)
+                            {
+                                UpdateChangesFromCustomerWindow();
+                            }
 
                             ListWindow.IsEnabled = true;
                             ClosingWindow = false;

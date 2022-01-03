@@ -247,9 +247,9 @@ namespace PL
 
         public int indexSelected;
 
-        public ParcelWindow parcelWindow; //שדה שנצטרך כאשר ניכנס לחלון לקוח דרך חלון חבילה ונצטרך לעדכן
+        public ParcelWindow parcelWindow; //for using if we enter from customer window
 
-        public ClientWindow clientWindow;//שדה שנצטרך כאשר ניכנס לחלון לקוח דרך חלון משתמש ונצטרך לעדכן
+        public ClientWindow clientWindow;//for using if we enter from customer window
         /// <summary>
         /// update constractor.
         /// </summary>
