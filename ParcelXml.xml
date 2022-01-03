@@ -132,4 +132,16 @@
     <PickedUp xsi:nil="true" />
     <Delivered xsi:nil="true" />
   </Parcel>
+  <Parcel>
+    <Id>1000</Id>
+    <SenderId>334197914</SenderId>
+    <TargetId>335079053</TargetId>
+    <Weight>light</Weight>
+    <Priority>regular</Priority>
+    <DroneId>0</DroneId>
+    <Requested>2022-01-03T17:12:22.5371239+02:00</Requested>
+    <Assigned xsi:nil="true" />
+    <PickedUp xsi:nil="true" />
+    <Delivered xsi:nil="true" />
+  </Parcel>
 </ArrayOfParcel>

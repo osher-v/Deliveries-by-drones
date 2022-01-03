@@ -199,7 +199,7 @@ namespace PL
         private void BAddParcel_Click(object sender, RoutedEventArgs e)
         {
             ListView listView = new ListView(AccessIbl);
-            new  ParcelWindow(AccessIbl, listView, null, this).Show();
+            new  ParcelWindow(AccessIbl, listView, customer, this).Show();
         }
     }
 }
