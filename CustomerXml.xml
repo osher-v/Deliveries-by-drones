@@ -1,80 +1,73 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0"?>
 <ArrayOfCustomer xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Customer>
-    <Id>963173030</Id>
+    <Id>528998561</Id>
     <Name>James</Name>
-    <PhoneNumber>051-5568076</PhoneNumber>
-    <Longitude>31.957918167114258</Longitude>
-    <Latitude>35.03744888305664</Latitude>
+    <PhoneNumber>056-8323887</PhoneNumber>
+    <Longitude>32.158084869384766</Longitude>
+    <Latitude>35.07795333862305</Latitude>
   </Customer>
   <Customer>
-    <Id>840335826</Id>
+    <Id>837589474</Id>
     <Name>Robert</Name>
-    <PhoneNumber>056-241437</PhoneNumber>
-    <Longitude>32.03040313720703</Longitude>
-    <Latitude>34.848121643066406</Latitude>
+    <PhoneNumber>055-6887077</PhoneNumber>
+    <Longitude>32.17915344238281</Longitude>
+    <Latitude>34.67753601074219</Latitude>
   </Customer>
   <Customer>
-    <Id>158164329</Id>
+    <Id>829950499</Id>
     <Name>John</Name>
-    <PhoneNumber>057-9412888</PhoneNumber>
-    <Longitude>32.10646057128906</Longitude>
-    <Latitude>34.62073516845703</Latitude>
+    <PhoneNumber>057-5881865</PhoneNumber>
+    <Longitude>32.00447082519531</Longitude>
+    <Latitude>34.804176330566406</Latitude>
   </Customer>
   <Customer>
-    <Id>528376896</Id>
+    <Id>213607124</Id>
     <Name>Michael</Name>
-    <PhoneNumber>057-4469212</PhoneNumber>
-    <Longitude>31.815528869628906</Longitude>
-    <Latitude>34.873226165771484</Latitude>
+    <PhoneNumber>051-8176574</PhoneNumber>
+    <Longitude>32.084537506103516</Longitude>
+    <Latitude>35.038658142089844</Latitude>
   </Customer>
   <Customer>
-    <Id>972251919</Id>
+    <Id>759276161</Id>
     <Name>William</Name>
-    <PhoneNumber>052-2768253</PhoneNumber>
-    <Longitude>31.884014129638672</Longitude>
-    <Latitude>34.9848518371582</Latitude>
+    <PhoneNumber>051-5585089</PhoneNumber>
+    <Longitude>31.90930938720703</Longitude>
+    <Latitude>34.968631744384766</Latitude>
   </Customer>
   <Customer>
-    <Id>600381651</Id>
+    <Id>711149941</Id>
     <Name>David</Name>
-    <PhoneNumber>050-5315192</PhoneNumber>
-    <Longitude>31.911699295043945</Longitude>
-    <Latitude>34.63396453857422</Latitude>
+    <PhoneNumber>051-8916207</PhoneNumber>
+    <Longitude>32.07502746582031</Longitude>
+    <Latitude>34.77021408081055</Latitude>
   </Customer>
   <Customer>
-    <Id>316539621</Id>
+    <Id>746302222</Id>
     <Name>Richard</Name>
-    <PhoneNumber>057-3186545</PhoneNumber>
-    <Longitude>31.921297073364258</Longitude>
-    <Latitude>34.72783279418945</Latitude>
+    <PhoneNumber>054-6803204</PhoneNumber>
+    <Longitude>32.00482177734375</Longitude>
+    <Latitude>34.69854736328125</Latitude>
   </Customer>
   <Customer>
-    <Id>640179112</Id>
+    <Id>994907886</Id>
     <Name>Thomas</Name>
-    <PhoneNumber>055-2930992</PhoneNumber>
-    <Longitude>32.0244026184082</Longitude>
-    <Latitude>34.87201690673828</Latitude>
+    <PhoneNumber>050-6053153</PhoneNumber>
+    <Longitude>31.93501853942871</Longitude>
+    <Latitude>34.707359313964844</Latitude>
   </Customer>
   <Customer>
-    <Id>444913408</Id>
+    <Id>315727954</Id>
     <Name>Mark</Name>
-    <PhoneNumber>050-8445810</PhoneNumber>
-    <Longitude>31.97677230834961</Longitude>
-    <Latitude>34.858367919921875</Latitude>
+    <PhoneNumber>057-860765</PhoneNumber>
+    <Longitude>32.16624450683594</Longitude>
+    <Latitude>34.784236907958984</Latitude>
   </Customer>
   <Customer>
-    <Id>539188334</Id>
+    <Id>368903102</Id>
     <Name>Donald</Name>
-    <PhoneNumber>051-5463717</PhoneNumber>
-    <Longitude>32.11276626586914</Longitude>
-    <Latitude>35.07463455200195</Latitude>
-  </Customer>
-  <Customer>
-    <Id>123</Id>
-    <Name>שוהם</Name>
-    <PhoneNumber>05456568689</PhoneNumber>
-    <Longitude>32</Longitude>
-    <Latitude>35</Latitude>
+    <PhoneNumber>053-7659105</PhoneNumber>
+    <Longitude>32.14491653442383</Longitude>
+    <Latitude>35.08803939819336</Latitude>
   </Customer>
 </ArrayOfCustomer>

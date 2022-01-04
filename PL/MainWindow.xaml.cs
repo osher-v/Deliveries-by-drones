@@ -155,8 +155,6 @@ namespace PL
             Blogin.Content = "כניסת לקוח";
         }
 
-     
-
         private void TBadmin_KeyUp(object sender, KeyEventArgs e)
         {
             if (TBadmin.Text.Length != 0)

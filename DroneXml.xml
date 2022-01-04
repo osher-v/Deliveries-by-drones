@@ -1,28 +1,28 @@
 <?xml version="1.0"?>
 <ArrayOfDrone xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Drone>
-    <Id>481905785</Id>
+    <Id>321177167</Id>
     <Model>I</Model>
-    <MaxWeight>light</MaxWeight>
-  </Drone>
-  <Drone>
-    <Id>381267179</Id>
-    <Model>IX</Model>
     <MaxWeight>heavy</MaxWeight>
   </Drone>
   <Drone>
-    <Id>482719682</Id>
-    <Model>iv</Model>
-    <MaxWeight>medium</MaxWeight>
-  </Drone>
-  <Drone>
-    <Id>469845276</Id>
-    <Model>VI</Model>
-    <MaxWeight>medium</MaxWeight>
-  </Drone>
-  <Drone>
-    <Id>408274598</Id>
-    <Model>IL</Model>
+    <Id>349374785</Id>
+    <Model>IX</Model>
     <MaxWeight>light</MaxWeight>
+  </Drone>
+  <Drone>
+    <Id>192075700</Id>
+    <Model>IIX</Model>
+    <MaxWeight>light</MaxWeight>
+  </Drone>
+  <Drone>
+    <Id>958923309</Id>
+    <Model>VI</Model>
+    <MaxWeight>heavy</MaxWeight>
+  </Drone>
+  <Drone>
+    <Id>717053993</Id>
+    <Model>IL</Model>
+    <MaxWeight>heavy</MaxWeight>
   </Drone>
 </ArrayOfDrone>
