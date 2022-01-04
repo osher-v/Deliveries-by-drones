@@ -24,12 +24,21 @@ namespace DalXml
 
         static DalXml()// static ctor to ensure instance init is done just before first usage
         {
-            //DataSource.Initialize();
+           // DataSource.Initialize();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         private DalXml() //private  
         {
-
+            List<DroneCharge> droneCharge = XMLTools.LoadListFromXMLSerializer<DroneCharge>(DroneChargeXml);
+            foreach (var item in droneCharge)
+            {
+                UpdatePluseChargeSlots(item.StationId);
+            }
+            droneCharge.Clear();
+            XMLTools.SaveListToXMLSerializer(droneCharge, DroneChargeXml);
         }
 
         internal static DalXml Instance { get; } = new DalXml();// The public Instance property to use
