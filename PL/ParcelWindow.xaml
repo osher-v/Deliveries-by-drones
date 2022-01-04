@@ -30,14 +30,14 @@
                     </Button>
                 </StackPanel>
             </Grid>
-            <TextBox x:Name="TBParcelSenderId" Grid.Row="2" materialDesign:HintAssist.Hint="מספר מזהה שולח" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center"   TextAlignment="Center" Margin="92,0,92,0"  Height="34" MaxLength="9" KeyDown="TBParcelSenderId_KeyDown"  />
-            <TextBox x:Name="TBParcelReciverId" Grid.Row="3" materialDesign:HintAssist.Hint="מספר מזהה מקבל" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center"   TextAlignment="Center" Margin="92,0,92,0"  Height="34" MaxLength="9" KeyDown="TBParcelReciverId_KeyDown"  />
+            <TextBox x:Name="TBParcelSenderId" Grid.Row="2" materialDesign:HintAssist.Hint="מספר מזהה שולח" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center"   TextAlignment="Center" Margin="92,0,92,0"  Height="60" MaxLength="9" KeyDown="TBParcelSenderId_KeyDown" FontSize="20" FontWeight="Bold"  />
+            <TextBox x:Name="TBParcelReciverId" Grid.Row="3" materialDesign:HintAssist.Hint="מספר מזהה מקבל" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center"   TextAlignment="Center" Margin="92,0,92,0"  Height="59" MaxLength="9" KeyDown="TBParcelReciverId_KeyDown" FontSize="20" FontWeight="Bold"  />
 
             <Button x:Name="BAddParcel" Grid.Row="6" Style="{StaticResource MaterialDesignRaisedButton}" materialDesign:ButtonProgressAssist.Value="-1" materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
              materialDesign:ButtonProgressAssist.IsIndeterminate="True" Content="הוספה למאגר הנתונים" Margin="0,16,0,-3" Click="BAddParcel_Click"/>
 
-            <ComboBox x:Name="CBPriorSelector"  Grid.Row="4" Style="{StaticResource MaterialDesignOutlinedComboBox}"  materialDesign:HintAssist.Hint="דחיפות חבילה"   Margin="92,52,92,45" />
-            <ComboBox x:Name="CBWeightSelctor" Grid.Row="5" Style="{StaticResource MaterialDesignOutlinedComboBox}"  materialDesign:HintAssist.Hint="משקל חבילה"  Margin="92,43,92,43" />
+            <ComboBox x:Name="CBPriorSelector"  Grid.Row="4" Style="{StaticResource MaterialDesignOutlinedComboBox}"  materialDesign:HintAssist.Hint="דחיפות חבילה"   Margin="92,52,92,45" FontWeight="Bold" FontSize="14" />
+            <ComboBox x:Name="CBWeightSelctor" Grid.Row="5" Style="{StaticResource MaterialDesignOutlinedComboBox}"  materialDesign:HintAssist.Hint="משקל חבילה"  Margin="92,43,92,43" FontWeight="Bold" FontSize="14" />
 
         </Grid>
 

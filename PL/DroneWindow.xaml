@@ -31,14 +31,14 @@
                     </Button>
                 </StackPanel>
             </Grid>
-            <TextBox x:Name="TBID" Grid.Row="2" materialDesign:HintAssist.Hint="מספר מזהה רחפן" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center"   TextAlignment="Center" Margin="92,0,92,0"  Height="58" MaxLength="9" KeyDown="TBID_KeyDown"  />
-            <TextBox x:Name="TBModel" Grid.Row="3" materialDesign:HintAssist.Hint="מודל רחפן" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center"   TextAlignment="Center" Margin="92,0,92,0"  Height="48" MaxLength="9" KeyDown="TBModel_KeyDown"  />
+            <TextBox x:Name="TBID" Grid.Row="2" materialDesign:HintAssist.Hint="מספר מזהה רחפן" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center"   TextAlignment="Center" Margin="92,0,92,0"  Height="67" MaxLength="9" KeyDown="TBID_KeyDown" FontSize="20" FontWeight="Bold"  />
+            <TextBox x:Name="TBModel" Grid.Row="3" materialDesign:HintAssist.Hint="מודל רחפן" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center"   TextAlignment="Center" Margin="92,0,92,0"  Height="75" MaxLength="9" KeyDown="TBModel_KeyDown" FontSize="20" FontWeight="Bold"  />
 
             <Button  x:Name="SendToBl" Content="הוספה למאגר הנתונים" Grid.Row="6" Style="{StaticResource MaterialDesignRaisedButton}" materialDesign:ButtonProgressAssist.Value="-1" materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
              materialDesign:ButtonProgressAssist.IsIndeterminate="True"  Margin="0,15,0,0" Click="SendToBl_Click"/>
 
-            <ComboBox  x:Name="TBWeight"  Grid.Row="4" Style="{StaticResource MaterialDesignOutlinedComboBox}"  materialDesign:HintAssist.Hint="משקל"   Margin="92,17,92,18" />
-            <ComboBox x:Name="BaseStationID" Grid.Row="5" Style="{StaticResource MaterialDesignOutlinedComboBox}"  materialDesign:HintAssist.Hint="מספר תחנה להטענה ראשונית"  Margin="92,12,92,17" />
+            <ComboBox  x:Name="TBWeight"  Grid.Row="4" Style="{StaticResource MaterialDesignOutlinedComboBox}"  materialDesign:HintAssist.Hint="משקל"   Margin="92,17,92,18" FontSize="16" FontWeight="Bold" />
+            <ComboBox x:Name="BaseStationID" Grid.Row="5" Style="{StaticResource MaterialDesignOutlinedComboBox}"  materialDesign:HintAssist.Hint= "תחנה להטענה ראשונית"  Margin="92,12,92,17" FontSize="16" FontWeight="Bold" />
 
         </Grid>
 
@@ -67,7 +67,7 @@
                 </StackPanel>
             </Grid>
 
-            <TextBox x:Name="TBmodel" Text="{Binding Path=Model}" Grid.Row="3" Grid.Column="1" materialDesign:HintAssist.Hint="מודל רחפן" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Top" Margin="81,10,80,0" TextAlignment="Center" Height="37" MaxLength="10" KeyUp="TBmodel_KeyUp" KeyDown="TBmodel_KeyDown_1" />
+            <TextBox x:Name="TBmodel" Text="{Binding Path=Model}" Grid.Row="3" Grid.Column="1" materialDesign:HintAssist.Hint="מודל רחפן" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Top" Margin="81,5,80,0" TextAlignment="Center" Height="44" MaxLength="10" KeyUp="TBmodel_KeyUp" KeyDown="TBmodel_KeyDown_1" FontSize="14" FontWeight="Bold" />
 
             <Grid x:Name="Cards" Grid.Row="4" Grid.ColumnSpan="2"  Margin="0,22,0,5">
                 <Grid.ColumnDefinitions>
@@ -118,9 +118,9 @@
              materialDesign:ButtonProgressAssist.IsIndeterminate="True" Content="עדכון רחפן" Margin="0,17,0,0"
              IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Click="BModalUpdate_Click" />
 
-            <Grid Grid.Row="1" Grid.Column="1" Margin="0,70,0,58" Grid.RowSpan="3">
-                <TextBlock TextWrapping="Wrap" Margin="219,39,10,10" FontWeight="Bold" FontFamily="Consolas" FontSize="14" ><Run Text=":"/><Run FlowDirection="RightToLeft" Language="he-il" Text="מספר מזהה"/></TextBlock>
-                <TextBlock  x:Name="TBID2" Text="{Binding Path=Id}" TextWrapping="Wrap" Margin="30,35,176,6" FontWeight="Bold" FontFamily="Consolas" FontSize="18" TextAlignment="Center"/>
+            <Grid Grid.Row="1" Grid.Column="1" Margin="0,70,0,0" Grid.RowSpan="2">
+                <TextBlock TextWrapping="Wrap" Margin="219,30,10,19" FontWeight="Bold" FontFamily="Consolas" FontSize="14" ><Run Text=":"/><Run FlowDirection="RightToLeft" Language="he-il" Text="מספר מזהה"/></TextBlock>
+                <TextBlock  x:Name="TBID2" Text="{Binding Path=Id}" TextWrapping="Wrap" Margin="30,30,176,11" FontWeight="Bold" FontFamily="Consolas" FontSize="18" TextAlignment="Center"/>
             </Grid>
             <Grid Grid.Row="1" Grid.ColumnSpan="2" Background="LightGray">
                 <Grid.ColumnDefinitions>
@@ -170,6 +170,7 @@
                         <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Height="20" Width="184" TextAlignment="Center" FontWeight="Bold" TextDecorations="Underline" FontSize="14" Margin="0,-2,0,0"><Run FlowDirection="RightToLeft" Language="he-il" Text="חבילה במשלוח"/></TextBlock>
                         <TextBlock x:Name="TBnotAssigned" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Center" Height="87" Grid.Row="1" Width="313" FontSize="32" FontWeight="Bold" FontFamily="Consolas" Margin="222,0,0,0"><Run FlowDirection="RightToLeft" Language="he-il" Text="אין חבילה משוייכת"/></TextBlock>
 
+                        <!--this grid is inside grid that wiil turn on if ther is a linked parcel-->
                         <Grid x:Name="GRIDparcelInDelivery" Grid.Row="1" Visibility="Hidden">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
@@ -209,24 +210,24 @@
 
                             </Grid>
                             <Grid Grid.Column="2">
-                                <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Height="20" Width="74" TextAlignment="Center" FontWeight="Bold" Margin="152,21,0,0" Foreground="#FF673AB7"><Run FlowDirection="RightToLeft" Language="he-il" Text="מספר מזהה"/></TextBlock>
-                                <TextBlock HorizontalAlignment="Left" Margin="96,19,0,0" Text="{Binding Path=Delivery.Id}" TextWrapping="Wrap" VerticalAlignment="Top" Width="44" FontSize="14" FontWeight="Bold" Foreground="{DynamicResource MaterialDesignBackground}" TextAlignment="Center" Height="18"/>
+                                <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Height="20" Width="74" TextAlignment="Center" FontWeight="Bold" Margin="153,15,0,0" Foreground="#FF673AB7"><Run FlowDirection="RightToLeft" Language="he-il" Text="מספר מזהה"/></TextBlock>
+                                <TextBlock HorizontalAlignment="Left" Margin="99,15,0,0" Text="{Binding Path=Delivery.Id}" TextWrapping="Wrap" VerticalAlignment="Top" Width="44" FontSize="14" FontWeight="Bold" Foreground="{DynamicResource MaterialDesignBackground}" TextAlignment="Center" Height="18"/>
 
-                                <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Height="20" Width="50" TextAlignment="Center" FontWeight="Bold" Margin="177,47,0,0" Foreground="{DynamicResource PrimaryHueMidBrush}"><Run FlowDirection="RightToLeft" Language="he-il" Text="עדיפות"/></TextBlock>
-                                <TextBlock HorizontalAlignment="Left" Margin="95,42,0,0" Text="{Binding Path=Delivery.Prior}" TextWrapping="Wrap" VerticalAlignment="Top" Width="66" FontSize="14" FontWeight="Bold" Foreground="{DynamicResource MaterialDesignBackground}" TextAlignment="Center" Height="20"/>
-
-
-                                <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Height="20" Width="67" TextAlignment="Center" FontWeight="Bold" Margin="170,76,0,0" Foreground="{DynamicResource PrimaryHueMidBrush}"><Run FlowDirection="RightToLeft" Language="he-il" Text="משקל"/></TextBlock>
-                                <TextBlock HorizontalAlignment="Left" Margin="95,0,0,0" Text="{Binding Path=Delivery.Weight}" TextWrapping="Wrap" VerticalAlignment="Center" Width="66" Foreground="{DynamicResource MaterialDesignBackground}" FontSize="14" FontWeight="Bold" TextAlignment="Center" Height="19"/>
+                                <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Height="20" Width="50" TextAlignment="Center" FontWeight="Bold" Margin="178,44,0,0" Foreground="{DynamicResource PrimaryHueMidBrush}"><Run FlowDirection="RightToLeft" Language="he-il" Text="עדיפות"/></TextBlock>
+                                <TextBlock HorizontalAlignment="Left" Margin="77,42,0,0" Text="{Binding Path=Delivery.Prior}" TextWrapping="Wrap" VerticalAlignment="Top" Width="66" FontSize="14" FontWeight="Bold" Foreground="{DynamicResource MaterialDesignBackground}" TextAlignment="Center" Height="20"/>
 
 
-                                <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Height="20" Width="101" TextAlignment="Center" FontWeight="Bold" Margin="134,107,0,0" Foreground="{DynamicResource PrimaryHueMidBrush}"><Run FlowDirection="RightToLeft" Language="he-il" Text="מרחק משלוח"/></TextBlock>
-                                <TextBlock HorizontalAlignment="Left" Margin="81,104,0,0" Text="{Binding Path=Delivery.TransportDistance, StringFormat=\{0:#0.00\}}" TextWrapping="Wrap" VerticalAlignment="Top" Width="62" Height="24" FontSize="14" FontWeight="Bold" TextAlignment="Center" Foreground="{DynamicResource MaterialDesignBackground}"/>
+                                <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Height="20" Width="67" TextAlignment="Center" FontWeight="Bold" Margin="172,75,0,0" Foreground="{DynamicResource PrimaryHueMidBrush}"><Run FlowDirection="RightToLeft" Language="he-il" Text="משקל"/></TextBlock>
+                                <TextBlock HorizontalAlignment="Left" Margin="77,0,0,0" Text="{Binding Path=Delivery.Weight}" TextWrapping="Wrap" VerticalAlignment="Center" Width="66" Foreground="{DynamicResource MaterialDesignBackground}" FontSize="14" FontWeight="Bold" TextAlignment="Center" Height="19"/>
 
 
-                                <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Height="20" Width="91" TextAlignment="Center" FontWeight="Bold" Margin="144,132,0,0" Foreground="{DynamicResource PrimaryHueMidBrush}"><Run FlowDirection="RightToLeft" Language="he-il" Text="נאסף כן/לא"/></TextBlock>
+                                <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Height="20" Width="101" TextAlignment="Center" FontWeight="Bold" Margin="135,107,0,0" Foreground="{DynamicResource PrimaryHueMidBrush}"><Run FlowDirection="RightToLeft" Language="he-il" Text="מרחק משלוח"/></TextBlock>
+                                <TextBlock HorizontalAlignment="Left" Margin="81,107,0,0" Text="{Binding Path=Delivery.TransportDistance, StringFormat=\{0:#0.00\}}" TextWrapping="Wrap" VerticalAlignment="Top" Width="62" Height="24" FontSize="14" FontWeight="Bold" TextAlignment="Center" Foreground="{DynamicResource MaterialDesignBackground}"/>
+
+
+                                <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Height="20" Width="91" TextAlignment="Center" FontWeight="Bold" Margin="144,137,0,0" Foreground="{DynamicResource PrimaryHueMidBrush}"><Run FlowDirection="RightToLeft" Language="he-il" Text="נאסף כן/לא"/></TextBlock>
                                 <!--<CheckBox Content="" HorizontalAlignment="Left" Margin="93,130,0,0" VerticalAlignment="Top" IsChecked="{Binding Path=Delivery.OnTheWayToTheDestination}" IsEnabled="False" Background="{DynamicResource MaterialDesignBackground}" BorderBrush="{x:Null}" Foreground="#FF0DF017" FontSize="14" Height="18" Width="20"/>-->
-                                <CheckBox IsChecked="{Binding Path=Delivery.OnTheWayToTheDestination}" Margin="115,126,104,15" />
+                                <CheckBox IsChecked="{Binding Path=Delivery.OnTheWayToTheDestination}" Margin="115,136,104,5" />
 
                             </Grid>
                         </Grid>

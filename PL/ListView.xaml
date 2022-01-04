@@ -15,7 +15,7 @@
             <RowDefinition Height="23*"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
-            <TabControl x:Name="TCmenu" Style="{StaticResource MaterialDesignNavigatilRailTabControl}" materialDesign:ColorZoneAssist.Mode="Standard" materialDesign:ShadowAssist.ShadowDepth="Depth3" Height="594" VerticalAlignment="Top">
+            <TabControl x:Name="TCmenu" Style="{StaticResource MaterialDesignNavigatilRailTabControl}" materialDesign:ColorZoneAssist.Mode="Standard" materialDesign:ShadowAssist.ShadowDepth="Depth3" Height="595" VerticalAlignment="Top">
                 <!--מתעסק ברשימת הרחפנים-->
                 <TabItem Name="droens">
                     <TabItem.Header>
@@ -244,7 +244,7 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-                                <Button x:Name="BRefreshPar" Grid.Column="0" Margin="102,58,102,2" Content="{materialDesign:PackIcon Kind=Refresh, Size=25 }" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"  Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{DynamicResource PrimaryHueDarkBrush}" RenderTransformOrigin="0.489,0.478" Click="BRefreshPar_Click" Grid.ColumnSpan="2"/>
+                                <Button x:Name="BRefreshPar" Grid.Column="0" Margin="102,58,87,2" Content="{materialDesign:PackIcon Kind=Refresh, Size=25 }" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"  Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{DynamicResource PrimaryHueDarkBrush}" RenderTransformOrigin="0.489,0.478" Click="BRefreshPar_Click" Grid.ColumnSpan="2"/>
                                 <Button  Name="BgroupingCustomar"  VerticalAlignment="Top" HorizontalAlignment="Center" Grid.Column="1" Width="116"  Content="קבץ לפי שולח"
                                      Style="{StaticResource MaterialDesignRaisedButton}" materialDesign:ButtonProgressAssist.Value="-1" materialDesign:ButtonProgressAssist.IsIndicatorVisible="True" materialDesign:ButtonProgressAssist.IsIndeterminate="True" Height="37" FontSize="10" FontFamily="Consolas" Click="BgroupingCustomar_Click" Margin="0,16,0,0"/>
                                 <Button  Name="BgroupingCustomar1"  VerticalAlignment="Top" HorizontalAlignment="Left" Width="116"  Content="קבץ לפי מקבל"
