@@ -7,13 +7,7 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        ResizeMode="CanMinimize"
-        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
-        TextElement.FontWeight="Regular"
-        TextElement.FontSize="13"
-        TextOptions.TextFormattingMode="Ideal"
-        TextOptions.TextRenderingMode="Auto"
-        FontFamily="{DynamicResource MaterialDesignFont}"
+        ResizeMode="CanMinimize" 
         Title="Login Window" Height="500" Width="860" >
     <Grid>
         <MediaElement x:Name="enter" Source="New Project.avi" HorizontalAlignment="Center"  VerticalAlignment="Center" Height="484" Width="860" Volume="0" Stretch="Fill" UnloadedBehavior="Manual" Loaded="enter_Loaded"/>
