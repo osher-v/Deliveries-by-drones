@@ -89,9 +89,8 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <StackPanel Grid.Row="1" Margin="0,17,0,25">
+                    <StackPanel Grid.Row="0" Margin="0,106,0,29">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition />
@@ -102,7 +101,7 @@
                         </Grid>
                         <ComboBox x:Name="CBPickUpList" Style="{StaticResource MaterialDesignOutlinedComboBox}"  materialDesign:HintAssist.Hint="בחירת חבילה לאיסוף" Width="244"   />
                     </StackPanel>
-                    <StackPanel Grid.Row="2" Margin="0,14,0,22">
+                    <StackPanel Grid.Row="1" Margin="0,43,0,22">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition />

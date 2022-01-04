@@ -122,41 +122,41 @@
                 <TextBlock TextWrapping="Wrap" Margin="219,30,10,19" FontWeight="Bold" FontFamily="Consolas" FontSize="14" ><Run Text=":"/><Run FlowDirection="RightToLeft" Language="he-il" Text="מספר מזהה"/></TextBlock>
                 <TextBlock  x:Name="TBID2" Text="{Binding Path=Id}" TextWrapping="Wrap" Margin="30,30,176,11" FontWeight="Bold" FontFamily="Consolas" FontSize="18" TextAlignment="Center"/>
             </Grid>
+            <!--boutones area-->
             <Grid Grid.Row="1" Grid.ColumnSpan="2" Background="LightGray">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Button x:Name="BSendToCharge" Visibility="Hidden"   Grid.Column="4" Style="{StaticResource MaterialDesignRaisedButton}" materialDesign:ButtonProgressAssist.Value="-1" materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
-                    materialDesign:ButtonProgressAssist.IsIndeterminate="True" Content="שליחה לטעינה" Margin="10,20,27,19"
+                <Button x:Name="BSendToCharge" Visibility="Hidden"   Grid.Column="2" Style="{StaticResource MaterialDesignRaisedButton}" materialDesign:ButtonProgressAssist.Value="-1" materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
+                    materialDesign:ButtonProgressAssist.IsIndeterminate="True" Content="שליחה לטעינה" Margin="18,20,19,19"
                     IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" Background="#FFFF0909" BorderBrush="#FFF14A2F" FontSize="12" FontWeight="Bold" Click="BSendToCharge_Click"  />
 
-                <Button  x:Name="BReleaseDrone" Visibility="Hidden"  Grid.Column="3" Style="{StaticResource MaterialDesignRaisedButton}" materialDesign:ButtonProgressAssist.Value="-1" materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
-                    materialDesign:ButtonProgressAssist.IsIndeterminate="True" Content="שחרור מטעינה" Margin="24,20,10,19"
+                <Button  x:Name="BReleaseDrone" Visibility="Hidden"  Grid.Column="2" Style="{StaticResource MaterialDesignRaisedButton}" materialDesign:ButtonProgressAssist.Value="-1" materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
+                    materialDesign:ButtonProgressAssist.IsIndeterminate="True" Content="שחרור מטעינה" Margin="18,20,16,19"
                     IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" Background="#FFFF0909" BorderBrush="#FFF14A2F" FontSize="12" FontWeight="Bold" Click="BReleaseDrone_Click"  />
 
-                <Button  x:Name="BAssignPackage" Visibility="Hidden"  Grid.Column="2" Style="{StaticResource MaterialDesignRaisedButton}" materialDesign:ButtonProgressAssist.Value="-1" materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
-                    materialDesign:ButtonProgressAssist.IsIndeterminate="True" Content="שיוך" Margin="24,20,24,19"
+                <Button  x:Name="BAssignPackage" Visibility="Hidden"  Grid.Column="1" Style="{StaticResource MaterialDesignRaisedButton}" materialDesign:ButtonProgressAssist.Value="-1" materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
+                    materialDesign:ButtonProgressAssist.IsIndeterminate="True" Content="שיוך" Margin="18,20,19,19"
                     IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" Background="#FFFF0909" BorderBrush="#FFF14A2F" FontSize="12" FontWeight="Bold"  Click="BAssignPackage_Click"/>
                 <Button  x:Name="BPickedUp" Visibility="Hidden"  Grid.Column="1" Style="{StaticResource MaterialDesignRaisedButton}" materialDesign:ButtonProgressAssist.Value="-1" materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
-                    materialDesign:ButtonProgressAssist.IsIndeterminate="True" Content="איסוף" Margin="24,20,24,19"
+                    materialDesign:ButtonProgressAssist.IsIndeterminate="True" Content="איסוף" Margin="18,20,19,19"
                     IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" Background="#FFFF0909" BorderBrush="#FFF14A2F" FontSize="12" FontWeight="Bold"  Click="BPickedUp_Click" />
                 <Button x:Name="BDeliveryPackage" Visibility="Hidden"  Style="{StaticResource MaterialDesignRaisedButton}" materialDesign:ButtonProgressAssist.Value="-1" materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
-                    materialDesign:ButtonProgressAssist.IsIndeterminate="True" Content="אספקה" Margin="24,20,24,19"
-                    IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" Background="#FFFF0909" BorderBrush="#FFF14A2F" FontSize="12" FontWeight="Bold" Click="BDeliveryPackage_Click" />
+                    materialDesign:ButtonProgressAssist.IsIndeterminate="True" Content="אספקה" Margin="18,20,19,19"
+                    IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" Background="#FFFF0909" BorderBrush="#FFF14A2F" FontSize="12" FontWeight="Bold" Click="BDeliveryPackage_Click" Grid.Column="1" />
             </Grid>
             <materialDesign:Card Grid.Column="0" Background="{DynamicResource PrimaryHueLightBrush}" Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}" Padding="8" 
-                    UniformCornerRadius="6" Margin="49,18,49,12" Grid.RowSpan="2" Grid.Row="2">
+                    UniformCornerRadius="6" Margin="49,18,23,12" Grid.RowSpan="2" Grid.Row="2">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="11*"/>
                         <RowDefinition Height="35*"/>
                     </Grid.RowDefinitions>
                     <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Height="20" Width="184" TextAlignment="Center" FontWeight="Bold"><Run FlowDirection="RightToLeft" Language="he-il" Text="מיקום"/></TextBlock>
-                    <TextBlock  x:Name="TBLocationLongitude" HorizontalAlignment="Center" Text="{Binding Path=CurrentLocation}" TextWrapping="Wrap" VerticalAlignment="Center" Width="234" Height="40" FontSize="14" FontWeight="Bold" Foreground="White" Grid.Row="1"/>
+                    <TextBlock  x:Name="TBLocationLongitude" HorizontalAlignment="Center" Text="{Binding Path=CurrentLocation}" TextWrapping="Wrap" VerticalAlignment="Center" Width="282" Height="40" FontSize="14" FontWeight="Bold" Foreground="White" Grid.Row="1"/>
                 </Grid>
             </materialDesign:Card>
             <Grid Grid.Row="5" Grid.ColumnSpan="2">

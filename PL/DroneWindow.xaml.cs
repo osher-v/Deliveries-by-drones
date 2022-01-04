@@ -212,6 +212,8 @@ namespace PL
 
                 case DroneStatuses.inMaintenance:
                     BReleaseDrone.Visibility = Visibility.Visible;
+                    BAssignPackage.Visibility = Visibility.Visible;
+                    BAssignPackage.IsEnabled = false;
                     break;
 
                 case DroneStatuses.busy:
@@ -294,7 +296,7 @@ namespace PL
 
                         BSendToCharge.Visibility = Visibility.Hidden;
                         BReleaseDrone.Visibility = Visibility.Visible;
-                        BAssignPackage.Visibility = Visibility.Hidden;              
+                        BAssignPackage.IsEnabled = false;
                         break;
                     default:
                         break;
@@ -333,7 +335,8 @@ namespace PL
 
                     BSendToCharge.Visibility = Visibility.Visible;
                     BReleaseDrone.Visibility = Visibility.Hidden;
-                    BAssignPackage.Visibility = Visibility.Visible;
+                    BAssignPackage.IsEnabled = true;
+
 
                     break;
                 default:
