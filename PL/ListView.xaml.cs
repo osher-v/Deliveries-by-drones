@@ -465,6 +465,8 @@ namespace PL
                     x.Prior == (Priorities)CBparcelWprior.SelectedIndex);
             }
         }
+        
+        #region grouping
         /// <summary>
         /// grouping items by the settings we need 
         /// </summary>
@@ -472,19 +474,22 @@ namespace PL
         /// <param name="e"></param>
         private void grouping_Click(object sender, RoutedEventArgs e)
         {
-            //IEnumerable<IGrouping<DroneStatuses, DroneToList>> droneGroup = from drone in AccessIbl.GetDroneList() group drone by drone.Statuses;
-            //List<DroneToList> droneList = new();
+            // we orgnize the collaction by our settings (according to the enums in this case) by grouping them 
+            IEnumerable<IGrouping<DroneStatuses, DroneToList>> droneGroup = from drone in AccessIbl.GetDroneList() group drone by drone.Statuses;
+            List<DroneToList> droneList = new();
 
-            //foreach (var group in droneGroup)
-            //{
-            //    foreach (var drone in group)
-            //    {
-            //        droneList.Add(drone);
-            //    }
-            //}
-            //listOfDrones.ItemsSource = droneList;
+            foreach (var group in droneGroup)
+            {
+                foreach (var drone in group)
+                {
+                    droneList.Add(drone);
+                }
+            }
+            listOfDrones.ItemsSource = droneList;
+
+            //from here is to set the xaml
             CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(listOfDrones.ItemsSource);
-            if (view.GroupDescriptions.Count < 1)
+            if (view.GroupDescriptions.Count < 1) //  not allow to set the style more then once 
             {
                 PropertyGroupDescription groupDescription = new PropertyGroupDescription("Statuses");
                 view.GroupDescriptions.Add(groupDescription);
@@ -493,10 +498,24 @@ namespace PL
 
         private void groupingBaseStaiton_Click(object sender, RoutedEventArgs e)
         {
+            // we orgnize the collaction by our settings (according to the enums in this case) by grouping them 
+
+            IEnumerable<IGrouping<int, BaseStationsToList>> baseGroup = from baseStation in AccessIbl.GetBaseStationList() group baseStation by baseStation.FreeChargeSlots;
+            List<BaseStationsToList> baseToList = new();
+
+            foreach (var group in baseGroup)
+            {
+                foreach (var baseStation in group)
+                {
+                    baseToList.Add(baseStation);
+                }
+            }
+            listOfBaseStations.ItemsSource = baseToList;
+
+            //from here is to set the xaml
             CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(listOfBaseStations.ItemsSource);
             if (view.GroupDescriptions.Count < 1) // prevent from do it more then once 
             {
-                //BaseStationToLists.OrderBy(x=>x.FreeChargeSlots);
                 PropertyGroupDescription groupDescription = new PropertyGroupDescription("FreeChargeSlots");
                 view.GroupDescriptions.Add(groupDescription);
             }
@@ -510,6 +529,63 @@ namespace PL
         {
             CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(listOfBaseStations.ItemsSource);
             view.GroupDescriptions.Clear();
+        }
+
+        private void BgroupingCustomar_Click(object sender, RoutedEventArgs e)
+        {
+            // we orgnize the collaction by our settings (according to the enums in this case) by grouping them 
+
+            IEnumerable<IGrouping<string, ParcelToList>> parcelGroup = from par in AccessIbl.GetParcelList() group par by par.CustomerSenderName;
+            List<ParcelToList> parcelToList = new();
+
+            foreach (var group in parcelGroup)
+            {
+                foreach (var par in group)
+                {
+                    parcelToList.Add(par);
+                }
+            }
+            listOfParcels.ItemsSource = parcelToList;
+
+            //from here is to set the xaml
+            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(listOfParcels.ItemsSource);
+            if (view.GroupDescriptions.Count < 1) // prevent from do it more then once 
+            {
+                PropertyGroupDescription groupDescription = new PropertyGroupDescription("CustomerSenderName");
+                view.GroupDescriptions.Add(groupDescription);
+            }
+        }
+
+        private void BRefreshPar_Click(object sender, RoutedEventArgs e)
+        {
+            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(listOfParcels.ItemsSource);
+            view.GroupDescriptions.Clear();
+        }
+
+        private void BgroupingCustomar1_Click(object sender, RoutedEventArgs e)
+        {
+            // we orgnize the collaction by our settings (according to the enums in this case) by grouping them 
+
+            IEnumerable<IGrouping<string, ParcelToList>> parcelGroup = from par in AccessIbl.GetParcelList() group par by par.CustomerReceiverName;
+            List<ParcelToList> parcelToList = new();
+
+            foreach (var group in parcelGroup)
+            {
+                foreach (var par in group)
+                {
+                    parcelToList.Add(par);
+                }
+            }
+            listOfParcels.ItemsSource = parcelToList;
+
+            //from here is to set the xaml
+            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(listOfParcels.ItemsSource);
+            if (view.GroupDescriptions.Count < 1) // prevent from do it more then once 
+            {
+                PropertyGroupDescription groupDescription = new PropertyGroupDescription("CustomerReceiverName");
+                view.GroupDescriptions.Add(groupDescription);
+            }
+            #endregion
         }
     }
 }

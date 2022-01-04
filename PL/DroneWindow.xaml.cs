@@ -165,29 +165,6 @@ namespace PL
 
         }
 
-        #region close
-        /// <summary>
-        /// cancel the option to clik x to close the window 
-        /// </summary>
-        /// <param name="e">close window</param>
-        protected override void OnClosing(CancelEventArgs e)
-        {
-            e.Cancel = ClosingWindow;
-        }
-
-        /// <summary>
-        /// to aloow closing again but just in the spcific close boutoon 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Bclose_Click(object sender, RoutedEventArgs e)
-        {
-            listWindow.IsEnabled = true;
-            ClosingWindow = false;
-            Close();
-        }
-        #endregion close
-
         #endregion
 
         #region drone in operations
@@ -512,6 +489,8 @@ namespace PL
                         if (parcelWindow != null)//עדכון שינוי מיקום וסוללת הרחפן אם נפתח חלון רחפן דרך חבילה
                         {
                             parcelWindow.UpdateChangesFromDroneWindow();
+                            ClosingWindow = false;
+                            Close();
                         }
                         break;
                     default:
@@ -556,5 +535,28 @@ namespace PL
         }
 
         #endregion drone in operations  
+
+        #region close
+        /// <summary>
+        /// cancel the option to clik x to close the window 
+        /// </summary>
+        /// <param name="e">close window</param>
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            e.Cancel = ClosingWindow;
+        }
+
+        /// <summary>
+        /// to aloow closing again but just in the spcific close boutoon 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Bclose_Click(object sender, RoutedEventArgs e)
+        {
+            listWindow.IsEnabled = true;
+            ClosingWindow = false;
+            Close();
+        }
+        #endregion close
     }
 }

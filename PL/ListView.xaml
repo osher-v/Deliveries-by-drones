@@ -40,7 +40,7 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-                                <Button  Name="grouping"  VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="2" Width="116"  Content="מיון לפי סטטוס"
+                                <Button  Name="grouping"  VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="2" Width="116"  Content="קבץ לפי סטטוס"
                                      Style="{StaticResource MaterialDesignRaisedButton}" materialDesign:ButtonProgressAssist.Value="-1" materialDesign:ButtonProgressAssist.IsIndicatorVisible="True" materialDesign:ButtonProgressAssist.IsIndeterminate="True" Click="grouping_Click" Height="37" FontSize="10" FontFamily="Consolas"/>
                             </Grid>
                             <StackPanel Grid.Column="0">
@@ -49,10 +49,9 @@
                                         <ColumnDefinition />
                                         <ColumnDefinition />
                                     </Grid.ColumnDefinitions>
-                                    <CheckBox x:Name="OutlinedComboBoxEnabledCheckBox1" IsChecked="True" Margin="45,0,19,8" Content="עריכה" />
                                     <Button x:Name="BResetStatus"  Content="איפוס" Style="{StaticResource MaterialDesignFlatButton}" HorizontalAlignment="Left"  Grid.Column="1" Margin="61,0,0,0" Click="BResetStatus_Click" />
                                 </Grid>
-                                <ComboBox x:Name="CBStatusSelector" Style="{StaticResource MaterialDesignOutlinedComboBox}" IsEnabled="{Binding IsChecked, ElementName=OutlinedComboBoxEnabledCheckBox1}" materialDesign:HintAssist.Hint="סינון רשימת הרחפנים לפי סטטוס" Width="256" SelectionChanged="CBStatusSelector_SelectionChanged" />
+                                <ComboBox x:Name="CBStatusSelector" Style="{StaticResource MaterialDesignOutlinedComboBox}" materialDesign:HintAssist.Hint="סינון רשימת הרחפנים לפי סטטוס" Width="256" SelectionChanged="CBStatusSelector_SelectionChanged" />
                             </StackPanel>
                             <StackPanel Grid.Column="1">
                                 <Grid>
@@ -60,10 +59,9 @@
                                         <ColumnDefinition />
                                         <ColumnDefinition />
                                     </Grid.ColumnDefinitions>
-                                    <CheckBox x:Name="OutlinedComboBoxEnabledCheckBox2" IsChecked="True" Margin="47,0,0,8" Content="עריכה" />
                                     <Button x:Name="BResetWeight" Content="איפוס" Style="{StaticResource MaterialDesignFlatButton}" HorizontalAlignment="Left"  Grid.Column="1" Margin="59,0,0,0" Click="BResetWeight_Click" />
                                 </Grid>
-                                <ComboBox x:Name="CBWeightSelctor" Style="{StaticResource MaterialDesignOutlinedComboBox}" IsEnabled="{Binding IsChecked, ElementName=OutlinedComboBoxEnabledCheckBox2}" materialDesign:HintAssist.Hint="סינון רשימת הרחפנים לפי סטטוס" Width="256" SelectionChanged="CBWeightSelctor_SelectionChanged" />
+                                <ComboBox x:Name="CBWeightSelctor" Style="{StaticResource MaterialDesignOutlinedComboBox}" materialDesign:HintAssist.Hint="סינון רשימת הרחפנים לפי סטטוס" Width="256" SelectionChanged="CBWeightSelctor_SelectionChanged" />
                             </StackPanel>
                         </Grid>
                         <ListView x:Name="listOfDrones" ItemsSource="{Binding Items1}" Margin="10,1,0,10" Grid.Row="1" MouseDoubleClick="listOfDrones_MouseDoubleClick">
@@ -83,6 +81,7 @@
                                     <GridViewColumn DisplayMemberBinding="{Binding NumberOfLinkedParcel}" Header="חבילה משויכת"   />
                                 </GridView>
                             </ListView.View>
+                            <!--this is for the group style to display it in a cool way (: -->
                             <ListView.GroupStyle>
                                 <GroupStyle>
                                     <GroupStyle.ContainerStyle>
@@ -130,7 +129,7 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <Button  Name="groupingBaseStaiton"  VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="2" Width="156"  Content="מיון לפי עמדות טעינה"
+                            <Button  Name="groupingBaseStaiton"  VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="2" Width="156"  Content="קבץ לפי עמדות טעינה"
                                      Style="{StaticResource MaterialDesignRaisedButton}" materialDesign:ButtonProgressAssist.Value="-1" materialDesign:ButtonProgressAssist.IsIndicatorVisible="True" materialDesign:ButtonProgressAssist.IsIndeterminate="True" Height="39" FontSize="10" FontFamily="Consolas" Click="groupingBaseStaiton_Click" Margin="115,0,0,0"/>
                             <Button x:Name="BRefresh" Margin="29,27,233,33" Content="{materialDesign:PackIcon Kind=Refresh, Size=25 }" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"  Click="BRefresh_Click" Grid.Column="2" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{DynamicResource PrimaryHueDarkBrush}" RenderTransformOrigin="0.489,0.478"/>
 
@@ -245,8 +244,12 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-                                <Button  Name="BgroupingCustomar"  VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="2" Width="116"  Content="מיון לפי שמות"
-                                     Style="{StaticResource MaterialDesignRaisedButton}" materialDesign:ButtonProgressAssist.Value="-1" materialDesign:ButtonProgressAssist.IsIndicatorVisible="True" materialDesign:ButtonProgressAssist.IsIndeterminate="True" Height="37" FontSize="10" FontFamily="Consolas"/>
+                                <Button x:Name="BRefreshPar" Grid.Column="0" Margin="102,58,102,2" Content="{materialDesign:PackIcon Kind=Refresh, Size=25 }" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"  Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{DynamicResource PrimaryHueDarkBrush}" RenderTransformOrigin="0.489,0.478" Click="BRefreshPar_Click" Grid.ColumnSpan="2"/>
+                                <Button  Name="BgroupingCustomar"  VerticalAlignment="Top" HorizontalAlignment="Center" Grid.Column="1" Width="116"  Content="קבץ לפי שולח"
+                                     Style="{StaticResource MaterialDesignRaisedButton}" materialDesign:ButtonProgressAssist.Value="-1" materialDesign:ButtonProgressAssist.IsIndicatorVisible="True" materialDesign:ButtonProgressAssist.IsIndeterminate="True" Height="37" FontSize="10" FontFamily="Consolas" Click="BgroupingCustomar_Click" Margin="0,16,0,0"/>
+                                <Button  Name="BgroupingCustomar1"  VerticalAlignment="Top" HorizontalAlignment="Left" Width="116"  Content="קבץ לפי מקבל"
+                                     Style="{StaticResource MaterialDesignRaisedButton}" materialDesign:ButtonProgressAssist.Value="-1" materialDesign:ButtonProgressAssist.IsIndicatorVisible="True" materialDesign:ButtonProgressAssist.IsIndeterminate="True" Height="37" FontSize="10" FontFamily="Consolas" Click="BgroupingCustomar1_Click" Margin="12,16,0,0"/>
+
                             </Grid>
                             <StackPanel Grid.Column="0">
                                 <Grid>
@@ -254,10 +257,9 @@
                                         <ColumnDefinition />
                                         <ColumnDefinition />
                                     </Grid.ColumnDefinitions>
-                                    <CheckBox x:Name="CBchaeck" IsChecked="True" Margin="45,0,19,8" Content="עריכה" />
                                     <Button x:Name="BRparcelWhaigt"  Content="איפוס" Style="{StaticResource MaterialDesignFlatButton}" HorizontalAlignment="Left"  Grid.Column="1" Margin="40,0,0,0" Width="89" Click="BRparcelWhaigt_Click"  />
                                 </Grid>
-                                <ComboBox x:Name="CBparcelWhaigt" Style="{StaticResource MaterialDesignOutlinedComboBox}" IsEnabled="{Binding IsChecked, ElementName=OutlinedComboBoxEnabledCheckBox1}" materialDesign:HintAssist.Hint="סינון רשימת החבילות לפי משקל" Width="244" SelectionChanged="CBparcelWhaigt_SelectionChanged" />
+                                <ComboBox x:Name="CBparcelWhaigt" Style="{StaticResource MaterialDesignOutlinedComboBox}"  materialDesign:HintAssist.Hint="סינון רשימת החבילות לפי משקל" Width="244" SelectionChanged="CBparcelWhaigt_SelectionChanged" />
                             </StackPanel>
                             <StackPanel Grid.Column="1">
                                 <Grid>
@@ -265,10 +267,9 @@
                                         <ColumnDefinition />
                                         <ColumnDefinition />
                                     </Grid.ColumnDefinitions>
-                                    <CheckBox x:Name="CBchaeck2" IsChecked="True" Margin="47,0,0,8" Content="עריכה" />
                                     <Button x:Name="BRparcelStatus" Content="איפוס" Style="{StaticResource MaterialDesignFlatButton}" HorizontalAlignment="Left"  Grid.Column="1" Margin="59,0,0,0" Click="BRparcelStatus_Click"  />
                                 </Grid>
-                                <ComboBox x:Name="CBparcelStatus" Style="{StaticResource MaterialDesignOutlinedComboBox}" IsEnabled="{Binding IsChecked, ElementName=OutlinedComboBoxEnabledCheckBox2}" materialDesign:HintAssist.Hint="סינון רשימת החבילות לפי סטטוס" Width="244" SelectionChanged="CBparcelStatus_SelectionChanged" />
+                                <ComboBox x:Name="CBparcelStatus" Style="{StaticResource MaterialDesignOutlinedComboBox}" materialDesign:HintAssist.Hint="סינון רשימת החבילות לפי סטטוס" Width="244" SelectionChanged="CBparcelStatus_SelectionChanged" />
                             </StackPanel>
                             <StackPanel Grid.Column="2">
                                 <Grid>
@@ -276,10 +277,9 @@
                                         <ColumnDefinition />
                                         <ColumnDefinition />
                                     </Grid.ColumnDefinitions>
-                                    <CheckBox x:Name="CBchaeck3" IsChecked="True" Margin="45,0,19,8" Content="עריכה" />
                                     <Button x:Name="BRparcelprior"  Content="איפוס" Style="{StaticResource MaterialDesignFlatButton}" HorizontalAlignment="Left"  Grid.Column="1" Margin="52,0,0,0" Click="BRparcelprior_Click"  />
                                 </Grid>
-                                <ComboBox x:Name="CBparcelWprior" Style="{StaticResource MaterialDesignOutlinedComboBox}" IsEnabled="{Binding IsChecked, ElementName=OutlinedComboBoxEnabledCheckBox1}" materialDesign:HintAssist.Hint="סינון רשימת החבילות לפי עדיפות" Width="244" SelectionChanged="CBparcelWprior_SelectionChanged"  />
+                                <ComboBox x:Name="CBparcelWprior" Style="{StaticResource MaterialDesignOutlinedComboBox}"  materialDesign:HintAssist.Hint="סינון רשימת החבילות לפי עדיפות" Width="244" SelectionChanged="CBparcelWprior_SelectionChanged"  />
                             </StackPanel>
                         </Grid>
 

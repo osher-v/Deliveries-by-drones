@@ -4,8 +4,8 @@
 
 	<dl>xml</dl>
 	<dl-packages>
-		<xml namespace="DalXml" class="DalXml">DalXml</xml>
-    <!--<xml namespace="DalObject" class="DalObject">DalObject</xml>-->
+    <!--<xml namespace="DalXml" class="DalXml">DalXml</xml>-->
+    <xml namespace="DalObject" class="DalObject">DalObject</xml>
 	</dl-packages>
 	
 </config>

@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         ResizeMode="CanMinimize" 
-        Title="ParcelWindow" Height="720" Width="780">
+        Title="DroneWindow" Height="720" Width="780">
     <Grid x:Name="MainGrid">
         <!--this grid is for addition option-->
         <Grid x:Name="addDrone" Visibility="Hidden">
