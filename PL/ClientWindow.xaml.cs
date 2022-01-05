@@ -48,6 +48,11 @@ namespace PL
             // the combobox use it to show the parcel  ID
             CBDeliverdList.ItemsSource = AccessIbl.GetParcelList(x => x.CustomerReceiverName == customer.Name && x.Status == DeliveryStatus.PickedUp);
             CBDeliverdList.DisplayMemberPath = "Id";
+
+            // the combobox use it to show the parcel  ID
+            CBdeleteList.ItemsSource = AccessIbl.GetParcelList(x => x.CustomerSenderName == customer.Name && x.Status == DeliveryStatus.created);
+            CBdeleteList.DisplayMemberPath = "Id";
+            
         }
 
         private void CBSendToPickUp_Checked(object sender, RoutedEventArgs e)
@@ -203,6 +208,11 @@ namespace PL
         {
             ListView listView = new ListView(AccessIbl);
             new  ParcelWindow(AccessIbl, listView, customer, this).Show();
+        }
+
+        private void BRrestComboBoxDelete_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

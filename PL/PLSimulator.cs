@@ -9,7 +9,7 @@ namespace PL
 {
     class PLSimulator
     {
-        BackgroundWorker assinwork
+        BackgroundWorker assinwork;
 
     }
 }

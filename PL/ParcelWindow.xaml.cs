@@ -210,6 +210,8 @@ namespace PL
 
         public Parcel parcel;
 
+        public ClientWindow Client;
+
         public int indexSelected;
 
         /// <summary>
@@ -219,12 +221,12 @@ namespace PL
         /// <param name="_ListWindow"></param>
         /// <param name="parcelTo"></param>
         /// <param name="_indexParcel"></param>
-        public ParcelWindow(BlApi.IBL bl, ListView _ListWindow, ParcelToList parcelTo, int _indexParcel)
+        public ParcelWindow(BlApi.IBL bl, ListView _ListWindow, ParcelToList parcelTo, int _indexParcel, ClientWindow _client=null)
         {
             InitializeComponent();
-
             updateParcel.Visibility = Visibility.Visible;
 
+            Client = _client;
             AccessIbl = bl;
 
             ListWindow = _ListWindow;
@@ -233,19 +235,25 @@ namespace PL
 
             parcel = AccessIbl.GetParcel(parcelTo.Id);
             DataContext = parcel;
+            if (Client == null)
+            {
+                Breciver.Visibility = Visibility.Visible;
+                Bsender.Visibility = Visibility.Visible;
+            }
 
-            Breciver.Visibility = Visibility.Visible;
-            Bsender.Visibility = Visibility.Visible;
-
-            if (parcelTo.Status == DeliveryStatus.created)
+            if (parcelTo.Status == DeliveryStatus.created && Client == null)
             {
                 BDelete.Visibility = Visibility.Visible; //we can only delete if the package is not associated.
             }
 
-            if (parcelTo.Status == DeliveryStatus.Assigned || parcelTo.Status == DeliveryStatus.PickedUp)
+            if ((parcelTo.Status == DeliveryStatus.Assigned || parcelTo.Status == DeliveryStatus.PickedUp) && Client == null)
             {
                 Bdrone.Visibility = Visibility.Visible;         
-            };      
+            };
+
+          
+
+
         }
 
         /// <summary>

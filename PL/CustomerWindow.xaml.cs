@@ -354,7 +354,7 @@ namespace PL
             int IdOfParcel = ((ParcelAtCustomer)listOfCustomeSend.SelectedItem).Id;
             int indexParcelInObservable = ListWindow.ParcelToLists.IndexOf(ListWindow.ParcelToLists.First(x => x.Id == IdOfParcel));
             ParcelToList customer = AccessIbl.GetParcelList().First(x => x.Id == IdOfParcel);
-            new ParcelWindow(AccessIbl, ListWindow, customer, indexParcelInObservable).Show();
+            new ParcelWindow(AccessIbl, ListWindow, customer, indexParcelInObservable,clientWindow).Show();
 
             ClosingWindow = false; // עקרונית צריכים לעדכן את החלון הזה השאלה איך עושים
             Close();
@@ -370,7 +370,7 @@ namespace PL
             int IdOfParcel = ((ParcelAtCustomer)listOfCustomerReceive.SelectedItem).Id;
             int indexParcelInObservable = ListWindow.ParcelToLists.IndexOf(ListWindow.ParcelToLists.First(x => x.Id == IdOfParcel));
             ParcelToList customer = AccessIbl.GetParcelList().First(x => x.Id == IdOfParcel);
-            new ParcelWindow(AccessIbl, ListWindow, customer, indexParcelInObservable).Show();
+            new ParcelWindow(AccessIbl, ListWindow, customer, indexParcelInObservable,clientWindow).Show();
 
             ClosingWindow = false; // עקרונית צריכים לעדכן את החלון הזה השאלה איך עושים
             Close();
