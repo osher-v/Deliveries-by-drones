@@ -227,6 +227,7 @@ namespace PL
             updateParcel.Visibility = Visibility.Visible;
 
             Client = _client;
+
             AccessIbl = bl;
 
             ListWindow = _ListWindow;
