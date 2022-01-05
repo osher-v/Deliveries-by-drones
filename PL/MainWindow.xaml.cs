@@ -190,5 +190,37 @@ namespace PL
                 Blogin.IsEnabled = false;
             }
         }
+
+        private void PBadminID_KeyDown(object sender, KeyEventArgs e)
+        {
+            // take only the kyes we alowed 
+            if (e.Key < Key.D0 || e.Key > Key.D9)
+            {
+                if (e.Key < Key.NumPad0 || e.Key > Key.NumPad9) // we want keys from the num pud too
+                {
+                    e.Handled = true;
+                }
+                else
+                {
+                    e.Handled = false;
+                }
+            }
+        }
+
+        private void TBuserID_KeyDown(object sender, KeyEventArgs e)
+        {
+            // take only the kyes we alowed 
+            if (e.Key < Key.D0 || e.Key > Key.D9)
+            {
+                if (e.Key < Key.NumPad0 || e.Key > Key.NumPad9) // we want keys from the num pud too
+                {
+                    e.Handled = true;
+                }
+                else
+                {
+                    e.Handled = false;
+                }
+            }  
+        }
     }
 }

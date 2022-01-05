@@ -465,7 +465,7 @@ namespace PL
                     x.Prior == (Priorities)CBparcelWprior.SelectedIndex);
             }
         }
-        
+
         #region grouping
         /// <summary>
         /// grouping items by the settings we need 
@@ -474,18 +474,18 @@ namespace PL
         /// <param name="e"></param>
         private void grouping_Click(object sender, RoutedEventArgs e)
         {
-            // we orgnize the collaction by our settings (according to the enums in this case) by grouping them 
-            IEnumerable<IGrouping<DroneStatuses, DroneToList>> droneGroup = from drone in AccessIbl.GetDroneList() group drone by drone.Statuses;
-            List<DroneToList> droneList = new();
+            //// we orgnize the collaction by our settings (according to the enums in this case) by grouping them 
+            //IEnumerable<IGrouping<DroneStatuses, DroneToList>> droneGroup = from drone in AccessIbl.GetDroneList() group drone by drone.Statuses;
+            //List<DroneToList> droneList = new();
 
-            foreach (var group in droneGroup)
-            {
-                foreach (var drone in group)
-                {
-                    droneList.Add(drone);
-                }
-            }
-            listOfDrones.ItemsSource = droneList;
+            //foreach (var group in droneGroup)
+            //{
+            //    foreach (var drone in group)
+            //    {
+            //        droneList.Add(drone);
+            //    }
+            //}
+            //listOfDrones.ItemsSource = droneList;
 
             //from here is to set the xaml
             CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(listOfDrones.ItemsSource);
@@ -586,6 +586,7 @@ namespace PL
                 view.GroupDescriptions.Add(groupDescription);
             }
             #endregion
+
         }
     }
 }
