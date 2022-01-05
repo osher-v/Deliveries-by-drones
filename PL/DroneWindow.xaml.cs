@@ -561,5 +561,12 @@ namespace PL
             Close();
         }
         #endregion close
+
+        private void Bsimoltor_Click(object sender, RoutedEventArgs e)
+        {
+
+
+
+        }
     }
 }
