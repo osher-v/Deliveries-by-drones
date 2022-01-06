@@ -11,12 +11,12 @@ namespace BL
     /// take care of updating the data layer and in addition a BL object will maintain a skimmer list.
     /// </summary>
     partial class BL : BlApi.IBL
-    {   
+    {
         static BL() { }// static ctor to ensure instance init is done just before first usage
- 
-        static BL Instance { get; } = new BL();// The public Instance property to use
 
-        DalApi.IDal AccessIdal; //Create an object that we will use to access the data layer. 
+        internal static BL Instance { get; } = new BL();// The public Instance property to use
+
+        public DalApi.IDal AccessIdal; //Create an object that we will use to access the data layer. 
 
         public List<DroneToList> DronesBL; //Creating a list of dronse.
 
@@ -51,8 +51,12 @@ namespace BL
             List<DO.Drone> holdDalDrones = AccessIdal.GetDroneList().ToList();
             foreach (var item in holdDalDrones)
             {
-                DronesBL.Add(new DroneToList { Id = item.Id, Model = item.Model,
-                     MaxWeight = (WeightCategories)item.MaxWeight });
+                DronesBL.Add(new DroneToList
+                {
+                    Id = item.Id,
+                    Model = item.Model,
+                    MaxWeight = (WeightCategories)item.MaxWeight
+                });
             }
 
             //Convert a customer list from the data layer to a customer list of the BL layer.
@@ -60,17 +64,26 @@ namespace BL
             List<DO.Customer> holdDalCustomer = AccessIdal.GetCustomerList().ToList();
             foreach (var item in holdDalCustomer)
             {
-                CustomerBL.Add(new Customer { Id = item.Id, Name = item.Name, PhoneNumber = item.PhoneNumber,
-                    LocationOfCustomer = new Location() { longitude = item.Longitude, latitude = item.Latitude }});
+                CustomerBL.Add(new Customer
+                {
+                    Id = item.Id,
+                    Name = item.Name,
+                    PhoneNumber = item.PhoneNumber,
+                    LocationOfCustomer = new Location() { longitude = item.Longitude, latitude = item.Latitude }
+                });
             }
 
             //Converts a list of base stations from the data layer to a list of base stations of the BL layer.
             List<BaseStation> baseStationBL = new List<BaseStation>();
-            List <DO.BaseStation> holdDalBaseStation = AccessIdal.GetBaseStationList().ToList();
+            List<DO.BaseStation> holdDalBaseStation = AccessIdal.GetBaseStationList().ToList();
             foreach (var item in holdDalBaseStation)
-            {      
-                baseStationBL.Add(new BaseStation{Id = item.Id, Name = item.StationName,
-                    FreeChargeSlots = item.FreeChargeSlots,BaseStationLocation = new Location() { longitude = item.Longitude, latitude = item.Latitude },
+            {
+                baseStationBL.Add(new BaseStation
+                {
+                    Id = item.Id,
+                    Name = item.StationName,
+                    FreeChargeSlots = item.FreeChargeSlots,
+                    BaseStationLocation = new Location() { longitude = item.Longitude, latitude = item.Latitude },
                     DroneInChargsList = new List<DroneInCharg>()
                 });
             }
@@ -81,14 +94,14 @@ namespace BL
             //The loop will go through the dronesBL list and check if the drone is associated with the package
             //or if it does not makes a delivery. and will update its status, location and battery status.
             foreach (var item in DronesBL)
-            {            
+            {
                 int index = holdDalParcels.FindIndex(x => x.DroneId == item.Id && x.Delivered == null); //Finding the package linked to the drone.
 
                 if (index != -1) //If the drone is indeed associated with one of the Parcels in the list.
                 {
                     item.Statuses = DroneStatuses.busy; //Update drone status for shipping operation.
-                 
-                    Location locationOfsender = CustomerBL.Find(x => x.Id == holdDalParcels[index].SenderId).LocationOfCustomer; 
+
+                    Location locationOfsender = CustomerBL.Find(x => x.Id == holdDalParcels[index].SenderId).LocationOfCustomer;
                     Location locationOfReceiver = CustomerBL.Find(x => x.Id == holdDalParcels[index].TargetId).LocationOfCustomer;
 
                     //Distance between sender and receiver.
@@ -96,7 +109,7 @@ namespace BL
 
                     //Distance between the receiver and the nearest base station.
                     double DistanceBetweenReceiverAndNearestBaseStation = minDistanceBetweenBaseStationsAndLocation
-                        (baseStationBL, locationOfReceiver).Item2; 
+                        (baseStationBL, locationOfReceiver).Item2;
 
                     double electricityUse = DistanceBetweenReceiverAndNearestBaseStation * Free; //Power consumption from the destination to the nearest station.
 
@@ -110,14 +123,14 @@ namespace BL
                             electricityUse += distanceBetweenSenderAndReceiver * MediumWeightBearing;
                             break;
                         case WeightCategories.heavy:
-                            electricityUse += distanceBetweenSenderAndReceiver * CarriesHeavyWeight;           
+                            electricityUse += distanceBetweenSenderAndReceiver * CarriesHeavyWeight;
                             break;
                         default:
                             break;
                     }
 
                     if (holdDalParcels[index].PickedUp == null)//Check if the Parcel has already been PickedUped.
-                    {    
+                    {
                         item.CurrentLocation = minDistanceBetweenBaseStationsAndLocation(baseStationBL, locationOfsender).Item1;
 
                         //Need to add the electricity use between the drone position and the sender position
@@ -127,7 +140,7 @@ namespace BL
                     {
                         item.CurrentLocation = locationOfsender;
                     }
-    
+
                     // random number battery status between minimum charge to make the shipment and full charge.     
                     item.BatteryStatus = (float)((float)(random.NextDouble() * (100 - electricityUse)) + electricityUse);
 
@@ -149,11 +162,11 @@ namespace BL
                     else //item.Statuses == DroneStatuses.free
                     {
                         List<DO.Parcel> DeliveredAndSameDroneID = holdDalParcels.FindAll(x => x.DroneId == item.Id && x.Delivered != null);
-                        
+
                         if (DeliveredAndSameDroneID.Any())//if the List is not empty.
                         {
                             item.CurrentLocation = CustomerBL.Find(x => x.Id == DeliveredAndSameDroneID[random.Next(0, DeliveredAndSameDroneID.Count)].TargetId).LocationOfCustomer;
-                            double electricityUse = minDistanceBetweenBaseStationsAndLocation(baseStationBL, item.CurrentLocation).Item2 *Free;
+                            double electricityUse = minDistanceBetweenBaseStationsAndLocation(baseStationBL, item.CurrentLocation).Item2 * Free;
                             item.BatteryStatus = (float)((float)(random.NextDouble() * (100 - electricityUse)) + electricityUse);
                         }
                         else //if the List is empty.
@@ -163,7 +176,7 @@ namespace BL
                         }
                     }
                 }
-            }          
+            }
         }
 
 
@@ -174,7 +187,7 @@ namespace BL
         /// <param name="baseStationBL">baseStationBL List</param>
         /// <param name="location">location</param>
         /// <returns>The location of the base station closest to the location and the min distance</returns>
-        private (Location,double) minDistanceBetweenBaseStationsAndLocation(IEnumerable<BaseStation> baseStationBL, Location location)
+        private (Location, double) minDistanceBetweenBaseStationsAndLocation(IEnumerable<BaseStation> baseStationBL, Location location)
         {
             IEnumerable<double> listOfDistance = from item in baseStationBL
                                                  select GetDistance(location, item.BaseStationLocation);
@@ -204,7 +217,7 @@ namespace BL
             var d3 = Math.Pow(Math.Sin((d2 - d1) / 2.0), 2.0) + Math.Cos(d1) * Math.Cos(d2) * Math.Pow(Math.Sin(num2 / 2.0), 2.0); //https://iw.waldorf-am-see.org/588999-calculating-distance-between-two-latitude-QPAAIP
                                                                                                                                    //We calculate the distance according to a formula that
                                                                                                                                    // also takes into account the curvature of the earth
-            return ((double)(6376500.0 * (2.0 * Math.Atan2(Math.Sqrt(d3), Math.Sqrt(1.0 - d3)))))/1000;
+            return ((double)(6376500.0 * (2.0 * Math.Atan2(Math.Sqrt(d3), Math.Sqrt(1.0 - d3))))) / 1000;
         }
         #endregion Function of calculating distance between points
     }

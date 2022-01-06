@@ -201,6 +201,6 @@ namespace BlApi
         public void RemoveParcel(int ParcelId);
         #endregion Functions for remove options
 
-        public void sim(int IddRrone, Action action, Func<bool> func);
+        public void sim(int droneID, Action action, Func<bool> func);
     }
 }
