@@ -562,10 +562,23 @@ namespace PL
         }
         #endregion close
 
+        BackgroundWorker worker;
+
+        public void Help()
+        {
+            worker.ReportProgress(0);
+        }
+
+        public bool Help2()
+        {
+            return worker.CancellationPending;
+        }
+
         private void Bsimoltor_Click(object sender, RoutedEventArgs e)
         {
+            worker = new BackgroundWorker() { WorkerReportsProgress = true, WorkerSupportsCancellation = true };
 
-
+            worker.DoWork += (sender, e) => AccessIbl.sim(MyDrone.Id, Help, Help2);
 
         }
     }

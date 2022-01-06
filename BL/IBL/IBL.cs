@@ -200,5 +200,7 @@ namespace BlApi
         /// <returns></returns>
         public void RemoveParcel(int ParcelId);
         #endregion Functions for remove options
+
+        public void sim(int IddRrone, Action action, Func<bool> func);
     }
 }

@@ -14,9 +14,9 @@ namespace BL
     {   
         static BL() { }// static ctor to ensure instance init is done just before first usage
  
-        internal static BL Instance { get; } = new BL();// The public Instance property to use
+        static BL Instance { get; } = new BL();// The public Instance property to use
 
-        public DalApi.IDal AccessIdal; //Create an object that we will use to access the data layer. 
+        DalApi.IDal AccessIdal; //Create an object that we will use to access the data layer. 
 
         public List<DroneToList> DronesBL; //Creating a list of dronse.
 

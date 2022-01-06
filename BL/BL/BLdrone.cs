@@ -130,5 +130,10 @@ namespace BL
         {
             return DronesBL.FindAll(x => predicate == null ? true : predicate(x));
         }
+
+        public void sim(int IddRrone, Action action, Func<bool> func)
+        {
+
+        }
     }
 }
