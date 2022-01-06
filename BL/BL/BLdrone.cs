@@ -101,7 +101,14 @@ namespace BL
                 printDrone.Delivery.Receiver = new CustomerInDelivery() { Id = holdDalReciver.Id, Name = holdDalReciver.Name };
                 printDrone.Delivery.DestinationLocation = locationOfReciver;
 
-                printDrone.Delivery.TransportDistance = GetDistance(locationOfSender, locationOfReciver);
+                if (holdDalParcel.PickedUp == null)//Assigned
+                {
+                    printDrone.Delivery.TransportDistance = GetDistance(printDrone.CurrentLocation, locationOfSender);
+                }
+                else//PickedUp
+                {
+                    printDrone.Delivery.TransportDistance = GetDistance(locationOfSender, locationOfReciver);
+                }
 
                 printDrone.Delivery.Id = holdDalParcel.Id;
                 printDrone.Delivery.Prior = (Priorities)holdDalParcel.Priority;
@@ -123,6 +130,5 @@ namespace BL
         {
             return DronesBL.FindAll(x => predicate == null ? true : predicate(x));
         }
-
     }
 }

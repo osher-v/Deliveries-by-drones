@@ -100,7 +100,7 @@
                             <CheckBox x:Name="CBdeleteParcel" IsChecked="False" Margin="45,0,165,8" Content="לאישור מחיקה לחץ" Grid.ColumnSpan="2" Checked="CBdeleteParcel_Checked" />
                             <Button x:Name="BRrestComboBoxDelete"  Content="איפוס" Style="{StaticResource MaterialDesignFlatButton}" HorizontalAlignment="Left"  Grid.Column="1" Margin="52,0,0,0" Click="BRrestComboBoxDelete_Click"  />
                         </Grid>
-                        <ComboBox x:Name="CBdeleteList" Style="{StaticResource MaterialDesignOutlinedComboBox}"  materialDesign:HintAssist.Hint="בחירת חבילה לאיסוף" Width="244"   />
+                        <ComboBox x:Name="CBdeleteList" Style="{StaticResource MaterialDesignOutlinedComboBox}"  materialDesign:HintAssist.Hint="בחירת חבילה למחיקה" Width="244"   />
                     </StackPanel>
                     <StackPanel Grid.Row="1" Margin="0,42,0,23">
                         <Grid>

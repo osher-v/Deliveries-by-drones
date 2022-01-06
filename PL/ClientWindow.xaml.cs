@@ -51,11 +51,13 @@ namespace PL
             listOfCustomerReceive.ItemsSource = AccessIbl.GetCustomer(customer.Id).ParcelToTheCustomer;//Connecting the listview to the list of parcels that the client should receive.
 
             // the combobox use it to show the parcel  ID
-            CBPickUpList.ItemsSource = AccessIbl.GetParcelList(x => x.CustomerSenderName == customer.Name && x.Status == DeliveryStatus.Assigned);
+            CBPickUpList.ItemsSource = AccessIbl.GetParcelList(x => x.Status == DeliveryStatus.Assigned &&
+                      AccessIbl.GetCustomer(customer.Id).ParcelFromTheCustomer.ToList().Exists(item => item.Id == x.Id));
             CBPickUpList.DisplayMemberPath = "Id";
             
             // the combobox use it to show the parcel  ID
-            CBDeliverdList.ItemsSource = AccessIbl.GetParcelList(x => x.CustomerReceiverName == customer.Name && x.Status == DeliveryStatus.PickedUp);
+            CBDeliverdList.ItemsSource = AccessIbl.GetParcelList(x => x.Status == DeliveryStatus.PickedUp &&
+                      AccessIbl.GetCustomer(customer.Id).ParcelToTheCustomer.ToList().Exists(item => item.Id == x.Id));
             CBDeliverdList.DisplayMemberPath = "Id";
 
             //the combobox use it to show the parcel  ID ParcelFromTheCustomer
@@ -96,8 +98,18 @@ namespace PL
         {
             if (CBdeleteList.SelectedItem != null)
             {
-                int id = ((ParcelToList)CBdeleteList.SelectedItem).Id;
-                deleteParcel(id);
+                MessageBoxResult result = MessageBox.Show("האם אתה בטוח שאתה רוצה לבצע מחיקה", "מצב מחיקה", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                switch (result)
+                {
+                    case MessageBoxResult.Yes:
+                        deleteParcel(((ParcelToList)CBdeleteList.SelectedItem).Id);
+                        break;
+                    case MessageBoxResult.No: //in case that the user dont want to delete he have the option to abort withot any change 
+                        CBdeleteParcel.IsChecked = false;
+                        break;
+                    default:
+                        break;
+                }      
             }
             else
             {
@@ -108,22 +120,19 @@ namespace PL
 
         private void deleteParcel(int Id)
         {
-            IsEnabled = false;
+            //IsEnabled = false;
             AccessIbl.RemoveParcel(Id);
-            MessageBoxResult result = MessageBox.Show("The operation was successful", "info", MessageBoxButton.OK, MessageBoxImage.Information);
+            MessageBoxResult result = MessageBox.Show("הפעולה הצליחה", "מידע", MessageBoxButton.OK, MessageBoxImage.Information);
             switch (result)
             {
                 case MessageBoxResult.OK:
-                    IsEnabled = true;
+                    //IsEnabled = true;
                     CBdeleteParcel.IsChecked = false;
 
                     // the combobox use it to show the parcel  ID
                     CBdeleteList.ItemsSource = AccessIbl.GetParcelList(x => x.Status == DeliveryStatus.created &&
                        AccessIbl.GetCustomer(customer.Id).ParcelFromTheCustomer.ToList().Exists(item => item.Id == x.Id));
-                    CBdeleteList.DisplayMemberPath = "Id";
-
-                    //customer = AccessIbl.GetCustomer(customerId);
-                    //DataContext = customer;
+                    CBdeleteList.DisplayMemberPath = "Id";                  
 
                     listOfCustomeSend.ItemsSource = AccessIbl.GetCustomer(customer.Id).ParcelFromTheCustomer;
                     break;

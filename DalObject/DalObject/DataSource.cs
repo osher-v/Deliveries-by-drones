@@ -49,7 +49,7 @@ namespace DalObject
             // becuse its just 2 and we want the landmarks of our homes.
             BaseStationsList.Add(new BaseStation {
                 Id = MyRandom.Next(100000000, 999999999),
-                StationName = "BnyBrak",
+                StationName = "בני ברק",
                 FreeChargeSlots = MyRandom.Next(5, 10),
                 Longitude = 32.086456,
                 Latitude = 34.844476
@@ -57,7 +57,7 @@ namespace DalObject
 
             BaseStationsList.Add (new BaseStation {
                 Id = MyRandom.Next(100000000, 999999999),
-                StationName = "Holon",
+                StationName = "חולון",
                 FreeChargeSlots = MyRandom.Next(5, 10),
                 Longitude = 32.021679,
                 Latitude = 34.789990
@@ -80,8 +80,8 @@ namespace DalObject
 
             #region init Customer
             //initialization of 10 Customers with different and MyRandom values.
-            string[] CustomersNameArr = new string[10]{"James","Robert","John","Michael","William",
-                   "David","Richard","Thomas","Mark","Donald"};
+            string[] CustomersNameArr = new string[10]{"אושר","אבי","אבישי","דורוןאיידי","חיים מרדכי",
+                   "יונתן","מענדי חמין","שמעון","יוסף","תומר"};
             for (int i = 0; i < 10; i++)
             {
                 CustomersList.Add(new Customer{

@@ -21,7 +21,7 @@ namespace BL
             }
 
             try //Check if the customers exist in the system.
-            {         
+            {
                 AccessIdal.GetCustomer(newParcel.Receiver.Id);
             }
             catch (DO.NonExistentObjectException)
@@ -58,7 +58,7 @@ namespace BL
             IEnumerable<DO.Parcel> tempParcels = from item in AccessIdal.GetParcelList(x => x.DroneId == 0 &&
                                                       myDrone.MaxWeight >= (WeightCategories)x.Weight && possibleDistance(x, myDrone))
                                                  orderby item.Priority descending, item.Weight descending,
-                                                         GetDistance(GetCustomer(item.SenderId).LocationOfCustomer, myDrone.CurrentLocation)        
+                                                         GetDistance(GetCustomer(item.SenderId).LocationOfCustomer, myDrone.CurrentLocation)
                                                  select item;
 
             if (!tempParcels.Any())
@@ -79,47 +79,46 @@ namespace BL
         /// <param name="myDrone">drone object</param>
         /// <returns></returns>
         private bool possibleDistance(DO.Parcel parcel, DroneToList myDrone)
+        {
+            double electricityUse = GetDistance(myDrone.CurrentLocation, GetCustomer(parcel.SenderId).LocationOfCustomer) * Free;
+            double distanceSenderToDestination = GetDistance(GetCustomer(parcel.SenderId).LocationOfCustomer, GetCustomer(parcel.TargetId).LocationOfCustomer);
+            switch ((WeightCategories)parcel.Weight)
             {
-                double electricityUse = GetDistance(myDrone.CurrentLocation, GetCustomer(parcel.SenderId).LocationOfCustomer) * Free;
-                double distanceSenderToDestination = GetDistance(GetCustomer(parcel.SenderId).LocationOfCustomer, GetCustomer(parcel.TargetId).LocationOfCustomer);
-                switch ((WeightCategories)parcel.Weight)
-                {
-                    case WeightCategories.light:
-                        electricityUse += distanceSenderToDestination * LightWeightCarrier;
-                        break;
-                    case WeightCategories.medium:
-                        electricityUse += distanceSenderToDestination * MediumWeightBearing;
-                        break;
-                    case WeightCategories.heavy:
-                        electricityUse += distanceSenderToDestination * CarriesHeavyWeight;
-                        break;
-                    default:
-                        break;
-                }
+                case WeightCategories.light:
+                    electricityUse += distanceSenderToDestination * LightWeightCarrier;
+                    break;
+                case WeightCategories.medium:
+                    electricityUse += distanceSenderToDestination * MediumWeightBearing;
+                    break;
+                case WeightCategories.heavy:
+                    electricityUse += distanceSenderToDestination * CarriesHeavyWeight;
+                    break;
+                default:
+                    break;
+            }
 
-                if (myDrone.BatteryStatus - electricityUse < 0)//if its lowest than zero no need to continue
-                    return false;
+            if (myDrone.BatteryStatus - electricityUse < 0)//if its lowest than zero no need to continue
+                return false;
 
             IEnumerable<DO.BaseStation> holdDalBaseStation = AccessIdal.GetBaseStationList();
             IEnumerable<BaseStation> baseStationBL = from item in holdDalBaseStation
-                                                            select new BaseStation()
-                                                            {
-                                                                Id = item.Id,
-                                                                Name = item.StationName,
-                                                                FreeChargeSlots = item.FreeChargeSlots,
-                                                                BaseStationLocation = new Location()
-                                                                {
-                                                                    longitude = item.Longitude,
-                                                                    latitude = item.Latitude
-                                                                }
-                                                            };
-                electricityUse += minDistanceBetweenBaseStationsAndLocation(baseStationBL, GetCustomer(parcel.TargetId).LocationOfCustomer).Item2 * Free;
+                                                     select new BaseStation()
+                                                     {
+                                                         Id = item.Id,
+                                                         Name = item.StationName,
+                                                         FreeChargeSlots = item.FreeChargeSlots,
+                                                         BaseStationLocation = new Location()
+                                                         {
+                                                             longitude = item.Longitude,
+                                                             latitude = item.Latitude
+                                                         }
+                                                     };
+            electricityUse += minDistanceBetweenBaseStationsAndLocation(baseStationBL, GetCustomer(parcel.TargetId).LocationOfCustomer).Item2 * Free;
 
-                if (myDrone.BatteryStatus - electricityUse < 0)
-                    return false;
-
-                return true;
-            }
+            if (myDrone.BatteryStatus - electricityUse < 0)
+                return false;
+            return true;
+        }
 
         public void PickedUpPackageByTheDrone(int droneId)
         {
@@ -141,7 +140,7 @@ namespace BL
 
             AccessIdal.PickedUpPackageByTheDrone(parcelIDal.Id);
         }
-    
+
         public void DeliveryPackageToTheCustomer(int droneId)
         {
             DroneToList drone = DronesBL.Find(x => x.Id == droneId);
@@ -173,11 +172,11 @@ namespace BL
                 drone.CurrentLocation = locationOfTarget;
                 drone.Statuses = DroneStatuses.free;
                 drone.NumberOfLinkedParcel = 0; //importent.
-                AccessIdal.DeliveryPackageToTheCustomer(parcelIDal.Id);    
+                AccessIdal.DeliveryPackageToTheCustomer(parcelIDal.Id);
             }
-            else if(parcelIDal.PickedUp == null)
+            else if (parcelIDal.PickedUp == null)
                 throw new DeliveryCannotBeMade("Error: parcel not yet collected");
-            else if(parcelIDal.Delivered != null)
+            else if (parcelIDal.Delivered != null)
                 throw new DeliveryCannotBeMade("Error: The parcel has already been delivered");
         }
 
@@ -225,28 +224,48 @@ namespace BL
 
         public IEnumerable<ParcelToList> GetParcelList(Predicate<ParcelToList> predicate = null)
         {
-            List<ParcelToList> parcels = new List<ParcelToList>();
-            List<DO.Parcel> holdDalParcels = AccessIdal.GetParcelList().ToList();
+            IEnumerable<ParcelToList> parcels = from item in AccessIdal.GetParcelList()
+                                                select new ParcelToList()
+                                                {
+                                                    Id = item.Id,
+                                                    Weight = (WeightCategories)item.Weight,
+                                                    Prior = (Priorities)item.Priority,
+                                                    CustomerSenderName = AccessIdal.GetCustomer(item.SenderId).Name,
+                                                    CustomerReceiverName = AccessIdal.GetCustomer(item.TargetId).Name,
+                                                    Status = item.Delivered != null ? DeliveryStatus.Delivered : item.PickedUp != null ?
+                                                    DeliveryStatus.PickedUp : item.Assigned != null ? DeliveryStatus.Assigned : DeliveryStatus.created
+                                                };
 
-            foreach (var item in holdDalParcels)
-            {
-                DeliveryStatus currentStatus;
-                if (item.Delivered != null)
-                    currentStatus = DeliveryStatus.Delivered;
-                else if (item.PickedUp != null)
-                    currentStatus = DeliveryStatus.PickedUp;
-                else if (item.Assigned != null)
-                    currentStatus = DeliveryStatus.Assigned;
-                else
-                    currentStatus = DeliveryStatus.created;
+            return parcels.Where(x => predicate == null ? true : predicate(x));
 
-                parcels.Add(new ParcelToList {Id = item.Id, Weight = (WeightCategories)item.Weight,
-                    Prior = (Priorities)item.Priority, CustomerSenderName = AccessIdal.GetCustomer(item.SenderId).Name,
-                    CustomerReceiverName = AccessIdal.GetCustomer(item.TargetId).Name, Status = currentStatus
-                });
-            }
 
-            return parcels.FindAll(x => predicate == null ? true : predicate(x));
+            //List<ParcelToList> parcels = new List<ParcelToList>();
+            //List<DO.Parcel> holdDalParcels = AccessIdal.GetParcelList().ToList();
+
+            //foreach (var item in holdDalParcels)
+            //{
+            //    DeliveryStatus currentStatus;
+            //    if (item.Delivered != null)
+            //        currentStatus = DeliveryStatus.Delivered;
+            //    else if (item.PickedUp != null)
+            //        currentStatus = DeliveryStatus.PickedUp;
+            //    else if (item.Assigned != null)
+            //        currentStatus = DeliveryStatus.Assigned;
+            //    else
+            //        currentStatus = DeliveryStatus.created;
+
+            //    parcels.Add(new ParcelToList
+            //    {
+            //        Id = item.Id,
+            //        Weight = (WeightCategories)item.Weight,
+            //        Prior = (Priorities)item.Priority,
+            //        CustomerSenderName = AccessIdal.GetCustomer(item.SenderId).Name,
+            //        CustomerReceiverName = AccessIdal.GetCustomer(item.TargetId).Name,
+            //        Status = currentStatus
+            //    });
+            //}
+
+            //return parcels.Where(x => predicate == null ? true : predicate(x));
         }
 
         public void RemoveParcel(int ParcelId)//להוסיף חריגה אם החבילה כבר משויכת

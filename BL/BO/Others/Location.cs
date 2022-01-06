@@ -22,7 +22,6 @@ namespace BO
             string convertLatitude = fanctions.ConvertDecimalDegreesToSexagesimal(latitude, (DO.LongitudeAndLatitude)2);
             return string.Format("{0,-8} \t {1,-8} ", convertLongitude, convertLatitude);
         }
-
     }
 }
 

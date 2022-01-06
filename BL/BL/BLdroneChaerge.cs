@@ -8,11 +8,11 @@ using BO;
 namespace BL
 {
     partial class BL
-    {    
+    {
         public void SendingDroneforCharging(int droneId)
         {
             DroneToList drone = DronesBL.Find(x => x.Id == droneId);
-            if(drone == default)
+            if (drone == default)
                 throw new NonExistentObjectException();
 
             if (drone.Statuses != DroneStatuses.free)
@@ -20,20 +20,20 @@ namespace BL
 
             IEnumerable<DO.BaseStation> dalListStations = AccessIdal.GetBaseStationList(x => x.FreeChargeSlots > 0);
             IEnumerable<BaseStation> BLbaseStations = from item in dalListStations
-                                                            select new BaseStation()
-                                                            {
-                                                                Id = item.Id,
-                                                                Name = item.StationName,
-                                                                FreeChargeSlots = item.FreeChargeSlots,
-                                                                BaseStationLocation = new Location() { longitude = item.Longitude, latitude = item.Latitude }
-                                                            };
+                                                      select new BaseStation()
+                                                      {
+                                                          Id = item.Id,
+                                                          Name = item.StationName,
+                                                          FreeChargeSlots = item.FreeChargeSlots,
+                                                          BaseStationLocation = new Location() { longitude = item.Longitude, latitude = item.Latitude }
+                                                      };
 
             if (!BLbaseStations.Any()) //if the List is empty and is no Free charge slots in the all Base station.
                 throw new TheDroneCanNotBeSentForCharging("Error, there are no free charging stations");
 
             Location locationOfTheNearestStation = minDistanceBetweenBaseStationsAndLocation(BLbaseStations, drone.CurrentLocation).Item1;
             double minDistence = minDistanceBetweenBaseStationsAndLocation(BLbaseStations, drone.CurrentLocation).Item2;
-            
+
             if (drone.BatteryStatus - minDistence * Free < 0)
             {
                 throw new TheDroneCanNotBeSentForCharging("Error, to the drone does not have enough battery to go to recharge at the nearest available station");
@@ -43,19 +43,6 @@ namespace BL
             drone.BatteryStatus -= minDistence * Free;
             drone.CurrentLocation = locationOfTheNearestStation;
             drone.Statuses = DroneStatuses.inMaintenance;
-
-            //foreach (var item in BLbaseStations)
-            //{
-            //    if (item.BaseStationLocation.longitude == locationOfTheNearestStation.longitude &&
-            //        item.BaseStationLocation.latitude == locationOfTheNearestStation.latitude)
-            //    {   
-            //        AccessIdal.UpdateMinusChargeSlots(item.Id);
-            //        AccessIdal.SendingDroneforChargingAtBaseStation(item.Id, drone.Id);
-            //    }
-            //}
-
-            //AccessIdal.UpdateMinusChargeSlots(BLbaseStations.First(x => x.BaseStationLocation == locationOfTheNearestStation).Id);
-            //AccessIdal.SendingDroneforChargingAtBaseStation(BLbaseStations.First(x => x.BaseStationLocation == locationOfTheNearestStation).Id, drone.Id);
 
             AccessIdal.UpdateMinusChargeSlots(BLbaseStations.First(item => item.BaseStationLocation.longitude == locationOfTheNearestStation.longitude &&
                     item.BaseStationLocation.latitude == locationOfTheNearestStation.latitude).Id);
@@ -73,7 +60,7 @@ namespace BL
             {
                 throw new OnlyMaintenanceDroneWillBeAbleToBeReleasedFromCharging();
             }
-    
+
             TimeSpan interval = DateTime.Now - AccessIdal.GetBaseCharge(droneId).StartChargeTime;
 
             double horsnInCahrge = interval.Hours + (((double)interval.Minutes) / 60) + (((double)interval.Seconds) / 3600);
@@ -92,13 +79,13 @@ namespace BL
         {
             try
             {
-               DO.DroneCharge BaseCharge = AccessIdal.GetBaseCharge(droneID);
+                DO.DroneCharge BaseCharge = AccessIdal.GetBaseCharge(droneID);
                 return BaseCharge.StationId;
             }
-            catch(DO.NonExistentObjectException)
+            catch (DO.NonExistentObjectException)
             {
                 throw new NonExistentObjectException();
-            }         
+            }
         }
     }
 }
