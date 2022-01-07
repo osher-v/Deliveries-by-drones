@@ -18,12 +18,12 @@ using System.Windows.Shapes;
 namespace PL
 {
     /// <summary>
-    /// Interaction logic for ListView.xaml
+    /// Interaction logic for ListView.xaml.
+    /// This window covers a Lists of all objects defined in this project.
     /// </summary>
     public partial class ListView : Window
     {
-        //Access object to the BL class
-        public BlApi.IBL AccessIbl; // = BlApi.BlFactory.GetBL();
+        public BlApi.IBL AccessIbl; //Access object to the BL class
 
         /// <summary> crate a observabs list of type IBL.BO.object (to see changes in live) </summary>
         public ObservableCollection<BO.DroneToList> DroneToLists;
@@ -166,8 +166,6 @@ namespace PL
         /// </summary>
         public void StatusDroneSelectorChanged()
         {
-
-
             if (CBWeightSelctor.SelectedItem == null && CBStatusSelector.SelectedItem == null)
             {
                 listOfDrones.ItemsSource = DroneToLists.ToList();

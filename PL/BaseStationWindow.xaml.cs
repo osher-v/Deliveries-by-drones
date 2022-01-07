@@ -18,7 +18,8 @@ using System.Windows.Shapes;
 namespace PL
 {
     /// <summary>
-    /// Interaction logic for BaseStationWindow.xaml
+    /// Interaction logic for BaseStationWindow.xaml.
+    /// This window covers a baseStation interface.
     /// </summary>
     public partial class BaseStationWindow : Window
     {

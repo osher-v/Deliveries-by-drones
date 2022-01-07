@@ -18,7 +18,8 @@ using System.Windows.Shapes;
 namespace PL
 {
     /// <summary>
-    /// Interaction logic for CustomerWindow.xaml
+    /// Interaction logic for CustomerWindow.xaml.
+    /// This window covers a customer interface.
     /// </summary>
     public partial class CustomerWindow : Window
     {

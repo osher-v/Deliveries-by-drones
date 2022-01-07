@@ -18,7 +18,8 @@ using System.Windows.Shapes;
 namespace PL
 {
     /// <summary>
-    /// Interaction logic for ParcelWindow.xaml
+    /// Interaction logic for ParcelWindow.xaml.
+    /// This window covers a parcel interface.
     /// </summary>
     public partial class ParcelWindow : Window
     {

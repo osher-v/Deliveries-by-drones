@@ -21,6 +21,7 @@ namespace BL
                 Longitude = newbaseStation.BaseStationLocation.longitude,
                 Latitude = newbaseStation.BaseStationLocation.latitude
             };
+
             try    // throw if the id is exsist
             {
                 AccessIdal.AddStation(newStation);
@@ -34,9 +35,9 @@ namespace BL
         public void UpdateBaseStaison(int baseStationId, string baseName, string chargeslots)
         {
             DO.BaseStation newbase = new DO.BaseStation();
-            try
+            try //Check if there is such a station in the database.
             {
-                newbase = AccessIdal.GetBaseStation(baseStationId);                
+                newbase = AccessIdal.GetBaseStation(baseStationId);
             }
             catch (DO.NonExistentObjectException)
             {
@@ -50,8 +51,10 @@ namespace BL
 
             if (chargeslots != "") ////if it is not empty.
             {
-                int totalQuantityChargeSlots;
-                int.TryParse(chargeslots, out  totalQuantityChargeSlots);
+                //int totalQuantityChargeSlots;
+
+                int.TryParse(chargeslots, out int totalQuantityChargeSlots);
+
                 int numOfBuzeChargeslots = AccessIdal.GetBaseChargeList(x => x.StationId == baseStationId).Count();
 
                 //chaeck if More Drone In Charging Than The Proposed Charging Stations
@@ -61,7 +64,8 @@ namespace BL
                 }
                 newbase.FreeChargeSlots = totalQuantityChargeSlots - numOfBuzeChargeslots; //else
             }
-            AccessIdal.UpdateBaseStation(newbase);
+
+            AccessIdal.UpdateBaseStation(newbase); //Update in the database.
         }
 
         public BaseStation GetBaseStation(int idForDisplayObject)
@@ -77,22 +81,28 @@ namespace BL
                 throw new NonExistentObjectException("BaseStation");
             }
 
-            Location dalBaseLocation = new Location() { longitude = printBase.Longitude, latitude=printBase.Latitude };
+            //Location dalBaseLocation = new Location() { longitude = printBase.Longitude, latitude=printBase.Latitude };
 
-            BaseStation blBase = new BaseStation() { Id = printBase.Id, Name=printBase.StationName, BaseStationLocation = dalBaseLocation,
-                FreeChargeSlots=printBase.FreeChargeSlots};
+            BaseStation blBase = new BaseStation()
+            {
+                Id = printBase.Id,
+                Name = printBase.StationName,
+                BaseStationLocation
+                = new Location() { longitude = printBase.Longitude, latitude = printBase.Latitude },
+                FreeChargeSlots = printBase.FreeChargeSlots
+            };
 
-            IEnumerable<DO.DroneCharge> droneInCharge = AccessIdal.GetBaseChargeList(i => i.StationId == idForDisplayObject);
+            //IEnumerable<DO.DroneCharge> droneInCharge = AccessIdal.GetBaseChargeList(x => x.StationId == idForDisplayObject);
 
-            blBase.DroneInChargsList = from item in droneInCharge
+            blBase.DroneInChargsList = from item in AccessIdal.GetBaseChargeList(x => x.StationId == idForDisplayObject)
                                        select new DroneInCharg { Id = item.DroneId, BatteryStatus = DronesBL.Find(x => x.Id == item.DroneId).BatteryStatus };
             return blBase;
         }
 
         public IEnumerable<BaseStationsToList> GetBaseStationList(Predicate<BaseStationsToList> predicate = null)
         {
-            IEnumerable<DO.BaseStation> holdDalBaseStation = AccessIdal.GetBaseStationList();
-            IEnumerable<BaseStationsToList> baseStationBL = from item in holdDalBaseStation
+            //IEnumerable<DO.BaseStation> holdDalBaseStation = AccessIdal.GetBaseStationList();
+            IEnumerable<BaseStationsToList> baseStationBL = from item in AccessIdal.GetBaseStationList()
                                                             select new BaseStationsToList()
                                                             {
                                                                 Id = item.Id,
@@ -102,6 +112,5 @@ namespace BL
                                                             };
             return baseStationBL.Where(x => predicate == null ? true : predicate(x));
         }
- 
     }
 }

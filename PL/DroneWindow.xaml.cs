@@ -20,7 +20,8 @@ using System.ComponentModel.DataAnnotations;
 namespace PL
 {
     /// <summary>
-    /// Interaction logic for DroneWindow.xaml
+    /// Interaction logic for DroneWindow.xaml.
+    /// This window covers a drone interface.
     /// </summary>
     public partial class DroneWindow : Window
     {
