@@ -8,13 +8,13 @@ namespace BL
 {
     /// <summary>
     /// These partial classes will implement the IBL interface and
-    /// take care of updating the data layer and in addition a BL object will maintain a skimmer list.
+    /// take care of updating the data layer, and in addition a BL object will maintain a drone list.
     /// </summary>
     partial class BL : BlApi.IBL
     {
         static BL() { }// static ctor to ensure instance init is done just before first usage
 
-        internal static BL Instance { get; } = new BL();// The public Instance property to use
+        internal static BL Instance { get; } = new BL();// The internal Instance property to use
 
         public DalApi.IDal AccessIdal; //Create an object that we will use to access the data layer. 
 
@@ -47,17 +47,26 @@ namespace BL
             DroneLoadingRate = arr[4];
 
             //Conversion of a drone list from the data layer to a Drone list of the BL layer.
-            DronesBL = new List<DroneToList>();
-            List<DO.Drone> holdDalDrones = AccessIdal.GetDroneList().ToList();
-            foreach (var item in holdDalDrones)
-            {
-                DronesBL.Add(new DroneToList
-                {
-                    Id = item.Id,
-                    Model = item.Model,
-                    MaxWeight = (WeightCategories)item.MaxWeight
-                });
-            }
+            DronesBL = (from item in AccessIdal.GetDroneList()
+                        select new DroneToList()
+                        {
+                            Id = item.Id,
+                            Model = item.Model,
+                            MaxWeight = (WeightCategories)item.MaxWeight
+                        }).ToList();
+
+            ////Conversion of a drone list from the data layer to a Drone list of the BL layer.
+            //DronesBL = new List<DroneToList>();
+            //List<DO.Drone> holdDalDrones = AccessIdal.GetDroneList().ToList();
+            //foreach (var item in holdDalDrones)
+            //{
+            //    DronesBL.Add(new DroneToList()
+            //    {
+            //        Id = item.Id,
+            //        Model = item.Model,
+            //        MaxWeight = (WeightCategories)item.MaxWeight
+            //    });
+            //}
 
             //Convert a customer list from the data layer to a customer list of the BL layer.
             List<Customer> CustomerBL = new List<Customer>();
@@ -89,7 +98,7 @@ namespace BL
             }
 
             //bring of the list of package from the data layer.
-            List<DO.Parcel> holdDalParcels = AccessIdal.GetParcelList(i => i.DroneId != 0).ToList();
+            List<DO.Parcel> holdDalParcels = AccessIdal.GetParcelList(i => i.DroneId != 0).ToList();//עשינו רשימה כי היינו חייבים בהמשך להשתמש באינדקס
 
             //The loop will go through the dronesBL list and check if the drone is associated with the package
             //or if it does not makes a delivery. and will update its status, location and battery status.
@@ -99,7 +108,7 @@ namespace BL
 
                 if (index != -1) //If the drone is indeed associated with one of the Parcels in the list.
                 {
-                    item.Statuses = DroneStatuses.busy; //Update drone status for shipping operation.
+                    item.Statuses = DroneStatuses.busy; //Placement drone status for shipping operation.
 
                     Location locationOfsender = CustomerBL.Find(x => x.Id == holdDalParcels[index].SenderId).LocationOfCustomer;
                     Location locationOfReceiver = CustomerBL.Find(x => x.Id == holdDalParcels[index].TargetId).LocationOfCustomer;
@@ -129,9 +138,10 @@ namespace BL
                             break;
                     }
 
+                    //Placement a location of drone on the map.
                     if (holdDalParcels[index].PickedUp == null)//Check if the Parcel has already been PickedUped.
                     {
-                        item.CurrentLocation = minDistanceBetweenBaseStationsAndLocation(baseStationBL, locationOfsender).Item1;
+                        item.CurrentLocation = minDistanceBetweenBaseStationsAndLocation(baseStationBL, locationOfsender).Item1; 
 
                         //Need to add the electricity use between the drone position and the sender position
                         electricityUse += GetDistance(item.CurrentLocation, locationOfsender) * Free; //
@@ -141,10 +151,10 @@ namespace BL
                         item.CurrentLocation = locationOfsender;
                     }
 
-                    // random number battery status between minimum charge to make the shipment and full charge.     
+                    //random number battery status between minimum charge to make the shipment and full charge.     
                     item.BatteryStatus = (float)((float)(random.NextDouble() * (100 - electricityUse)) + electricityUse);
 
-                    item.NumberOfLinkedParcel = holdDalParcels[index].Id; //Update field in BL drone.
+                    item.NumberOfLinkedParcel = holdDalParcels[index].Id; //Placement field in BL drone.
                 }
                 else //If the drone is not associated with one of the parcels on the list and is actually available and does not ship.
                 {
