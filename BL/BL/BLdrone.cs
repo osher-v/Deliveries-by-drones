@@ -133,7 +133,7 @@ namespace BL
 
         public void sim(int droneID, Action action, Func<bool> func)
         {
-            new Simulator(BlApi.BlFactory.GetBL(), droneID, action, func);
+            new Simulator(this, droneID, action, func);
         }
     }
 }
