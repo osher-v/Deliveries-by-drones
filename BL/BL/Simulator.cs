@@ -25,8 +25,46 @@ namespace BL
             bl = _bl;
             var dal = bl;
             //area for seting puse time
+            Drone drone = bl.GetDrone(droneID);
+            while (true)
+            {
+
+                switch (drone.Statuses)
+                {
+
+                    case DroneStatuses.inMaintenance:
+                        if(drone.BatteryStatus == 100)
+                        {
+                            bl.ReleaseDroneFromCharging(drone.Id);
+                        }
+                        else
+                        {
+                            // TODO update battery status somehow
+                        }
+                        break;
+                    case DroneStatuses.free:
+                        break;
+                            
 
 
+
+
+
+
+
+
+
+
+                    default:
+                        break;
+
+                }
+
+
+
+
+
+            }
 
 
         }
