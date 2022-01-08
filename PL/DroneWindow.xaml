@@ -43,7 +43,7 @@
         </Grid>
 
         <!--this grid is for update option-->
-        <Grid x:Name="updateDrone" Visibility="Visible">
+        <Grid x:Name="updateDrone" Visibility="Hidden">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
@@ -80,7 +80,7 @@
                     <Grid>
                         <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Height="20" Width="158" TextAlignment="Center" FontWeight="Bold"><Run FlowDirection="RightToLeft" Language="he-il" Text="מצב סוללה"/></TextBlock>
                         <materialDesign:PackIcon Kind="BatteryCharging10" Margin="16,25,0,0" Height="126" Width="152" />
-                        <ProgressBar Value="{Binding Path=BatteryStatus}" Maximum="100" HorizontalAlignment="Left" Height="41" Margin="39,68,0,0" VerticalAlignment="Top" Width="64" BorderBrush="{x:Null}" FontWeight="Normal" RenderTransformOrigin="0.5,0.5" Background="{x:Null}">
+                        <ProgressBar x:Name="PBbatr" Value="{Binding Path=BatteryStatus}" Maximum="100" HorizontalAlignment="Left" Height="42" Margin="39,68,0,0" VerticalAlignment="Top" Width="64" BorderBrush="{x:Null}" FontWeight="Normal" RenderTransformOrigin="0.5,0.5" Background="{x:Null}" Foreground="#FF30F027">
                             <ProgressBar.RenderTransform>
                                 <TransformGroup>
                                     <ScaleTransform/>
@@ -89,12 +89,6 @@
                                     <TranslateTransform/>
                                 </TransformGroup>
                             </ProgressBar.RenderTransform>
-                            <ProgressBar.Foreground>
-                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                    <GradientStop Color="White" Offset="0.037"/>
-                                    <GradientStop Color="#FF36F160" Offset="0.502"/>
-                                </LinearGradientBrush>
-                            </ProgressBar.Foreground>
                         </ProgressBar>
                         <TextBlock x:Name="TBBatrryStatuses" HorizontalAlignment="Left" Margin="56,78,0,0" Text="{Binding BatteryStatus, StringFormat=\{0:#0\}%}" TextWrapping="Wrap" VerticalAlignment="Top" Width="36"   TextAlignment="Left" FontWeight="Bold" Background="{x:Null}" Foreground="#FF030104" Height="20"/>
                     </Grid>
@@ -115,8 +109,7 @@
                 </materialDesign:Card>
             </Grid>
             <Button x:Name="BModalUpdate" Grid.Row="6" Grid.ColumnSpan="2" Style="{StaticResource MaterialDesignRaisedButton}" materialDesign:ButtonProgressAssist.Value="-1" materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
-             materialDesign:ButtonProgressAssist.IsIndeterminate="True" Content="עדכון רחפן" Margin="0,17,0,0"
-             IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Click="BModalUpdate_Click" />
+             materialDesign:ButtonProgressAssist.IsIndeterminate="True" Content="עדכון רחפן" Margin="0,17,0,0"  IsEnabled="False" Click="BModalUpdate_Click" />
 
             <Grid Grid.Row="1" Grid.Column="1" Margin="0,70,0,0" Grid.RowSpan="2">
                 <TextBlock TextWrapping="Wrap" Margin="219,30,10,19" FontWeight="Bold" FontFamily="Consolas" FontSize="14" ><Run Text=":"/><Run FlowDirection="RightToLeft" Language="he-il" Text="מספר מזהה"/></TextBlock>

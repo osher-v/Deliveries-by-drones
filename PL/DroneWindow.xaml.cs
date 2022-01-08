@@ -1,21 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using BO;
+using System;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using System.Collections.ObjectModel;
-using BO;
-using System.ComponentModel.DataAnnotations;
 
 namespace PL
 {
@@ -25,13 +14,11 @@ namespace PL
     /// </summary>
     public partial class DroneWindow : Window
     {
-        //Access object to the BL class.
+        ///Access object to the BL class.
         public BlApi.IBL AccessIbl;
-
         /// <summary> the calling window, becuse we want to use it here </summary> 
         private ListView listWindow;
-
-        /// <summary> a bool to help us disable the x bootum  </summary>
+        /// <summary> a bool to help us disable the x bootun  </summary>
         public bool ClosingWindow { get; private set; } = true;
 
         #region drone to add
@@ -43,62 +30,18 @@ namespace PL
         public DroneWindow(BlApi.IBL bl, ListView _DroneListWindow)
         {
             InitializeComponent();
-
+            //set the Width & Height for this window
             Width = 440;
             Height = 540;
-
             addDrone.Visibility = Visibility.Visible;
-
+            // set the bl obeject and the drone list window that we got from the priviose window
             AccessIbl = bl;
-
             listWindow = _DroneListWindow;
-
             // the combobox use it to show the Weight Categories
             TBWeight.ItemsSource = Enum.GetValues(typeof(WeightCategories));
-
             // the combobox use it to show the BaseStation ID
             BaseStationID.ItemsSource = AccessIbl.GetBaseStationList(x => x.FreeChargeSlots > 0);
             BaseStationID.DisplayMemberPath = "Id";
-        }
-
-        /// <summary>
-        /// disable the non numbers keys
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void TBID_KeyDown(object sender, KeyEventArgs e)
-        {
-            TBID.BorderBrush = Brushes.Gray;
-            // take only the kyes we alowed 
-            if (e.Key < Key.D0 || e.Key > Key.D9)
-            {
-                if (e.Key < Key.NumPad0 || e.Key > Key.NumPad9) // we want keys from the num pud too
-                {
-                    e.Handled = true;
-                }
-                else
-                {
-                    e.Handled = false;
-                }
-            }
-            if (TBID.Text.Length > 8)
-            {
-                e.Handled = true;
-            }
-        }
-
-        /// <summary>
-        /// limited the langth of the text
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void TBModel_KeyDown(object sender, KeyEventArgs e)
-        {
-            TBID.BorderBrush = Brushes.Gray;
-            if (TBModel.Text.Length > 5)
-            {
-                e.Handled = true;
-            }
         }
 
         /// <summary>
@@ -126,28 +69,28 @@ namespace PL
                     {
                         case MessageBoxResult.OK:
                             newdrone = AccessIbl.GetDroneList().ToList().Find(i => i.Id == newdrone.Id);
-                            listWindow.DroneToLists.Add(newdrone); //עדכון המשקיף
-
+                            listWindow.DroneToLists.Add(newdrone); //Observer update
+                            //Handles required window updates
                             listWindow.IsEnabled = true;
                             ClosingWindow = false;
                             Close();
-
                             break;
                         default:
                             break;
                     }
                 }
+                // Area responsible for error capture
                 catch (AddAnExistingObjectException ex)
                 {
                     MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
                     TBID.Text = "";
-                    TBID.BorderBrush = Brushes.Red; //בונוס 
+                    TBID.BorderBrush = Brushes.Red; //bonus 
                 }
                 catch (NonExistentObjectException ex)
                 {
                     MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
                     TBID.Text = "";
-                    TBID.BorderBrush = Brushes.Red;//בונוס 
+                    TBID.BorderBrush = Brushes.Red;//bonus 
                 }
                 catch (NoFreeChargingStations ex)
                 {
@@ -157,7 +100,6 @@ namespace PL
                 {
                     MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
-
             }
             else
             {
@@ -166,15 +108,46 @@ namespace PL
 
         }
 
+        /// <summary>
+        /// disable the non numbers keys
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void TBID_KeyDown(object sender, KeyEventArgs e)
+        {
+            TBID.BorderBrush = Brushes.Gray;
+            // take only the kyes we alowed 
+            if (e.Key < Key.D0 || e.Key > Key.D9)
+            {
+                if (e.Key < Key.NumPad0 || e.Key > Key.NumPad9) // we want keys from the num pud too
+                {
+                    e.Handled = true;
+                }
+                else
+                {
+                    e.Handled = false;
+                }
+            }
+        }
+
+        /// <summary>
+        /// set the color back to gray
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void TBModel_KeyDown(object sender, KeyEventArgs e)
+        {
+            TBID.BorderBrush = Brushes.Gray;
+        }
         #endregion
 
         #region drone in operations
-
+        //hold the drone that we send for update or work on 
         public Drone MyDrone;
-
-        public int indexDrone;//indexe of the drone how chosse by doubly click 
-
-        ParcelWindow parcelWindow;//עדכון לחלון החבילה
+        //indexe of the drone how chosse by doubly click
+        public int indexDrone;
+        //Update to the package window
+        ParcelWindow parcelWindow;
 
         /// <summary>
         /// constractor for acction staet  And updates the views accordingly
@@ -186,20 +159,28 @@ namespace PL
         public DroneWindow(BlApi.IBL bl, ListView _DroneListWindow, DroneToList droneTo, int _indexDrone, ParcelWindow _parcelWindow = null)
         {
             InitializeComponent();
-
-            updateDrone.Visibility = Visibility.Visible; // open the grid for the user
+            // open the grid for the user
+            updateDrone.Visibility = Visibility.Visible;
 
             indexDrone = _indexDrone;
-
             AccessIbl = bl;
-
             listWindow = _DroneListWindow;
 
-            //to conecct the binding to set the value of my drone to the proprtis
+            //to conect the binding to set the value of my drone to the proprtis
             MyDrone = bl.GetDrone(droneTo.Id);
             DataContext = MyDrone;
 
-            BModalUpdate.IsEnabled = false;
+            if (MyDrone.BatteryStatus < 50)
+            {
+                if (MyDrone.BatteryStatus > 10)
+                {
+                    PBbatr.Foreground = Brushes.YellowGreen;
+                }
+                else
+                {
+                    PBbatr.Foreground = Brushes.Red;
+                }
+            }
 
             parcelWindow = _parcelWindow;
 
@@ -231,7 +212,6 @@ namespace PL
                         BPickedUp.Visibility = Visibility.Visible;
                     }
                     break;
-
                 default:
                     break;
             }
@@ -262,7 +242,7 @@ namespace PL
             {
                 case MessageBoxResult.OK:
                     BModalUpdate.IsEnabled = false;
-                    listWindow.StatusDroneSelectorChanged();                 
+                    listWindow.StatusDroneSelectorChanged();
                     break;
                 default:
                     break;
@@ -318,7 +298,7 @@ namespace PL
         {
             int IdOfBaseStation = AccessIbl.GetBaseCharge(MyDrone.Id);//שמירת מס התחנה לצורך עדכון רשימת התחנות בשורה 350
 
-            AccessIbl.ReleaseDroneFromCharging(MyDrone.Id); 
+            AccessIbl.ReleaseDroneFromCharging(MyDrone.Id);
 
             MessageBoxResult result = MessageBox.Show("The operation was successful", "info", MessageBoxButton.OK, MessageBoxImage.Information);//לטלפל בX
             switch (result)
@@ -338,7 +318,22 @@ namespace PL
                     BReleaseDrone.Visibility = Visibility.Hidden;
                     BAssignPackage.IsEnabled = true;
 
+                    if (MyDrone.BatteryStatus < 50)
+                    {
+                        if (MyDrone.BatteryStatus > 10)
+                        {
+                            PBbatr.Foreground = Brushes.YellowGreen;
+                        }
+                        else
+                        {
+                            PBbatr.Foreground = Brushes.Red;
+                        }
+                    }
+                    else
+                    {
+                        PBbatr.Foreground = Brushes.LimeGreen;
 
+                    }
                     break;
                 default:
                     break;
@@ -380,7 +375,7 @@ namespace PL
                     default:
                         break;
                 }
-            }   
+            }
             catch (NoSuitablePsrcelWasFoundToBelongToTheDrone ex)
             {
                 MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -431,6 +426,18 @@ namespace PL
                         {
                             parcelWindow.UpdateChangesFromDroneWindow();
                         }
+                        //set the battry color 
+                        if (MyDrone.BatteryStatus < 50)
+                        {
+                            if (MyDrone.BatteryStatus > 10)
+                            {
+                                PBbatr.Foreground = Brushes.YellowGreen;
+                            }
+                            else
+                            {
+                                PBbatr.Foreground = Brushes.Red;
+                            }
+                        }
                         break;
                     default:
                         break;
@@ -467,7 +474,7 @@ namespace PL
                 {
                     case MessageBoxResult.OK:
                         listWindow.StatusDroneSelectorChanged();
-   
+
                         //to conecct the binding to set the value of my drone to the proprtis
                         MyDrone = AccessIbl.GetDrone(MyDrone.Id);
                         DataContext = MyDrone;
@@ -495,6 +502,18 @@ namespace PL
                             parcelWindow.UpdateChangesFromDroneWindow();
                             ClosingWindow = false;
                             Close();
+                        }
+                        //set the battry color 
+                        if (MyDrone.BatteryStatus < 50)
+                        {
+                            if (MyDrone.BatteryStatus > 10)
+                            {
+                                PBbatr.Foreground = Brushes.YellowGreen;
+                            }
+                            else
+                            {
+                                PBbatr.Foreground = Brushes.Red;
+                            }
                         }
                         break;
                     default:
