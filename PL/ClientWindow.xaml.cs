@@ -330,7 +330,7 @@ namespace PL
         }
 
         #region close
-
+         
         /// <summary>
         /// cancel the option to clik x to close the window 
         /// </summary>
