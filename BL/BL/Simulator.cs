@@ -9,6 +9,9 @@ using static BL.BL;
 
 namespace BL
 {
+    /// <summary>
+    /// drone simulator.
+    /// </summary>
     class Simulator
     {
         BlApi.IBL bl;
@@ -26,47 +29,43 @@ namespace BL
             var dal = bl;
             //area for seting puse time
             Drone drone = bl.GetDrone(droneID);
+
             while (true)
             {
-
                 switch (drone.Statuses)
                 {
+                    case DroneStatuses.free:
+                        try
+                        {
+                            bl.AssignPackageToDdrone(drone.Id);
+
+                        }
+                        catch
+                        {
+
+                        }
+                        break;
 
                     case DroneStatuses.inMaintenance:
-                        if(drone.BatteryStatus == 100)
+                        if (drone.BatteryStatus == 100)
                         {
                             bl.ReleaseDroneFromCharging(drone.Id);
+                            //worker.ReportProgress(23);
+
                         }
-                        else
+                        else 
                         {
                             // TODO update battery status somehow
                         }
                         break;
-                    case DroneStatuses.free:
+
+                    case DroneStatuses.busy:
                         break;
-                            
-
-
-
-
-
-
-
-
-
-
                     default:
                         break;
-
                 }
-
-
-
-
-
+                Thread.Sleep(1000); 
             }
-
-
         }
     }
 }
