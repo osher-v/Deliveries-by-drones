@@ -14,7 +14,7 @@ namespace BL
     /// </summary>
     class Simulator
     {
-        BlApi.IBL bl;
+        BlApi.IBL AccessIbl;
 
         enum StatusSim {Start, onGo, onCharge }
         private const int Delay = 1000;
@@ -25,46 +25,47 @@ namespace BL
 
         public Simulator(BlApi.IBL _bl,int droneID, Action action, Func<bool> func)
         {
-            bl = _bl;
-            var dal = bl;
+            AccessIbl = _bl;
+            Drone MyDrone = AccessIbl.GetDrone(droneID);
+            var dal = AccessIbl;
             //area for seting puse time
-            Drone drone = bl.GetDrone(droneID);
+            Drone drone = AccessIbl.GetDrone(droneID);
 
-            while (true)
+            while (true)//isTimeRun)
             {
-                switch (drone.Statuses)
+                switch (MyDrone.Statuses)
                 {
                     case DroneStatuses.free:
                         try
                         {
-                            bl.AssignPackageToDdrone(drone.Id);
-
+                            AccessIbl.AssignPackageToDdrone(MyDrone.Id);
                         }
                         catch
                         {
-
+                            if (MyDrone.BatteryStatus < 100)
+                                AccessIbl.SendingDroneforCharging(MyDrone.Id);
                         }
                         break;
-
                     case DroneStatuses.inMaintenance:
-                        if (drone.BatteryStatus == 100)
-                        {
-                            bl.ReleaseDroneFromCharging(drone.Id);
-                            //worker.ReportProgress(23);
-
-                        }
-                        else 
-                        {
-                            // TODO update battery status somehow
-                        }
+                        AccessIbl.ReleaseDroneFromCharging(MyDrone.Id);
+                        if (MyDrone.BatteryStatus < 100)
+                            AccessIbl.SendingDroneforCharging(MyDrone.Id);
                         break;
-
                     case DroneStatuses.busy:
+                        if (AccessIbl.GetParcel(MyDrone.Delivery.Id).PickedUp == null)
+                        {
+                            AccessIbl.PickedUpPackageByTheDrone(MyDrone.Id);
+                        }
+                        else
+                        {
+                            AccessIbl.DeliveryPackageToTheCustomer(MyDrone.Id);
+                        }
                         break;
                     default:
                         break;
                 }
-                Thread.Sleep(1000); 
+                //DroneSimultor.ReportProgress(1);?????????????????????????????
+                Thread.Sleep(1500);
             }
         }
     }

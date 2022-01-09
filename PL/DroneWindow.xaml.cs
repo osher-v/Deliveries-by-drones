@@ -603,15 +603,28 @@ namespace PL
             DroneSimultor.RunWorkerAsync();
         }
 
+        public int IdOfDeliveryInMyDrone;
+        public int IdOfSenderCustomerInMyDrone;
+        public int IdOfReceiverCustomerInMyDrone;
+
         private void DroneSimultor_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             //to conect the binding to set the value of my drone to the proprtis
             MyDrone = AccessIbl.GetDrone(MyDrone.Id);
             DataContext = MyDrone;
+
+            listWindow.StatusDroneSelectorChanged();
+
             if (MyDrone.Statuses== DroneStatuses.busy)
             {
+                IdOfDeliveryInMyDrone = MyDrone.Delivery.Id;
+                IdOfSenderCustomerInMyDrone = MyDrone.Delivery.Sender.Id;
+                IdOfReceiverCustomerInMyDrone = MyDrone.Delivery.Receiver.Id;
+
                 if (AccessIbl.GetParcel(MyDrone.Delivery.Id).PickedUp == null)
                 {
+                   // listWindow.StatusDroneSelectorChanged();
+
                     //update list of parcels
                     int indexOfParcelInTheObservable = listWindow.ParcelToLists.IndexOf(listWindow.ParcelToLists.First(x => x.Id == MyDrone.Delivery.Id));
                     listWindow.ParcelToLists[indexOfParcelInTheObservable] = AccessIbl.GetParcelList().First(x => x.Id == MyDrone.Delivery.Id);
@@ -625,6 +638,8 @@ namespace PL
                 }
                  else if (AccessIbl.GetParcel(MyDrone.Delivery.Id).Delivered == null)
                 {
+                   // listWindow.StatusDroneSelectorChanged();
+
                     //עדכון רשימת החבילות
                     int indexOfParcelInTheObservable = listWindow.ParcelToLists.IndexOf(listWindow.ParcelToLists.First(x => x.Id == MyDrone.Delivery.Id));
                     listWindow.ParcelToLists[indexOfParcelInTheObservable] = AccessIbl.GetParcelList().First(x => x.Id == MyDrone.Delivery.Id);
@@ -643,9 +658,8 @@ namespace PL
             }
             else if (GRIDparcelInDelivery.Visibility== Visibility.Visible)
             {
-                int IdOfDeliveryInMyDrone = MyDrone.Delivery.Id;
-                int IdOfSenderCustomerInMyDrone = MyDrone.Delivery.Sender.Id;
-                int IdOfReceiverCustomerInMyDrone = MyDrone.Delivery.Receiver.Id;
+               // listWindow.StatusDroneSelectorChanged();
+
                 //עדכון רשימת החבילות
                 int indexOfParcelInTheObservable = listWindow.ParcelToLists.IndexOf(listWindow.ParcelToLists.First(x => x.Id == IdOfDeliveryInMyDrone));
                 listWindow.ParcelToLists[indexOfParcelInTheObservable] = AccessIbl.GetParcelList().First(x => x.Id == IdOfDeliveryInMyDrone);
