@@ -43,7 +43,7 @@
         </Grid>
 
         <!--this grid is for update option-->
-        <Grid x:Name="updateDrone" Visibility="Hidden">
+        <Grid x:Name="updateDrone" Visibility="Visible">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
@@ -228,7 +228,8 @@
                 </materialDesign:Card>
 
             </Grid>
-            <Button x:Name="Bsimoltor" Content="Button" HorizontalAlignment="Left" Margin="37,14,0,0" Grid.Row="1" VerticalAlignment="Top" Click="Bsimoltor_Click"/>
+            <Button x:Name="Bsimoltor" Content="Button" HorizontalAlignment="Left" Margin="37,0,0,0" Grid.Row="1" VerticalAlignment="Top" Click="Bsimoltor_Click"/>
+            <Button x:Name="BstopSimoltor" Content="Button" HorizontalAlignment="Left" Margin="37,36,0,0" Grid.Row="1" VerticalAlignment="Top" Click="BstopSimoltor_Click" />
 
         </Grid>
     </Grid>

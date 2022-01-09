@@ -2,6 +2,7 @@
 using System;
 using System.ComponentModel;
 using System.Linq;
+using System.Threading;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -584,22 +585,94 @@ namespace PL
 
         public BackgroundWorker DroneSimultor;
 
-        public void Help()
+        bool isTimeRun;
+        public void Simultor()
         {
-            DroneSimultor.ReportProgress(0);
-        }
+            DroneSimultor = new BackgroundWorker();
+            DroneSimultor.DoWork += DroneSimultor_DoWork;
+            DroneSimultor.ProgressChanged += DroneSimultor_ProgressChanged;
 
-        public bool Help2()
-        {
-            return DroneSimultor.CancellationPending;
+            DroneSimultor.WorkerReportsProgress = true;
         }
 
         private void Bsimoltor_Click(object sender, RoutedEventArgs e)
         {
-            DroneSimultor = new BackgroundWorker() { WorkerReportsProgress = true, WorkerSupportsCancellation = true };
-
-            DroneSimultor.DoWork += (sender, e) => AccessIbl.sim(MyDrone.Id, Help, Help2);
-
+            isTimeRun = true;
+            Simultor();
+            //DroneSimultor = new BackgroundWorker();
+            DroneSimultor.RunWorkerAsync();
         }
+
+        private void DroneSimultor_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            //to conect the binding to set the value of my drone to the proprtis
+            MyDrone = AccessIbl.GetDrone(MyDrone.Id);
+            DataContext = MyDrone;
+        }
+
+        private void DroneSimultor_DoWork(object sender, DoWorkEventArgs e)
+        {
+            while(isTimeRun)
+            {
+                switch (MyDrone.Statuses)
+                {
+                    case DroneStatuses.free:
+                        try
+                        {
+                            AccessIbl.AssignPackageToDdrone(MyDrone.Id);
+
+                        }
+                        catch
+                        {
+                            AccessIbl.SendingDroneforCharging(MyDrone.Id);
+                        }
+                        break;
+                    case DroneStatuses.inMaintenance:
+                        AccessIbl.ReleaseDroneFromCharging(MyDrone.Id);
+                        break;
+                    case DroneStatuses.busy:
+                        if (AccessIbl.GetParcel(MyDrone.Delivery.Id).PickedUp == null)
+                        {   
+                            AccessIbl.PickedUpPackageByTheDrone(MyDrone.Id);
+                        }
+                        else
+                        {
+                            AccessIbl.DeliveryPackageToTheCustomer(MyDrone.Id);
+                        }
+                        break;
+                    default:
+                        break;
+                }
+                DroneSimultor.ReportProgress(1);
+                Thread.Sleep(5000);
+            }
+        }
+
+        private void BstopSimoltor_Click(object sender, RoutedEventArgs e)
+        {
+            //while(MyDrone.Statuses!=DroneStatuses.free)
+            //{ }
+            isTimeRun = false;
+        }
+
+        //public void Help()
+        //{
+        //    DroneSimultor.ReportProgress(0);
+        //}
+
+        //public bool Help2()
+        //{
+        //    return DroneSimultor.CancellationPending;
+        //}
+
+        //private void Bsimoltor_Click(object sender, RoutedEventArgs e)
+        //{
+        //    DroneSimultor = new BackgroundWorker() { WorkerReportsProgress = true, WorkerSupportsCancellation = true };
+
+        //    DroneSimultor.DoWork += (sender, e) => AccessIbl.sim(MyDrone.Id, Help, Help2);
+
+        //}
+
+
     }
 }
