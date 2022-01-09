@@ -362,7 +362,7 @@ namespace PL
                         MyDrone = AccessIbl.GetDrone(MyDrone.Id);
                         DataContext = MyDrone;
 
-                        //עדכון רשימת החבילות
+                        //update list of parcels
                         int indexOfParcelInTheObservable = listWindow.ParcelToLists.IndexOf(listWindow.ParcelToLists.First(x => x.Id == MyDrone.Delivery.Id));
                         listWindow.ParcelToLists[indexOfParcelInTheObservable] = AccessIbl.GetParcelList().First(x => x.Id == MyDrone.Delivery.Id);
 
@@ -608,6 +608,81 @@ namespace PL
             //to conect the binding to set the value of my drone to the proprtis
             MyDrone = AccessIbl.GetDrone(MyDrone.Id);
             DataContext = MyDrone;
+            if (MyDrone.Statuses== DroneStatuses.busy)
+            {
+                if (AccessIbl.GetParcel(MyDrone.Delivery.Id).PickedUp == null)
+                {
+                    //update list of parcels
+                    int indexOfParcelInTheObservable = listWindow.ParcelToLists.IndexOf(listWindow.ParcelToLists.First(x => x.Id == MyDrone.Delivery.Id));
+                    listWindow.ParcelToLists[indexOfParcelInTheObservable] = AccessIbl.GetParcelList().First(x => x.Id == MyDrone.Delivery.Id);
+
+                   // BSendToCharge.IsEnabled = false;
+
+                    BAssignPackage.Visibility = Visibility.Hidden;
+                    BPickedUp.Visibility = Visibility.Visible;
+                    GRIDparcelInDelivery.Visibility = Visibility.Visible;
+                    TBnotAssigned.Visibility = Visibility.Hidden;
+                }
+                 else if (AccessIbl.GetParcel(MyDrone.Delivery.Id).Delivered == null)
+                {
+                    //עדכון רשימת החבילות
+                    int indexOfParcelInTheObservable = listWindow.ParcelToLists.IndexOf(listWindow.ParcelToLists.First(x => x.Id == MyDrone.Delivery.Id));
+                    listWindow.ParcelToLists[indexOfParcelInTheObservable] = AccessIbl.GetParcelList().First(x => x.Id == MyDrone.Delivery.Id);
+
+                    //עדכון השולח ברשימת הלקוחות
+                    int indexOfSenderCustomerInTheObservable = listWindow.CustomerToLists.IndexOf(listWindow.CustomerToLists.First(x => x.Id == MyDrone.Delivery.Sender.Id));
+                    listWindow.CustomerToLists[indexOfSenderCustomerInTheObservable] = AccessIbl.GetCustomerList().First(x => x.Id == MyDrone.Delivery.Sender.Id);
+
+                    //עדכון המקבל ברשימת הלקוחות
+                    int indexOfReceiverCustomerInTheObservable = listWindow.CustomerToLists.IndexOf(listWindow.CustomerToLists.First(x => x.Id == MyDrone.Delivery.Receiver.Id));
+                    listWindow.CustomerToLists[indexOfReceiverCustomerInTheObservable] = AccessIbl.GetCustomerList().First(x => x.Id == MyDrone.Delivery.Receiver.Id);
+
+                    BPickedUp.Visibility = Visibility.Hidden;
+                    BDeliveryPackage.Visibility = Visibility.Visible;
+                }         
+            }
+            else if (GRIDparcelInDelivery.Visibility== Visibility.Visible)
+            {
+                int IdOfDeliveryInMyDrone = MyDrone.Delivery.Id;
+                int IdOfSenderCustomerInMyDrone = MyDrone.Delivery.Sender.Id;
+                int IdOfReceiverCustomerInMyDrone = MyDrone.Delivery.Receiver.Id;
+                //עדכון רשימת החבילות
+                int indexOfParcelInTheObservable = listWindow.ParcelToLists.IndexOf(listWindow.ParcelToLists.First(x => x.Id == IdOfDeliveryInMyDrone));
+                listWindow.ParcelToLists[indexOfParcelInTheObservable] = AccessIbl.GetParcelList().First(x => x.Id == IdOfDeliveryInMyDrone);
+
+                //עדכון השולח ברשימת הלקוחות
+                int indexOfSenderCustomerInTheObservable = listWindow.CustomerToLists.IndexOf(listWindow.CustomerToLists.First(x => x.Id == IdOfSenderCustomerInMyDrone));
+                listWindow.CustomerToLists[indexOfSenderCustomerInTheObservable] = AccessIbl.GetCustomerList().First(x => x.Id == IdOfSenderCustomerInMyDrone);
+
+                //עדכון המקבל ברשימת הלקוחות
+                int indexOfReceiverCustomerInTheObservable = listWindow.CustomerToLists.IndexOf(listWindow.CustomerToLists.First(x => x.Id == IdOfReceiverCustomerInMyDrone));
+                listWindow.CustomerToLists[indexOfReceiverCustomerInTheObservable] = AccessIbl.GetCustomerList().First(x => x.Id == IdOfReceiverCustomerInMyDrone);
+
+                BDeliveryPackage.Visibility = Visibility.Hidden;
+                BAssignPackage.Visibility = Visibility.Visible;
+                //BSendToCharge.IsEnabled = true;
+                GRIDparcelInDelivery.Visibility = Visibility.Hidden;
+                TBnotAssigned.Visibility = Visibility.Visible;
+            }
+
+
+
+            if (MyDrone.BatteryStatus < 50)
+            {
+                if (MyDrone.BatteryStatus > 10)
+                {
+                    PBbatr.Foreground = Brushes.YellowGreen;
+                }
+                else
+                {
+                    PBbatr.Foreground = Brushes.Red;
+                }
+            }
+            else
+            {
+                PBbatr.Foreground = Brushes.LimeGreen;
+
+            }
         }
 
         private void DroneSimultor_DoWork(object sender, DoWorkEventArgs e)
@@ -620,15 +695,17 @@ namespace PL
                         try
                         {
                             AccessIbl.AssignPackageToDdrone(MyDrone.Id);
-
                         }
                         catch
                         {
-                            AccessIbl.SendingDroneforCharging(MyDrone.Id);
+                            if (MyDrone.BatteryStatus < 100)
+                                AccessIbl.SendingDroneforCharging(MyDrone.Id);
                         }
                         break;
                     case DroneStatuses.inMaintenance:
                         AccessIbl.ReleaseDroneFromCharging(MyDrone.Id);
+                        if (MyDrone.BatteryStatus<100)
+                        AccessIbl.SendingDroneforCharging(MyDrone.Id);
                         break;
                     case DroneStatuses.busy:
                         if (AccessIbl.GetParcel(MyDrone.Delivery.Id).PickedUp == null)
@@ -644,7 +721,7 @@ namespace PL
                         break;
                 }
                 DroneSimultor.ReportProgress(1);
-                Thread.Sleep(5000);
+                Thread.Sleep(1500);
             }
         }
 
