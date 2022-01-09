@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Runtime.CompilerServices;
 using BO;
 
 namespace BL
@@ -10,6 +11,7 @@ namespace BL
     //public partial class BLcustomer
     partial class BL
     {
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddCustomer(Customer customer)
         {
             DO.Customer newCustomer = new DO.Customer()
@@ -31,6 +33,7 @@ namespace BL
             }
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateCustomer(int customerId, string customerName, string phoneNumber)
         {
             // try if Non Existent Object Exception
@@ -49,6 +52,7 @@ namespace BL
             }
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Customer GetCustomer(int idForDisplayObject)
         {
             DO.Customer printCustomer = new DO.Customer();
@@ -103,6 +107,7 @@ namespace BL
             return blCustomer;
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<CustomerToList> GetCustomerList(Predicate<CustomerToList> predicate = null)
         {
 

@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Runtime.CompilerServices;
 using BO;
 
 namespace BL
 {
     partial class BL
     {
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void SendingDroneforCharging(int droneId)
         {
             DroneToList drone = DronesBL.Find(x => x.Id == droneId);
@@ -50,6 +52,7 @@ namespace BL
                     item.BaseStationLocation.latitude == locationOfTheNearestStation.latitude).Id, drone.Id);
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void ReleaseDroneFromCharging(int droneId)
         {
             DroneToList drone = DronesBL.Find(x => x.Id == droneId);
@@ -75,6 +78,7 @@ namespace BL
             AccessIdal.ReleaseDroneFromChargingAtBaseStation(droneId);
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public int GetBaseCharge(int droneID)
         {
             try

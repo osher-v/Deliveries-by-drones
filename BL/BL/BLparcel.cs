@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Runtime.CompilerServices;
 using BO;
 
 namespace BL
 {
     partial class BL
     {
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public int AddParcel(Parcel newParcel)
         {
             try //Check if the customers exist in the system.
@@ -46,6 +48,7 @@ namespace BL
             return IdOfParcel;
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AssignPackageToDdrone(int droneId)
         {
             DroneToList myDrone = DronesBL.Find(x => x.Id == droneId);
@@ -120,6 +123,7 @@ namespace BL
             return true;
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void PickedUpPackageByTheDrone(int droneId)
         {
             DroneToList drone = DronesBL.Find(x => x.Id == droneId);
@@ -141,6 +145,7 @@ namespace BL
             AccessIdal.PickedUpPackageByTheDrone(parcelIDal.Id);
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void DeliveryPackageToTheCustomer(int droneId)
         {
             DroneToList drone = DronesBL.Find(x => x.Id == droneId);
@@ -180,6 +185,7 @@ namespace BL
                 throw new DeliveryCannotBeMade("Error: The parcel has already been delivered");
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Parcel GetParcel(int idForDisplayObject)
         {
             DO.Parcel printParcel = new DO.Parcel();
@@ -222,6 +228,7 @@ namespace BL
             return parcel;
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<ParcelToList> GetParcelList(Predicate<ParcelToList> predicate = null)
         {
             IEnumerable<ParcelToList> parcels = from item in AccessIdal.GetParcelList()
@@ -268,6 +275,7 @@ namespace BL
             //return parcels.Where(x => predicate == null ? true : predicate(x));
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void RemoveParcel(int ParcelId)//להוסיף חריגה אם החבילה כבר משויכת
         {
             try    // throw if the id is nonExsist

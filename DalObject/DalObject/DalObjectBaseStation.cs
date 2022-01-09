@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Runtime.CompilerServices;
 
 using DO;
 using DalApi;
@@ -11,6 +12,7 @@ namespace DalObject
 {
      partial class DalObject : IDal
     {
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddStation(BaseStation newbaseStation)
         {
             if (DataSource.BaseStationsList.Exists(x => x.Id == newbaseStation.Id))
@@ -20,6 +22,7 @@ namespace DalObject
             DataSource.BaseStationsList.Add(newbaseStation); //else
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateBaseStation(BaseStation newBaseStation)
         {
             if (!DataSource.BaseStationsList.Exists(x => x.Id == newBaseStation.Id))
@@ -29,6 +32,7 @@ namespace DalObject
             DataSource.BaseStationsList[DataSource.BaseStationsList.FindIndex(x => x.Id == newBaseStation.Id)] = newBaseStation; //else
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateMinusChargeSlots(int baseStationId)
         {
             //BaseStation update.
@@ -38,6 +42,7 @@ namespace DalObject
             DataSource.BaseStationsList[indexaforBaseStationId] = temp;
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdatePluseChargeSlots(int baseStationId)
         {
             //BaseStation update.
@@ -47,6 +52,7 @@ namespace DalObject
             DataSource.BaseStationsList[indexaforBaseStationId] = temp;
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public BaseStation GetBaseStation(int ID)
         {
             if (!DataSource.BaseStationsList.Exists(x => x.Id == ID))
@@ -55,28 +61,12 @@ namespace DalObject
             }
             return DataSource.BaseStationsList.Find(x => x.Id == ID);
         }
-   
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<BaseStation> GetBaseStationList(Predicate<BaseStation> predicate = null)
         {
             //return DataSource.BaseStationsList.FindAll(x => predicate == null ? true : predicate(x));
             return DataSource.BaseStationsList.Where(x => predicate == null ? true : predicate(x));
-        }
-
-        //public void RemoveStation(int baseStationId)
-        //{ 
-        //    int index = DataSource.BaseStationsList.FindIndex(x => x.Id == baseStationId);
-        //    if (index == -1)
-        //    {
-        //        throw new NonExistentObjectException();
-        //    }
-        //    DataSource.BaseStationsList.RemoveAt(index); //else
-
-        //    ////this Remove fanction return true if item is successfully removed; otherwise, false. This method also returns false if item was not found in the List<T>.
-        //    //bool successOperation = DataSource.BaseStationsList.Remove(baseStation);
-        //    //if(!successOperation)
-        //    //{
-        //    //    throw new NonExistentObjectException();
-        //    //}
-        //}
+        }    
     }        
 }

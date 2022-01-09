@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Runtime.CompilerServices;
 using BO;
 
 namespace BL
@@ -10,6 +11,7 @@ namespace BL
     //public partial class BLbaseStation
     partial class BL
     {
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddStation(BaseStation newbaseStation)
         {
 
@@ -32,6 +34,7 @@ namespace BL
             }
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateBaseStaison(int baseStationId, string baseName, string chargeslots)
         {
             DO.BaseStation newbase = new DO.BaseStation();
@@ -68,6 +71,7 @@ namespace BL
             AccessIdal.UpdateBaseStation(newbase); //Update in the database.
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public BaseStation GetBaseStation(int idForDisplayObject)
         {
             DO.BaseStation printBase = new DO.BaseStation();
@@ -99,6 +103,7 @@ namespace BL
             return blBase;
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<BaseStationsToList> GetBaseStationList(Predicate<BaseStationsToList> predicate = null)
         {
             //IEnumerable<DO.BaseStation> holdDalBaseStation = AccessIdal.GetBaseStationList();

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Runtime.CompilerServices;
 using BO;
 
 namespace BL
@@ -10,6 +11,7 @@ namespace BL
     //public partial class BLdrone
     partial class BL
     {
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddDrone(DroneToList newDrone, int firstChargingStation)
         {
             if ((int)newDrone.MaxWeight < 0 || (int)newDrone.MaxWeight > 2)
@@ -56,6 +58,7 @@ namespace BL
             DronesBL.Add(newDrone);
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateDroneName(int droneId, string droneName)
         {
             //if the its Non Existent throw Exception
@@ -73,6 +76,7 @@ namespace BL
             DronesBL.Find(x => x.Id == droneId).Model = droneName;
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Drone GetDrone(int idForDisplayObject)
         {
             DroneToList droneToLIist = DronesBL.Find(x => x.Id == idForDisplayObject);
@@ -126,11 +130,13 @@ namespace BL
             return printDrone;
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<DroneToList> GetDroneList(Predicate<DroneToList> predicate = null)
         {
             return DronesBL.FindAll(x => predicate == null ? true : predicate(x));
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void sim(int droneID, Action action, Func<bool> func)
         {
             new Simulator(this, droneID, action, func);

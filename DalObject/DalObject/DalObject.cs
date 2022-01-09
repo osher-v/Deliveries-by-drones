@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Runtime.CompilerServices;
 
 using DO;
 using DalApi;
@@ -30,6 +31,7 @@ namespace DalObject
 
         #endregion Singelton
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public double[] RequestPowerConsumptionByDrone()
         {
             double[] temp = { DataSource.Config.Free, DataSource.Config.LightWeightCarrier,
