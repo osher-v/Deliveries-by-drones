@@ -594,58 +594,75 @@ namespace PL
 
 
 
-        public BackgroundWorker DroneSimultor;
+        internal BackgroundWorker DroneSimultor; //defining the process(Worker).
 
-        bool isTimeRun;
-        public void Simultor()
+        internal bool isTimeRun;
+
+        /// <summary>
+        /// The function creates the process.
+        /// </summary>
+        private void Simultor()
         {
             DroneSimultor = new BackgroundWorker();
-            DroneSimultor.DoWork += DroneSimultor_DoWork;
-            DroneSimultor.ProgressChanged += DroneSimultor_ProgressChanged;
+            DroneSimultor.DoWork += DroneSimultor_DoWork; //Operation function.
+            DroneSimultor.ProgressChanged += DroneSimultor_ProgressChanged; //changed function.
 
-            DroneSimultor.WorkerReportsProgress = true;
+            DroneSimultor.WorkerReportsProgress = true; //אפשור דיווח השינוי מהתהליך
         }
 
+        /// <summary>
+        /// The function handles in case the user selects the automatic process button.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Bsimoltor_Click(object sender, RoutedEventArgs e)
         {
             isTimeRun = true;
-            Simultor();
-            //DroneSimultor = new BackgroundWorker();
-            DroneSimultor.RunWorkerAsync();
 
+            Simultor(); //call to function who creates the process.
+
+            DroneSimultor.RunWorkerAsync(); //Run the process.
+
+            //Hiding the other buttons in the background.
             BSendToCharge.Visibility = Visibility.Hidden;
             BReleaseDrone.Visibility = Visibility.Hidden;
             BAssignPackage.Visibility = Visibility.Hidden;
             BPickedUp.Visibility = Visibility.Hidden;
             BDeliveryPackage.Visibility = Visibility.Hidden;
 
+            //Hiding the automatic process button and opening a manually process button.
             Bsimoltor.Visibility = Visibility.Hidden;
             BstopSimoltor.Visibility = Visibility.Visible;
 
-            TBmodel.IsEnabled = false;
-
+            TBmodel.IsEnabled = false; //
         }
 
-        public int IdOfDeliveryInMyDrone;
-        public int IdOfSenderCustomerInMyDrone;
-        public int IdOfReceiverCustomerInMyDrone;
+        private int IdOfDeliveryInMyDrone;
+        private int IdOfSenderCustomerInMyDrone;
+        private int IdOfReceiverCustomerInMyDrone;
 
+        /// <summary>
+        /// The function handles the display when changes made in the process are received.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void DroneSimultor_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            //to conect the binding to set the value of my drone to the proprtis
+            //to update conect the binding to set the value of my drone to the proprtis.
             MyDrone = AccessIbl.GetDrone(MyDrone.Id);
             DataContext = MyDrone;
 
-            listWindow.StatusDroneSelectorChanged();
+            listWindow.StatusDroneSelectorChanged(); //update the List of drones.
 
             int indexOfParcelInTheObservable;
             int indexOfSenderCustomerInTheObservable;
             int indexOfReceiverCustomerInTheObservable;
 
+            //
             switch (MyDrone.Statuses)
             {
                 case DroneStatuses.free:
-                    if (GRIDparcelInDelivery.Visibility == Visibility.Visible)
+                    if (GRIDparcelInDelivery.Visibility == Visibility.Visible) //הוא במצב משוחרר כי הרגע הוא ביצע וסיים את השליחות
                     {
                         //עדכון רשימת החבילות
                         indexOfParcelInTheObservable = listWindow.ParcelToLists.IndexOf(listWindow.ParcelToLists.First(x => x.Id == IdOfDeliveryInMyDrone));
@@ -659,12 +676,11 @@ namespace PL
                         indexOfReceiverCustomerInTheObservable = listWindow.CustomerToLists.IndexOf(listWindow.CustomerToLists.First(x => x.Id == IdOfReceiverCustomerInMyDrone));
                         listWindow.CustomerToLists[indexOfReceiverCustomerInTheObservable] = AccessIbl.GetCustomerList().First(x => x.Id == IdOfReceiverCustomerInMyDrone);
 
-
-                        //BSendToCharge.IsEnabled = true;
+                        //
                         GRIDparcelInDelivery.Visibility = Visibility.Hidden;
                         TBnotAssigned.Visibility = Visibility.Visible;
                     }
-                    else
+                    else //the drone is in a free state that has come out of charge.
                     {
                         listWindow.BaseStationToLists.Clear();
                         List<BO.BaseStationsToList> baseStations1 = AccessIbl.GetBaseStationList().ToList();
@@ -725,7 +741,8 @@ namespace PL
                 default:
                     break;
             }
-     
+
+            //battery colors.
             if (MyDrone.BatteryStatus < 50)
             {
                 if (MyDrone.BatteryStatus > 10)
@@ -737,7 +754,7 @@ namespace PL
                     PBbatr.Foreground = Brushes.Red;
                 }
             }
-            else
+            else //MyDrone.BatteryStatus > 50
             {
                 PBbatr.Foreground = Brushes.LimeGreen;
 
