@@ -601,6 +601,18 @@ namespace PL
             Simultor();
             //DroneSimultor = new BackgroundWorker();
             DroneSimultor.RunWorkerAsync();
+
+            BSendToCharge.Visibility = Visibility.Hidden;
+            BReleaseDrone.Visibility = Visibility.Hidden;
+            BAssignPackage.Visibility = Visibility.Hidden;
+            BPickedUp.Visibility = Visibility.Hidden;
+            BDeliveryPackage.Visibility = Visibility.Hidden;
+
+            Bsimoltor.Visibility = Visibility.Hidden;
+            BstopSimoltor.Visibility = Visibility.Visible;
+
+            TBmodel.IsEnabled = false;
+
         }
 
         public int IdOfDeliveryInMyDrone;
@@ -629,14 +641,10 @@ namespace PL
                     int indexOfParcelInTheObservable = listWindow.ParcelToLists.IndexOf(listWindow.ParcelToLists.First(x => x.Id == MyDrone.Delivery.Id));
                     listWindow.ParcelToLists[indexOfParcelInTheObservable] = AccessIbl.GetParcelList().First(x => x.Id == MyDrone.Delivery.Id);
 
-                   // BSendToCharge.IsEnabled = false;
-
-                    BAssignPackage.Visibility = Visibility.Hidden;
-                    BPickedUp.Visibility = Visibility.Visible;
                     GRIDparcelInDelivery.Visibility = Visibility.Visible;
                     TBnotAssigned.Visibility = Visibility.Hidden;
                 }
-                 else if (AccessIbl.GetParcel(MyDrone.Delivery.Id).Delivered == null)
+                else if (AccessIbl.GetParcel(MyDrone.Delivery.Id).Delivered == null)
                 {
                    // listWindow.StatusDroneSelectorChanged();
 
@@ -651,10 +659,7 @@ namespace PL
                     //עדכון המקבל ברשימת הלקוחות
                     int indexOfReceiverCustomerInTheObservable = listWindow.CustomerToLists.IndexOf(listWindow.CustomerToLists.First(x => x.Id == MyDrone.Delivery.Receiver.Id));
                     listWindow.CustomerToLists[indexOfReceiverCustomerInTheObservable] = AccessIbl.GetCustomerList().First(x => x.Id == MyDrone.Delivery.Receiver.Id);
-
-                    BPickedUp.Visibility = Visibility.Hidden;
-                    BDeliveryPackage.Visibility = Visibility.Visible;
-                }         
+                }
             }
             else if (GRIDparcelInDelivery.Visibility== Visibility.Visible)
             {
@@ -672,8 +677,7 @@ namespace PL
                 int indexOfReceiverCustomerInTheObservable = listWindow.CustomerToLists.IndexOf(listWindow.CustomerToLists.First(x => x.Id == IdOfReceiverCustomerInMyDrone));
                 listWindow.CustomerToLists[indexOfReceiverCustomerInTheObservable] = AccessIbl.GetCustomerList().First(x => x.Id == IdOfReceiverCustomerInMyDrone);
 
-                BDeliveryPackage.Visibility = Visibility.Hidden;
-                BAssignPackage.Visibility = Visibility.Visible;
+              
                 //BSendToCharge.IsEnabled = true;
                 GRIDparcelInDelivery.Visibility = Visibility.Hidden;
                 TBnotAssigned.Visibility = Visibility.Visible;
@@ -744,6 +748,13 @@ namespace PL
             //while(MyDrone.Statuses!=DroneStatuses.free)
             //{ }
             isTimeRun = false;
+            Bsimoltor.Visibility = Visibility.Visible;
+            BstopSimoltor.Visibility = Visibility.Hidden;
+
+            BSendToCharge.Visibility = Visibility.Visible;
+            BAssignPackage.Visibility = Visibility.Visible;
+            BAssignPackage.IsEnabled = true;
+            TBmodel.IsEnabled = true;
         }
 
         //public void Help()
