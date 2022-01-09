@@ -20,7 +20,12 @@
                 <RowDefinition Height="495*"/>
                 <RowDefinition Height="191*"/>
             </Grid.RowDefinitions>
-            <Grid Grid.Column="1" Grid.RowSpan="3" Background="#FF673AB7" Opacity="0.3"/>
+            <Grid Grid.Column="1" Grid.RowSpan="3" Background="#FF673AB7" Opacity="0.3">
+
+                <Button x:Name="BClose"  HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" Height="64" Click="BClose_Click" BorderBrush="{x:Null}" Background="{x:Null}" Foreground="#DDFBFBFB" FontSize="16"  >
+                    <materialDesign:PackIcon Kind="CloseBold" Height="24" Width="27" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                </Button>
+            </Grid>
             <Grid Margin="0,48,0,0" Grid.RowSpan="2">
                 <Grid.ColumnDefinitions >
                     <ColumnDefinition Width="63*"/>

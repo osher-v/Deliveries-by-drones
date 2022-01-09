@@ -345,11 +345,13 @@ namespace PL
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void closeUpdate_Click(object sender, RoutedEventArgs e)
+        private void BClose_Click(object sender, RoutedEventArgs e)
         {
             ClosingWindow = false; // we alowd the close option
             Close();
         }
         #endregion close  
+
+
     }
 }
