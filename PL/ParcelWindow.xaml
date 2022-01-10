@@ -197,7 +197,7 @@
 
             <Button x:Name="BDelete" Visibility="Hidden" Grid.Row="1" Style="{StaticResource MaterialDesignRaisedButton}" materialDesign:ButtonProgressAssist.Value="-1" materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
                 materialDesign:ButtonProgressAssist.IsIndeterminate="True" Content="מחיקת חבילה" Margin="24,21,351,22"
-                IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" Background="#FFFF0909" BorderBrush="#FFF14A2F" FontSize="12" FontWeight="Bold" Click="BDelete_Click" />
+                Background="#FFFF0909" BorderBrush="#FFF14A2F" FontSize="12" FontWeight="Bold" Click="BDelete_Click" />
             <Button x:Name="Breciver" Style="{StaticResource MaterialDesignFloatingActionButton}" materialDesign:ButtonProgressAssist.IsIndicatorVisible="True" materialDesign:ButtonProgressAssist.Value="-1" materialDesign:ButtonProgressAssist.IsIndeterminate="True" Visibility="Hidden"  HorizontalAlignment="Left" Margin="19,35,0,0"  Width="30" Height="30" Grid.Row="5" VerticalAlignment="Top" Click="Breciver_Click" >
                 <materialDesign:PackIcon Kind="CogOutline" Height="20" Width="29" VerticalAlignment="Center" HorizontalAlignment="Center" />
             </Button>

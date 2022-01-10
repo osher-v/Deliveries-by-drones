@@ -41,12 +41,12 @@
 
             <Button x:Name="BAdd" Grid.Row="6" Style="{StaticResource MaterialDesignRaisedButton}" materialDesign:ButtonProgressAssist.Value="-1" materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
              materialDesign:ButtonProgressAssist.IsIndeterminate="True" Content="הוספה למאגר הנתונים" Margin="0,10,0,0"
-             IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Click="BAdd_Click"/>
+              Click="BAdd_Click"/>
             <!--<materialDesign:Card materialDesign:ShadowAssist.ShadowDepth="Depth5" Padding="32" Content="" Margin="10,10,10,10" />-->
         </Grid>
 
         <!--this grid stand for updat base station sactor-->
-        <Grid x:Name="updateBaseStation" Visibility="Hidden" Margin="0,4,0,-4">
+        <Grid x:Name="updateBaseStation" Visibility="Visible" Margin="0,4,0,-4">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
@@ -69,8 +69,8 @@
                 </StackPanel>
             </Grid>
             <!--<TextBox x:Name="TBUpdateStaitonI" Grid.Row="2" materialDesign:HintAssist.Hint="מספר מזהה" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" HorizontalAlignment="Left" Width="279" TextAlignment="Center" Margin="88,0,0,0" TextChanged="TBstaitonId_TextChanged" KeyDown="TBstaitonId_KeyDown" />-->
-            <TextBox x:Name="TBUpdateStaitonName" Text="{Binding Path=Name}" Grid.Row="2" materialDesign:HintAssist.Hint="שם התחנה" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Top" Margin="88,10,73,0" TextAlignment="Center"  Height="38" MaxLength="20" FontSize="14" FontWeight="Bold" />
-            <TextBox x:Name="TBstationFreeChargeSlotS" Text="" Grid.Row="3" materialDesign:HintAssist.Hint="מספר עמדות הטענה בתחנה" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" Margin="88,0,73,0" TextAlignment="Center" KeyDown="TBstationChargeSlots_KeyDown" Height="46" MaxLength="2" FontSize="14" FontWeight="Bold" />
+            <TextBox x:Name="TBUpdateStaitonName" Text="{Binding Path=Name}" Grid.Row="2" materialDesign:HintAssist.Hint="שם התחנה" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" Margin="88,0,73,0" TextAlignment="Center"  Height="44" MaxLength="20" FontSize="14" FontWeight="Bold" KeyUp="TBUpdateStaitonName_KeyUp" />
+            <TextBox x:Name="TBstationFreeChargeSlotS" Text="" Grid.Row="3" materialDesign:HintAssist.Hint="מספר עמדות הטענה בתחנה" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" Margin="88,0,73,0" TextAlignment="Center" KeyDown="TBstationChargeSlots_KeyDown" Height="46" MaxLength="2" FontSize="14" FontWeight="Bold" KeyUp="TBstationFreeChargeSlotS_KeyUp" />
             <!--<TextBox x:Name="TBstaitonLongtud" Grid.Row="5" materialDesign:HintAssist.Hint="קו אורך" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" Margin="242,0,23,0" TextAlignment="Center" KeyDown="TBstaitonLongtude_KeyDown" />
             <TextBox x:Name="TBstaitonLattud" Grid.Row="5" materialDesign:HintAssist.Hint="קו רוחב" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" Margin="38,0,227,0" TextAlignment="Center" KeyDown="TBstaitonLattude_KeyDown" />-->
             <Grid x:Name="Cards" Grid.Row="4" Margin="0,22,0,5">
@@ -84,7 +84,7 @@
                             <RowDefinition Height="37*"/>
                             <RowDefinition Height="122*"/>
                         </Grid.RowDefinitions>
-                        <TextBlock Grid.Row="0" Text="רחפנים בהטענה" Margin="152,-11,124,22" FontWeight="Bold" FontSize="14" TextAlignment="Center" ></TextBlock>
+                        <TextBlock Grid.Row="0" Text="רחפנים בהטענה" Margin="152,-12,124,22" FontWeight="Bold" FontSize="14" TextAlignment="Center" ></TextBlock>
                         <ListView x:Name="listOfDronesInCahrge" ItemsSource="{Binding Items1}" Margin="0,-3,20,10" FontSize="12" Grid.RowSpan="2" MouseDoubleClick="listOfDronesInCahrge_MouseDoubleClick">
                             <ListView.ItemContainerStyle>
                                 <Style TargetType="{x:Type ListViewItem}">
@@ -133,8 +133,8 @@
                 </materialDesign:Card>
             </Grid>
             <Button x:Name="BUpdate" Grid.Row="6" Style="{StaticResource MaterialDesignRaisedButton}" materialDesign:ButtonProgressAssist.Value="-1" materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
-             materialDesign:ButtonProgressAssist.IsIndeterminate="True" Content="עדכון התחנה" Margin="0,13,0,4"
-             IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Click="BUpdate_Click" />
+             materialDesign:ButtonProgressAssist.IsIndeterminate="True" IsEnabled="False" Content="עדכון התחנה" Margin="0,13,0,4"
+              Click="BUpdate_Click" />
 
             <Grid Grid.Row="1" Margin="0,0,0,3">
                 <TextBlock Text=":מספר התחנה" TextWrapping="Wrap" Margin="302,24,9,33" FontWeight="Bold" FontFamily="Consolas" FontSize="14"/>

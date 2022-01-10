@@ -352,13 +352,16 @@ namespace PL
         /// <param name="e"></param>
         private void listOfCustomeSend_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            int IdOfParcel = ((ParcelAtCustomer)listOfCustomeSend.SelectedItem).Id;
-            int indexParcelInObservable = ListWindow.ParcelToLists.IndexOf(ListWindow.ParcelToLists.First(x => x.Id == IdOfParcel));
-            ParcelToList customer = AccessIbl.GetParcelList().First(x => x.Id == IdOfParcel);
-            new ParcelWindow(AccessIbl, ListWindow, customer, indexParcelInObservable,clientWindow).Show();
+            if (((ParcelAtCustomer)listOfCustomerReceive.SelectedItem) != null)// if the user click on empty space in the view list we dont open anything
+            {
+                int IdOfParcel = ((ParcelAtCustomer)listOfCustomeSend.SelectedItem).Id;
+                int indexParcelInObservable = ListWindow.ParcelToLists.IndexOf(ListWindow.ParcelToLists.First(x => x.Id == IdOfParcel));
+                ParcelToList customer = AccessIbl.GetParcelList().First(x => x.Id == IdOfParcel);
+                new ParcelWindow(AccessIbl, ListWindow, customer, indexParcelInObservable, clientWindow).Show();
 
-            ClosingWindow = false; // עקרונית צריכים לעדכן את החלון הזה השאלה איך עושים
-            Close();
+                ClosingWindow = false; // עקרונית צריכים לעדכן את החלון הזה השאלה איך עושים
+                Close();
+            }
         }
 
         /// <summary>
@@ -368,13 +371,43 @@ namespace PL
         /// <param name="e"></param>
         private void listOfCustomerReceive_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            int IdOfParcel = ((ParcelAtCustomer)listOfCustomerReceive.SelectedItem).Id;
-            int indexParcelInObservable = ListWindow.ParcelToLists.IndexOf(ListWindow.ParcelToLists.First(x => x.Id == IdOfParcel));
-            ParcelToList customer = AccessIbl.GetParcelList().First(x => x.Id == IdOfParcel);
-            new ParcelWindow(AccessIbl, ListWindow, customer, indexParcelInObservable,clientWindow).Show();
+            if (((ParcelAtCustomer)listOfCustomerReceive.SelectedItem) != null)// if the user click on empty space in the view list we dont open anything
+            {
+                int IdOfParcel = ((ParcelAtCustomer)listOfCustomerReceive.SelectedItem).Id;
+                int indexParcelInObservable = ListWindow.ParcelToLists.IndexOf(ListWindow.ParcelToLists.First(x => x.Id == IdOfParcel));
+                ParcelToList customer = AccessIbl.GetParcelList().First(x => x.Id == IdOfParcel);
+                new ParcelWindow(AccessIbl, ListWindow, customer, indexParcelInObservable, clientWindow).Show();
 
-            ClosingWindow = false; // עקרונית צריכים לעדכן את החלון הזה השאלה איך עושים
-            Close();
+                ClosingWindow = false; // עקרונית צריכים לעדכן את החלון הזה השאלה איך עושים
+                Close();
+            }
+        }
+
+        private void TBUpdateCustomerName_KeyUp(object sender, KeyEventArgs e)
+        {
+
+            if (TBUpdateCustomerPhoneNumber.Text.Length != 0 && TBUpdateCustomerName.Text.Length != 0)
+            {
+                if (!BUpdate.IsEnabled)
+                BUpdate.IsEnabled = true;
+            }
+            else
+            {
+                BUpdate.IsEnabled = false;
+            }
+        }
+        private void TBUpdateCustomerPhoneNumber_KeyUp(object sender, KeyEventArgs e)
+        {
+
+            if (TBUpdateCustomerPhoneNumber.Text.Length != 0 && TBUpdateCustomerName.Text.Length != 0)
+            {
+                if (!BUpdate.IsEnabled)
+                    BUpdate.IsEnabled = true;
+            }
+            else
+            {
+                BUpdate.IsEnabled = false;
+            }
         }
     }
 }

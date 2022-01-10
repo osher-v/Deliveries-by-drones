@@ -295,7 +295,7 @@ namespace PL
             {
                 int indexParcel = listOfParcels.SelectedIndex;
                 this.IsEnabled = false; // to privent anotur click on the list window chosse we donr want alot of windows togter.
-                new ParcelWindow(AccessIbl, this, parcel, indexParcel).Show();//open the drone windowon acction
+                new ParcelWindow(AccessIbl, this, parcel, indexParcel).ShowDialog();//open the drone windowon acction
             }
         }
 

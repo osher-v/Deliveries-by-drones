@@ -43,7 +43,7 @@
         </Grid>
 
         <!--this grid is for update option-->
-        <Grid x:Name="updateDrone" Visibility="Visible">
+        <Grid x:Name="updateDrone" Visibility="Hidden">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
@@ -67,7 +67,7 @@
                 </StackPanel>
             </Grid>
 
-            <TextBox x:Name="TBmodel" Text="{Binding Path=Model}" Grid.Row="3" Grid.Column="1" materialDesign:HintAssist.Hint="מודל רחפן" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Top" Margin="81,5,80,0" TextAlignment="Center" Height="44" MaxLength="10" KeyUp="TBmodel_KeyUp" KeyDown="TBmodel_KeyDown_1" FontSize="14" FontWeight="Bold" />
+            <TextBox x:Name="TBmodel" Text="{Binding Path=Model}" Grid.Row="3" Grid.Column="1" materialDesign:HintAssist.Hint="מודל רחפן" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Top" Margin="81,5,80,0" TextAlignment="Center" Height="44" MaxLength="6" KeyUp="TBmodel_KeyUp" FontSize="14" FontWeight="Bold" />
 
             <Grid x:Name="Cards" Grid.Row="4" Grid.ColumnSpan="2"  Margin="0,22,0,5">
                 <Grid.ColumnDefinitions>
@@ -125,21 +125,21 @@
                 </Grid.ColumnDefinitions>
                 <Button x:Name="BSendToCharge" Visibility="Hidden"   Grid.Column="2" Style="{StaticResource MaterialDesignRaisedButton}" materialDesign:ButtonProgressAssist.Value="-1" materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
                     materialDesign:ButtonProgressAssist.IsIndeterminate="True" Content="שליחה לטעינה" Margin="18,20,19,19"
-                    IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" Background="#FFFF0909" BorderBrush="#FFF14A2F" FontSize="12" FontWeight="Bold" Click="BSendToCharge_Click"  />
+                     Background="#FFFF0909" BorderBrush="#FFF14A2F" FontSize="12" FontWeight="Bold" Click="BSendToCharge_Click"  />
 
                 <Button  x:Name="BReleaseDrone" Visibility="Hidden"  Grid.Column="2" Style="{StaticResource MaterialDesignRaisedButton}" materialDesign:ButtonProgressAssist.Value="-1" materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
                     materialDesign:ButtonProgressAssist.IsIndeterminate="True" Content="שחרור מטעינה" Margin="18,20,16,19"
-                    IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" Background="#FFFF0909" BorderBrush="#FFF14A2F" FontSize="12" FontWeight="Bold" Click="BReleaseDrone_Click"  />
+                     Background="#FFFF0909" BorderBrush="#FFF14A2F" FontSize="12" FontWeight="Bold" Click="BReleaseDrone_Click"  />
 
                 <Button  x:Name="BAssignPackage" Visibility="Hidden"  Grid.Column="1" Style="{StaticResource MaterialDesignRaisedButton}" materialDesign:ButtonProgressAssist.Value="-1" materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
                     materialDesign:ButtonProgressAssist.IsIndeterminate="True" Content="שיוך" Margin="18,20,19,19"
-                    IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" Background="#FFFF0909" BorderBrush="#FFF14A2F" FontSize="12" FontWeight="Bold"  Click="BAssignPackage_Click"/>
+                     Background="#FFFF0909" BorderBrush="#FFF14A2F" FontSize="12" FontWeight="Bold"  Click="BAssignPackage_Click"/>
                 <Button  x:Name="BPickedUp" Visibility="Hidden"  Grid.Column="1" Style="{StaticResource MaterialDesignRaisedButton}" materialDesign:ButtonProgressAssist.Value="-1" materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
                     materialDesign:ButtonProgressAssist.IsIndeterminate="True" Content="איסוף" Margin="18,20,19,19"
-                    IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" Background="#FFFF0909" BorderBrush="#FFF14A2F" FontSize="12" FontWeight="Bold"  Click="BPickedUp_Click" />
+                     Background="#FFFF0909" BorderBrush="#FFF14A2F" FontSize="12" FontWeight="Bold"  Click="BPickedUp_Click" />
                 <Button x:Name="BDeliveryPackage" Visibility="Hidden"  Style="{StaticResource MaterialDesignRaisedButton}" materialDesign:ButtonProgressAssist.Value="-1" materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
                     materialDesign:ButtonProgressAssist.IsIndeterminate="True" Content="אספקה" Margin="18,20,19,19"
-                    IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" Background="#FFFF0909" BorderBrush="#FFF14A2F" FontSize="12" FontWeight="Bold" Click="BDeliveryPackage_Click" Grid.Column="1" />
+                    Background="#FFFF0909" BorderBrush="#FFF14A2F" FontSize="12" FontWeight="Bold" Click="BDeliveryPackage_Click" Grid.Column="1" />
             </Grid>
             <materialDesign:Card Grid.Column="0" Background="{DynamicResource PrimaryHueLightBrush}" Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}" Padding="8" 
                     UniformCornerRadius="6" Margin="49,18,23,12" Grid.RowSpan="2" Grid.Row="2">
@@ -219,7 +219,6 @@
 
 
                                 <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Height="20" Width="91" TextAlignment="Center" FontWeight="Bold" Margin="144,137,0,0" Foreground="{DynamicResource PrimaryHueMidBrush}"><Run FlowDirection="RightToLeft" Language="he-il" Text="נאסף כן/לא"/></TextBlock>
-                                <!--<CheckBox Content="" HorizontalAlignment="Left" Margin="93,130,0,0" VerticalAlignment="Top" IsChecked="{Binding Path=Delivery.OnTheWayToTheDestination}" IsEnabled="False" Background="{DynamicResource MaterialDesignBackground}" BorderBrush="{x:Null}" Foreground="#FF0DF017" FontSize="14" Height="18" Width="20"/>-->
                                 <CheckBox IsChecked="{Binding Path=Delivery.OnTheWayToTheDestination}" Margin="115,136,104,5" />
 
                             </Grid>
