@@ -46,7 +46,7 @@
         </Grid>
 
         <!--this grid stand for updat base station sactor-->
-        <Grid x:Name="updateBaseStation" Visibility="Visible" Margin="0,4,0,-4">
+        <Grid x:Name="updateBaseStation" Visibility="Hidden" Margin="0,4,0,-4">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>

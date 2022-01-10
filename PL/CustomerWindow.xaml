@@ -44,7 +44,7 @@
             <!--<materialDesign:Card materialDesign:ShadowAssist.ShadowDepth="Depth5" Padding="32" Content="" Margin="10,10,10,10" />-->
         </Grid>
         <!--this sactor stand for update customer area-->
-        <Grid x:Name="updateCustomer" Visibility="Visible">
+        <Grid x:Name="updateCustomer" Visibility="Hidden">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
