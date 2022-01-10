@@ -304,13 +304,41 @@ namespace PL
         /// <param name="e"></param>
         private void listOfDronesInCahrge_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            int IdOfDroneInCharg = ((DroneInCharg)listOfDronesInCahrge.SelectedItem).Id;
-            int indexDroneInObservable = ListWindow.DroneToLists.IndexOf(ListWindow.DroneToLists.First(x => x.Id == IdOfDroneInCharg));
-            DroneToList drone = AccessIbl.GetDroneList().First(x => x.Id == IdOfDroneInCharg); 
-            new DroneWindow(AccessIbl, ListWindow, drone, indexDroneInObservable).Show();
+            if (((DroneInCharg)listOfDronesInCahrge.SelectedItem) != null)// if the user click on empty space in the view list we donr open anything
+            {
+                int IdOfDroneInCharg = ((DroneInCharg)listOfDronesInCahrge.SelectedItem).Id;
+                int indexDroneInObservable = ListWindow.DroneToLists.IndexOf(ListWindow.DroneToLists.First(x => x.Id == IdOfDroneInCharg));
+                DroneToList drone = AccessIbl.GetDroneList().First(x => x.Id == IdOfDroneInCharg);
+                new DroneWindow(AccessIbl, ListWindow, drone, indexDroneInObservable).Show();
 
-            ClosingWindow = false; // עקרונית צריכים לעדכן את החלון הזה השאלה איך עושים
-            Close();         
+                ClosingWindow = false;
+                Close();
+            }
+        }
+        private void TBUpdateStaitonName_KeyUp(object sender, KeyEventArgs e)
+        {
+                if (TBstationFreeChargeSlotS.Text.Length != 0 && TBUpdateStaitonName.Text.Length != 0)
+                {
+                    if (!BUpdate.IsEnabled)
+                        BUpdate.IsEnabled = true;
+                }
+                else
+                {
+                    BUpdate.IsEnabled = false;
+                }
+        }
+
+        private void TBstationFreeChargeSlotS_KeyUp(object sender, KeyEventArgs e)
+        {
+                if (TBstationFreeChargeSlotS.Text.Length != 0 && TBUpdateStaitonName.Text.Length != 0)
+                {
+                    if (!BUpdate.IsEnabled)
+                        BUpdate.IsEnabled = true;
+                }
+                else
+                {
+                    BUpdate.IsEnabled = false;
+                }
         }
     }
 }

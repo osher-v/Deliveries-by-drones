@@ -294,7 +294,7 @@ namespace PL
             int IdOfcustomer = parcel.Sender.Id;
             int indexcustomerInObservable = ListWindow.CustomerToLists.IndexOf(ListWindow.CustomerToLists.First(x => x.Id == IdOfcustomer));
             CustomerToList customer = AccessIbl.GetCustomerList().First(x => x.Id == IdOfcustomer);
-            new CustomerWindow(AccessIbl, ListWindow, customer, indexcustomerInObservable, this).Show();
+            new CustomerWindow(AccessIbl, ListWindow, customer, indexcustomerInObservable, this).ShowDialog();
         }
 
         /// <summary>
@@ -307,7 +307,7 @@ namespace PL
             int IdOfcustomer = parcel.Receiver.Id;
             int indexcustomerInObservable = ListWindow.CustomerToLists.IndexOf(ListWindow.CustomerToLists.First(x => x.Id == IdOfcustomer));
             CustomerToList customer = AccessIbl.GetCustomerList().First(x => x.Id == IdOfcustomer);
-            new CustomerWindow(AccessIbl, ListWindow, customer, indexcustomerInObservable, this).Show();  
+            new CustomerWindow(AccessIbl, ListWindow, customer, indexcustomerInObservable, this).ShowDialog();  
         }
 
         /// <summary>
@@ -329,7 +329,7 @@ namespace PL
             int IdOfDrone = parcel.MyDrone.Id;
             int indexDroneInObservable = ListWindow.DroneToLists.IndexOf(ListWindow.DroneToLists.First(x => x.Id == IdOfDrone));
             DroneToList drone = AccessIbl.GetDroneList().First(x => x.Id == IdOfDrone);
-            new DroneWindow(AccessIbl, ListWindow, drone , indexDroneInObservable, this).Show();
+            new DroneWindow(AccessIbl, ListWindow, drone , indexDroneInObservable, this).ShowDialog();
 
             //ClosingWindow = false; // עקרונית צריכים לעדכן את החלון הזה השאלה איך עושים
             //Close();

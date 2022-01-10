@@ -320,6 +320,7 @@ namespace PL
                     BReleaseDrone.Visibility = Visibility.Hidden;
                     BAssignPackage.IsEnabled = true;
 
+                    //battery colors.
                     if (MyDrone.BatteryStatus < 50)
                     {
                         if (MyDrone.BatteryStatus > 10)
@@ -331,7 +332,7 @@ namespace PL
                             PBbatr.Foreground = Brushes.Red;
                         }
                     }
-                    else
+                    else //MyDrone.BatteryStatus > 50
                     {
                         PBbatr.Foreground = Brushes.LimeGreen;
 
@@ -530,7 +531,7 @@ namespace PL
         }
 
         /// <summary>
-        ///  prevent the user from type an non number key 
+        ///  prevent the user from sending empty string
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -539,6 +540,7 @@ namespace PL
 
             if (TBmodel.Text.Length != 0)
             {
+                if (!BModalUpdate.IsEnabled)
                 BModalUpdate.IsEnabled = true;
             }
             else
@@ -547,18 +549,6 @@ namespace PL
             }
         }
 
-        /// <summary>
-        /// this event is checking tje limit for the contexet
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void TBmodel_KeyDown_1(object sender, KeyEventArgs e)
-        {
-            if (TBmodel.Text.Length > 5)
-            {
-                e.Handled = true;
-            }
-        }
 
         #endregion drone in operations  
 
@@ -585,13 +575,11 @@ namespace PL
         }
         #endregion close
 
-
-
         /// <summary>
         /// ///////////////////////////////////////////////////////Simultor//////////////////////////////////////////////
         /// </summary>
 
-
+        #region Simultor
 
 
         internal BackgroundWorker DroneSimultor; //defining the process(Worker).
@@ -639,9 +627,9 @@ namespace PL
             Bsimoltor.Visibility = Visibility.Hidden;
             BstopSimoltor.Visibility = Visibility.Visible;
 
-            TBmodel.IsEnabled = false; //
+            TBmodel.IsEnabled = false; //to prevent modal changing
         }
-
+        // int to help us save the ID.
         private int IdOfDeliveryInMyDrone;
         private int IdOfSenderCustomerInMyDrone;
         private int IdOfReceiverCustomerInMyDrone;
@@ -659,33 +647,34 @@ namespace PL
 
             listWindow.StatusDroneSelectorChanged(); //update the List of drones.
 
+            // to find the index when the fanc need to find in the observer collaction and update.
             int indexOfParcelInTheObservable;
             int indexOfSenderCustomerInTheObservable;
             int indexOfReceiverCustomerInTheObservable;
 
-            //
+            //switch betwen drone status and according to that update the display.
             switch (MyDrone.Statuses)
             {
                 case DroneStatuses.free:
-                    if (GRIDparcelInDelivery.Visibility == Visibility.Visible) //הוא במצב משוחרר כי הרגע הוא ביצע וסיים את השליחות
+                    if (GRIDparcelInDelivery.Visibility == Visibility.Visible) //the drone is free cuse he just done (we know that becuse the grid is opend) it is affter deliverd.
                     {
-                        //עדכון רשימת החבילות
+                        //update the parcels list
                         indexOfParcelInTheObservable = listWindow.ParcelToLists.IndexOf(listWindow.ParcelToLists.First(x => x.Id == IdOfDeliveryInMyDrone));
                         listWindow.ParcelToLists[indexOfParcelInTheObservable] = AccessIbl.GetParcelList().First(x => x.Id == IdOfDeliveryInMyDrone);
 
-                        //עדכון השולח ברשימת הלקוחות
+                        //update spasice customer in the Customer list (sender)
                         indexOfSenderCustomerInTheObservable = listWindow.CustomerToLists.IndexOf(listWindow.CustomerToLists.First(x => x.Id == IdOfSenderCustomerInMyDrone));
                         listWindow.CustomerToLists[indexOfSenderCustomerInTheObservable] = AccessIbl.GetCustomerList().First(x => x.Id == IdOfSenderCustomerInMyDrone);
 
-                        //עדכון המקבל ברשימת הלקוחות
+                        //update the reciver
                         indexOfReceiverCustomerInTheObservable = listWindow.CustomerToLists.IndexOf(listWindow.CustomerToLists.First(x => x.Id == IdOfReceiverCustomerInMyDrone));
                         listWindow.CustomerToLists[indexOfReceiverCustomerInTheObservable] = AccessIbl.GetCustomerList().First(x => x.Id == IdOfReceiverCustomerInMyDrone);
 
-                        //
+                        //display changes for thois stage
                         GRIDparcelInDelivery.Visibility = Visibility.Hidden;
                         TBnotAssigned.Visibility = Visibility.Visible;
                     }
-                    else //the drone is in a free state that has come out of charge.
+                    else //the drone is in a free state that has come out of charge and not like before (not affter deliver).
                     {
                         listWindow.BaseStationToLists.Clear();
                         List<BO.BaseStationsToList> baseStations1 = AccessIbl.GetBaseStationList().ToList();
@@ -716,7 +705,6 @@ namespace PL
                         IdOfDeliveryInMyDrone = MyDrone.Delivery.Id;
                         IdOfSenderCustomerInMyDrone = MyDrone.Delivery.Sender.Id;
                         IdOfReceiverCustomerInMyDrone = MyDrone.Delivery.Receiver.Id;
-                        // listWindow.StatusDroneSelectorChanged();
 
                         //update list of parcels
                         indexOfParcelInTheObservable = listWindow.ParcelToLists.IndexOf(listWindow.ParcelToLists.First(x => x.Id == MyDrone.Delivery.Id));
@@ -727,17 +715,13 @@ namespace PL
                     }
                     else if (AccessIbl.GetParcel(MyDrone.Delivery.Id).Delivered == null)
                     {
-                        // listWindow.StatusDroneSelectorChanged();
-
-                        //עדכון רשימת החבילות
+                        //update the parcels list
                         indexOfParcelInTheObservable = listWindow.ParcelToLists.IndexOf(listWindow.ParcelToLists.First(x => x.Id == MyDrone.Delivery.Id));
                         listWindow.ParcelToLists[indexOfParcelInTheObservable] = AccessIbl.GetParcelList().First(x => x.Id == MyDrone.Delivery.Id);
-
-                        //עדכון השולח ברשימת הלקוחות
+                        //update spasice customer in the Customer list (sender)
                         indexOfSenderCustomerInTheObservable = listWindow.CustomerToLists.IndexOf(listWindow.CustomerToLists.First(x => x.Id == MyDrone.Delivery.Sender.Id));
                         listWindow.CustomerToLists[indexOfSenderCustomerInTheObservable] = AccessIbl.GetCustomerList().First(x => x.Id == MyDrone.Delivery.Sender.Id);
-
-                        //עדכון המקבל ברשימת הלקוחות
+                        //update the reciver
                         indexOfReceiverCustomerInTheObservable = listWindow.CustomerToLists.IndexOf(listWindow.CustomerToLists.First(x => x.Id == MyDrone.Delivery.Receiver.Id));
                         listWindow.CustomerToLists[indexOfReceiverCustomerInTheObservable] = AccessIbl.GetCustomerList().First(x => x.Id == MyDrone.Delivery.Receiver.Id);
                     }
@@ -848,7 +832,7 @@ namespace PL
             TBmodel.IsEnabled = true;
         }
 
-
+        #endregion
 
         public void ReportProgressInSimultor()
         {

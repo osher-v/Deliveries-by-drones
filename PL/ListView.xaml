@@ -334,7 +334,7 @@
                 <Button  x:Name="BAdd"
   Style="{StaticResource MaterialDesignFloatingActionMiniButton}"
   ToolTip="MaterialDesignFloatingActionButton"
-  IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" Margin="933,6,111,34" Click="BAdd_Click">
+ Margin="933,6,111,34" Click="BAdd_Click">
                     <materialDesign:PackIcon
     Kind="add"
     Height="25"
@@ -343,7 +343,7 @@
                 <Button  x:Name="Bclose"
   Style="{StaticResource MaterialDesignFloatingActionMiniButton}"
   ToolTip="MaterialDesignFloatingActionButton"
-  IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" Margin="1017,6,21,34" Click="Bclose_Click_1">
+  Margin="1017,6,21,34" Click="Bclose_Click_1">
                     <materialDesign:PackIcon
     Kind="Close"
     Height="25"
