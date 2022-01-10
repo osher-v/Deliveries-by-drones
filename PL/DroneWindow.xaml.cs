@@ -596,18 +596,23 @@ namespace PL
 
         internal BackgroundWorker DroneSimultor; //defining the process(Worker).
 
-        internal bool isTimeRun;
+        //internal bool isTimeRun;
 
         /// <summary>
         /// The function creates the process.
         /// </summary>
         private void Simultor()
         {
-            DroneSimultor = new BackgroundWorker();
+            DroneSimultor = new BackgroundWorker() { WorkerReportsProgress = true, WorkerSupportsCancellation = true};
             DroneSimultor.DoWork += DroneSimultor_DoWork; //Operation function.
             DroneSimultor.ProgressChanged += DroneSimultor_ProgressChanged; //changed function.
 
-            DroneSimultor.WorkerReportsProgress = true; //אפשור דיווח השינוי מהתהליך
+            DroneSimultor.RunWorkerCompleted += DroneSimultor_RunWorkerCompleted;        
+        }
+
+        private void DroneSimultor_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            //throw new NotImplementedException();
         }
 
         /// <summary>
@@ -617,7 +622,7 @@ namespace PL
         /// <param name="e"></param>
         private void Bsimoltor_Click(object sender, RoutedEventArgs e)
         {
-            isTimeRun = true;
+            //isTimeRun = true;
 
             Simultor(); //call to function who creates the process.
 
@@ -763,49 +768,77 @@ namespace PL
 
         private void DroneSimultor_DoWork(object sender, DoWorkEventArgs e)
         {
-            while(isTimeRun)
-            {
-                switch (MyDrone.Statuses)
-                {
-                    case DroneStatuses.free:
-                        try
-                        {
-                            AccessIbl.AssignPackageToDdrone(MyDrone.Id);
-                        }
-                        catch
-                        {
-                            if (MyDrone.BatteryStatus < 100)
-                                AccessIbl.SendingDroneforCharging(MyDrone.Id);
-                        }
-                        break;
-                    case DroneStatuses.inMaintenance:
-                        AccessIbl.ReleaseDroneFromCharging(MyDrone.Id);
-                        if (MyDrone.BatteryStatus<100)
-                        AccessIbl.SendingDroneforCharging(MyDrone.Id);
-                        break;
-                    case DroneStatuses.busy:
-                        if (AccessIbl.GetParcel(MyDrone.Delivery.Id).PickedUp == null)
-                        {   
-                            AccessIbl.PickedUpPackageByTheDrone(MyDrone.Id);
-                        }
-                        else
-                        {
-                            AccessIbl.DeliveryPackageToTheCustomer(MyDrone.Id);
-                        }
-                        break;
-                    default:
-                        break;
-                }
-                DroneSimultor.ReportProgress(1);
-                Thread.Sleep(1500);
-            }
+            AccessIbl.sim(MyDrone.Id, ReportProgressInSimultor, IsTimeRun);
         }
+        //    while(!IsTimeRun())
+        //    {
+        //        switch (MyDrone.Statuses)
+        //        {
+        //            case DroneStatuses.free:
+        //                try
+        //                {
+        //                    AccessIbl.AssignPackageToDdrone(MyDrone.Id);
+        //                }
+        //                catch
+        //                {
+        //                    if (MyDrone.BatteryStatus < 100)
+        //                        AccessIbl.SendingDroneforCharging(MyDrone.Id);
+        //                }
+        //                break;
+        //            case DroneStatuses.inMaintenance:
+
+        //                TimeSpan interval = DateTime.Now - AccessIbl.AccessIdal.GetBaseCharge(droneId).StartChargeTime;
+        //                double horsnInCahrge = interval.Hours + (((double)interval.Minutes) / 60) + (((double)interval.Seconds) / 3600);
+        //                double batrryCharge = horsnInCahrge * DroneLoadingRate + drone.BatteryStatus;
+
+        //                while (batrryCharge < 100)
+        //                {
+
+        //                }
+
+        //                //AccessIbl.ReleaseDroneFromCharging(MyDrone.Id);
+        //                //if (MyDrone.BatteryStatus<100)
+        //                //AccessIbl.SendingDroneforCharging(MyDrone.Id);
+        //                break;
+        //            case DroneStatuses.busy:
+        //                if (AccessIbl.GetParcel(MyDrone.Delivery.Id).PickedUp == null)
+        //                {   
+        //                    AccessIbl.PickedUpPackageByTheDrone(MyDrone.Id);
+        //                }
+        //                else
+        //                {
+        //                    AccessIbl.DeliveryPackageToTheCustomer(MyDrone.Id);
+        //                }
+        //                break;
+        //            default:
+        //                break;
+        //        }
+        //        ReportProgressInSimultor();
+        //        Thread.Sleep(1500);
+        //    }
+
+        //    switch (MyDrone.Statuses)
+        //    {
+        //        case DroneStatuses.free:
+                   
+        //            break;
+        //        case DroneStatuses.inMaintenance:
+                  
+        //            break;
+        //        case DroneStatuses.busy:
+                   
+        //            break;
+        //        default:
+        //            break;
+        //    }
+        //}
 
         private void BstopSimoltor_Click(object sender, RoutedEventArgs e)
         {
+            DroneSimultor.CancelAsync();
             //while(MyDrone.Statuses!=DroneStatuses.free)
             //{ }
-            isTimeRun = false;
+            //isTimeRun = false;
             Bsimoltor.Visibility = Visibility.Visible;
             BstopSimoltor.Visibility = Visibility.Hidden;
 
@@ -817,15 +850,15 @@ namespace PL
 
 
 
-        //public void Help()
-        //{
-        //    DroneSimultor.ReportProgress(0);
-        //}
+        public void ReportProgressInSimultor()
+        {
+            DroneSimultor.ReportProgress(0);
+        }
 
-        //public bool Help2()
-        //{
-        //    return DroneSimultor.CancellationPending;
-        //}
+        public bool IsTimeRun()
+        {
+            return DroneSimultor.CancellationPending;
+        }
 
         //private void Bsimoltor_Click(object sender, RoutedEventArgs e)
         //{

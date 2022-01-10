@@ -137,9 +137,9 @@ namespace BL
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public void sim(int droneID, Action action, Func<bool> func)
+        public void sim(int droneID, Action ReportProgressInSimultor, Func<bool> IsTimeRun)
         {
-            new Simulator(this, droneID, action, func);
+            new Simulator(this, droneID, ReportProgressInSimultor, IsTimeRun);
         }
     }
 }

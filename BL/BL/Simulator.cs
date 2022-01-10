@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using BO;
 using System.Threading;
-using static BL.BL;
 
 namespace BL
 {
@@ -14,7 +13,7 @@ namespace BL
     /// </summary>
     class Simulator
     {
-        BlApi.IBL AccessIbl;
+        BL AccessIbl;
 
         enum StatusSim {Start, onGo, onCharge }
         private const int Delay = 1000;
@@ -23,15 +22,16 @@ namespace BL
         private const double TimeStep = Delay / 1000.0;
 
 
-        public Simulator(BlApi.IBL _bl,int droneID, Action action, Func<bool> func)
+        public Simulator(BL _bl,int droneID, Action ReportProgressInSimultor, Func<bool> IsTimeRun)
         {
+            DalApi.IDal AccessIdal = DalApi.DalFactory.GetDL();
             AccessIbl = _bl;
             Drone MyDrone = AccessIbl.GetDrone(droneID);
             var dal = AccessIbl;
             //area for seting puse time
             Drone drone = AccessIbl.GetDrone(droneID);
 
-            while (true)//isTimeRun)
+            while (!IsTimeRun())
             {
                 switch (MyDrone.Statuses)
                 {
@@ -43,13 +43,34 @@ namespace BL
                         catch
                         {
                             if (MyDrone.BatteryStatus < 100)
+                            {
+                                double b = MyDrone.BatteryStatus;
+
+                                AccessIbl.d
+
+
+
+
                                 AccessIbl.SendingDroneforCharging(MyDrone.Id);
+                            }
                         }
                         break;
                     case DroneStatuses.inMaintenance:
+
+                        TimeSpan interval = DateTime.Now - AccessIdal.GetBaseCharge(droneID).StartChargeTime;
+                        double horsnInCahrge = interval.Hours + (((double)interval.Minutes) / 60) + (((double)interval.Seconds) / 3600);
+                        double batrryCharge = horsnInCahrge * 10000 + drone.BatteryStatus; //DroneLoadingRate == 10000
+
+                        while (batrryCharge < 100)
+                        {
+                            AccessIbl.GetDroneList().First(x => x.Id == droneID).BatteryStatus += 3; // כל שנייה הוא מתקדם ב3%
+                            ReportProgressInSimultor();
+                            Thread.Sleep(1500);
+                        }
+
                         AccessIbl.ReleaseDroneFromCharging(MyDrone.Id);
-                        if (MyDrone.BatteryStatus < 100)
-                            AccessIbl.SendingDroneforCharging(MyDrone.Id);
+                        //if (MyDrone.BatteryStatus<100)
+                        //AccessIbl.SendingDroneforCharging(MyDrone.Id);
                         break;
                     case DroneStatuses.busy:
                         if (AccessIbl.GetParcel(MyDrone.Delivery.Id).PickedUp == null)
@@ -64,8 +85,23 @@ namespace BL
                     default:
                         break;
                 }
-                //DroneSimultor.ReportProgress(1);?????????????????????????????
+                ReportProgressInSimultor();
                 Thread.Sleep(1500);
+            }
+
+            switch (MyDrone.Statuses)
+            {
+                case DroneStatuses.free:
+
+                    break;
+                case DroneStatuses.inMaintenance:
+
+                    break;
+                case DroneStatuses.busy:
+
+                    break;
+                default:
+                    break;
             }
         }
     }
