@@ -20,11 +20,11 @@ namespace BL
         public Simulator(BL _bl,int droneID, Action ReportProgressInSimultor, Func<bool> IsTimeRun)
         {
             DalApi.IDal AccessIdal = DalApi.DalFactory.GetDL();
+
             AccessIbl = _bl;
-            //Drone MyDrone = AccessIbl.GetDrone(droneID);
+            
             var dal = AccessIbl;
-            //area for seting puse time
-            //Drone drone = AccessIbl.GetDrone(droneID);
+            
             double dis;
             double b;
 
@@ -92,23 +92,29 @@ namespace BL
                         }
 
                         AccessIbl.ReleaseDroneFromCharging(droneID); //שחרור מטעינה ברגע שהרחפן מגיע ל100
-                        
+                        ReportProgressInSimultor();
+
                         break;
                     case DroneStatuses.busy:
                         Drone MyDrone = AccessIbl.GetDrone(droneID);
+
                         if (AccessIbl.GetParcel(MyDrone.Delivery.Id).PickedUp == null)
                         {
                             b = droneToList.BatteryStatus;
                             Location d = new Location { longitude = droneToList.CurrentLocation.longitude, latitude = droneToList.CurrentLocation.latitude };
                             dis = MyDrone.Delivery.TransportDistance;
+
+                            double Latitude = Math.Abs((AccessIbl.GetCustomer(MyDrone.Delivery.Sender.Id).LocationOfCustomer.latitude - droneToList.CurrentLocation.latitude) / dis);
+                            double longitude = Math.Abs((AccessIbl.GetCustomer(MyDrone.Delivery.Sender.Id).LocationOfCustomer.longitude - droneToList.CurrentLocation.longitude) / dis);
+
                             while (dis > 1)
                             {
                                 droneToList.BatteryStatus -= AccessIbl.Free;
                                 dis -= 1;
-                                locationSteps(MyDrone.CurrentLocation, AccessIbl.GetCustomer(MyDrone.Delivery.Sender.Id).LocationOfCustomer, MyDrone);
+                                locationSteps(MyDrone.CurrentLocation, AccessIbl.GetCustomer(MyDrone.Delivery.Sender.Id).LocationOfCustomer, MyDrone, longitude, Latitude);
                                 droneToList.CurrentLocation = MyDrone.CurrentLocation;
                                 ReportProgressInSimultor();
-                                Thread.Sleep(500);
+                                Thread.Sleep(1000);
                             }
                             droneToList.CurrentLocation = d;
                             droneToList.BatteryStatus = b;
@@ -139,7 +145,7 @@ namespace BL
                                 
                                 ReportProgressInSimultor();
                                 dis -= 1;
-                                Thread.Sleep(500);
+                                Thread.Sleep(1000);
                             }
 
                             droneToList.BatteryStatus = b;
@@ -152,56 +158,52 @@ namespace BL
                 }
                 //ReportProgressInSimultor();
                 Thread.Sleep(1000);
-            }
-
-            //switch (MyDrone.Statuses)
-            //{
-            //    case DroneStatuses.free:
-
-            //        break;
-            //    case DroneStatuses.inMaintenance:
-
-            //        break;
-            //    case DroneStatuses.busy:
-
-            //        break;
-            //    default:
-            //        break;
-            //}
-        
+            }     
         }
-         private void locationSteps(Location locationOfDrone , Location locationOfNextStep, Drone myDrone) 
+
+        /// <summary>
+        /// The function takes the location of the drone and the target location and determines the
+        /// location of the drone relative to the progress.
+        /// </summary>
+        /// <param name="locationOfDrone">location of drone</param>
+        /// <param name="locationOfNextStep">location of next step</param>
+        /// <param name="myDrone">drone</param>
+        //private void locationSteps(Location locationOfDrone , Location locationOfNextStep, Drone myDrone) 
+        private void locationSteps(Location locationOfDrone, Location locationOfNextStep, Drone myDrone,double lon, double lat)
         {
             double droneLatitude = locationOfDrone.latitude;
             double droneLongitude = locationOfDrone.longitude;
 
             double nextStepLatitude = locationOfNextStep.latitude;
-            double nextStepLongitude = locationOfNextStep.latitude;
+            double nextStepLongitude = locationOfNextStep.longitude;
 
+            //Calculate the latitude of the new location.
             if (droneLatitude < nextStepLatitude)// ++++++
             {
-                double step = (nextStepLatitude - droneLatitude) / myDrone.Delivery.TransportDistance;
-                myDrone.CurrentLocation.latitude += step;
+                //double step = (nextStepLatitude - droneLatitude) / myDrone.Delivery.TransportDistance;
+                //myDrone.CurrentLocation.latitude += (nextStepLatitude - droneLatitude) / myDrone.Delivery.TransportDistance;
+                myDrone.CurrentLocation.latitude += lat;
             }
             else
             {
-                double step = (  droneLatitude - nextStepLatitude) / myDrone.Delivery.TransportDistance;
-                myDrone.CurrentLocation.latitude -= step;
-
+                //double step = (  droneLatitude - nextStepLatitude) / myDrone.Delivery.TransportDistance;
+                //myDrone.CurrentLocation.latitude -= (droneLatitude - nextStepLatitude) / myDrone.Delivery.TransportDistance;
+                myDrone.CurrentLocation.latitude -= lat;
             }
 
+            //Calculate the Longitude of the new location.
             if (droneLongitude < nextStepLongitude)//+++++++
             {
-                double step = (nextStepLongitude - droneLongitude) / myDrone.Delivery.TransportDistance;
-                myDrone.CurrentLocation.longitude += step;
+                // double step = (nextStepLongitude - droneLongitude) / myDrone.Delivery.TransportDistance;
+                //myDrone.CurrentLocation.longitude += (nextStepLongitude - droneLongitude) / myDrone.Delivery.TransportDistance;
+                myDrone.CurrentLocation.longitude += lon;
             }
             else
             {
-                double step = (droneLongitude - nextStepLongitude) / myDrone.Delivery.TransportDistance;
-                myDrone.CurrentLocation.longitude -= step;
-
+                //double step = (droneLongitude - nextStepLongitude) / myDrone.Delivery.TransportDistance;
+                //myDrone.CurrentLocation.longitude -= (droneLongitude - nextStepLongitude) / myDrone.Delivery.TransportDistance;
+                myDrone.CurrentLocation.longitude -= lon;
             }
-           // return myDrone.CurrentLocation; 
         }
     }
 }

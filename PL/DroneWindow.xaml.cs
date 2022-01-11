@@ -629,7 +629,7 @@ namespace PL
 
             TBmodel.IsEnabled = false; //to prevent modal changing
         }
-        // int to help us save the ID.
+        //int to help us save the ID.
         private int IdOfDeliveryInMyDrone;
         private int IdOfSenderCustomerInMyDrone;
         private int IdOfReceiverCustomerInMyDrone;
@@ -758,9 +758,7 @@ namespace PL
         private void BstopSimoltor_Click(object sender, RoutedEventArgs e)
         {
             DroneSimultor.CancelAsync();
-            //while(MyDrone.Statuses!=DroneStatuses.free)
-            //{ }
-            //isTimeRun = false;
+           
             Bsimoltor.Visibility = Visibility.Visible;
             BstopSimoltor.Visibility = Visibility.Hidden;
 
