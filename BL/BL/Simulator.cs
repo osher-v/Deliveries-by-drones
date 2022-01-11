@@ -128,8 +128,8 @@ namespace BL
 
                             dis = MyDrone.Delivery.TransportDistance;
 
-                            double Latitude = Math.Abs((AccessIbl.GetCustomer(MyDrone.Delivery.Sender.Id).LocationOfCustomer.latitude - AccessIbl.GetCustomer(MyDrone.Delivery.Receiver.Id).LocationOfCustomer.latitude) / dis);
-                            double longitude = Math.Abs((AccessIbl.GetCustomer(MyDrone.Delivery.Sender.Id).LocationOfCustomer.longitude - AccessIbl.GetCustomer(MyDrone.Delivery.Receiver.Id).LocationOfCustomer.longitude) / dis);
+                            double Latitude = Math.Abs((AccessIbl.GetCustomer(MyDrone.Delivery.Receiver.Id).LocationOfCustomer.latitude - droneToList.CurrentLocation.latitude) / dis);
+                            double longitude = Math.Abs((AccessIbl.GetCustomer(MyDrone.Delivery.Receiver.Id).LocationOfCustomer.longitude - droneToList.CurrentLocation.longitude) / dis);
 
                             while (dis > 1)
                             {
@@ -147,7 +147,7 @@ namespace BL
                                     default:
                                         break;
                                 }
-                                locationSteps(MyDrone.CurrentLocation, AccessIbl.GetCustomer(MyDrone.Delivery.Sender.Id).LocationOfCustomer, MyDrone, longitude, Latitude);
+                                locationSteps(MyDrone.CurrentLocation, AccessIbl.GetCustomer(MyDrone.Delivery.Receiver.Id).LocationOfCustomer, MyDrone, longitude, Latitude);
                                 droneToList.CurrentLocation = MyDrone.CurrentLocation;
                                 ReportProgressInSimultor();
                                 dis -= 1;

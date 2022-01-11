@@ -496,7 +496,7 @@ namespace PL
 
                         BDeliveryPackage.Visibility = Visibility.Hidden;
                         BAssignPackage.Visibility = Visibility.Visible;
-                        //BSendToCharge.Visibility = Visibility.Visible;
+                        BSendToCharge.Visibility = Visibility.Visible;
                         BSendToCharge.IsEnabled = true;
                         GRIDparcelInDelivery.Visibility = Visibility.Hidden;
                         TBnotAssigned.Visibility = Visibility.Visible;
@@ -600,7 +600,47 @@ namespace PL
 
         private void DroneSimultor_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            //throw new NotImplementedException();
+            Cursor = Cursors.Arrow;
+
+            Bsimoltor.Visibility = Visibility.Visible;
+
+            TBmodel.IsEnabled = true;
+            //The switch checks the drone's status value and opens buttons 
+            switch ((DroneStatuses)MyDrone.Statuses)
+            {
+                case DroneStatuses.free:
+                    BSendToCharge.Visibility = Visibility.Visible;
+                    BAssignPackage.Visibility = Visibility.Visible;
+                    BSendToCharge.IsEnabled = true;
+                    break;
+
+                case DroneStatuses.inMaintenance:
+                    BReleaseDrone.Visibility = Visibility.Visible;
+                    BAssignPackage.Visibility = Visibility.Visible;
+                    BAssignPackage.IsEnabled = false;
+                    break;
+
+                case DroneStatuses.busy:
+                    GRIDparcelInDelivery.Visibility = Visibility.Visible;
+                    TBnotAssigned.Visibility = Visibility.Hidden;
+
+                    //check the status to open the right button
+                    if (MyDrone.Delivery.OnTheWayToTheDestination)
+                    {
+                        BDeliveryPackage.Visibility = Visibility.Visible;
+                        BSendToCharge.Visibility = Visibility.Visible;
+                        BSendToCharge.IsEnabled = false;
+                    }
+                    else
+                    {
+                        BPickedUp.Visibility = Visibility.Visible;
+                        BSendToCharge.Visibility = Visibility.Visible;
+                        BSendToCharge.IsEnabled = false;
+                    }
+                    break;
+                default:
+                    break;
+            }
         }
 
         /// <summary>
@@ -758,14 +798,8 @@ namespace PL
         private void BstopSimoltor_Click(object sender, RoutedEventArgs e)
         {
             DroneSimultor.CancelAsync();
-           
-            Bsimoltor.Visibility = Visibility.Visible;
             BstopSimoltor.Visibility = Visibility.Hidden;
-
-            BSendToCharge.Visibility = Visibility.Visible;
-            BAssignPackage.Visibility = Visibility.Visible;
-            BAssignPackage.IsEnabled = true;
-            TBmodel.IsEnabled = true;
+            Cursor = Cursors.Wait;
         }
 
         #endregion
