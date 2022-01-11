@@ -754,69 +754,7 @@ namespace PL
         {
             AccessIbl.sim(MyDrone.Id, ReportProgressInSimultor, IsTimeRun);
         }
-        //    while(!IsTimeRun())
-        //    {
-        //        switch (MyDrone.Statuses)
-        //        {
-        //            case DroneStatuses.free:
-        //                try
-        //                {
-        //                    AccessIbl.AssignPackageToDdrone(MyDrone.Id);
-        //                }
-        //                catch
-        //                {
-        //                    if (MyDrone.BatteryStatus < 100)
-        //                        AccessIbl.SendingDroneforCharging(MyDrone.Id);
-        //                }
-        //                break;
-        //            case DroneStatuses.inMaintenance:
-
-        //                TimeSpan interval = DateTime.Now - AccessIbl.AccessIdal.GetBaseCharge(droneId).StartChargeTime;
-        //                double horsnInCahrge = interval.Hours + (((double)interval.Minutes) / 60) + (((double)interval.Seconds) / 3600);
-        //                double batrryCharge = horsnInCahrge * DroneLoadingRate + drone.BatteryStatus;
-
-        //                while (batrryCharge < 100)
-        //                {
-
-        //                }
-
-        //                //AccessIbl.ReleaseDroneFromCharging(MyDrone.Id);
-        //                //if (MyDrone.BatteryStatus<100)
-        //                //AccessIbl.SendingDroneforCharging(MyDrone.Id);
-        //                break;
-        //            case DroneStatuses.busy:
-        //                if (AccessIbl.GetParcel(MyDrone.Delivery.Id).PickedUp == null)
-        //                {   
-        //                    AccessIbl.PickedUpPackageByTheDrone(MyDrone.Id);
-        //                }
-        //                else
-        //                {
-        //                    AccessIbl.DeliveryPackageToTheCustomer(MyDrone.Id);
-        //                }
-        //                break;
-        //            default:
-        //                break;
-        //        }
-        //        ReportProgressInSimultor();
-        //        Thread.Sleep(1500);
-        //    }
-
-        //    switch (MyDrone.Statuses)
-        //    {
-        //        case DroneStatuses.free:
-                   
-        //            break;
-        //        case DroneStatuses.inMaintenance:
-                  
-        //            break;
-        //        case DroneStatuses.busy:
-                   
-        //            break;
-        //        default:
-        //            break;
-        //    }
-        //}
-
+       
         private void BstopSimoltor_Click(object sender, RoutedEventArgs e)
         {
             DroneSimultor.CancelAsync();
@@ -843,11 +781,5 @@ namespace PL
         {
             return DroneSimultor.CancellationPending;
         }
-
-        //private void Bsimoltor_Click(object sender, RoutedEventArgs e)
-        //{
-        //    DroneSimultor = new BackgroundWorker() { WorkerReportsProgress = true, WorkerSupportsCancellation = true };
-
-        //    DroneSimultor.DoWork += (sender, e) => AccessIbl.sim(MyDrone.Id, Help, Help2);
     }
 }
