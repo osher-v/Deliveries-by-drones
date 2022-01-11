@@ -141,6 +141,31 @@ namespace PL
         {
             TBID.BorderBrush = Brushes.Gray;
         }
+
+
+        #region close
+        /// <summary>
+        /// cancel the option to clik x to close the window 
+        /// </summary>
+        /// <param name="e">close window</param>
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            e.Cancel = ClosingWindow;
+        }
+
+        /// <summary>
+        /// to aloow closing again but just in the spcific close boutoon 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Bclose_Click(object sender, RoutedEventArgs e)
+        {
+            listWindow.IsEnabled = true;
+            ClosingWindow = false;
+            Close();
+        }
+        #endregion close
+
         #endregion
 
         #region drone in operations
@@ -219,17 +244,6 @@ namespace PL
             }
         }
 
-        /// <summary>
-        /// close drone window And updates the views accordingly
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void BClose1_Click(object sender, RoutedEventArgs e)
-        {
-            listWindow.IsEnabled = true;//allowd to use drone window list again
-            ClosingWindow = false;
-            Close();
-        }
 
         /// <summary>
         /// the fanction update the modal of the drone And updates the views accordingly 
@@ -541,7 +555,7 @@ namespace PL
             if (TBmodel.Text.Length != 0)
             {
                 if (!BModalUpdate.IsEnabled)
-                BModalUpdate.IsEnabled = true;
+                    BModalUpdate.IsEnabled = true;
             }
             else
             {
@@ -550,30 +564,27 @@ namespace PL
         }
 
 
-        #endregion drone in operations  
-
-        #region close
         /// <summary>
-        /// cancel the option to clik x to close the window 
-        /// </summary>
-        /// <param name="e">close window</param>
-        protected override void OnClosing(CancelEventArgs e)
-        {
-            e.Cancel = ClosingWindow;
-        }
-
-        /// <summary>
-        /// to aloow closing again but just in the spcific close boutoon 
+        /// close drone window And updates the views accordingly
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Bclose_Click(object sender, RoutedEventArgs e)
+        private void BClose1_Click(object sender, RoutedEventArgs e)
         {
-            listWindow.IsEnabled = true;
-            ClosingWindow = false;
-            Close();
+            if (Bsimoltor.Visibility == Visibility.Visible)
+            {
+                listWindow.IsEnabled = true;//allowd to use drone window list again
+                ClosingWindow = false;
+                Close();
+            }
+            else if (BstopSimoltor.Visibility == Visibility.Visible)
+            {
+                BstopSimoltor.Visibility = Visibility.Hidden;
+                DroneSimultor.CancelAsync();
+                Cursor = Cursors.Wait;
+            }
         }
-        #endregion close
+        #endregion drone in operations  
 
         /// <summary>
         /// ///////////////////////////////////////////////////////Simultor//////////////////////////////////////////////
@@ -591,20 +602,33 @@ namespace PL
         /// </summary>
         private void Simultor()
         {
-            DroneSimultor = new BackgroundWorker() { WorkerReportsProgress = true, WorkerSupportsCancellation = true};
+            DroneSimultor = new BackgroundWorker() { WorkerReportsProgress = true, WorkerSupportsCancellation = true };
             DroneSimultor.DoWork += DroneSimultor_DoWork; //Operation function.
             DroneSimultor.ProgressChanged += DroneSimultor_ProgressChanged; //changed function.
 
-            DroneSimultor.RunWorkerCompleted += DroneSimultor_RunWorkerCompleted;        
+            DroneSimultor.RunWorkerCompleted += DroneSimultor_RunWorkerCompleted;
         }
 
         private void DroneSimultor_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            Cursor = Cursors.Arrow;
 
-            Bsimoltor.Visibility = Visibility.Visible;
+            if (BstopSimoltor.Visibility == Visibility.Visible)
+            {
+                Cursor = Cursors.Arrow;
 
-            TBmodel.IsEnabled = true;
+                BstopSimoltor.Visibility = Visibility.Hidden;
+                BstopSimoltor.IsEnabled = true;
+
+                Bsimoltor.Visibility = Visibility.Visible;
+
+                TBmodel.IsEnabled = true;
+            }
+            else
+            {
+                listWindow.IsEnabled = true;//allowd to use drone window list again
+                ClosingWindow = false;
+                Close();
+            }
             //The switch checks the drone's status value and opens buttons 
             switch ((DroneStatuses)MyDrone.Statuses)
             {
@@ -651,6 +675,7 @@ namespace PL
         private void Bsimoltor_Click(object sender, RoutedEventArgs e)
         {
             //isTimeRun = true;
+            listWindow.IsEnabled = true;
 
             Simultor(); //call to function who creates the process.
 
@@ -794,11 +819,11 @@ namespace PL
         {
             AccessIbl.sim(MyDrone.Id, ReportProgressInSimultor, IsTimeRun);
         }
-       
+
         private void BstopSimoltor_Click(object sender, RoutedEventArgs e)
         {
             DroneSimultor.CancelAsync();
-            BstopSimoltor.Visibility = Visibility.Hidden;
+            BstopSimoltor.IsEnabled = false;
             Cursor = Cursors.Wait;
         }
 

@@ -43,7 +43,7 @@
         </Grid>
 
         <!--this grid is for update option-->
-        <Grid x:Name="updateDrone" Visibility="Hidden">
+        <Grid x:Name="updateDrone" Visibility="Visible">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
