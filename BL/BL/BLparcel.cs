@@ -51,28 +51,31 @@ namespace BL
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void AssignPackageToDdrone(int droneId)
         {
-            DroneToList myDrone = DronesBL.Find(x => x.Id == droneId);
-            if (myDrone == default)
-                throw new NonExistentObjectException();
+            lock (AccessIdal)
+            {
+                DroneToList myDrone = DronesBL.Find(x => x.Id == droneId);
+                if (myDrone == default)
+                    throw new NonExistentObjectException();
 
-            if (myDrone.Statuses != DroneStatuses.free)
-                throw new DroneCantBeAssigend();
+                if (myDrone.Statuses != DroneStatuses.free)
+                    throw new DroneCantBeAssigend();
 
-            IEnumerable<DO.Parcel> tempParcels = from item in AccessIdal.GetParcelList(x => x.DroneId == 0 &&
-                                                      myDrone.MaxWeight >= (WeightCategories)x.Weight && possibleDistance(x, myDrone))
-                                                 orderby item.Priority descending, item.Weight descending,
-                                                         GetDistance(GetCustomer(item.SenderId).LocationOfCustomer, myDrone.CurrentLocation)
-                                                 select item;
+                IEnumerable<DO.Parcel> tempParcels = from item in AccessIdal.GetParcelList(x => x.DroneId == 0 &&
+                                                          myDrone.MaxWeight >= (WeightCategories)x.Weight && possibleDistance(x, myDrone))
+                                                     orderby item.Priority descending, item.Weight descending,
+                                                             GetDistance(GetCustomer(item.SenderId).LocationOfCustomer, myDrone.CurrentLocation)
+                                                     select item;
 
-            if (!tempParcels.Any())
-                throw new NoSuitablePsrcelWasFoundToBelongToTheDrone();
+                if (!tempParcels.Any())
+                    throw new NoSuitablePsrcelWasFoundToBelongToTheDrone();
 
-            DO.Parcel theRightParcel = tempParcels.First();//מביא את האיבר הראשון שהוא המתאים ביותר לאחר כל הסינונים והמיונים
+                DO.Parcel theRightParcel = tempParcels.First();//מביא את האיבר הראשון שהוא המתאים ביותר לאחר כל הסינונים והמיונים
 
-            myDrone.Statuses = DroneStatuses.busy;
-            myDrone.NumberOfLinkedParcel = theRightParcel.Id;
+                myDrone.Statuses = DroneStatuses.busy;
+                myDrone.NumberOfLinkedParcel = theRightParcel.Id;
 
-            AccessIdal.AssignPackageToDdrone(theRightParcel.Id, droneId);
+                AccessIdal.AssignPackageToDdrone(theRightParcel.Id, droneId);
+            }
         }
 
         /// <summary>
@@ -126,63 +129,69 @@ namespace BL
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void PickedUpPackageByTheDrone(int droneId)
         {
-            DroneToList drone = DronesBL.Find(x => x.Id == droneId);
-            if (drone == default)
-                throw new NonExistentObjectException();
+            lock (AccessIdal)
+            {
+                DroneToList drone = DronesBL.Find(x => x.Id == droneId);
+                if (drone == default)
+                    throw new NonExistentObjectException();
 
-            if (drone.NumberOfLinkedParcel == 0)//Deafult if he do not Assign to parcel.
-                throw new UnableToCollectParcel("The drone is not associated with the package");
+                if (drone.NumberOfLinkedParcel == 0)//Deafult if he do not Assign to parcel.
+                    throw new UnableToCollectParcel("The drone is not associated with the package");
 
-            DO.Parcel parcelIDal = AccessIdal.GetParcel(drone.NumberOfLinkedParcel);
+                DO.Parcel parcelIDal = AccessIdal.GetParcel(drone.NumberOfLinkedParcel);
 
-            if (parcelIDal.PickedUp != null)
-                throw new UnableToCollectParcel("The parcel has already been collected");
+                if (parcelIDal.PickedUp != null)
+                    throw new UnableToCollectParcel("The parcel has already been collected");
 
-            Location locationOfSender = GetCustomer(parcelIDal.SenderId).LocationOfCustomer;
-            drone.BatteryStatus -= GetDistance(drone.CurrentLocation, locationOfSender) * Free;
-            drone.CurrentLocation = locationOfSender;
+                Location locationOfSender = GetCustomer(parcelIDal.SenderId).LocationOfCustomer;
+                drone.BatteryStatus -= GetDistance(drone.CurrentLocation, locationOfSender) * Free;
+                drone.CurrentLocation = locationOfSender;
 
-            AccessIdal.PickedUpPackageByTheDrone(parcelIDal.Id);
+                AccessIdal.PickedUpPackageByTheDrone(parcelIDal.Id);
+            }
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void DeliveryPackageToTheCustomer(int droneId)
         {
-            DroneToList drone = DronesBL.Find(x => x.Id == droneId);
-            if (drone == default)
-                throw new NonExistentObjectException();
-
-            if (drone.NumberOfLinkedParcel == 0)//Deafult if he do not Assign to parcel.
-                throw new DeliveryCannotBeMade("The drone is not associated with the package");
-
-            DO.Parcel parcelIDal = AccessIdal.GetParcel(drone.NumberOfLinkedParcel);
-
-            if (parcelIDal.PickedUp != null && parcelIDal.Delivered == null)
+            lock (AccessIdal)
             {
-                Location locationOfTarget = GetCustomer(parcelIDal.TargetId).LocationOfCustomer;
-                switch ((WeightCategories)parcelIDal.Weight)
+                DroneToList drone = DronesBL.Find(x => x.Id == droneId);
+                if (drone == default)
+                    throw new NonExistentObjectException();
+
+                if (drone.NumberOfLinkedParcel == 0)//Deafult if he do not Assign to parcel.
+                    throw new DeliveryCannotBeMade("The drone is not associated with the package");
+
+                DO.Parcel parcelIDal = AccessIdal.GetParcel(drone.NumberOfLinkedParcel);
+
+                if (parcelIDal.PickedUp != null && parcelIDal.Delivered == null)
                 {
-                    case WeightCategories.light:
-                        drone.BatteryStatus -= GetDistance(locationOfTarget, drone.CurrentLocation) * LightWeightCarrier;
-                        break;
-                    case WeightCategories.medium:
-                        drone.BatteryStatus -= GetDistance(locationOfTarget, drone.CurrentLocation) * MediumWeightBearing;
-                        break;
-                    case WeightCategories.heavy:
-                        drone.BatteryStatus -= GetDistance(locationOfTarget, drone.CurrentLocation) * CarriesHeavyWeight;
-                        break;
-                    default:
-                        break;
+                    Location locationOfTarget = GetCustomer(parcelIDal.TargetId).LocationOfCustomer;
+                    switch ((WeightCategories)parcelIDal.Weight)
+                    {
+                        case WeightCategories.light:
+                            drone.BatteryStatus -= GetDistance(locationOfTarget, drone.CurrentLocation) * LightWeightCarrier;
+                            break;
+                        case WeightCategories.medium:
+                            drone.BatteryStatus -= GetDistance(locationOfTarget, drone.CurrentLocation) * MediumWeightBearing;
+                            break;
+                        case WeightCategories.heavy:
+                            drone.BatteryStatus -= GetDistance(locationOfTarget, drone.CurrentLocation) * CarriesHeavyWeight;
+                            break;
+                        default:
+                            break;
+                    }
+                    drone.CurrentLocation = locationOfTarget;
+                    drone.Statuses = DroneStatuses.free;
+                    drone.NumberOfLinkedParcel = 0; //importent.
+                    AccessIdal.DeliveryPackageToTheCustomer(parcelIDal.Id);
                 }
-                drone.CurrentLocation = locationOfTarget;
-                drone.Statuses = DroneStatuses.free;
-                drone.NumberOfLinkedParcel = 0; //importent.
-                AccessIdal.DeliveryPackageToTheCustomer(parcelIDal.Id);
+                else if (parcelIDal.PickedUp == null)
+                    throw new DeliveryCannotBeMade("Error: parcel not yet collected");
+                else if (parcelIDal.Delivered != null)
+                    throw new DeliveryCannotBeMade("Error: The parcel has already been delivered");
             }
-            else if (parcelIDal.PickedUp == null)
-                throw new DeliveryCannotBeMade("Error: parcel not yet collected");
-            else if (parcelIDal.Delivered != null)
-                throw new DeliveryCannotBeMade("Error: The parcel has already been delivered");
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]

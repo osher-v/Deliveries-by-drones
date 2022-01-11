@@ -136,7 +136,7 @@ namespace BL
             return DronesBL.FindAll(x => predicate == null ? true : predicate(x));
         }
 
-        [MethodImpl(MethodImplOptions.Synchronized)]
+        //[MethodImpl(MethodImplOptions.Synchronized)]
         public void sim(int droneID, Action ReportProgressInSimultor, Func<bool> IsTimeRun)
         {
             new Simulator(this, droneID, ReportProgressInSimultor, IsTimeRun);
