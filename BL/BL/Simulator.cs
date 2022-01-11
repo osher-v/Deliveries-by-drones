@@ -124,7 +124,12 @@ namespace BL
                         else // PickedUp != null
                         {
                             b = droneToList.BatteryStatus;
+                            Location d = new Location { longitude = droneToList.CurrentLocation.longitude, latitude = droneToList.CurrentLocation.latitude };
+
                             dis = MyDrone.Delivery.TransportDistance;
+
+                            double Latitude = Math.Abs((AccessIbl.GetCustomer(MyDrone.Delivery.Sender.Id).LocationOfCustomer.latitude - AccessIbl.GetCustomer(MyDrone.Delivery.Receiver.Id).LocationOfCustomer.latitude) / dis);
+                            double longitude = Math.Abs((AccessIbl.GetCustomer(MyDrone.Delivery.Sender.Id).LocationOfCustomer.longitude - AccessIbl.GetCustomer(MyDrone.Delivery.Receiver.Id).LocationOfCustomer.longitude) / dis);
 
                             while (dis > 1)
                             {
@@ -142,13 +147,15 @@ namespace BL
                                     default:
                                         break;
                                 }
-                                
+                                locationSteps(MyDrone.CurrentLocation, AccessIbl.GetCustomer(MyDrone.Delivery.Sender.Id).LocationOfCustomer, MyDrone, longitude, Latitude);
+                                droneToList.CurrentLocation = MyDrone.CurrentLocation;
                                 ReportProgressInSimultor();
                                 dis -= 1;
                                 Thread.Sleep(1000);
                             }
 
                             droneToList.BatteryStatus = b;
+                            droneToList.CurrentLocation = d;
                             AccessIbl.DeliveryPackageToTheCustomer(MyDrone.Id);
                             ReportProgressInSimultor();
                         }

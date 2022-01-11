@@ -111,7 +111,8 @@ namespace BL
                 }
                 else//PickedUp
                 {
-                    printDrone.Delivery.TransportDistance = GetDistance(locationOfSender, locationOfReciver);
+                    //printDrone.Delivery.TransportDistance = GetDistance(locationOfSender, locationOfReciver);
+                    printDrone.Delivery.TransportDistance = GetDistance(printDrone.CurrentLocation, locationOfReciver);
                 }
 
                 printDrone.Delivery.Id = holdDalParcel.Id;
