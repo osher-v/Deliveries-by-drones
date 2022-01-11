@@ -827,8 +827,6 @@ namespace PL
             Cursor = Cursors.Wait;
         }
 
-        #endregion
-
         public void ReportProgressInSimultor()
         {
             DroneSimultor.ReportProgress(0);
@@ -838,5 +836,7 @@ namespace PL
         {
             return DroneSimultor.CancellationPending;
         }
+        #endregion
+
     }
 }
