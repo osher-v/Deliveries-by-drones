@@ -99,15 +99,18 @@ namespace BL
                         if (AccessIbl.GetParcel(MyDrone.Delivery.Id).PickedUp == null)
                         {
                             b = droneToList.BatteryStatus;
+                            Location d = new Location { longitude = droneToList.CurrentLocation.longitude, latitude = droneToList.CurrentLocation.latitude };
                             dis = MyDrone.Delivery.TransportDistance;
                             while (dis > 1)
                             {
                                 droneToList.BatteryStatus -= AccessIbl.Free;
-                                ReportProgressInSimultor();
                                 dis -= 1;
-                                Thread.Sleep(300);
+                                locationSteps(MyDrone.CurrentLocation, AccessIbl.GetCustomer(MyDrone.Delivery.Sender.Id).LocationOfCustomer, MyDrone);
+                                droneToList.CurrentLocation = MyDrone.CurrentLocation;
+                                ReportProgressInSimultor();
+                                Thread.Sleep(500);
                             }
-
+                            droneToList.CurrentLocation = d;
                             droneToList.BatteryStatus = b;
                             AccessIbl.PickedUpPackageByTheDrone(MyDrone.Id);
                             ReportProgressInSimultor();
@@ -136,7 +139,7 @@ namespace BL
                                 
                                 ReportProgressInSimultor();
                                 dis -= 1;
-                                Thread.Sleep(300);
+                                Thread.Sleep(500);
                             }
 
                             droneToList.BatteryStatus = b;
@@ -165,6 +168,40 @@ namespace BL
             //    default:
             //        break;
             //}
+        
+        }
+         private void locationSteps(Location locationOfDrone , Location locationOfNextStep, Drone myDrone) 
+        {
+            double droneLatitude = locationOfDrone.latitude;
+            double droneLongitude = locationOfDrone.longitude;
+
+            double nextStepLatitude = locationOfNextStep.latitude;
+            double nextStepLongitude = locationOfNextStep.latitude;
+
+            if (droneLatitude < nextStepLatitude)// ++++++
+            {
+                double step = (nextStepLatitude - droneLatitude) / myDrone.Delivery.TransportDistance;
+                myDrone.CurrentLocation.latitude += step;
+            }
+            else
+            {
+                double step = (  droneLatitude - nextStepLatitude) / myDrone.Delivery.TransportDistance;
+                myDrone.CurrentLocation.latitude -= step;
+
+            }
+
+            if (droneLongitude < nextStepLongitude)//+++++++
+            {
+                double step = (nextStepLongitude - droneLongitude) / myDrone.Delivery.TransportDistance;
+                myDrone.CurrentLocation.longitude += step;
+            }
+            else
+            {
+                double step = (droneLongitude - nextStepLongitude) / myDrone.Delivery.TransportDistance;
+                myDrone.CurrentLocation.longitude -= step;
+
+            }
+           // return myDrone.CurrentLocation; 
         }
     }
 }
