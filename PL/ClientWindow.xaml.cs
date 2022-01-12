@@ -28,9 +28,6 @@ namespace PL
 
         public Customer customer;
 
-        //public int indexSelected;
-        //public int customerId;
-
         /// <summary>
         /// ctor of ClientWindow.
         /// </summary>

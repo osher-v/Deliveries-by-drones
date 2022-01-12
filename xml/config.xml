@@ -4,10 +4,10 @@
 
 	<dl>xml</dl>
 	<dl-packages>
-    <!--<xml namespace="DalXml" class="DalXml">DalXml</xml>-->   <!--to run on files--> 
-    <xml namespace="DalObject" class="DalObject">DalObject</xml> <!--to run on DalObject-->
+    <!--<xml namespace="DalXml" class="DalXml">DalXml</xml>-->  <!--to run on files-->
+    <xml namespace="DalObject" class="DalObject">DalObject</xml>  <!--to run on DalObject-->
 	</dl-packages>
-	
+  
 </config>
 
 
