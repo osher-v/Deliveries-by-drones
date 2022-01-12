@@ -29,7 +29,7 @@ namespace PL
 
         public bool ClosingWindow { get; private set; } = true; //a bool to help us disable the x bootum
 
-        #region add ctor 
+        #region add situation 
         /// <summary>
         /// adding constractor
         /// </summary>
@@ -77,9 +77,9 @@ namespace PL
                                 BO.BaseStationsToList stationsToList = AccessIbl.GetBaseStationList().ToList().Find(i => i.Id == baseStationAdd.Id);
                                 ListWindow.BaseStationToLists.Add(stationsToList); //Updating the observer list of stations.
 
-                                ListWindow.IsEnabled = true; //to open the "ListWindow" window
+                                ListWindow.IsEnabled = true; //to open the "ListWindow" window.
 
-                                ClosingWindow = false; //to enable to Close the "BaseStationWindow" window
+                                ClosingWindow = false; //to enable to close the "BaseStationWindow" window.
                                 Close();
                                 break;
                             default:
@@ -123,7 +123,7 @@ namespace PL
                 {
                     e.Handled = false;
                 }
-            }  
+            }
         }
 
         /// <summary>
@@ -146,7 +146,7 @@ namespace PL
                 {
                     e.Handled = false;
                 }
-            }   
+            }
         }
 
         /// <summary>
@@ -193,13 +193,13 @@ namespace PL
         }
         #endregion מטפל בבדיקות כפתורים
 
-        #endregion add ctor 
+        #endregion add situation 
 
         public BaseStation baseStation;
 
         public int indexSelected; //the location index in the observer of the stations in the ListView window.
 
-        #region update ctor
+        #region update situation
 
         /// <summary>
         /// update constractor
@@ -238,22 +238,23 @@ namespace PL
         {
             try
             {
-                AccessIbl.UpdateBaseStaison(baseStation.Id, TBUpdateStaitonName.Text, TBstationFreeChargeSlotS.Text);
+                AccessIbl.UpdateBaseStaison(baseStation.Id, TBUpdateStaitonName.Text, TBstationFreeChargeSlotS.Text); //update the logic layer.
                 MessageBoxResult result = MessageBox.Show("The operation was successful", "info", MessageBoxButton.OK, MessageBoxImage.Information);
                 switch (result)
                 {
                     case MessageBoxResult.OK:
-                        ListWindow.BaseStationToLists[indexSelected] = AccessIbl.GetBaseStationList().First(x => x.Id == baseStation.Id);//עדכון המשקיף
+                        ListWindow.BaseStationToLists[indexSelected] = AccessIbl.GetBaseStationList().First(x => x.Id == baseStation.Id);//Updating the observer list of stations.
 
-                        ListWindow.IsEnabled = true;
-                        ClosingWindow = false;
+                        ListWindow.IsEnabled = true; //to open the "ListWindow" window.
+
+                        ClosingWindow = false; //to enable to close the "BaseStationWindow" window.
                         Close();
                         break;
                     default:
                         break;
                 }
             }
-            catch (MoreDroneInChargingThanTheProposedChargingStations ex)
+            catch (MoreDroneInChargingThanTheProposedChargingStations ex) //The problem is with the stationFreeChargeSlots field.
             {
                 MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
                 TBstationFreeChargeSlotS.Text = "";
@@ -261,12 +262,8 @@ namespace PL
             }
         }
 
-        
-
-        #endregion update ctor
-
         /// <summary>
-        /// Opening a drone window
+        /// Opening a drone window from the List of drone in Charge.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -283,31 +280,44 @@ namespace PL
                 Close();
             }
         }
+
+        /// <summary>
+        /// The function opens the option to update as soon as the fields are full and closes when one of the fields is equal to 0.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void TBUpdateStaitonName_KeyUp(object sender, KeyEventArgs e)
         {
-                if (TBstationFreeChargeSlotS.Text.Length != 0 && TBUpdateStaitonName.Text.Length != 0)
-                {
-                    if (!BUpdate.IsEnabled)
-                        BUpdate.IsEnabled = true;
-                }
-                else
-                {
-                    BUpdate.IsEnabled = false;
-                }
+            if (TBstationFreeChargeSlotS.Text.Length != 0 && TBUpdateStaitonName.Text.Length != 0)
+            {
+                if (!BUpdate.IsEnabled)
+                    BUpdate.IsEnabled = true;
+            }
+            else //one of the fields is equal to 0.
+            {
+                BUpdate.IsEnabled = false;
+            }
         }
 
+        /// <summary>
+        /// The function opens the option to update as soon as the fields are full and closes when one of the fields is equal to 0.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void TBstationFreeChargeSlotS_KeyUp(object sender, KeyEventArgs e)
         {
-                if (TBstationFreeChargeSlotS.Text.Length != 0 && TBUpdateStaitonName.Text.Length != 0)
-                {
-                    if (!BUpdate.IsEnabled)
-                        BUpdate.IsEnabled = true;
-                }
-                else
-                {
-                    BUpdate.IsEnabled = false;
-                }
+            if (TBstationFreeChargeSlotS.Text.Length != 0 && TBUpdateStaitonName.Text.Length != 0)
+            {
+                if (!BUpdate.IsEnabled)
+                    BUpdate.IsEnabled = true;
+            }
+            else//one of the fields is equal to 0.
+            {
+                BUpdate.IsEnabled = false;
+            }
         }
+
+        #endregion update situation
 
         #region close
         /// <summary>
