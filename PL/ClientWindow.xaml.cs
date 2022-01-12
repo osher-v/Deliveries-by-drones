@@ -351,7 +351,5 @@ namespace PL
             Close();
         }
         #endregion close  
-
-
     }
 }

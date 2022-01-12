@@ -201,6 +201,12 @@ namespace BlApi
         public void RemoveParcel(int ParcelId);
         #endregion Functions for remove options
 
-        public void sim(int droneID, Action action, Func<bool> func);
+        /// <summary>
+        /// The function start the simulator class.
+        /// </summary>
+        /// <param name="droneID">drone ID</param>
+        /// <param name="ReportProgressInSimultor">Pointer to the function that triggers the change reporting.</param>
+        /// <param name="IsTimeRun">Pointer to a function that returns whether the process should close.</param>
+        public void sim(int droneID, Action ReportProgressInSimultor, Func<bool> IsTimeRun);
     }
 }
