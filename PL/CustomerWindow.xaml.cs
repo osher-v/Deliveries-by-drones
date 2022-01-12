@@ -23,18 +23,15 @@ namespace PL
     /// </summary>
     public partial class CustomerWindow : Window
     {
-        //Access object to the BL class.
-        public BlApi.IBL AccessIbl;
+        public BlApi.IBL AccessIbl; //Access object to the BL class.
 
-        //object of ListView window.
-        public ListView ListWindow;
+        public ListView ListWindow; //object of ListView window.
 
-        /// <summary> a bool to help us disable the x bootum  </summary>
-        public bool ClosingWindow { get; private set; } = true;
+        public bool ClosingWindow { get; private set; } = true; //a bool to help us disable the x bootum.
 
-        #region add Customer
+        #region add situation
         /// <summary>
-        /// add constractor.
+        /// add ctor.
         /// </summary>
         /// <param name="bl"></param>
         /// <param name="_ListWindow"></param>
@@ -44,7 +41,7 @@ namespace PL
 
             Width = 440;
 
-            addCustomer.Visibility = Visibility.Visible;
+            addCustomer.Visibility = Visibility.Visible; //open the Grid of add action.
 
             AccessIbl = bl;
 
@@ -64,7 +61,7 @@ namespace PL
             {
                 if (e.Key < Key.NumPad0 || e.Key > Key.NumPad9) // we want keys from the num pud too
                 {
-                    e.Handled = true;
+                    e.Handled = true; //In this case, pressing the keyboard is not enabled.
                 }
                 else
                 {
@@ -86,7 +83,7 @@ namespace PL
             {
                 if (e.Key < Key.NumPad0 || e.Key > Key.NumPad9) // we want keys from the num pud too
                 {
-                    e.Handled = true;
+                    e.Handled = true; //In this case, pressing the keyboard is not enabled.
                 }
                 else
                 {
@@ -106,10 +103,10 @@ namespace PL
             {
                 if (e.Key < Key.NumPad0 || e.Key > Key.NumPad9) // we want keys from the num pud too
                 {
-                    if (e.Key == Key.Decimal)
+                    if (e.Key == Key.Decimal) //Open option of "."
                         e.Handled = false;
                     else
-                        e.Handled = true;
+                        e.Handled = true; //In this case, pressing the keyboard is not enabled.
                 }
                 else
                 {
@@ -130,10 +127,10 @@ namespace PL
             {
                 if (e.Key < Key.NumPad0 || e.Key > Key.NumPad9) // we want keys from the num pud too
                 {
-                    if (e.Key == Key.Decimal)
+                    if (e.Key == Key.Decimal) //Open option of "."
                         e.Handled = false;
                     else
-                        e.Handled = true;
+                        e.Handled = true; //In this case, pressing the keyboard is not enabled.
                 }
                 else
                 {
@@ -156,7 +153,7 @@ namespace PL
                 //Check that the location does not exceed the boundaries of Gush Dan.
                 if (!(double.Parse(TBcustomerLongtude.Text) < 31.8 || double.Parse(TBcustomerLongtude.Text) > 32.2 || double.Parse(TBcustomerLattude.Text) < 34.6 || double.Parse(TBcustomerLattude.Text) > 35.1))
                 {
-                    BO.Customer customerAdd = new Customer()
+                    BO.Customer customerAdd = new Customer() //Create an object to add to the data.
                     {
                         Id = int.Parse(TBcustomerId.Text),
                         Name = TBcustomerName.Text,
@@ -166,23 +163,24 @@ namespace PL
 
                     try
                     {
-                        AccessIbl.AddCustomer(customerAdd);
+                        AccessIbl.AddCustomer(customerAdd); //update the logic layer.
                         MessageBoxResult result = MessageBox.Show("The operation was successful", "info", MessageBoxButton.OK, MessageBoxImage.Information);
                         switch (result)
                         {
                             case MessageBoxResult.OK:
                                 BO.CustomerToList customersToList = AccessIbl.GetCustomerList().ToList().Find(i => i.Id == customerAdd.Id);
-                                ListWindow.CustomerToLists.Add(customersToList); //Updating the observer list of stations.
+                                ListWindow.CustomerToLists.Add(customersToList); //Updating the observer list of customers.
 
-                                ListWindow.IsEnabled = true;
-                                ClosingWindow = false;
+                                ListWindow.IsEnabled = true; //open the "ListWindow" window.
+
+                                ClosingWindow = false; //to enable to close the "BaseStationWindow" window.
                                 Close();
                                 break;
                             default:
                                 break;
                         }
                     }
-                    catch (AddAnExistingObjectException ex)
+                    catch (AddAnExistingObjectException ex) //The problem is with the ID number field.
                     {
                         MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
                         TBcustomerId.Text = "";
@@ -199,12 +197,203 @@ namespace PL
                 MessageBox.Show("נא ודאו שכל השדות מלאים", "!שגיאה", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-        
-        #endregion בנאי הוספה
+
+        #endregion add situation
+
+        public Customer customer;
+
+        public int indexSelected; //the location index in the observer of the customers in the ListView window.
+
+        public ParcelWindow parcelWindow; //for using if we enter from parcel window.
+
+        public ClientWindow clientWindow;//for using if we enter from client window.
+
+        #region update customer 
+
+        /// <summary>
+        /// update ctor.
+        /// </summary>
+        /// <param name="bl"></param>
+        /// <param name="_ListWindow"></param>
+        /// <param name="CustomerTo"></param>
+        /// <param name="_indexCustomer"></param>
+        public CustomerWindow(BlApi.IBL bl, ListView _ListWindow, CustomerToList CustomerTo, int _indexCustomer, ParcelWindow _parcelWindow = null, ClientWindow _clientWindow=null)
+        {
+            InitializeComponent();
+
+            updateCustomer.Visibility = Visibility.Visible;
+
+            AccessIbl = bl;
+
+            ListWindow = _ListWindow;
+
+            indexSelected = _indexCustomer;
+
+            ////Connecting customer data.
+            customer = AccessIbl.GetCustomer(CustomerTo.Id);
+            DataContext = customer;
+
+            listOfCustomeSend.ItemsSource = AccessIbl.GetCustomer(customer.Id).ParcelFromTheCustomer; //Connecting List of parcel from the customer.
+            listOfCustomerReceive.ItemsSource = AccessIbl.GetCustomer(customer.Id).ParcelToTheCustomer; //Connecting List of parcel to the customer.
+
+            parcelWindow = _parcelWindow;
+            clientWindow = _clientWindow;
+        }
+
+        /// <summary>
+        /// The function updates customer details.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BUpdate_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                AccessIbl.UpdateCustomer(customer.Id, TBUpdateCustomerName.Text, TBUpdateCustomerPhoneNumber.Text); //update the logic layer.
+                MessageBoxResult result = MessageBox.Show("The operation was successful", "info", MessageBoxButton.OK, MessageBoxImage.Information);
+                switch (result)
+                {
+                    case MessageBoxResult.OK:
+                        ListWindow.CustomerToLists[indexSelected] = AccessIbl.GetCustomerList().FirstOrDefault(x => x.Id == customer.Id);//Updating the observer list of customers.
+
+                        ListWindow.ParcelToLists.Clear();  //Update overlooking a new list for customers.
+                        List<BO.ParcelToList> parcel = AccessIbl.GetParcelList().ToList();
+                        foreach (var item in parcel)
+                        {
+                            ListWindow.ParcelToLists.Add(item);
+                        }
+
+                        if(parcelWindow != null)//in case opened from a parcel window.
+                        {
+                            parcelWindow.UpdateChangesFromCustomerWindow();
+                        }
+
+                        if (clientWindow != null)//in case opened from a client window.
+                        {
+                            clientWindow.UpdateChangesFromParcelWindow();
+                        }
+
+                        ListWindow.IsEnabled = true; //open the "ListWindow" window.
+
+                        ClosingWindow = false; //to enable to close the "BaseStationWindow" window.
+                        Close();
+                        break;
+                    default:
+                        break;
+                }
+            }
+            catch
+            {
+                MessageBox.Show("ERROR");
+            }
+        }
+
+        /// <summary>
+        /// Open a parcel window from the List of "CustomeSend".
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void listOfCustomeSend_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (((ParcelAtCustomer)listOfCustomerReceive.SelectedItem) != null)// if the user click on empty space in the view list we dont open anything
+            {
+                int IdOfParcel = ((ParcelAtCustomer)listOfCustomeSend.SelectedItem).Id;
+                int indexParcelInObservable = ListWindow.ParcelToLists.IndexOf(ListWindow.ParcelToLists.First(x => x.Id == IdOfParcel));
+                ParcelToList customer = AccessIbl.GetParcelList().First(x => x.Id == IdOfParcel);
+                new ParcelWindow(AccessIbl, ListWindow, customer, indexParcelInObservable, clientWindow).Show();
+
+                // to close the window affter the opariton
+                ClosingWindow = false;
+                Close();
+            }
+        }
+
+        /// <summary>
+        /// Open a parcel window from the List of "CustomerReceive".
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void listOfCustomerReceive_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (((ParcelAtCustomer)listOfCustomerReceive.SelectedItem) != null)// if the user click on empty space in the view list we dont open anything
+            {
+                int IdOfParcel = ((ParcelAtCustomer)listOfCustomerReceive.SelectedItem).Id;
+                int indexParcelInObservable = ListWindow.ParcelToLists.IndexOf(ListWindow.ParcelToLists.First(x => x.Id == IdOfParcel));
+                ParcelToList customer = AccessIbl.GetParcelList().First(x => x.Id == IdOfParcel);
+                new ParcelWindow(AccessIbl, ListWindow, customer, indexParcelInObservable, clientWindow).Show();
+
+                // to close the window affter the opariton
+                ClosingWindow = false;
+                Close();
+            }
+        }
+
+        #region Handles text insert and butones 
+
+        /// <summary>
+        /// Locks the keyboard for numbers only.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void TBUpdateCustomerPhoneNumber_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key < Key.D0 || e.Key > Key.D9)
+            {
+                if (e.Key < Key.NumPad0 || e.Key > Key.NumPad9) // we want keys from the num pud too
+                {
+                    e.Handled = true; //In this case, pressing the keyboard is not enabled.
+                }
+                else
+                {
+                    e.Handled = false;
+                }
+            }
+        }
+
+        /// <summary>
+        /// The function opens the option to update as soon as the fields are full and closes when one of the fields is equal to 0.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void TBUpdateCustomerName_KeyUp(object sender, KeyEventArgs e)
+        {
+
+            if (TBUpdateCustomerPhoneNumber.Text.Length != 0 && TBUpdateCustomerName.Text.Length != 0)
+            {
+                if (!BUpdate.IsEnabled)
+                BUpdate.IsEnabled = true;
+            }
+            else //one of the fields is equal to 0.
+            {
+                BUpdate.IsEnabled = false;
+            }
+        }
+
+        /// <summary>
+        /// The function opens the option to update as soon as the fields are full and closes when one of the fields is equal to 0.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void TBUpdateCustomerPhoneNumber_KeyUp(object sender, KeyEventArgs e)
+        {
+
+            if (TBUpdateCustomerPhoneNumber.Text.Length != 0 && TBUpdateCustomerName.Text.Length != 0)
+            {
+                if (!BUpdate.IsEnabled)
+                    BUpdate.IsEnabled = true;
+            }
+            else //one of the fields is equal to 0.
+            {
+                BUpdate.IsEnabled = false;
+            }
+        }
+        #endregion Handles text insert and butones 
+
+        #endregion update customer 
 
         #region close
         /// <summary>
-        /// cancel the option to clik x to close the window 
+        /// cancel the option to clik x to close the window.
         /// </summary>
         /// <param name="e">close window</param>
         protected override void OnClosing(CancelEventArgs e)
@@ -236,178 +425,5 @@ namespace PL
             Close();
         }
         #endregion close  
-
-        #region update customer 
-
-        public Customer customer;
-
-        public int indexSelected;
-
-        public ParcelWindow parcelWindow; //for using if we enter from customer window
-
-        public ClientWindow clientWindow;//for using if we enter from customer window
-        /// <summary>
-        /// update constractor.
-        /// </summary>
-        /// <param name="bl"></param>
-        /// <param name="_ListWindow"></param>
-        /// <param name="CustomerTo"></param>
-        /// <param name="_indexCustomer"></param>
-        public CustomerWindow(BlApi.IBL bl, ListView _ListWindow, CustomerToList CustomerTo, int _indexCustomer, ParcelWindow _parcelWindow = null, ClientWindow _clientWindow=null)
-        {
-            InitializeComponent();
-
-            updateCustomer.Visibility = Visibility.Visible;
-
-            AccessIbl = bl;
-
-            ListWindow = _ListWindow;
-
-            indexSelected = _indexCustomer;
-
-            customer = AccessIbl.GetCustomer(CustomerTo.Id);
-            DataContext = customer;
-
-            listOfCustomeSend.ItemsSource = AccessIbl.GetCustomer(customer.Id).ParcelFromTheCustomer;
-            listOfCustomerReceive.ItemsSource = AccessIbl.GetCustomer(customer.Id).ParcelToTheCustomer;
-
-            parcelWindow = _parcelWindow;
-            clientWindow = _clientWindow;
-        }
-
-   
-        /// <summary>
-        /// The function updates customer details.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void BUpdate_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                AccessIbl.UpdateCustomer(customer.Id, TBUpdateCustomerName.Text, TBUpdateCustomerPhoneNumber.Text);
-                MessageBoxResult result = MessageBox.Show("The operation was successful", "info", MessageBoxButton.OK, MessageBoxImage.Information);
-                switch (result)
-                {
-                    case MessageBoxResult.OK:
-                        ListWindow.CustomerToLists[indexSelected] = AccessIbl.GetCustomerList().FirstOrDefault(x => x.Id == customer.Id);//Observer update
-
-                        ListWindow.ParcelToLists.Clear();  //Update overlooking a new list for customers
-                        List<BO.ParcelToList> parcel = AccessIbl.GetParcelList().ToList();
-                        foreach (var item in parcel)
-                        {
-                            ListWindow.ParcelToLists.Add(item);
-                        }
-
-                        if(parcelWindow != null)
-                        {
-                            parcelWindow.UpdateChangesFromCustomerWindow();
-                        }
-                        if (clientWindow != null)
-                        {
-                            clientWindow.UpdateChangesFromParcelWindow();
-                        }
-                        ListWindow.IsEnabled = true;
-                        ClosingWindow = false;
-                        Close();
-                        break;
-                    default:
-                        break;
-                }
-            }
-            catch
-            {
-                MessageBox.Show("ERROR");
-            }
-        }
-
-        /// <summary>
-        /// Open a parcel window.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void listOfCustomeSend_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            if (((ParcelAtCustomer)listOfCustomerReceive.SelectedItem) != null)// if the user click on empty space in the view list we dont open anything
-            {
-                int IdOfParcel = ((ParcelAtCustomer)listOfCustomeSend.SelectedItem).Id;
-                int indexParcelInObservable = ListWindow.ParcelToLists.IndexOf(ListWindow.ParcelToLists.First(x => x.Id == IdOfParcel));
-                ParcelToList customer = AccessIbl.GetParcelList().First(x => x.Id == IdOfParcel);
-                new ParcelWindow(AccessIbl, ListWindow, customer, indexParcelInObservable, clientWindow).Show();
-                // to close the window affter the opariton
-                ClosingWindow = false;
-                Close();
-            }
-        }
-
-        /// <summary>
-        /// Open a parcel window.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void listOfCustomerReceive_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            if (((ParcelAtCustomer)listOfCustomerReceive.SelectedItem) != null)// if the user click on empty space in the view list we dont open anything
-            {
-                int IdOfParcel = ((ParcelAtCustomer)listOfCustomerReceive.SelectedItem).Id;
-                int indexParcelInObservable = ListWindow.ParcelToLists.IndexOf(ListWindow.ParcelToLists.First(x => x.Id == IdOfParcel));
-                ParcelToList customer = AccessIbl.GetParcelList().First(x => x.Id == IdOfParcel);
-                new ParcelWindow(AccessIbl, ListWindow, customer, indexParcelInObservable, clientWindow).Show();
-                // to close the window affter the opariton
-                ClosingWindow = false;
-                Close();
-            }
-        }
-
-        #region Handles text insert and butones 
-        /// <summary>
-        /// Locks the keyboard for numbers only
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void TBUpdateCustomerPhoneNumber_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key < Key.D0 || e.Key > Key.D9)
-            {
-                if (e.Key < Key.NumPad0 || e.Key > Key.NumPad9) // we want keys from the num pud too
-                {
-                    e.Handled = true;
-                }
-                else
-                {
-                    e.Handled = false;
-                }
-            }
-        }
-
-        private void TBUpdateCustomerName_KeyUp(object sender, KeyEventArgs e)
-        {
-
-            if (TBUpdateCustomerPhoneNumber.Text.Length != 0 && TBUpdateCustomerName.Text.Length != 0)
-            {
-                if (!BUpdate.IsEnabled)
-                BUpdate.IsEnabled = true;
-            }
-            else
-            {
-                BUpdate.IsEnabled = false;
-            }
-        }
-        private void TBUpdateCustomerPhoneNumber_KeyUp(object sender, KeyEventArgs e)
-        {
-
-            if (TBUpdateCustomerPhoneNumber.Text.Length != 0 && TBUpdateCustomerName.Text.Length != 0)
-            {
-                if (!BUpdate.IsEnabled)
-                    BUpdate.IsEnabled = true;
-            }
-            else
-            {
-                BUpdate.IsEnabled = false;
-            }
-            #endregion
-
-        }
-        #endregion
     }
 }

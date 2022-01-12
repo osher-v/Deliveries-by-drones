@@ -77,7 +77,7 @@ namespace PL
                                 BO.BaseStationsToList stationsToList = AccessIbl.GetBaseStationList().ToList().Find(i => i.Id == baseStationAdd.Id);
                                 ListWindow.BaseStationToLists.Add(stationsToList); //Updating the observer list of stations.
 
-                                ListWindow.IsEnabled = true; //to open the "ListWindow" window.
+                                ListWindow.IsEnabled = true; //open the "ListWindow" window.
 
                                 ClosingWindow = false; //to enable to close the "BaseStationWindow" window.
                                 Close();
@@ -104,7 +104,7 @@ namespace PL
             }
         }
 
-        #region מטפל בבדיקות כפתורים
+        #region Handles text insert
         /// <summary>
         /// Locks the keyboard for numbers only.
         /// </summary>
@@ -160,7 +160,7 @@ namespace PL
             {
                 if (e.Key < Key.NumPad0 || e.Key > Key.NumPad9) // we want keys from the num pud too
                 {
-                    if (e.Key == Key.Decimal)//Open option of "."
+                    if (e.Key == Key.Decimal) //Open option of "."
                         e.Handled = false;
                     else
                         e.Handled = true; //In this case, pressing the keyboard is not enabled.
@@ -191,7 +191,7 @@ namespace PL
                 }
             }
         }
-        #endregion מטפל בבדיקות כפתורים
+        #endregion Handles text insert
 
         #endregion add situation 
 

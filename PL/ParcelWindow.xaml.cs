@@ -23,41 +23,40 @@ namespace PL
     /// </summary>
     public partial class ParcelWindow : Window
     {
-        //Access object to the BL class.
-        public BlApi.IBL AccessIbl;
+        public BlApi.IBL AccessIbl; //Access object to the BL class.
 
-        //object of ListView window.
-        public ListView ListWindow;
+        public ListView ListWindow; //object of ListView window.
 
         public ClientWindow clientWindow;//for using if we enter from customer window
+    
+        public bool ClosingWindow { get; private set; } = true; //a bool to help us disable the x bootum.
 
-        /// <summary> a bool to help us disable the x bootum  </summary>
-        public bool ClosingWindow { get; private set; } = true;
-
-        #region הוספה
+        #region add situation
         /// <summary>
-        /// Add constractor.
+        /// Add ctor.
         /// </summary>
         /// <param name="bl"></param>
         /// <param name="_ListWindow"></param>
-        public ParcelWindow(BlApi.IBL bl, ListView _ListWindow,Customer customerFromClientWindow = null, ClientWindow _clientWindow = null)
+        public ParcelWindow(BlApi.IBL bl, ListView _ListWindow, Customer customerFromClientWindow = null, ClientWindow _clientWindow = null)
         {
             InitializeComponent();
 
-            clientWindow = _clientWindow;
-
-            if (clientWindow != null)
-            {
-                TBParcelSenderId.Text = customerFromClientWindow.Id.ToString();
-                TBParcelSenderId.IsEnabled = false;
-            }
-
-            addParcel.Visibility = Visibility.Visible;
             Width = 440;
 
             AccessIbl = bl;
 
             ListWindow = _ListWindow;
+
+            clientWindow = _clientWindow;
+
+            if (clientWindow != null) // in case "ParcelWindow" opened from client Window.
+            {
+                TBParcelSenderId.Text = customerFromClientWindow.Id.ToString(); //
+                TBParcelSenderId.IsEnabled = false;
+            }
+
+            addParcel.Visibility = Visibility.Visible;
+           
 
             // the combobox use it to show the Weight Categories
             CBWeightSelctor.ItemsSource = Enum.GetValues(typeof(WeightCategories));
@@ -108,40 +107,7 @@ namespace PL
             }
         }
 
-        #region close
-        /// <summary>
-        /// cancel the option to clik x to close the window 
-        /// </summary>
-        /// <param name="e">close window</param>
-        protected override void OnClosing(CancelEventArgs e)
-        {
-            e.Cancel = ClosingWindow;
-        }
-
-        /// <summary>
-        /// The function closes the window
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void BcloseAdd_Click(object sender, RoutedEventArgs e) //חריגהההההההההההההה
-        {
-            ListWindow.IsEnabled = true;
-            ClosingWindow = false; // we alowd the close option
-            Close();
-        }
-
-        /// <summary>
-        /// The function closes the window
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void BcloseUpdate_Click(object sender, RoutedEventArgs e)
-        {
-            ListWindow.IsEnabled = true;
-            ClosingWindow = false; // we alowd the close option
-            Close();
-        }
-        #endregion close  
+       
 
         /// <summary>
         /// The function handles adding a parcel.
@@ -207,7 +173,7 @@ namespace PL
                 MessageBox.Show("נא ודאו שכל השדות מלאים", "!שגיאה", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-        #endregion הוספה
+        #endregion add situation
 
         public Parcel parcel;
 
@@ -348,5 +314,40 @@ namespace PL
                 Bdrone.Visibility = Visibility.Hidden;
             }
         }
+
+        #region close
+        /// <summary>
+        /// cancel the option to clik x to close the window 
+        /// </summary>
+        /// <param name="e">close window</param>
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            e.Cancel = ClosingWindow;
+        }
+
+        /// <summary>
+        /// The function closes the window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BcloseAdd_Click(object sender, RoutedEventArgs e) //חריגהההההההההההההה
+        {
+            ListWindow.IsEnabled = true;
+            ClosingWindow = false; // we alowd the close option
+            Close();
+        }
+
+        /// <summary>
+        /// The function closes the window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BcloseUpdate_Click(object sender, RoutedEventArgs e)
+        {
+            ListWindow.IsEnabled = true;
+            ClosingWindow = false; // we alowd the close option
+            Close();
+        }
+        #endregion close  
     }
 }
