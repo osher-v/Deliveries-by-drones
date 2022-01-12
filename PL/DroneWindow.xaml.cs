@@ -15,74 +15,80 @@ namespace PL
     /// This window covers a drone interface.
     /// </summary>
     public partial class DroneWindow : Window
-    {
-        ///Access object to the BL class.
-        public BlApi.IBL AccessIbl;
-        /// <summary> the calling window, becuse we want to use it here </summary> 
-        private ListView listWindow;
-        /// <summary> a bool to help us disable the x bootun  </summary>
-        public bool ClosingWindow { get; private set; } = true;
+    {  
+        public BlApi.IBL AccessIbl; ///Access object to the BL class.
+                                   
+        private ListView listWindow; //object of ListView window.
+   
+        public bool ClosingWindow { get; private set; } = true; //a bool to help us disable the x bootun.
 
-        #region drone to add
+        #region add situation
         /// <summary>
-        /// consractor for add drone option 
+        /// ctor for add drone option 
         /// </summary>
         /// <param name="bl"></param>
         /// <param name="_DroneListWindow"></param>
         public DroneWindow(BlApi.IBL bl, ListView _DroneListWindow)
         {
             InitializeComponent();
-            //set the Width & Height for this window
+
+            //set the Width & Height of window for add option.
             Width = 440;
             Height = 540;
+
             addDrone.Visibility = Visibility.Visible;
-            // set the bl obeject and the drone list window that we got from the priviose window
+        
             AccessIbl = bl;
+
             listWindow = _DroneListWindow;
-            // the combobox use it to show the Weight Categories
+
+            //the combobox use it to show the Weight Categories.
             TBWeight.ItemsSource = Enum.GetValues(typeof(WeightCategories));
-            // the combobox use it to show the BaseStation ID
+
+            //the combobox use it to show the BaseStation ID of BaseStation with free charge slots.
             BaseStationID.ItemsSource = AccessIbl.GetBaseStationList(x => x.FreeChargeSlots > 0);
             BaseStationID.DisplayMemberPath = "Id";
         }
 
         /// <summary>
-        /// A function that sends the new drone and adds it to the data after tests in the logical layer
+        /// A function that sends the new drone and adds it to the data after tests in the logical layer.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void SendToBl_Click(object sender, RoutedEventArgs e)
         {
-            // If all the fields are full
+            //Check that all fields are filled.
             if (TBModel.Text.Length != 0 && TBID.Text.Length != 0 && BaseStationID.SelectedItem != null && TBWeight.SelectedItem != null)
             {
-                DroneToList newdrone = new DroneToList
+                DroneToList newdrone = new DroneToList //Create an object to add to the data.
                 {
                     Id = int.Parse(TBID.Text),
                     Model = TBModel.Text,
                     MaxWeight = (WeightCategories)TBWeight.SelectedIndex,
                 };
-                // try to add the drone if fals return a MessageBox
-                try
+
+                try // try to add the drone if fals return a MessageBox.
                 {
-                    AccessIbl.AddDrone(newdrone, ((BaseStationsToList)BaseStationID.SelectedItem).Id);
+                    AccessIbl.AddDrone(newdrone, ((BaseStationsToList)BaseStationID.SelectedItem).Id); //update the logic layer.
                     MessageBoxResult result = MessageBox.Show("The operation was successful", "info", MessageBoxButton.OK, MessageBoxImage.Information);
                     switch (result)
                     {
                         case MessageBoxResult.OK:
                             newdrone = AccessIbl.GetDroneList().ToList().Find(i => i.Id == newdrone.Id);
-                            listWindow.DroneToLists.Add(newdrone); //Observer update
-                            //Handles required window updates
-                            listWindow.IsEnabled = true;
-                            ClosingWindow = false;
+                            listWindow.DroneToLists.Add(newdrone); //Updating the observer list of stations.
+                            
+                            listWindow.IsEnabled = true; //open the "ListWindow" window.
+
+                            ClosingWindow = false; //to enable to close the "BaseStationWindow" window.
                             Close();
                             break;
+
                         default:
                             break;
                     }
                 }
                 // Area responsible for error capture
-                catch (AddAnExistingObjectException ex)
+                catch (AddAnExistingObjectException ex) //in case ID of drone is already exists.
                 {
                     MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
                     TBID.Text = "";
@@ -107,12 +113,11 @@ namespace PL
             {
                 MessageBox.Show("נא ודאו שכל השדות מלאים", "!שגיאה", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-
         }
 
         #region keybord events
         /// <summary>
-        /// disable the non numbers keys
+        /// disable the non numbers keys.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -122,12 +127,13 @@ namespace PL
             {
                 TBID.BorderBrush = Brushes.Gray;
             }
+
             // take only the kyes we alowed 
             if (e.Key < Key.D0 || e.Key > Key.D9)
             {
                 if (e.Key < Key.NumPad0 || e.Key > Key.NumPad9) // we want keys from the num pud too
                 {
-                    e.Handled = true;
+                    e.Handled = true; //In this case, pressing the keyboard is not enabled.
                 }
                 else
                 {
@@ -137,7 +143,7 @@ namespace PL
         }
 
         /// <summary>
-        /// set the color back to gray
+        /// set the color back to gray.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -148,19 +154,20 @@ namespace PL
                 TBID.BorderBrush = Brushes.Gray;
             }
         }
-        #endregion
+        #endregion add situation
 
         #region close
         /// <summary>
-        /// cancel the option to clik x to close the window 
+        /// cancel the option to clik x to close the window.
         /// </summary>
         /// <param name="e">close window</param>
         protected override void OnClosing(CancelEventArgs e)
         {
             e.Cancel = ClosingWindow;
-        }    
+        }
+
         /// <summary>
-        /// to aloow closing again but just in the spcific close boutoon 
+        /// The function closes the window.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -173,17 +180,17 @@ namespace PL
         #endregion close
 
         #endregion
+        
+        public Drone MyDrone; //hold the drone that we send for update or work on. 
+        
+        public int indexDrone; //the location index in the observer of the drones in the ListView window.
+
+        ParcelWindow parcelWindow; //Update to the package window.
 
         #region drone in operations
-        //hold the drone that we send for update or work on 
-        public Drone MyDrone;
-        //indexe of the drone how chosse by doubly click
-        public int indexDrone;
-        //Update to the package window
-        ParcelWindow parcelWindow;
 
         /// <summary>
-        /// constractor for acction staet  And updates the views accordingly
+        /// ctor for acction staet And updates the views accordingly
         /// </summary>
         /// <param name="bl">accses to ibl</param>
         /// <param name="_DroneListWindow">the call window</param>
@@ -192,16 +199,23 @@ namespace PL
         public DroneWindow(BlApi.IBL bl, ListView _DroneListWindow, DroneToList droneTo, int _indexDrone, ParcelWindow _parcelWindow = null)
         {
             InitializeComponent();
-            // open the grid for the user
-            updateDrone.Visibility = Visibility.Visible;
+           
+            updateDrone.Visibility = Visibility.Visible; //open the grid for update action.
+
             //save the variables that we get in the fanction
+
             indexDrone = _indexDrone;
+
             AccessIbl = bl;
+
             listWindow = _DroneListWindow;
+
             parcelWindow = _parcelWindow;
-            //to conect the binding to set the value of my drone to the proprtis
+
+            //to conect the binding to set the value of my drone to the proprtis.
             MyDrone = bl.GetDrone(droneTo.Id);
             DataContext = MyDrone;
+
             //set the color of the battry
             if (MyDrone.BatteryStatus < 50)
             {
@@ -214,7 +228,8 @@ namespace PL
                     PBbatr.Foreground = Brushes.Red;
                 }
             }
-            //The switch checks the drone's status value and opens buttons 
+
+            //The switch checks the drone's status value and opens buttons.
             switch ((DroneStatuses)MyDrone.Statuses)
             {
                 case DroneStatuses.free:
@@ -231,18 +246,38 @@ namespace PL
                 case DroneStatuses.busy:
                     GRIDparcelInDelivery.Visibility = Visibility.Visible;
                     TBnotAssigned.Visibility = Visibility.Hidden;
+
                     //check the status to open the right button
-                    if (MyDrone.Delivery.OnTheWayToTheDestination)
+                    if (MyDrone.Delivery.OnTheWayToTheDestination)//if the parcel is Already collected from the sender.
                     {
                         BDeliveryPackage.Visibility = Visibility.Visible;
                     }
-                    else
+                    else //In case the parcel has not yet been collected from the sender.
                     {
                         BPickedUp.Visibility = Visibility.Visible;
                     }
                     break;
+
                 default:
                     break;
+            }
+        }
+
+        /// <summary>
+        /// prevent the user from sending empty string
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void TBmodel_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (TBmodel.Text.Length != 0)
+            {
+                if (!BModalUpdate.IsEnabled)
+                    BModalUpdate.IsEnabled = true;
+            }
+            else
+            {
+                BModalUpdate.IsEnabled = false;
             }
         }
 
@@ -253,19 +288,20 @@ namespace PL
         /// <param name="e"></param>
         private void BModalUpdate_Click(object sender, RoutedEventArgs e)
         {
-            AccessIbl.UpdateDroneName(MyDrone.Id, TBmodel.Text);
+            AccessIbl.UpdateDroneName(MyDrone.Id, TBmodel.Text); //update the logic layer.
             MessageBoxResult result = MessageBox.Show("The operation was successful", "info", MessageBoxButton.OK, MessageBoxImage.Information);
             switch (result)
             {
                 case MessageBoxResult.OK:
                     BModalUpdate.IsEnabled = false;
-                    listWindow.StatusDroneSelectorChanged();
+                    listWindow.StatusDroneSelectorChanged(); //update the List of drones.
                     break;
                 default:
                     break;
             }
         }
 
+        #region operation functions of the drone evants
         /// <summary>
         /// the fanction send the drone to charge And updates the views accordingly
         /// </summary>
@@ -275,22 +311,23 @@ namespace PL
         {
             try
             {
-                AccessIbl.SendingDroneforCharging(MyDrone.Id);
+                AccessIbl.SendingDroneforCharging(MyDrone.Id); //update the logic layer.
 
                 MessageBoxResult result = MessageBox.Show("The operation was successful", "info", MessageBoxButton.OK, MessageBoxImage.Information);
                 switch (result)
                 {
                     case MessageBoxResult.OK:
-                        listWindow.StatusDroneSelectorChanged();
+                        //update conecct the binding to set the value of my drone to the proprtis
+                        MyDrone = AccessIbl.GetDrone(MyDrone.Id);
+                        DataContext = MyDrone;
 
-                        //Update the list observer
+                        listWindow.StatusDroneSelectorChanged();//update the List of drones.
+
+                        //Update the list observer of BaseStations.
                         int IdOfBaseStation = AccessIbl.GetBaseCharge(MyDrone.Id);
                         int indexOfBaseStationInTheObservable = listWindow.BaseStationToLists.IndexOf(listWindow.BaseStationToLists.First(x => x.Id == IdOfBaseStation));
                         listWindow.BaseStationToLists[indexOfBaseStationInTheObservable] = AccessIbl.GetBaseStationList().First(x => x.Id == IdOfBaseStation);//Update the list observer
 
-                        //to conecct the binding to set the value of my drone to the proprtis
-                        MyDrone = AccessIbl.GetDrone(MyDrone.Id);
-                        DataContext = MyDrone;
                         //display update
                         BSendToCharge.Visibility = Visibility.Hidden;
                         BReleaseDrone.Visibility = Visibility.Visible;
@@ -305,6 +342,7 @@ namespace PL
                 MessageBox.Show(ex.Message, "info");
             }
         }
+
         /// <summary>
         ///  release the drone from charge And updates the views accordingly
         /// </summary>
@@ -312,7 +350,7 @@ namespace PL
         /// <param name="e"></param>
         private void BReleaseDrone_Click(object sender, RoutedEventArgs e)
         {
-            int IdOfBaseStation = AccessIbl.GetBaseCharge(MyDrone.Id);//Saving the station tax for the purpose of updating the list of stations on line 350
+            int IdOfBaseStation = AccessIbl.GetBaseCharge(MyDrone.Id);//Saving the station tax for the purpose of updating the list of stations
 
             AccessIbl.ReleaseDroneFromCharging(MyDrone.Id); //no need for try becuse we chose drone from the list and the exption for non exsit item cant be trown 
 
@@ -320,9 +358,9 @@ namespace PL
             switch (result)
             {
                 case MessageBoxResult.OK:
-                    listWindow.StatusDroneSelectorChanged();
+                    listWindow.StatusDroneSelectorChanged();//update the List of drones.
 
-                    //Update the list observer
+                    //Update the list observer of BaseStations.
                     int indexOfBaseStationInTheObservable = listWindow.BaseStationToLists.IndexOf(listWindow.BaseStationToLists.First(x => x.Id == IdOfBaseStation));
                     listWindow.BaseStationToLists[indexOfBaseStationInTheObservable] = AccessIbl.GetBaseStationList().First(x => x.Id == IdOfBaseStation);
 
@@ -372,15 +410,16 @@ namespace PL
                 switch (result)
                 {
                     case MessageBoxResult.OK:
-                        listWindow.StatusDroneSelectorChanged();
+                        listWindow.StatusDroneSelectorChanged(); //update the List of drones.
 
                         //to conecct the binding to set the value of my drone to the proprtis
                         MyDrone = AccessIbl.GetDrone(MyDrone.Id);
                         DataContext = MyDrone;
 
-                        //update list of parcels
+                        //Update the list observer of Parcel.
                         int indexOfParcelInTheObservable = listWindow.ParcelToLists.IndexOf(listWindow.ParcelToLists.First(x => x.Id == MyDrone.Delivery.Id));
                         listWindow.ParcelToLists[indexOfParcelInTheObservable] = AccessIbl.GetParcelList().First(x => x.Id == MyDrone.Delivery.Id);
+
                         // disply update affter the oppertion
                         BSendToCharge.IsEnabled = false;
                         BAssignPackage.Visibility = Visibility.Hidden;
@@ -411,37 +450,38 @@ namespace PL
         {
             try
             {
-                AccessIbl.PickedUpPackageByTheDrone(MyDrone.Id);
+                AccessIbl.PickedUpPackageByTheDrone(MyDrone.Id);//update the logic layer.
 
                 MessageBoxResult result = MessageBox.Show("The operation was successful", "info", MessageBoxButton.OK, MessageBoxImage.Information);
                 switch (result)
                 {
                     case MessageBoxResult.OK:
-                        listWindow.StatusDroneSelectorChanged();
+                        listWindow.StatusDroneSelectorChanged(); //update the List of drones.
 
                         //to conecct the binding to set the value of my drone to the proprtis
                         MyDrone = AccessIbl.GetDrone(MyDrone.Id);
                         DataContext = MyDrone;
 
-                        // Update the list of packages
+                        //Update the list of parcel
                         int indexOfParcelInTheObservable = listWindow.ParcelToLists.IndexOf(listWindow.ParcelToLists.First(x => x.Id == MyDrone.Delivery.Id));
                         listWindow.ParcelToLists[indexOfParcelInTheObservable] = AccessIbl.GetParcelList().First(x => x.Id == MyDrone.Delivery.Id);
 
-                        // Sender update in customer list
+                        //Sender update in customer list
                         int indexOfSenderCustomerInTheObservable = listWindow.CustomerToLists.IndexOf(listWindow.CustomerToLists.First(x => x.Id == MyDrone.Delivery.Sender.Id));
                         listWindow.CustomerToLists[indexOfSenderCustomerInTheObservable] = AccessIbl.GetCustomerList().First(x => x.Id == MyDrone.Delivery.Sender.Id);
 
-                        // Recipient update in the customer list
+                        //Recipient update in the customer list
                         int indexOfReceiverCustomerInTheObservable = listWindow.CustomerToLists.IndexOf(listWindow.CustomerToLists.First(x => x.Id == MyDrone.Delivery.Receiver.Id));
                         listWindow.CustomerToLists[indexOfReceiverCustomerInTheObservable] = AccessIbl.GetCustomerList().First(x => x.Id == MyDrone.Delivery.Receiver.Id);
 
                         BPickedUp.Visibility = Visibility.Hidden;
                         BDeliveryPackage.Visibility = Visibility.Visible;
 
-                        if (parcelWindow != null)//Update the skimmer location and battery if a skimmer window opens through a package
+                        if (parcelWindow != null)//update the parcelWindow if a drone window opens through a parcelWindow.
                         {
                             parcelWindow.UpdateChangesFromDroneWindow();
                         }
+
                         //set the battry color 
                         if (MyDrone.BatteryStatus < 50)
                         {
@@ -482,30 +522,31 @@ namespace PL
                 int IdOfSenderCustomerInMyDrone = MyDrone.Delivery.Sender.Id;
                 int IdOfReceiverCustomerInMyDrone = MyDrone.Delivery.Receiver.Id;
 
-                AccessIbl.DeliveryPackageToTheCustomer(MyDrone.Id);
+                AccessIbl.DeliveryPackageToTheCustomer(MyDrone.Id);//update the logic layer.
 
                 MessageBoxResult result = MessageBox.Show("The operation was successful", "info", MessageBoxButton.OK, MessageBoxImage.Information);
                 switch (result)
                 {
                     case MessageBoxResult.OK:
-                        listWindow.StatusDroneSelectorChanged();
+                        listWindow.StatusDroneSelectorChanged();//update the List of drones.
 
                         //to conecct the binding to set the value of my drone to the proprtis
                         MyDrone = AccessIbl.GetDrone(MyDrone.Id);
                         DataContext = MyDrone;
 
-                        // Update the list of packages
+                        //Update the list of packages
                         int indexOfParcelInTheObservable = listWindow.ParcelToLists.IndexOf(listWindow.ParcelToLists.First(x => x.Id == IdOfDeliveryInMyDrone));
                         listWindow.ParcelToLists[indexOfParcelInTheObservable] = AccessIbl.GetParcelList().First(x => x.Id == IdOfDeliveryInMyDrone);
 
-                        // Sender update in customer list
+                        //Sender update in customer list
                         int indexOfSenderCustomerInTheObservable = listWindow.CustomerToLists.IndexOf(listWindow.CustomerToLists.First(x => x.Id == IdOfSenderCustomerInMyDrone));
                         listWindow.CustomerToLists[indexOfSenderCustomerInTheObservable] = AccessIbl.GetCustomerList().First(x => x.Id == IdOfSenderCustomerInMyDrone);
 
-                        // Recipient update in the customer list
+                        //Recipient update in the customer list
                         int indexOfReceiverCustomerInTheObservable = listWindow.CustomerToLists.IndexOf(listWindow.CustomerToLists.First(x => x.Id == IdOfReceiverCustomerInMyDrone));
                         listWindow.CustomerToLists[indexOfReceiverCustomerInTheObservable] = AccessIbl.GetCustomerList().First(x => x.Id == IdOfReceiverCustomerInMyDrone);
-                        //  disply update affter the oppertion
+
+                        //disply update affter the oppertion
                         BDeliveryPackage.Visibility = Visibility.Hidden;
                         BAssignPackage.Visibility = Visibility.Visible;
                         BSendToCharge.Visibility = Visibility.Visible;
@@ -513,12 +554,13 @@ namespace PL
                         GRIDparcelInDelivery.Visibility = Visibility.Hidden;
                         TBnotAssigned.Visibility = Visibility.Visible;
 
-                        if (parcelWindow != null)// Update the skimmer location and battery if a skimmer window opens through a package
+                        if (parcelWindow != null) //update the parcelWindow if a drone window opens through a parcelWindow.
                         {
                             parcelWindow.UpdateChangesFromDroneWindow();
                             ClosingWindow = false;
                             Close();
                         }
+
                         //set the battry color 
                         if (MyDrone.BatteryStatus < 50)
                         {
@@ -541,26 +583,7 @@ namespace PL
                 MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-
-        /// <summary>
-        ///  prevent the user from sending empty string
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void TBmodel_KeyUp(object sender, KeyEventArgs e)
-        {
-
-            if (TBmodel.Text.Length != 0)
-            {
-                if (!BModalUpdate.IsEnabled)
-                    BModalUpdate.IsEnabled = true;
-            }
-            else
-            {
-                BModalUpdate.IsEnabled = false;
-            }
-        }
-
+        #endregion operation functions of the drone evants
 
         /// <summary>
         /// close drone window And updates the views accordingly
@@ -569,36 +592,26 @@ namespace PL
         /// <param name="e"></param>
         private void BClose1_Click(object sender, RoutedEventArgs e)
         {
-            if (Bsimoltor.Visibility == Visibility.Visible)
+            if (Bsimoltor.Visibility == Visibility.Visible) //In case simulator mode is not turned on.
             {
-                listWindow.IsEnabled = true;//allowd to use drone window list again
+                listWindow.IsEnabled = true;//allowd to use drone window list again.
                 ClosingWindow = false;
                 Close();
             }
-            else if (BstopSimoltor.Visibility == Visibility.Visible)
+            else if (BstopSimoltor.Visibility == Visibility.Visible) //In case the simulator mode is active. In this case the window should close only when the process is complete.
             {
                 BstopSimoltor.Visibility = Visibility.Hidden;
-                DroneSimultor.CancelAsync();
+                DroneSimultor.CancelAsync(); //Closing the process.
                 Cursor = Cursors.Wait;
             }
         }
         #endregion drone in operations  
 
-
-
-
-
-
-        /// <summary>
-        /// ///////////////////////////////////////////////////////Simultor//////////////////////////////////////////////
-        /// </summary>
-
+        //////////////////////////////////////////////////////////Simultor//////////////////////////////////////////////
+        
         #region Simultor
 
-
         internal BackgroundWorker DroneSimultor; //defining the process(Worker).
-
-        //internal bool isTimeRun;
 
         /// <summary>
         /// The function creates the process.
@@ -608,14 +621,44 @@ namespace PL
             DroneSimultor = new BackgroundWorker() { WorkerReportsProgress = true, WorkerSupportsCancellation = true };
             DroneSimultor.DoWork += DroneSimultor_DoWork; //Operation function.
             DroneSimultor.ProgressChanged += DroneSimultor_ProgressChanged; //changed function.
-
-            DroneSimultor.RunWorkerCompleted += DroneSimultor_RunWorkerCompleted;
+            DroneSimultor.RunWorkerCompleted += DroneSimultor_RunWorkerCompleted; //end of process function.
         }
 
+        /// <summary>
+        /// The function reports a change made by the process.
+        /// </summary>
+        public void ReportProgressInSimultor()
+        {
+            DroneSimultor.ReportProgress(0);
+        }
+
+        /// <summary>
+        /// The function returns a Boolean value whether the process should end.
+        /// </summary>
+        /// <returns></returns>
+        public bool IsTimeRun()
+        {
+            return DroneSimultor.CancellationPending;
+        }
+
+        /// <summary>
+        /// The function calls the simulator class as soon as the process start.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void DroneSimultor_DoWork(object sender, DoWorkEventArgs e)
+        {
+            AccessIbl.sim(MyDrone.Id, ReportProgressInSimultor, IsTimeRun);
+        }
+
+        /// <summary>
+        /// The function is activated when the process ends.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void DroneSimultor_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-
-            if (BstopSimoltor.Visibility == Visibility.Visible)
+            if (BstopSimoltor.Visibility == Visibility.Visible) //If the process closes because of the stop button.
             {
                 Cursor = Cursors.Arrow;
 
@@ -626,13 +669,15 @@ namespace PL
 
                 TBmodel.IsEnabled = true;
             }
-            else
+            else //If the process closes because the user clicks a close button on the window.
             {
                 listWindow.IsEnabled = true;//allowd to use drone window list again
                 ClosingWindow = false;
                 Close();
+                return;
             }
-            //The switch checks the drone's status value and opens buttons 
+
+            //The switch checks the drone's status value and opens buttons/
             switch ((DroneStatuses)MyDrone.Statuses)
             {
                 case DroneStatuses.free:
@@ -652,13 +697,13 @@ namespace PL
                     TBnotAssigned.Visibility = Visibility.Hidden;
 
                     //check the status to open the right button
-                    if (MyDrone.Delivery.OnTheWayToTheDestination)
+                    if (MyDrone.Delivery.OnTheWayToTheDestination)//if the parcel is Already collected from the sender.
                     {
                         BDeliveryPackage.Visibility = Visibility.Visible;
                         BSendToCharge.Visibility = Visibility.Visible;
                         BSendToCharge.IsEnabled = false;
                     }
-                    else
+                    else //In case the parcel has not yet been collected from the sender.
                     {
                         BPickedUp.Visibility = Visibility.Visible;
                         BSendToCharge.Visibility = Visibility.Visible;
@@ -677,7 +722,6 @@ namespace PL
         /// <param name="e"></param>
         private void Bsimoltor_Click(object sender, RoutedEventArgs e)
         {
-            //isTimeRun = true;
             listWindow.IsEnabled = true;
 
             Simultor(); //call to function who creates the process.
@@ -697,6 +741,7 @@ namespace PL
 
             TBmodel.IsEnabled = false; //to prevent modal changing
         }
+
         //int to help us save the ID.
         private int IdOfDeliveryInMyDrone;
         private int IdOfSenderCustomerInMyDrone;
@@ -744,6 +789,7 @@ namespace PL
                     }
                     else //the drone is in a free state that has come out of charge and not like before (not affter deliver).
                     {
+                        //Update the list observer of BaseStations.
                         listWindow.BaseStationToLists.Clear();
                         List<BO.BaseStationsToList> baseStations1 = AccessIbl.GetBaseStationList().ToList();
                         foreach (var item in baseStations1)
@@ -755,6 +801,7 @@ namespace PL
                     break;
 
                 case DroneStatuses.inMaintenance:
+                    //Update the list observer of BaseStations.
                     listWindow.BaseStationToLists.Clear();
                     List<BO.BaseStationsToList> baseStations = AccessIbl.GetBaseStationList().ToList();
                     foreach (var item in baseStations)
@@ -818,28 +865,17 @@ namespace PL
             }
         }
 
-        private void DroneSimultor_DoWork(object sender, DoWorkEventArgs e)
-        {
-            AccessIbl.sim(MyDrone.Id, ReportProgressInSimultor, IsTimeRun);
-        }
-
+        /// <summary>
+        /// stop the simoltor.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BstopSimoltor_Click(object sender, RoutedEventArgs e)
         {
-            DroneSimultor.CancelAsync();
+            DroneSimultor.CancelAsync(); //close the prosses.
             BstopSimoltor.IsEnabled = false;
-            Cursor = Cursors.Wait;
-        }
-
-        public void ReportProgressInSimultor()
-        {
-            DroneSimultor.ReportProgress(0);
-        }
-
-        public bool IsTimeRun()
-        {
-            return DroneSimultor.CancellationPending;
+            Cursor = Cursors.Wait; //change the mouse to "Wait".
         }
         #endregion
-
     }
 }

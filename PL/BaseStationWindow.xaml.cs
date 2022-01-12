@@ -321,7 +321,7 @@ namespace PL
 
         #region close
         /// <summary>
-        /// cancel the option to clik x to close the window 
+        /// cancel the option to clik x to close the window.
         /// </summary>
         /// <param name="e">close window</param>
         protected override void OnClosing(CancelEventArgs e)
@@ -330,7 +330,7 @@ namespace PL
         }
 
         /// <summary>
-        /// The function closes the window
+        /// The function closes the window.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
