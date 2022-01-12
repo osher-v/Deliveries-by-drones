@@ -149,8 +149,8 @@
                             <RowDefinition Height="11*"/>
                             <RowDefinition Height="35*"/>
                         </Grid.RowDefinitions>
-                        <TextBlock HorizontalAlignment="Center" Grid.Row="0" Margin="0,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="208"  Height="36" FontSize="16" FontWeight="Bold" FontFamily="Consolas" Foreground="{DynamicResource PrimaryHueMidBrush}" TextAlignment="Center"><Run FlowDirection="RightToLeft" Language="he-il" Text="מספר חבילות בדרך אליך"/></TextBlock>
-                        <TextBlock HorizontalAlignment="Center" Grid.Row="1" Text="" TextWrapping="Wrap" VerticalAlignment="Center" Width="208" Height="118" FontSize="76" FontWeight="Bold" FontFamily="Consolas" TextAlignment="Center"/>
+                        <TextBlock HorizontalAlignment="Center" Grid.Row="0" Margin="0,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="280"  Height="36" FontSize="16" FontWeight="Bold" FontFamily="Consolas" Foreground="{DynamicResource PrimaryHueMidBrush}" TextAlignment="Center" Grid.RowSpan="2"><Run FlowDirection="RightToLeft" Language="he-il" Text="פרטי יצירת קשר השמורים במערכת"/></TextBlock>
+                        <TextBlock HorizontalAlignment="Center" Grid.Row="1" Text="{Binding PhoneNumber}" TextWrapping="Wrap" VerticalAlignment="Center" Width="312" Height="86" FontSize="36" FontWeight="Bold" FontFamily="Consolas" TextAlignment="Center"/>
                     </Grid>
                 </materialDesign:Card>
                 <materialDesign:Card   Grid.Column="1" Background="{DynamicResource PrimaryHueLightBrush}" Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}" Padding="8" 
@@ -160,8 +160,8 @@
                             <RowDefinition Height="11*"/>
                             <RowDefinition Height="35*"/>
                         </Grid.RowDefinitions>
-                        <TextBlock HorizontalAlignment="Center" Grid.Row="1" Text="{Binding ParcelFromTheCustomer}" TextWrapping="Wrap" VerticalAlignment="Top" Width="208" Height="118" FontSize="14" FontWeight="Bold" FontFamily="Consolas" TextAlignment="Center" Margin="0,24,0,0"/>
-                        <TextBlock HorizontalAlignment="Center" Grid.Row="0" Margin="0,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="192"  Height="36" FontSize="16" FontWeight="Bold" FontFamily="Consolas" Foreground="{DynamicResource PrimaryHueMidBrush}" TextAlignment="Center"><Run FlowDirection="RightToLeft" Language="he-il" Text="מספר חבילות ששלחת"/></TextBlock>
+                        <TextBlock HorizontalAlignment="Center" Grid.Row="1" Text="{Binding LocationOfCustomer}" TextWrapping="Wrap" VerticalAlignment="Top" Width="312" Height="70" FontSize="14" FontWeight="Bold" FontFamily="Consolas" TextAlignment="Center" Margin="0,24,0,0"/>
+                        <TextBlock HorizontalAlignment="Center" Grid.Row="0" Margin="0,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="243"  Height="36" FontSize="16" FontWeight="Bold" FontFamily="Consolas" Foreground="{DynamicResource PrimaryHueMidBrush}" TextAlignment="Center" Grid.RowSpan="2"><Run FlowDirection="RightToLeft" Language="he-il" Text="מיקומך הנוכחי למשלוחים"/></TextBlock>
                     </Grid>
                 </materialDesign:Card>
                 <materialDesign:Card   Grid.Column="2" Background="{DynamicResource PrimaryHueLightBrush}" Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}" Padding="8" 
@@ -171,6 +171,10 @@
                             <RowDefinition Height="11*"/>
                             <RowDefinition Height="35*"/>
                         </Grid.RowDefinitions>
+                        <materialDesign:PackIcon Kind="Quadcopter" Height="59" Width="92" Margin="230,42,0,0" Grid.Row="1"  />
+                        <TextBlock HorizontalAlignment="Center" Grid.Row="0" Grid.RowSpan="2" TextWrapping="Wrap" VerticalAlignment="Top" Width="244"  Height="70" FontSize="24" FontWeight="Bold" FontFamily="Consolas" Foreground="{DynamicResource MaterialDesignBackground}" TextAlignment="Center" ><Run FlowDirection="RightToLeft" Text="א.א משלוחים בעמ"/><LineBreak/><Run FlowDirection="RightToLeft" Language="he-il" Text="מקווים שתעופו עלינו"/></TextBlock>
+                        <TextBlock HorizontalAlignment="Left" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="244"  Height="82" FontSize="20" FontWeight="Bold" FontFamily="Consolas" Foreground="{DynamicResource MaterialDesignBackground}" TextAlignment="Center" Margin="0,36,0,0" Text="שירות לקוחות&#xD;&#xA;אושר 058-4689379&#xD;&#xA;אבי 053-7165211 " />
+
                     </Grid>
                 </materialDesign:Card>
 
