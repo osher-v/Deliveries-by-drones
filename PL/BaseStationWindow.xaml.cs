@@ -23,16 +23,13 @@ namespace PL
     /// </summary>
     public partial class BaseStationWindow : Window
     {
-        //Access object to the BL class.
-        public BlApi.IBL AccessIbl;
+        public BlApi.IBL AccessIbl; //Access object to the BL class.
 
-        //object of ListView window.
-        public ListView ListWindow;
+        public ListView ListWindow; //object of ListView window.
 
-        /// <summary> a bool to help us disable the x bootum  </summary>
-        public bool ClosingWindow { get; private set; } = true;
+        public bool ClosingWindow { get; private set; } = true; //a bool to help us disable the x bootum
 
-        #region בנאי הוספה 
+        #region add ctor 
         /// <summary>
         /// adding constractor
         /// </summary>
@@ -42,7 +39,7 @@ namespace PL
         {
             InitializeComponent();
 
-            addBaseStation.Visibility = Visibility.Visible;
+            addBaseStation.Visibility = Visibility.Visible; //open the Grid of add action.
 
             AccessIbl = bl;
 
@@ -62,7 +59,7 @@ namespace PL
                 //Check that the location does not exceed the boundaries of Gush Dan.
                 if (!(double.Parse(TBstaitonLongtude.Text) < 31.8 || double.Parse(TBstaitonLongtude.Text) > 32.2 || double.Parse(TBstaitonLattude.Text) < 34.6 || double.Parse(TBstaitonLattude.Text) > 35.1))
                 {
-                    BO.BaseStation baseStationAdd = new BaseStation()
+                    BO.BaseStation baseStationAdd = new BaseStation() //Create an object to add to the data.
                     {
                         Id = int.Parse(TBstaitonId.Text),
                         Name = TBstaitonName.Text,
@@ -72,22 +69,24 @@ namespace PL
 
                     try
                     {
-                        AccessIbl.AddStation(baseStationAdd);
+                        AccessIbl.AddStation(baseStationAdd); //update the logic layer.
                         MessageBoxResult result = MessageBox.Show("The operation was successful", "info", MessageBoxButton.OK, MessageBoxImage.Information);
                         switch (result)
                         {
                             case MessageBoxResult.OK:
                                 BO.BaseStationsToList stationsToList = AccessIbl.GetBaseStationList().ToList().Find(i => i.Id == baseStationAdd.Id);
                                 ListWindow.BaseStationToLists.Add(stationsToList); //Updating the observer list of stations.
-                                ListWindow.IsEnabled = true;
-                                ClosingWindow = false;
+
+                                ListWindow.IsEnabled = true; //to open the "ListWindow" window
+
+                                ClosingWindow = false; //to enable to Close the "BaseStationWindow" window
                                 Close();
                                 break;
                             default:
                                 break;
                         }
                     }
-                    catch (AddAnExistingObjectException ex)
+                    catch (AddAnExistingObjectException ex) //The problem is with the ID number field.
                     {
                         MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
                         TBstaitonId.Text = "";
@@ -116,9 +115,9 @@ namespace PL
             TBstaitonId.BorderBrush = Brushes.Gray;
             if (e.Key < Key.D0 || e.Key > Key.D9)
             {
-                if (e.Key < Key.NumPad0 || e.Key > Key.NumPad9) // we want keys from the num pud too
+                if (e.Key < Key.NumPad0 || e.Key > Key.NumPad9) // we want keys from the num pud too.
                 {
-                    e.Handled = true;
+                    e.Handled = true; //In this case, pressing the keyboard is not enabled.
                 }
                 else
                 {
@@ -138,10 +137,10 @@ namespace PL
             {
                 if (e.Key < Key.NumPad0 || e.Key > Key.NumPad9) // we want keys from the num pud too
                 {
-                    if (e.Key == Key.Decimal)
+                    if (e.Key == Key.Decimal) //Open option of "."
                         e.Handled = false;
                     else
-                        e.Handled = true;
+                        e.Handled = true; //In this case, pressing the keyboard is not enabled.
                 }
                 else
                 {
@@ -161,10 +160,10 @@ namespace PL
             {
                 if (e.Key < Key.NumPad0 || e.Key > Key.NumPad9) // we want keys from the num pud too
                 {
-                    if (e.Key == Key.Decimal)
+                    if (e.Key == Key.Decimal)//Open option of "."
                         e.Handled = false;
                     else
-                        e.Handled = true;
+                        e.Handled = true; //In this case, pressing the keyboard is not enabled.
                 }
                 else
                 {
@@ -184,7 +183,7 @@ namespace PL
             {
                 if (e.Key < Key.NumPad0 || e.Key > Key.NumPad9) // we want keys from the num pud too
                 {
-                    e.Handled = true;
+                    e.Handled = true; //In this case, pressing the keyboard is not enabled.
                 }
                 else
                 {
@@ -194,13 +193,14 @@ namespace PL
         }
         #endregion מטפל בבדיקות כפתורים
 
-        #endregion בנאי הוספה
+        #endregion add ctor 
 
         public BaseStation baseStation;
 
-        public int indexSelected;
+        public int indexSelected; //the location index in the observer of the stations in the ListView window.
 
-        #region בנאי לעדכון
+        #region update ctor
+
         /// <summary>
         /// update constractor
         /// </summary>
@@ -212,20 +212,21 @@ namespace PL
         {
             InitializeComponent();
 
-            updateBaseStation.Visibility = Visibility.Visible;
+            updateBaseStation.Visibility = Visibility.Visible; //open the Grid of add action.
 
             AccessIbl = bl;
 
             ListWindow = _ListWindow;
 
-            indexSelected = _indexBaseStation;
+            indexSelected = _indexBaseStation; //the location index in the observer of the stations in the ListView window.
 
+            //Connecting station data.
             baseStation = AccessIbl.GetBaseStation(BaseStationTo.Id);
             DataContext = baseStation;
 
-            TBstationFreeChargeSlotS.Text = (BaseStationTo.BusyChargeSlots + baseStation.FreeChargeSlots).ToString();
+            TBstationFreeChargeSlotS.Text = (BaseStationTo.BusyChargeSlots + baseStation.FreeChargeSlots).ToString();//Connection given total ChargeSlots.
 
-            listOfDronesInCahrge.ItemsSource = baseStation.DroneInChargsList;
+            listOfDronesInCahrge.ItemsSource = baseStation.DroneInChargsList; //Connection the List of DronesInCahrge.
         }
 
         /// <summary>
@@ -260,42 +261,9 @@ namespace PL
             }
         }
 
-        #region close
-        /// <summary>
-        /// cancel the option to clik x to close the window 
-        /// </summary>
-        /// <param name="e">close window</param>
-        protected override void OnClosing(CancelEventArgs e)
-        {
-            e.Cancel = ClosingWindow;
-        }
+        
 
-        /// <summary>
-        /// The function closes the window
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void closeAdd_Click(object sender, RoutedEventArgs e)
-        {
-            ListWindow.IsEnabled = true;
-            ClosingWindow = false; // we alowd the close option
-            Close();
-        }
-
-        /// <summary>
-        /// The function closes the window
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void closeUpdate_Click(object sender, RoutedEventArgs e)
-        {
-            ListWindow.IsEnabled = true;
-            ClosingWindow = false; // we alowd the close option
-            Close();
-        }
-        #endregion close  
-
-        #endregion
+        #endregion update ctor
 
         /// <summary>
         /// Opening a drone window
@@ -340,5 +308,40 @@ namespace PL
                     BUpdate.IsEnabled = false;
                 }
         }
+
+        #region close
+        /// <summary>
+        /// cancel the option to clik x to close the window 
+        /// </summary>
+        /// <param name="e">close window</param>
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            e.Cancel = ClosingWindow;
+        }
+
+        /// <summary>
+        /// The function closes the window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void closeAdd_Click(object sender, RoutedEventArgs e)
+        {
+            ListWindow.IsEnabled = true;
+            ClosingWindow = false; // we alowd the close option
+            Close();
+        }
+
+        /// <summary>
+        /// The function closes the window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void closeUpdate_Click(object sender, RoutedEventArgs e)
+        {
+            ListWindow.IsEnabled = true;
+            ClosingWindow = false; // we alowd the close option
+            Close();
+        }
+        #endregion close  
     }
 }
