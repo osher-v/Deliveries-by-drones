@@ -32,7 +32,7 @@ namespace PL
         /// <summary> a bool to help us disable the x bootum  </summary>
         public bool ClosingWindow { get; private set; } = true;
 
-        #region בנאי הוספה
+        #region add Customer
         /// <summary>
         /// add constractor.
         /// </summary>
@@ -51,7 +51,7 @@ namespace PL
             ListWindow = _ListWindow;
         }
 
-        #region מטפל בכפתורים
+        #region Handles text insert
         /// <summary>
         /// Locks the keyboard for numbers only.
         /// </summary>
@@ -116,10 +116,7 @@ namespace PL
                     e.Handled = false;
                 }
             }
-            if (TBcustomerLattude.Text.Length > 10)
-            {
-                e.Handled = true;
-            }
+
         }
 
         /// <summary>
@@ -143,12 +140,8 @@ namespace PL
                     e.Handled = false;
                 }
             }
-            if (TBcustomerLongtude.Text.Length > 10)
-            {
-                e.Handled = true;
-            }
         }
-        #endregion מטפל בכפתורים
+        #endregion 
 
         /// <summary>
         /// add Customer to data.
@@ -244,6 +237,8 @@ namespace PL
         }
         #endregion close  
 
+        #region update customer 
+
         public Customer customer;
 
         public int indexSelected;
@@ -280,26 +275,7 @@ namespace PL
             clientWindow = _clientWindow;
         }
 
-        /// <summary>
-        /// Locks the keyboard for numbers only
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void TBUpdateCustomerPhoneNumber_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key < Key.D0 || e.Key > Key.D9)
-            {
-                if (e.Key < Key.NumPad0 || e.Key > Key.NumPad9) // we want keys from the num pud too
-                {
-                    e.Handled = true;
-                }
-                else
-                {
-                    e.Handled = false;
-                }
-            }
-        }
-
+   
         /// <summary>
         /// The function updates customer details.
         /// </summary>
@@ -314,9 +290,9 @@ namespace PL
                 switch (result)
                 {
                     case MessageBoxResult.OK:
-                        ListWindow.CustomerToLists[indexSelected] = AccessIbl.GetCustomerList().FirstOrDefault(x => x.Id == customer.Id);//עדכון המשקיף
+                        ListWindow.CustomerToLists[indexSelected] = AccessIbl.GetCustomerList().FirstOrDefault(x => x.Id == customer.Id);//Observer update
 
-                        ListWindow.ParcelToLists.Clear();  //עדכון המשקיף לרשימה חדשה עבור הלקוחות
+                        ListWindow.ParcelToLists.Clear();  //Update overlooking a new list for customers
                         List<BO.ParcelToList> parcel = AccessIbl.GetParcelList().ToList();
                         foreach (var item in parcel)
                         {
@@ -339,9 +315,9 @@ namespace PL
                         break;
                 }
             }
-            catch 
+            catch
             {
-                MessageBox.Show("ERROR");    
+                MessageBox.Show("ERROR");
             }
         }
 
@@ -358,8 +334,8 @@ namespace PL
                 int indexParcelInObservable = ListWindow.ParcelToLists.IndexOf(ListWindow.ParcelToLists.First(x => x.Id == IdOfParcel));
                 ParcelToList customer = AccessIbl.GetParcelList().First(x => x.Id == IdOfParcel);
                 new ParcelWindow(AccessIbl, ListWindow, customer, indexParcelInObservable, clientWindow).Show();
-
-                ClosingWindow = false; // עקרונית צריכים לעדכן את החלון הזה השאלה איך עושים
+                // to close the window affter the opariton
+                ClosingWindow = false;
                 Close();
             }
         }
@@ -377,9 +353,30 @@ namespace PL
                 int indexParcelInObservable = ListWindow.ParcelToLists.IndexOf(ListWindow.ParcelToLists.First(x => x.Id == IdOfParcel));
                 ParcelToList customer = AccessIbl.GetParcelList().First(x => x.Id == IdOfParcel);
                 new ParcelWindow(AccessIbl, ListWindow, customer, indexParcelInObservable, clientWindow).Show();
-
-                ClosingWindow = false; // עקרונית צריכים לעדכן את החלון הזה השאלה איך עושים
+                // to close the window affter the opariton
+                ClosingWindow = false;
                 Close();
+            }
+        }
+
+        #region Handles text insert and butones 
+        /// <summary>
+        /// Locks the keyboard for numbers only
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void TBUpdateCustomerPhoneNumber_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key < Key.D0 || e.Key > Key.D9)
+            {
+                if (e.Key < Key.NumPad0 || e.Key > Key.NumPad9) // we want keys from the num pud too
+                {
+                    e.Handled = true;
+                }
+                else
+                {
+                    e.Handled = false;
+                }
             }
         }
 
@@ -408,6 +405,9 @@ namespace PL
             {
                 BUpdate.IsEnabled = false;
             }
+            #endregion
+
         }
+        #endregion
     }
 }
