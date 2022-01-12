@@ -25,17 +25,16 @@ namespace PL
     {
         public BlApi.IBL AccessIbl; //Access object to the BL class
 
-        /// <summary> crate a observabs list of type IBL.BO.object (to see changes in live) </summary>
+        //crate a observabs list of type IBL.BO.object(to see changes in live)
         public ObservableCollection<BO.DroneToList> DroneToLists;
         public ObservableCollection<BO.BaseStationsToList> BaseStationToLists;
         public ObservableCollection<BO.CustomerToList> CustomerToLists;
         public ObservableCollection<BO.ParcelToList> ParcelToLists;
 
-        /// <summary> a bool to help us disable the x bootum  </summary>
-        public bool ClosingWindow { get; private set; } = true;
+        public bool ClosingWindow { get; private set; } = true; //a bool to help us disable the x bootum.
 
         /// <summary>
-        /// constractor for the ListWindow that will start the InitializeComponent ans fill the Observable Collection.
+        /// ctor for the ListWindow that will start the InitializeComponent ans fill the Observable Collection.
         /// </summary>
         /// <param name="bl">get AccessIbl from main win</param>
         public ListView(BlApi.IBL bl)
@@ -56,8 +55,7 @@ namespace PL
             //new event that will call evre time that the ObservableCollection didact a change 
             DroneToLists.CollectionChanged += DroneToLists_CollectionChanged;
 
-            //display the defult list 
-            listOfDrones.ItemsSource = DroneToLists;
+            listOfDrones.ItemsSource = DroneToLists; //Connecting the data in ObservableCollection to listOfDrones.
             #endregion drone Observable and listOfDrones
 
             #region baseStations Observable and listOfBaseStations
@@ -72,8 +70,7 @@ namespace PL
             //new event that will call evre time that the ObservableCollection didact a change 
             BaseStationToLists.CollectionChanged += BaseStationToLists_CollectionChanged;
 
-            //display the defult list 
-            listOfBaseStations.ItemsSource = BaseStationToLists;
+            listOfBaseStations.ItemsSource = BaseStationToLists; //Connecting the data in ObservableCollection to listOfBaseStations.
             #endregion baseStations Observable and listOfBaseStations
 
             #region customer Observable and listOfCustomer
@@ -88,8 +85,7 @@ namespace PL
             //new event that will call evre time that the ObservableCollection didact a change 
             CustomerToLists.CollectionChanged += CustomerToLists_CollectionChanged;
 
-            //display the defult list 
-            listOfCustomers.ItemsSource = CustomerToLists;
+            listOfCustomers.ItemsSource = CustomerToLists; //Connecting the data in ObservableCollection to listOfCustomers.
             #endregion customer Observable and listOfCustomer
 
             #region parcel Observable and listOfParcel
@@ -104,8 +100,7 @@ namespace PL
             //new event that will call evre time that the ObservableCollection didact a change 
             ParcelToLists.CollectionChanged += ParcelToLists_CollectionChanged;
 
-            //display the defult list 
-            listOfParcels.ItemsSource = ParcelToLists;
+            listOfParcels.ItemsSource = ParcelToLists;//Connecting the data in ObservableCollection to listOfParcels.
             #endregion parcel Observable and listOfParcel
 
             //combobox of dronesList handling.
@@ -118,8 +113,9 @@ namespace PL
             CBparcelWprior.ItemsSource = Enum.GetValues(typeof(Priorities));
         }
 
+        #region CollectionChanged of all Observas
         /// <summary>
-        /// /// a new event that we crate in the intaklizer :DroneToLists_CollectionChanged:
+        /// a new event that we crate in the intaklizer :DroneToLists_CollectionChanged:
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>   
@@ -129,40 +125,38 @@ namespace PL
         }
 
         /// <summary>
-        /// /// a new event that we crate in the intaklizer :BaseStationToLists_CollectionChanged:
+        /// a new event that we crate in the intaklizer :BaseStationToLists_CollectionChanged:
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>   
         private void BaseStationToLists_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-            //display the defult list 
-            listOfBaseStations.ItemsSource = BaseStationToLists;
+            listOfBaseStations.ItemsSource = BaseStationToLists; //update Connecting the data in ObservableCollection to listOfBaseStations.
         }
 
         /// <summary>
-        /// /// a new event that we crate in the intaklizer :CustomerToLists_CollectionChanged:
+        /// a new event that we crate in the intaklizer :CustomerToLists_CollectionChanged:
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>   
         private void CustomerToLists_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-            //display the defult list 
-            listOfCustomers.ItemsSource = CustomerToLists;
+            listOfCustomers.ItemsSource = CustomerToLists; //update Connecting the data in ObservableCollection to listOfCustomers.
         }
 
         /// <summary>
-        /// /// a new event that we crate in the intaklizer :ParcelToLists_CollectionChanged:
+        /// a new event that we crate in the intaklizer :ParcelToLists_CollectionChanged:
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>  
         private void ParcelToLists_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-            //display the defult list 
-            listOfParcels.ItemsSource = ParcelToLists;
+            listOfParcels.ItemsSource = ParcelToLists; //update Connecting the data in ObservableCollection to listOfParcels.
         }
+        #endregion CollectionChanged of all Observas
 
         /// <summary>
-        /// help fanction to choose what to show on the user side accordingly to user cohises ( bonous)
+        /// help fanction to choose what to show on the user side accordingly to user cohises(bonous).
         /// </summary>
         public void StatusDroneSelectorChanged()
         {
@@ -181,19 +175,12 @@ namespace PL
             else //If 2 filters are enabled.
             {
                 listOfDrones.ItemsSource = DroneToLists.ToList().FindAll(x => x.Statuses == (DroneStatuses)CBStatusSelector.SelectedIndex && x.MaxWeight == (WeightCategories)CBWeightSelctor.SelectedIndex);
-            }
-
-            //CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(listOfDrones.ItemsSource);
-            //if (view.GroupDescriptions.Count < 1) // prevent from do it more then once 
-            //{
-            //    PropertyGroupDescription groupDescription = new PropertyGroupDescription("Statuses");
-            //    view.GroupDescriptions.Add(groupDescription);
-            //}
+            }    
         }
 
         #region combobox of dronesList handling
         /// <summary>
-        /// show on the user side accordingly to user cohises
+        /// show on the user side accordingly to user cohises.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -203,7 +190,7 @@ namespace PL
         }
 
         /// <summary>
-        /// show on the user side accordingly to user cohises
+        /// show on the user side accordingly to user cohises.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -235,6 +222,7 @@ namespace PL
         }
         #endregion combobox of dronesList handling
 
+        #region MouseDoubleClick evant of all the Lists
         /// <summary>
         /// open drone window in acction when didect double clik
         /// </summary>
@@ -298,17 +286,17 @@ namespace PL
                 new ParcelWindow(AccessIbl, this, parcel, indexParcel).ShowDialog();//open the drone windowon acction
             }
         }
-
+        #endregion MouseDoubleClick evant of all the Lists
 
         /// <summary>
-        /// Add drone button which activates the builder in the Add drone window
+        /// Add objects button.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void BAdd_Click(object sender, RoutedEventArgs e)
         {
             // we send ""this"" window becuse we want to use it in the new window
-            switch (TCmenu.SelectedIndex)
+            switch (TCmenu.SelectedIndex)//According to the tab the user is in, add an object.
             {
                 case 0:
                     new DroneWindow(AccessIbl, this).Show();
@@ -334,28 +322,6 @@ namespace PL
                     break;
             }
         }
-
-        #region close
-        /// <summary>
-        /// cancel the option to clik x to close the window 
-        /// </summary>
-        /// <param name="e">close window</param>
-        protected override void OnClosing(CancelEventArgs e)
-        {
-            e.Cancel = ClosingWindow;
-        }
-
-        /// <summary>
-        /// to aloow closing again but just in the spcific close boutoon 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Bclose_Click_1(object sender, RoutedEventArgs e)
-        {
-            ClosingWindow = false; // we alowd the close option
-            Close();
-        }
-        #endregion close     
 
         #region combobox of parcelList handling
         /// <summary>
@@ -471,21 +437,7 @@ namespace PL
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void grouping_Click(object sender, RoutedEventArgs e)
-        {
-            //// we orgnize the collaction by our settings (according to the enums in this case) by grouping them 
-            //IEnumerable<IGrouping<DroneStatuses, DroneToList>> droneGroup = from drone in AccessIbl.GetDroneList() group drone by drone.Statuses;
-            //List<DroneToList> droneList = new();
-
-            //foreach (var group in droneGroup)
-            //{
-            //    foreach (var drone in group)
-            //    {
-            //        droneList.Add(drone);
-            //    }
-            //}
-            //listOfDrones.ItemsSource = droneList;
-
-            //from here is to set the xaml
+        {         
             CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(listOfDrones.ItemsSource);
             if (view.GroupDescriptions.Count < 1) //  not allow to set the style more then once 
             {
@@ -518,6 +470,7 @@ namespace PL
                 view.GroupDescriptions.Add(groupDescription);
             }
         }
+
         /// <summary>
         /// clear the gruop proprties 
         /// </summary>
@@ -583,8 +536,30 @@ namespace PL
                 PropertyGroupDescription groupDescription = new PropertyGroupDescription("CustomerReceiverName");
                 view.GroupDescriptions.Add(groupDescription);
             }
-            #endregion
-
         }
+
+        #endregion grouping 
+
+        #region close
+        /// <summary>
+        /// cancel the option to clik x to close the window 
+        /// </summary>
+        /// <param name="e">close window</param>
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            e.Cancel = ClosingWindow;
+        }
+
+        /// <summary>
+        /// to aloow closing again but just in the spcific close boutoon 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Bclose_Click_1(object sender, RoutedEventArgs e)
+        {
+            ClosingWindow = false; // we alowd the close option
+            Close();
+        }
+        #endregion close     
     }
 }

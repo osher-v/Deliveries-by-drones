@@ -43,30 +43,26 @@ namespace PL
 
             Width = 440;
 
+            addParcel.Visibility = Visibility.Visible; //open the Grid of add action.
+
             AccessIbl = bl;
 
             ListWindow = _ListWindow;
 
             clientWindow = _clientWindow;
 
-            if (clientWindow != null) // in case "ParcelWindow" opened from client Window.
+            if (clientWindow != null) //in case "ParcelWindow" opened from client Window.
             {
-                TBParcelSenderId.Text = customerFromClientWindow.Id.ToString(); //
+                TBParcelSenderId.Text = customerFromClientWindow.Id.ToString(); //Placement in the field of sender ID.
                 TBParcelSenderId.IsEnabled = false;
             }
 
-            addParcel.Visibility = Visibility.Visible;
-           
-
-            // the combobox use it to show the Weight Categories
-            CBWeightSelctor.ItemsSource = Enum.GetValues(typeof(WeightCategories));
-
-            // the combobox use it to show the Priorities Categories
-            CBPriorSelector.ItemsSource = Enum.GetValues(typeof(Priorities));
+            CBWeightSelctor.ItemsSource = Enum.GetValues(typeof(WeightCategories)); //the combobox use it to show the Weight Categories.
+            CBPriorSelector.ItemsSource = Enum.GetValues(typeof(Priorities)); //the combobox use it to show the Priorities Categories
         }
 
         /// <summary>
-        /// disable the non numbers keys
+        /// disable the non numbers keys.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -77,7 +73,7 @@ namespace PL
             {
                 if (e.Key < Key.NumPad0 || e.Key > Key.NumPad9) // we want keys from the num pud too
                 {
-                    e.Handled = true;
+                    e.Handled = true; //In this case, pressing the keyboard is not enabled.
                 }
                 else
                 {
@@ -98,7 +94,7 @@ namespace PL
             {
                 if (e.Key < Key.NumPad0 || e.Key > Key.NumPad9) // we want keys from the num pud too
                 {
-                    e.Handled = true;
+                    e.Handled = true; //In this case, pressing the keyboard is not enabled.
                 }
                 else
                 {
@@ -106,8 +102,6 @@ namespace PL
                 }
             }
         }
-
-       
 
         /// <summary>
         /// The function handles adding a parcel.
@@ -119,7 +113,7 @@ namespace PL
             //Check that all fields are filled.
             if (TBParcelSenderId.Text.Length != 0 && TBParcelReciverId.Text.Length != 0 && CBPriorSelector.SelectedItem != null && CBWeightSelctor.SelectedItem != null)
             {           
-                BO.Parcel parcelAdd = new Parcel()
+                BO.Parcel parcelAdd = new Parcel() //Create an object to add to the data.
                 {
                     Sender = new CustomerInDelivery() { Id = int.Parse(TBParcelSenderId.Text) },
                     Receiver = new CustomerInDelivery() { Id = int.Parse(TBParcelReciverId.Text) },
@@ -129,28 +123,29 @@ namespace PL
 
                 try
                 {
-                    int IdOfParcel = AccessIbl.AddParcel(parcelAdd);
+                    int IdOfParcel = AccessIbl.AddParcel(parcelAdd); //update the logic layer.
                     MessageBoxResult result = MessageBox.Show("The operation was successful", "info", MessageBoxButton.OK, MessageBoxImage.Information);
                     switch (result)
                     {
                         case MessageBoxResult.OK:
                             BO.ParcelToList parcelsToList = AccessIbl.GetParcelList().ToList().Find(i => i.Id == IdOfParcel);
-                            ListWindow.ParcelToLists.Add(parcelsToList); //Updating the observer list of stations.
+                            ListWindow.ParcelToLists.Add(parcelsToList); //Updating the observer list of parcels.
 
-                            if (clientWindow != null)
+                            if (clientWindow != null)//in case "ParcelWindow" opened from client Window.
                             {
-                                clientWindow.UpdateChangesFromParcelWindow();
+                                clientWindow.UpdateChangesFromParcelWindow(); //update clientWindow.
                             }
 
-                            ListWindow.IsEnabled = true;
-                            ClosingWindow = false;
+                            ListWindow.IsEnabled = true; //open the "ListWindow" window.
+
+                            ClosingWindow = false; //to enable to close the "BaseStationWindow" window.
                             Close();
                             break;
                         default:
                             break;
                     }
                 }
-                catch (NonExistentObjectException ex)
+                catch (NonExistentObjectException ex) //The problem is with the ID number field.
                 {
                     MessageBox.Show(ex.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
                     switch (ex.Message)
@@ -179,21 +174,21 @@ namespace PL
 
         public ClientWindow Client;
 
-        public int indexSelected;
+        public int indexSelected; //the location index in the observer of the parcels in the ListView window.
 
+        #region update situation
         /// <summary>
-        /// update constractor.
+        /// update ctor.
         /// </summary>
         /// <param name="bl"></param>
         /// <param name="_ListWindow"></param>
         /// <param name="parcelTo"></param>
         /// <param name="_indexParcel"></param>
-        public ParcelWindow(BlApi.IBL bl, ListView _ListWindow, ParcelToList parcelTo, int _indexParcel, ClientWindow _client=null)
+        public ParcelWindow(BlApi.IBL bl, ListView _ListWindow, ParcelToList parcelTo, int _indexParcel, ClientWindow _client = null)
         {
             InitializeComponent();
-            updateParcel.Visibility = Visibility.Visible;
 
-            Client = _client;
+            updateParcel.Visibility = Visibility.Visible; //open the Grid of update action.
 
             AccessIbl = bl;
 
@@ -201,27 +196,29 @@ namespace PL
 
             indexSelected = _indexParcel;
 
+            Client = _client;
+
+            //Connecting customer data.
             parcel = AccessIbl.GetParcel(parcelTo.Id);
             DataContext = parcel;
-            if (Client == null)
+
+            if (Client == null)//in case "ParcelWindow" NOT opened from client Window.
             {
                 Breciver.Visibility = Visibility.Visible;
                 Bsender.Visibility = Visibility.Visible;
             }
 
+            //If the parcel is not associated then it will be possible to delete it.
             if (parcelTo.Status == DeliveryStatus.created && Client == null)
             {
                 BDelete.Visibility = Visibility.Visible; //we can only delete if the package is not associated.
             }
 
+            //If the parcel has already been associated then it will be possible to open drone details.
             if ((parcelTo.Status == DeliveryStatus.Assigned || parcelTo.Status == DeliveryStatus.PickedUp) && Client == null)
             {
                 Bdrone.Visibility = Visibility.Visible;         
             };
-
-          
-
-
         }
 
         /// <summary>
@@ -235,15 +232,17 @@ namespace PL
             switch (result)
             {
                 case MessageBoxResult.Yes:
-                    AccessIbl.RemoveParcel(parcel.Id);// accses to delete from the bl list 
-                    ListWindow.ParcelToLists.RemoveAt(indexSelected);// we go to the index to delete from the observer 
+                    AccessIbl.RemoveParcel(parcel.Id); //update the logic layer.
 
-                    ListWindow.IsEnabled = true;
-                    ClosingWindow = false;// allowd to close the window 
+                    ListWindow.ParcelToLists.RemoveAt(indexSelected); //Update the observer list of parcels.
+
+                    ListWindow.IsEnabled = true; //open the "ListWindow" window.
+
+                    ClosingWindow = false; //allowd to close the window 
                     Close();
 
                     break;
-                case MessageBoxResult.No: // in case that the user dont want to delete he have the option to abort withot any change 
+                case MessageBoxResult.No: //in case that the user dont want to delete he have the option to abort withot any change. 
                     break;
                 default:
                     break;
@@ -277,15 +276,6 @@ namespace PL
         }
 
         /// <summary>
-        /// Update changes from customer window(name).
-        /// </summary>
-        public void UpdateChangesFromCustomerWindow()
-        {
-            parcel = AccessIbl.GetParcel(parcel.Id);
-            DataContext = parcel;
-        }
-
-        /// <summary>
         /// open window for more informiton about the linked drone
         /// </summary>
         /// <param name="sender"></param>
@@ -295,29 +285,38 @@ namespace PL
             int IdOfDrone = parcel.MyDrone.Id;
             int indexDroneInObservable = ListWindow.DroneToLists.IndexOf(ListWindow.DroneToLists.First(x => x.Id == IdOfDrone));
             DroneToList drone = AccessIbl.GetDroneList().First(x => x.Id == IdOfDrone);
-            new DroneWindow(AccessIbl, ListWindow, drone , indexDroneInObservable, this).ShowDialog();
-
-            //ClosingWindow = false; // עקרונית צריכים לעדכן את החלון הזה השאלה איך עושים
-            //Close();
+            new DroneWindow(AccessIbl, ListWindow, drone, indexDroneInObservable, this).ShowDialog();
         }
 
         /// <summary>
-        /// Update changes from customer window(name).
+        /// Update changes from customer window.
+        /// </summary>
+        public void UpdateChangesFromCustomerWindow()
+        {
+            //update connecting customer data.
+            parcel = AccessIbl.GetParcel(parcel.Id);
+            DataContext = parcel;
+        }
+
+        /// <summary>
+        /// Update changes from drone window.
         /// </summary>
         public void UpdateChangesFromDroneWindow()
         {
+            //update connecting customer data.
             parcel = AccessIbl.GetParcel(parcel.Id);
             DataContext = parcel;
 
-            if(parcel.Delivered != null)//להסתיר את כפתור רחפן אם אין אחד שמשויך כי כבר סיפק
+            if(parcel.Delivered != null) //In case the parcl was provided hidden the operation skimmer details.
             {
                 Bdrone.Visibility = Visibility.Hidden;
             }
         }
+        #endregion update situation
 
         #region close
         /// <summary>
-        /// cancel the option to clik x to close the window 
+        /// cancel the option to clik x to close the window.
         /// </summary>
         /// <param name="e">close window</param>
         protected override void OnClosing(CancelEventArgs e)

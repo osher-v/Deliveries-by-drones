@@ -229,7 +229,7 @@ namespace PL
 
             indexSelected = _indexCustomer;
 
-            ////Connecting customer data.
+            //Connecting customer data.
             customer = AccessIbl.GetCustomer(CustomerTo.Id);
             DataContext = customer;
 
