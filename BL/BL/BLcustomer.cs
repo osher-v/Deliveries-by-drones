@@ -8,7 +8,6 @@ using BO;
 
 namespace BL
 {
-    //public partial class BLcustomer
     partial class BL
     {
         [MethodImpl(MethodImplOptions.Synchronized)]
@@ -67,8 +66,13 @@ namespace BL
 
             Location dalCustomerLocation = new Location() { longitude = printCustomer.Longitude, latitude = printCustomer.Latitude };
 
-            Customer blCustomer = new Customer(){Id = printCustomer.Id, Name = printCustomer.Name,PhoneNumber = printCustomer.PhoneNumber,
-                LocationOfCustomer = dalCustomerLocation};
+            Customer blCustomer = new Customer()
+            {
+                Id = printCustomer.Id,
+                Name = printCustomer.Name,
+                PhoneNumber = printCustomer.PhoneNumber,
+                LocationOfCustomer = dalCustomerLocation
+            };
 
             IEnumerable<DO.Parcel> holdDalParcels = AccessIdal.GetParcelList(i => i.SenderId == idForDisplayObject);
 
@@ -91,18 +95,18 @@ namespace BL
 
             blCustomer.ParcelToTheCustomer = from item in holdDalSentParcels
                                              select new ParcelAtCustomer()
-                                               {
-                                                   Id = item.Id,
-                                                   Prior = (Priorities)item.Priority,
-                                                   Weight = (WeightCategories)item.Weight,
-                                                   OtherCustomer = new CustomerInDelivery
-                                                   {
-                                                       Id = item.SenderId,
-                                                       Name = AccessIdal.GetCustomer(item.SenderId).Name
-                                                   },
-                                                   Status = item.Delivered != null ? DeliveryStatus.Delivered : item.PickedUp != null ?
+                                             {
+                                                 Id = item.Id,
+                                                 Prior = (Priorities)item.Priority,
+                                                 Weight = (WeightCategories)item.Weight,
+                                                 OtherCustomer = new CustomerInDelivery
+                                                 {
+                                                     Id = item.SenderId,
+                                                     Name = AccessIdal.GetCustomer(item.SenderId).Name
+                                                 },
+                                                 Status = item.Delivered != null ? DeliveryStatus.Delivered : item.PickedUp != null ?
                                                    DeliveryStatus.PickedUp : item.Assigned != null ? DeliveryStatus.Assigned : DeliveryStatus.created
-                                               };
+                                             };
 
             return blCustomer;
         }
@@ -110,7 +114,6 @@ namespace BL
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<CustomerToList> GetCustomerList(Predicate<CustomerToList> predicate = null)
         {
-
             IEnumerable<DO.Customer> holdDalCustomer = AccessIdal.GetCustomerList();
             IEnumerable<CustomerToList> CustomerBL = from item in holdDalCustomer
                                                      select new CustomerToList()
@@ -127,7 +130,7 @@ namespace BL
                                                          NumberPackagesOnTheWayToTheCustomer = AccessIdal.GetParcelList
                                                              (x => x.PickedUp != null && x.Delivered == null && x.TargetId == item.Id).Count(),
                                                      };
-           return CustomerBL.Where(x => predicate == null ? true : predicate(x));
+            return CustomerBL.Where(x => predicate == null ? true : predicate(x));
         }
     }
 }

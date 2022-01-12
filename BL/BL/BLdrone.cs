@@ -8,7 +8,6 @@ using BO;
 
 namespace BL
 {
-    //public partial class BLdrone
     partial class BL
     {
         [MethodImpl(MethodImplOptions.Synchronized)]
@@ -26,11 +25,15 @@ namespace BL
                 throw new NonExistentObjectException("BaseStation");
             }
 
-            if(AccessIdal.GetBaseStation(firstChargingStation).FreeChargeSlots <= 0)
+            if (AccessIdal.GetBaseStation(firstChargingStation).FreeChargeSlots <= 0)
                 throw new NoFreeChargingStations();
 
-            DO.Drone Drone = new DO.Drone() { Id = newDrone.Id, MaxWeight = (DO.WeightCategories)newDrone.MaxWeight,
-                Model = newDrone.Model};
+            DO.Drone Drone = new DO.Drone()
+            {
+                Id = newDrone.Id,
+                MaxWeight = (DO.WeightCategories)newDrone.MaxWeight,
+                Model = newDrone.Model
+            };
 
             try  // if Add An Existing Object throw Exception
             {
@@ -46,8 +49,8 @@ namespace BL
             //set a location bo
             Location location = new Location()
             {
-                 longitude = AccessIdal.GetBaseStation(firstChargingStation).Longitude,
-                 latitude = AccessIdal.GetBaseStation(firstChargingStation).Latitude
+                longitude = AccessIdal.GetBaseStation(firstChargingStation).Longitude,
+                latitude = AccessIdal.GetBaseStation(firstChargingStation).Latitude
             };
 
             newDrone.CurrentLocation = location;
@@ -62,7 +65,7 @@ namespace BL
         public void UpdateDroneName(int droneId, string droneName)
         {
             //if the its Non Existent throw Exception
-            try 
+            try
             {
                 DO.Drone newDrone = AccessIdal.GetDrone(droneId);
                 newDrone.Model = droneName;
@@ -83,18 +86,25 @@ namespace BL
             if (droneToLIist == default)
                 throw new NonExistentObjectException("drone");
 
-            Drone printDrone = new Drone() {Id= droneToLIist.Id, BatteryStatus= droneToLIist.BatteryStatus, 
-                CurrentLocation= droneToLIist.CurrentLocation, MaxWeight= droneToLIist.MaxWeight,
-                Model= droneToLIist.Model,  Statuses= droneToLIist.Statuses, Delivery = new ParcelInTransfer() };
+            Drone printDrone = new Drone()
+            {
+                Id = droneToLIist.Id,
+                BatteryStatus = droneToLIist.BatteryStatus,
+                CurrentLocation = droneToLIist.CurrentLocation,
+                MaxWeight = droneToLIist.MaxWeight,
+                Model = droneToLIist.Model,
+                Statuses = droneToLIist.Statuses,
+                Delivery = new ParcelInTransfer()
+            };
 
-           if(droneToLIist.Statuses == DroneStatuses.busy)
-           {    
+            if (droneToLIist.Statuses == DroneStatuses.busy)
+            {
                 DO.Parcel holdDalParcel = AccessIdal.GetParcel(droneToLIist.NumberOfLinkedParcel);
 
                 DO.Customer holdDalSender = AccessIdal.GetCustomer(holdDalParcel.SenderId);
-                DO.Customer holdDalReciver= AccessIdal.GetCustomer(holdDalParcel.TargetId);
+                DO.Customer holdDalReciver = AccessIdal.GetCustomer(holdDalParcel.TargetId);
 
-                Location locationOfSender = new Location() { longitude= holdDalSender.Longitude, latitude=holdDalSender.Latitude };
+                Location locationOfSender = new Location() { longitude = holdDalSender.Longitude, latitude = holdDalSender.Latitude };
                 Location locationOfReciver = new Location() { longitude = holdDalReciver.Longitude, latitude = holdDalReciver.Latitude };
 
                 // sender      
@@ -111,7 +121,6 @@ namespace BL
                 }
                 else//PickedUp
                 {
-                    //printDrone.Delivery.TransportDistance = GetDistance(locationOfSender, locationOfReciver);
                     printDrone.Delivery.TransportDistance = GetDistance(printDrone.CurrentLocation, locationOfReciver);
                 }
 
@@ -119,14 +128,14 @@ namespace BL
                 printDrone.Delivery.Prior = (Priorities)holdDalParcel.Priority;
                 printDrone.Delivery.Weight = (WeightCategories)holdDalParcel.Weight;
 
-                if (holdDalParcel.PickedUp != null) 
+                if (holdDalParcel.PickedUp != null)
                 {
                     printDrone.Delivery.OnTheWayToTheDestination = true;
-                }  
+                }
                 else
                     printDrone.Delivery.OnTheWayToTheDestination = false;
 
-           }
+            }
 
             return printDrone;
         }
@@ -137,7 +146,6 @@ namespace BL
             return DronesBL.FindAll(x => predicate == null ? true : predicate(x));
         }
 
-        //[MethodImpl(MethodImplOptions.Synchronized)]
         public void sim(int droneID, Action ReportProgressInSimultor, Func<bool> IsTimeRun)
         {
             new Simulator(this, droneID, ReportProgressInSimultor, IsTimeRun);

@@ -10,7 +10,7 @@ using DalApi;
 
 namespace DalObject
 {
-     partial class DalObject : IDal
+    partial class DalObject : IDal
     {
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddStation(BaseStation newbaseStation)
@@ -65,8 +65,7 @@ namespace DalObject
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<BaseStation> GetBaseStationList(Predicate<BaseStation> predicate = null)
         {
-            //return DataSource.BaseStationsList.FindAll(x => predicate == null ? true : predicate(x));
             return DataSource.BaseStationsList.Where(x => predicate == null ? true : predicate(x));
-        }    
-    }        
+        }
+    }
 }

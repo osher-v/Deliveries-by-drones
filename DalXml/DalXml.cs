@@ -29,7 +29,7 @@ namespace DalXml
         }
 
         /// <summary>
-        /// 
+        ///  ctor in the biginin of eace run we relese all the drons from charge
         /// </summary>
         private DalXml() //private  
         {

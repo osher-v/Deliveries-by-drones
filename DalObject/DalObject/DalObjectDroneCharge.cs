@@ -11,18 +11,22 @@ using DalApi;
 
 namespace DalObject
 {
-     partial class DalObject 
+    partial class DalObject 
     {
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void SendingDroneforChargingAtBaseStation(int baseStationId, int droneId)
         {
-            DataSource.DroneChargeList.Add(new DroneCharge() { StationId = baseStationId,
-                DroneId = droneId, StartChargeTime =  DateTime.Now });
+            DataSource.DroneChargeList.Add(new DroneCharge()
+            {
+                StationId = baseStationId,
+                DroneId = droneId,
+                StartChargeTime = DateTime.Now
+            });
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void ReleaseDroneFromChargingAtBaseStation(int droneId)
-        {       
+        {
             DataSource.DroneChargeList.RemoveAt(DataSource.DroneChargeList.FindIndex(x => x.DroneId == droneId));
         }
 
@@ -39,7 +43,6 @@ namespace DalObject
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<DroneCharge> GetBaseChargeList(Predicate<DroneCharge> predicate = null)
         {
-            //return DataSource.DroneChargeList.FindAll(x => predicate == null ? true : predicate(x));
             return DataSource.DroneChargeList.Where(x => predicate == null ? true : predicate(x));
         }
     }

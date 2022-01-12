@@ -54,19 +54,6 @@ namespace BL
                             MaxWeight = (WeightCategories)item.MaxWeight
                         }).ToList();
 
-            ////Conversion of a drone list from the data layer to a Drone list of the BL layer.
-            //DronesBL = new List<DroneToList>();
-            //List<DO.Drone> holdDalDrones = AccessIdal.GetDroneList().ToList();
-            //foreach (var item in holdDalDrones)
-            //{
-            //    DronesBL.Add(new DroneToList()
-            //    {
-            //        Id = item.Id,
-            //        Model = item.Model,
-            //        MaxWeight = (WeightCategories)item.MaxWeight
-            //    });
-            //}
-
             //Convert a customer list from the data layer to a customer Collection of the BL layer.
             IEnumerable<Customer> CustomerBL = from item in AccessIdal.GetCustomerList()
                                                select new Customer()
@@ -77,20 +64,6 @@ namespace BL
                                                    LocationOfCustomer = new Location()
                                                    { longitude = item.Longitude, latitude = item.Latitude }
                                                };
-
-            ////Convert a customer list from the data layer to a customer list of the BL layer.
-            //List <Customer> CustomerBL = new List<Customer>();
-            //List<DO.Customer> holdDalCustomer = AccessIdal.GetCustomerList().ToList();
-            //foreach (var item in holdDalCustomer)
-            //{
-            //    CustomerBL.Add(new Customer
-            //    {
-            //        Id = item.Id,
-            //        Name = item.Name,
-            //        PhoneNumber = item.PhoneNumber,
-            //        LocationOfCustomer = new Location() { longitude = item.Longitude, latitude = item.Latitude }
-            //    });
-            //}
 
             //Converts a list of base stations from the data layer to a list of base stations of the BL layer.
             List<BaseStation> baseStationBL = (from item in AccessIdal.GetBaseStationList()
@@ -103,23 +76,8 @@ namespace BL
                                                    DroneInChargsList = new List<DroneInCharg>()
                                                }).ToList();
 
-            ////Converts a list of base stations from the data layer to a list of base stations of the BL layer.
-            //List<BaseStation> baseStationBL = new List<BaseStation>();
-            //List<DO.BaseStation> holdDalBaseStation = AccessIdal.GetBaseStationList().ToList();
-            //foreach (var item in holdDalBaseStation)
-            //{
-            //    baseStationBL.Add(new BaseStation
-            //    {
-            //        Id = item.Id,
-            //        Name = item.StationName,
-            //        FreeChargeSlots = item.FreeChargeSlots,
-            //        BaseStationLocation = new Location() { longitude = item.Longitude, latitude = item.Latitude },
-            //        DroneInChargsList = new List<DroneInCharg>()
-            //    });
-            //}
-
-            //bring of the list of package from the data layer.
-            List<DO.Parcel> holdDalParcels = AccessIdal.GetParcelList(i => i.DroneId != 0).ToList();//עשינו רשימה כי היינו חייבים בהמשך להשתמש באינדקס
+            //bring the list of package from the data layer.
+            List<DO.Parcel> holdDalParcels = AccessIdal.GetParcelList(i => i.DroneId != 0).ToList();//We made a list because we had to later use the index
 
             //The loop will go through the dronesBL list and check if the drone is associated with the package
             //or if it does not makes a delivery. and will update its status, location and battery status.
@@ -165,7 +123,7 @@ namespace BL
                         item.CurrentLocation = minDistanceBetweenBaseStationsAndLocation(baseStationBL, locationOfsender).Item1;
 
                         //Need to add the electricity use between the drone position and the sender position
-                        electricityUse += GetDistance(item.CurrentLocation, locationOfsender) * Free; //
+                        electricityUse += GetDistance(item.CurrentLocation, locationOfsender) * Free; 
                     }
                     else //If the package was PickedUped.
                     {
@@ -224,11 +182,6 @@ namespace BL
         /// <returns>The location of the base station closest to the location and the min distance</returns>
         public (Location, double) minDistanceBetweenBaseStationsAndLocation(IEnumerable<BaseStation> baseStationBL, Location location)
         {
-            //IEnumerable<double> listOfDistance = from item in baseStationBL
-            //                                     select GetDistance(location, item.BaseStationLocation);
-            //double minDistance = listOfDistance.Min();
-            //return (baseStationBL.First(x => minDistance == GetDistance(location, x.BaseStationLocation)).BaseStationLocation, minDistance);//לבדוק איך אפשר לייעל              
-
             IEnumerable<Location> locations = from item in baseStationBL
                                               orderby GetDistance(location, item.BaseStationLocation)
                                               select item.BaseStationLocation;

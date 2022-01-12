@@ -9,38 +9,40 @@ namespace DalXml
 {
     internal class XMLTools
     {
-        static string dir = @"xml\";
-        static XMLTools()
-        {
-            if (!Directory.Exists(dir))
-                Directory.CreateDirectory(dir);
-        }
-
+        /// <summary>
+        /// this func save XElement to xml file by XElement mathod
+        /// </summary>
+        /// <param name="rootElem"></param>
+        /// <param name="filePath"></param>
         #region SaveLoadWithXElement
         public static void SaveListToXMLElement(XElement rootElem, string filePath)
         {
             try
             {
-                rootElem.Save(/*dir + */filePath);
+                rootElem.Save(filePath);
             }
             catch (Exception ex)
             {
                 throw new DO.XMLFileLoadCreateException(filePath, $"fail to create xml file: {filePath}", ex);
             }
         }
-
+        /// <summary>
+        /// this func load XElement to xml file by XElement mathod
+        /// </summary>
+        /// <param name="filePath"></param>
+        /// <returns></returns>
         public static XElement LoadListFromXMLElement(string filePath)
         {
             try
             {
-                if (File.Exists(/*dir +*/ filePath))
+                if (File.Exists( filePath))
                 {
-                    return XElement.Load(/*dir +*/ filePath);
+                    return XElement.Load( filePath);
                 }
                 else
                 {
-                    XElement rootElem = new XElement(/*dir + */filePath);
-                    rootElem.Save(/*dir + */filePath);
+                    XElement rootElem = new XElement(filePath);
+                    rootElem.Save(filePath);
                     return rootElem;
                 }
             }
@@ -52,11 +54,17 @@ namespace DalXml
         #endregion
 
         #region SaveLoadWithXMLSerializer
+        /// <summary>
+        /// this func save list to xml file by serializa mathod
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="list"></param>
+        /// <param name="filePath"></param>
         public static void SaveListToXMLSerializer<T>(List<T> list, string filePath)
         {
             try
             {
-                FileStream file = new FileStream(/*dir +*/ filePath, FileMode.Create);
+                FileStream file = new FileStream( filePath, FileMode.Create);
                 XmlSerializer x = new XmlSerializer(list.GetType());
                 x.Serialize(file, list);
                 file.Close();
@@ -66,7 +74,12 @@ namespace DalXml
                 throw new DO.XMLFileLoadCreateException(filePath, $"fail to create xml file: {filePath}", ex);
             }
         }
-
+        /// <summary>
+        /// this func load list to xml file by serializa mathod
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="filePath"></param>
+        /// <returns></returns>
         public static List<T> LoadListFromXMLSerializer<T>(string filePath)
         {
             try

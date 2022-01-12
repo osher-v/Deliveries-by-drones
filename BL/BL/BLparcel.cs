@@ -69,7 +69,7 @@ namespace BL
                 if (!tempParcels.Any())
                     throw new NoSuitablePsrcelWasFoundToBelongToTheDrone();
 
-                DO.Parcel theRightParcel = tempParcels.First();//מביא את האיבר הראשון שהוא המתאים ביותר לאחר כל הסינונים והמיונים
+                DO.Parcel theRightParcel = tempParcels.First();
 
                 myDrone.Statuses = DroneStatuses.busy;
                 myDrone.NumberOfLinkedParcel = theRightParcel.Id;
@@ -223,7 +223,7 @@ namespace BL
                 Delivered = printParcel.Delivered
             };
 
-            if (parcel.Assigned != null && parcel.Delivered == null)//ברגע שחבילה סופקה אין רחפן בקשר
+            if (parcel.Assigned != null && parcel.Delivered == null)
             {
                 DroneInThePackage droneInThePackage = new DroneInThePackage()
                 {
@@ -253,39 +253,10 @@ namespace BL
                                                 };
 
             return parcels.Where(x => predicate == null ? true : predicate(x));
-
-
-            //List<ParcelToList> parcels = new List<ParcelToList>();
-            //List<DO.Parcel> holdDalParcels = AccessIdal.GetParcelList().ToList();
-
-            //foreach (var item in holdDalParcels)
-            //{
-            //    DeliveryStatus currentStatus;
-            //    if (item.Delivered != null)
-            //        currentStatus = DeliveryStatus.Delivered;
-            //    else if (item.PickedUp != null)
-            //        currentStatus = DeliveryStatus.PickedUp;
-            //    else if (item.Assigned != null)
-            //        currentStatus = DeliveryStatus.Assigned;
-            //    else
-            //        currentStatus = DeliveryStatus.created;
-
-            //    parcels.Add(new ParcelToList
-            //    {
-            //        Id = item.Id,
-            //        Weight = (WeightCategories)item.Weight,
-            //        Prior = (Priorities)item.Priority,
-            //        CustomerSenderName = AccessIdal.GetCustomer(item.SenderId).Name,
-            //        CustomerReceiverName = AccessIdal.GetCustomer(item.TargetId).Name,
-            //        Status = currentStatus
-            //    });
-            //}
-
-            //return parcels.Where(x => predicate == null ? true : predicate(x));
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public void RemoveParcel(int ParcelId)//להוסיף חריגה אם החבילה כבר משויכת
+        public void RemoveParcel(int ParcelId)
         {
             try    // throw if the id is nonExsist
             {

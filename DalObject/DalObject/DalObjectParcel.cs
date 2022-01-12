@@ -18,7 +18,7 @@ namespace DalObject
         {
             newParcel.Id = DataSource.Config.CountIdPackage++;
             DataSource.ParcelsList.Add(newParcel);
-            return newParcel.Id; //Returns the id of the current Parcel.
+            return newParcel.Id; //Returns the id of the current Parcel becuse we cant know that (its index number)
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
@@ -33,7 +33,7 @@ namespace DalObject
             Parcel temp = DataSource.ParcelsList[indexaforParcel];
             temp.DroneId = droneId;
             temp.Assigned = DateTime.Now;
-            DataSource.ParcelsList[indexaforParcel] = temp; 
+            DataSource.ParcelsList[indexaforParcel] = temp;
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
@@ -76,7 +76,6 @@ namespace DalObject
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Parcel> GetParcelList(Predicate<Parcel> prdicat = null)
         {
-            //return DataSource.ParcelsList.FindAll(x => prdicat == null ? true : prdicat(x));
             return DataSource.ParcelsList.Where(x => prdicat == null ? true : prdicat(x));
         }
 

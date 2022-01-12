@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 using DO;
 
 namespace DalObject
@@ -31,9 +30,9 @@ namespace DalObject
 
         internal class Config 
         {
-        /// <summary> Continuous number For the package </summary>
+            /// <summary> Continuous number For the package </summary>
             public static int CountIdPackage = 1000;
-
+            /// charge rates and Power consumption rate 
             public static double Free = 0.5;
             public static double LightWeightCarrier = 0.6;
             public static double MediumWeightBearing = 0.75;
@@ -70,7 +69,8 @@ namespace DalObject
             string[] modelNameArr = new string[5] { "I", "IX", "IIX", "VI", "IL" }; 
             for (int i = 0; i < 5; i++)
             {
-                DronesList.Add( new Drone {
+                DronesList.Add(new Drone
+                {
                     Id = MyRandom.Next(100000000, 999999999),
                     Model = modelNameArr[i],
                     MaxWeight = (WeightCategories)MyRandom.Next(0, 3)//0=light,1=medium,2=heavy
@@ -80,7 +80,7 @@ namespace DalObject
 
             #region init Customer
             //initialization of 10 Customers with different and MyRandom values.
-            string[] CustomersNameArr = new string[10]{"אושר","אבי","אבישי","דורוןאיידי","חיים מרדכי",
+            string[] CustomersNameArr = new string[10]{"אושר","אבי","אבישי","דורון היידי","חיים מרדכי",
                    "יונתן","מענדי חמין","שמעון","יוסף","תומר"};
             for (int i = 0; i < 10; i++)
             {
@@ -89,7 +89,7 @@ namespace DalObject
                     Name = CustomersNameArr[i],
                     PhoneNumber = "0" + MyRandom.Next(50, 58) + "-" + MyRandom.Next(0000000, 9999999),
                     Longitude = (float)((float)(MyRandom.NextDouble() * (32.2 - 31.8)) + 31.8),// get israel range (just gos dan)
-                    Latitude = (float)((float)(MyRandom.NextDouble() * (35.1 - 34.6)) + 34.6)//get israel range 
+                    Latitude = (float)((float)(MyRandom.NextDouble() * (35.1 - 34.6)) + 34.6)//get israel range (just gos dan)
                 });
             }
             #endregion init Customer
@@ -106,9 +106,9 @@ namespace DalObject
                     Priority = (Priorities)MyRandom.Next(0, 3),//0=regular, 1=fast, 2=urgent
                     DroneId = 0,
                     Requested = DateTime.Now,
-                    Assigned = null, 
+                    Assigned = null,
                     PickedUp = null,
-                    Delivered = null    
+                    Delivered = null
                 });
             }
             #endregion init Parcel

@@ -44,25 +44,7 @@ namespace DalObject
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Drone> GetDroneList()
         {
-            //return DataSource.DronesList.Take(DataSource.DronesList.Count);
             return DataSource.DronesList.Select(item => item);
         }
-
-        //public void RemoveDrone(int DroneId)
-        //{
-        //    int index = DataSource.DronesList.FindIndex(x => x.Id == DroneId);
-        //    if (index == -1)
-        //    {
-        //        throw new NonExistentObjectException();
-        //    }
-        //    DataSource.DronesList.RemoveAt(index); //else
-
-        //    ////this Remove fanction return true if item is successfully removed; otherwise, false. This method also returns false if item was not found in the List<T>.
-        //    //bool successOperation = DataSource.DronesList.Remove(Drone);
-        //    //if (!successOperation)
-        //    //{
-        //    //    throw new NonExistentObjectException();
-        //    //}
-        //}
     }
 }

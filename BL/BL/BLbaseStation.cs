@@ -8,7 +8,6 @@ using BO;
 
 namespace BL
 {
-    //public partial class BLbaseStation
     partial class BL
     {
         [MethodImpl(MethodImplOptions.Synchronized)]
@@ -54,8 +53,6 @@ namespace BL
 
             if (chargeslots != "") ////if it is not empty.
             {
-                //int totalQuantityChargeSlots;
-
                 int.TryParse(chargeslots, out int totalQuantityChargeSlots);
 
                 int numOfBuzeChargeslots = AccessIdal.GetBaseChargeList(x => x.StationId == baseStationId).Count();
@@ -85,8 +82,6 @@ namespace BL
                 throw new NonExistentObjectException("BaseStation");
             }
 
-            //Location dalBaseLocation = new Location() { longitude = printBase.Longitude, latitude=printBase.Latitude };
-
             BaseStation blBase = new BaseStation()
             {
                 Id = printBase.Id,
@@ -96,8 +91,6 @@ namespace BL
                 FreeChargeSlots = printBase.FreeChargeSlots
             };
 
-            //IEnumerable<DO.DroneCharge> droneInCharge = AccessIdal.GetBaseChargeList(x => x.StationId == idForDisplayObject);
-
             blBase.DroneInChargsList = from item in AccessIdal.GetBaseChargeList(x => x.StationId == idForDisplayObject)
                                        select new DroneInCharg { Id = item.DroneId, BatteryStatus = DronesBL.Find(x => x.Id == item.DroneId).BatteryStatus };
             return blBase;
@@ -106,7 +99,6 @@ namespace BL
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<BaseStationsToList> GetBaseStationList(Predicate<BaseStationsToList> predicate = null)
         {
-            //IEnumerable<DO.BaseStation> holdDalBaseStation = AccessIdal.GetBaseStationList();
             IEnumerable<BaseStationsToList> baseStationBL = from item in AccessIdal.GetBaseStationList()
                                                             select new BaseStationsToList()
                                                             {

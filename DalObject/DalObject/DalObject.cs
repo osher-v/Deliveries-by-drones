@@ -22,7 +22,7 @@ namespace DalObject
 
         static DalObject() { }// static ctor to ensure instance init is done just before first usage
 
-        private DalObject() //private  
+        private DalObject()   
         {
             DataSource.Initialize();
         }
