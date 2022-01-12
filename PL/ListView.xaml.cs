@@ -178,50 +178,6 @@ namespace PL
             }    
         }
 
-        #region combobox of dronesList handling
-        /// <summary>
-        /// show on the user side accordingly to user cohises.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void CBStatusSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            StatusDroneSelectorChanged();
-        }
-
-        /// <summary>
-        /// show on the user side accordingly to user cohises.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void CBWeightSelctor_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            StatusDroneSelectorChanged();
-        }
-
-        /// <summary>
-        /// restart modem to set option to default
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void BResetStatus_Click(object sender, RoutedEventArgs e)
-        {
-            CBStatusSelector.SelectedItem = null;
-            StatusDroneSelectorChanged();
-        }
-
-        /// <summary>
-        /// restart modem to set option to default
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void BResetWeight_Click(object sender, RoutedEventArgs e)
-        {
-            CBWeightSelctor.SelectedItem = null;
-            StatusDroneSelectorChanged();
-        }
-        #endregion combobox of dronesList handling
-
         #region MouseDoubleClick evant of all the Lists
         /// <summary>
         /// open drone window in acction when didect double clik
@@ -287,6 +243,50 @@ namespace PL
             }
         }
         #endregion MouseDoubleClick evant of all the Lists
+
+        #region combobox of dronesList handling
+        /// <summary>
+        /// show on the user side accordingly to user cohises.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CBStatusSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            StatusDroneSelectorChanged();
+        }
+
+        /// <summary>
+        /// show on the user side accordingly to user cohises.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CBWeightSelctor_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            StatusDroneSelectorChanged();
+        }
+
+        /// <summary>
+        /// restart modem to set option to default
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BResetStatus_Click(object sender, RoutedEventArgs e)
+        {
+            CBStatusSelector.SelectedItem = null;
+            StatusDroneSelectorChanged();
+        }
+
+        /// <summary>
+        /// restart modem to set option to default
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BResetWeight_Click(object sender, RoutedEventArgs e)
+        {
+            CBWeightSelctor.SelectedItem = null;
+            StatusDroneSelectorChanged();
+        }
+        #endregion combobox of dronesList handling
 
         /// <summary>
         /// Add objects button.
@@ -389,7 +389,7 @@ namespace PL
         #endregion combobox of parcelList handling
 
         /// <summary>
-        /// The function calculates the list of packages according to all the filters.
+        /// The function calculates the list of parcels according to all the filters.
         /// </summary>
         public void StatusParcelSelectorChanged()
         {
@@ -439,17 +439,21 @@ namespace PL
         private void grouping_Click(object sender, RoutedEventArgs e)
         {         
             CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(listOfDrones.ItemsSource);
-            if (view.GroupDescriptions.Count < 1) //  not allow to set the style more then once 
+            if (view.GroupDescriptions.Count < 1) //not allow to set the style more then once 
             {
                 PropertyGroupDescription groupDescription = new PropertyGroupDescription("Statuses");
                 view.GroupDescriptions.Add(groupDescription);
             }
         }
 
+        /// <summary>
+        /// grouping BaseStaiton by the number of ChargeSlots.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void groupingBaseStaiton_Click(object sender, RoutedEventArgs e)
         {
             // we orgnize the collaction by our settings (according to the enums in this case) by grouping them 
-
             IEnumerable<IGrouping<int, BaseStationsToList>> baseGroup = from baseStation in AccessIbl.GetBaseStationList() group baseStation by baseStation.FreeChargeSlots;
             List<BaseStationsToList> baseToList = new();
 
@@ -472,7 +476,7 @@ namespace PL
         }
 
         /// <summary>
-        /// clear the gruop proprties 
+        /// clear the gruop proprties.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -482,6 +486,11 @@ namespace PL
             view.GroupDescriptions.Clear();
         }
 
+        /// <summary>
+        /// grouping parcel by the sender name.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BgroupingCustomar_Click(object sender, RoutedEventArgs e)
         {
             // we orgnize the collaction by our settings (according to the enums in this case) by grouping them 
@@ -507,12 +516,11 @@ namespace PL
             }
         }
 
-        private void BRefreshPar_Click(object sender, RoutedEventArgs e)
-        {
-            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(listOfParcels.ItemsSource);
-            view.GroupDescriptions.Clear();
-        }
-
+        /// <summary>
+        ///  grouping parcel by the receiver name.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BgroupingCustomar1_Click(object sender, RoutedEventArgs e)
         {
             // we orgnize the collaction by our settings (according to the enums in this case) by grouping them 
@@ -536,6 +544,17 @@ namespace PL
                 PropertyGroupDescription groupDescription = new PropertyGroupDescription("CustomerReceiverName");
                 view.GroupDescriptions.Add(groupDescription);
             }
+        }
+
+        /// <summary>
+        /// clear the gruop proprties.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BRefreshPar_Click(object sender, RoutedEventArgs e)
+        {
+            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(listOfParcels.ItemsSource);
+            view.GroupDescriptions.Clear();
         }
 
         #endregion grouping 
