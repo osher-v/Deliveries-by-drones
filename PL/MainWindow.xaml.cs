@@ -19,11 +19,10 @@ using System.ComponentModel;
 namespace PL
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for MainWindow.xaml 
     /// </summary>
     public partial class MainWindow : Window
     {
-
         #region main window
         /// <summary> the constractor start the intlize consractor of the data </summary>
         public MainWindow()
@@ -32,15 +31,15 @@ namespace PL
         }
 
         /// <summary>
-        /// cancel the option to clik x to close the window 
+        /// when we close the app we need to put all of the drones that are inmintinan to free so we cencel the option of closing inteil we set thet  
         /// </summary>
         /// <param name="e">close window</param>
         protected override void OnClosing(CancelEventArgs e)
         {
             e.Cancel = false;
             IEnumerable<BO.DroneToList> DroneToList = from item in AccessIbl.GetDroneList()
-                                                       where item.Statuses == BO.DroneStatuses.inMaintenance
-                                                       select item;
+                                                      where item.Statuses == BO.DroneStatuses.inMaintenance
+                                                      select item;
             if (DroneToList.Any())
             {
                 foreach (var item in DroneToList)//when we close the app we need to put all of the drones that are inmintinan to free
@@ -49,7 +48,7 @@ namespace PL
                     AccessIbl.ReleaseDroneFromCharging(item.Id);
                 }
             }
-            Application.Current.Shutdown();     
+            Application.Current.Shutdown();// the app Shutdown to close all windowes if open  
         }
 
         // we crate an obejt that give us accses to the ibl intrface  
@@ -62,7 +61,7 @@ namespace PL
         /// <param name="e"></param>
         private void Blogin_Click(object sender, RoutedEventArgs e)
         {
-           
+            // we can identify which window to open instead of creating 2 buttons cuse we chnge the content of the buton 
             switch (Blogin.Content)
             {
                 case "כניסה כמנהל":
@@ -87,54 +86,14 @@ namespace PL
                         MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                     break;
-                default:   
+                default:
                     break;
-            }       
-        }
-        #endregion
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void enter_Loaded(object sender, RoutedEventArgs e)
-        {
-            AddOn.Opacity = 0;
-            DoubleAnimation Animmation = new DoubleAnimation(0, 100, TimeSpan.FromSeconds(10.5));
-            PBloding.BeginAnimation(ProgressBar.ValueProperty, Animmation);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void PBloding_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            if(PBloding.Value == 100)
-            {
-                Blogin.IsEnabled = true;
-                DoubleAnimation doubleAnimmation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(5));
-                AddOn.BeginAnimation(Grid.OpacityProperty, doubleAnimmation);
-                DoubleAnimation DSF = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(1));
-                Disiaper.BeginAnimation(Grid.OpacityProperty, DSF);
             }
         }
 
         /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void BNewUser_Click(object sender, RoutedEventArgs e)
-        {
-            ListView listView = new ListView(AccessIbl);
-            new CustomerWindow(AccessIbl, listView).Show();
-        }
-
-        /// <summary>
-        /// 
+        /// Clicking on the appropriate tab opens the button with a suitable name 
+        /// (this way we can identify which window to open instead of creating 2 buttons)
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -145,7 +104,8 @@ namespace PL
         }
 
         /// <summary>
-        /// 
+        /// Clicking on the appropriate tab opens the button with a suitable name 
+        /// (this way we can identify which window to open instead of creating 2 buttons)
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -155,6 +115,57 @@ namespace PL
             Blogin.Content = "כניסת לקוח";
         }
 
+        /// <summary>
+        /// Registration of a new customer to the system
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BNewUser_Click(object sender, RoutedEventArgs e)
+        {
+            ListView listView = new ListView(AccessIbl); //We create the list window but do not show it to the customer
+                                                         //Because we want to access the Add Customer window
+            new CustomerWindow(AccessIbl, listView).Show();
+        }
+
+        #endregion
+
+        #region Animated actions
+        /// <summary>
+        /// when the app start run we start a madie background and want the prograss bar to start increse
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void enter_Loaded(object sender, RoutedEventArgs e)
+        {
+            AddOn.Opacity = 0; // its start from 0 and affter that increse (in  PBloding_ValueChanged event)
+            DoubleAnimation Animmation = new DoubleAnimation(0, 100, TimeSpan.FromSeconds(10.5));//start Animmation for the progres bar to run from 0 to 100 
+            PBloding.BeginAnimation(ProgressBar.ValueProperty, Animmation);
+        }
+
+        /// <summary>
+        /// we chaeck the progress bar valu to know when its on 100% and then start the animiton 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void PBloding_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if(PBloding.Value == 100)
+            {
+                Blogin.IsEnabled = true;
+                DoubleAnimation doubleAnimmation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(5));
+                AddOn.BeginAnimation(Grid.OpacityProperty, doubleAnimmation);// ADD on is a grid that contain all the affter start app parts its chosse the opactity and reduce it 
+                DoubleAnimation DSF = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(1));
+                Disiaper.BeginAnimation(Grid.OpacityProperty, DSF); // Disiaper is a grid that contain all the start app parts
+            }
+        }
+        #endregion    
+
+        #region Checks that the text is not empty
+        /// <summary>
+        /// if the text is empy you cant press on the login 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void TBadmin_KeyUp(object sender, KeyEventArgs e)
         {
             if (TBadmin.Text.Length != 0)
@@ -166,7 +177,11 @@ namespace PL
                 Blogin.IsEnabled = false;
             }
         }
-
+        /// <summary>
+        /// if the text is empy you cant press on the login 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void TBuserID_KeyUp(object sender, KeyEventArgs e)
         {
             if (TBuserID.Password.Length != 0)
@@ -178,7 +193,11 @@ namespace PL
                 Blogin.IsEnabled = false;
             }
         }
-
+        /// <summary>
+        /// if the text is empy you cant press on the login 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void PBadminID_KeyUp(object sender, KeyEventArgs e)
         {
             if (PBadminID.Password.Length != 0)
@@ -190,7 +209,14 @@ namespace PL
                 Blogin.IsEnabled = false;
             }
         }
+        #endregion
 
+        #region  type only digits
+        /// <summary>
+        /// Allows you to type only digits
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void PBadminID_KeyDown(object sender, KeyEventArgs e)
         {
             // take only the kyes we alowed 
@@ -206,7 +232,11 @@ namespace PL
                 }
             }
         }
-
+        /// <summary>
+        /// Allows you to type only digits
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void TBuserID_KeyDown(object sender, KeyEventArgs e)
         {
             // take only the kyes we alowed 
@@ -222,5 +252,6 @@ namespace PL
                 }
             }
         }
+        #endregion
     }
 }
